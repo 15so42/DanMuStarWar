@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class RotateSelf : MonoBehaviour
 {
-    public float rotateSpeed;
+    public float rotateSpeed=5;
+    
+    public Vector3 rotateDir=Vector3.one;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +16,6 @@ public class RotateSelf : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
+        transform.Rotate(rotateDir * (rotateSpeed * Time.deltaTime));
     }
 }
