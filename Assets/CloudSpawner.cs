@@ -7,25 +7,24 @@ public class CloudSpawner : MonoBehaviour
     
 
     public Transform[] clouds;
+
+    public Vector3 cloudSize = Vector3.one;
     // Start is called before the first frame update
     void Start()
     {
         var parent=new GameObject("CloudParent");
         
         parent.transform.SetParent(transform);
-        parent.transform.position=Vector3.zero;
+        parent.transform.localPosition=Vector3.zero;
         parent.transform.localScale = Vector3.one;
-        for (int i = 0; i < clouds.Length; i++)
-        {
-            var iCloud = GameObject.Instantiate(clouds[i],parent.transform);
-            iCloud.Rotate(Random.insideUnitSphere*Random.Range(0,360));
-            
-        }
+        
+        var iCloud = GameObject.Instantiate(clouds[Random.Range(0,clouds.Length)],parent.transform);
+        var transform1 = iCloud.transform;
+        transform1.localPosition=Vector3.zero;
+        transform1.localScale=cloudSize;
+        iCloud.gameObject.AddComponent<RotateSelf>();
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }
