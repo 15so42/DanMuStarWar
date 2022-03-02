@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GameCode.Tools;
 using UnityEngine;
 
 public enum TaskType
@@ -56,8 +57,16 @@ public class PlanetTask : MonoBehaviour
       switch (taskParams.taskType)
       {
          case TaskType.Create :
-            //GameObject.Instantiate()
-         break;
+            var splitArr = taskParams.value.Split('_');
+            var type = splitArr[0];
+
+            if (type == "Planet")
+               ResFactory.Instance.CreatePlanet(splitArr[1]);
+            if (type == "BattleUnit")
+               ResFactory.Instance.CreateBattleUnit(splitArr[1]);
+            if (type == "Bullet")
+               ResFactory.Instance.CreateBullet(splitArr[1]);
+            break;
       }
    }
    

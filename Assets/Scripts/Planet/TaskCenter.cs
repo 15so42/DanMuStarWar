@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class TaskCenter : MonoBehaviour
 {
-    public Queue<PlanetTask> taks=new Queue<PlanetTask>();
+    public List<PlanetTask> tasks=new List<PlanetTask>();
     public void Run()
     {
-        
+        foreach (var t in tasks)
+        {
+            t.Run();
+        }
     }
 }
