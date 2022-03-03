@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class StateController : MonoBehaviour
 {
-
+    
     public State currentState;                      //当前状态
     public EnemyStats enemyStats;                   //敌人状态
     public Transform eyes;                          //眼睛：拿来观察状态变化
@@ -25,14 +25,25 @@ public class StateController : MonoBehaviour
     [HideInInspector]
     public float stateTimeElapsed;                  //状态变化时间间隔
 
+    [HideInInspector] public Planet planet;          //主星球
+    [HideInInspector]public MoveManager moveManager;
+
     private bool aiActive;                          //AI是否有效
     private State startState;                       //初始状态，每次复活后重置
+    
+    
 
     private void Awake()
     {
         tankShooting = GetComponent<Weapon>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        moveManager = GetComponent<MoveManager>();
         startState = currentState;
+    }
+
+    public void Init(Planet planet)
+    {
+        this.planet = planet;
     }
 
     private void Update()
@@ -51,19 +62,19 @@ public class StateController : MonoBehaviour
     //设置巡逻点还有是否设置AI并且是否激活导航
     public void SetupAI(bool aiActivationFromTankManager, List<Transform> wayPointsFromTankManager)
     {
-        wayPointList = wayPointsFromTankManager;
+        //wayPointList = wayPointsFromTankManager;
         aiActive = aiActivationFromTankManager;
-        if (aiActive)
-            navMeshAgent.enabled = true;
-        else
-            navMeshAgent.enabled = false;
+        //if (aiActive)
+        //    navMeshAgent.enabled = true;
+        //else
+        //    navMeshAgent.enabled = false;
     }
     private void OnDrawGizmos()
     {
         if (currentState != null && eyes != null)
         {
             Gizmos.color = currentState.sceneGizmoColor;
-            Gizmos.DrawWireSphere(eyes.position, enemyStats.lookSphereCastRadius);
+            Gizmos.DrawRay(eyes.position, transform.position);
         }
     }
 

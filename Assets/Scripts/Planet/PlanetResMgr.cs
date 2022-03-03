@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class PlanetResMgr : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public List<ResourceTable> allRes=new List<ResourceTable>();
 
-    // Update is called once per frame
-    void Update()
+    public bool HasAnyRes()
     {
-        
+        foreach (var resT in allRes)
+        {
+            if (resT.resourceNum > 0)
+                return true;
+        }
+
+        return false;
     }
 }

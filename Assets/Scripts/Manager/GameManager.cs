@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public FightingManager fightingManager;
     //public UIManager uIManager;
 
+    public PlanetManager planetManager;//存放所有planet
+    public BattleUnitManager battleUnitManager;//存放所有battleUnit
     public MapManager mapManager;
     
 

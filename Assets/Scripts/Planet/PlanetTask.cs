@@ -25,12 +25,13 @@ public struct TaskParams
       this.onFinished = onFinished;
    }
 }
-public class PlanetTask : MonoBehaviour
+public class PlanetTask 
 {
    private float timer = 0;
-   private bool isFininshed = false;
-   
+   public bool isFininshed = false;
+
    public TaskParams taskParams;
+   public Planet planet;
    
    public PlanetTask(TaskParams taskParams)
    {
@@ -52,6 +53,11 @@ public class PlanetTask : MonoBehaviour
       }
    }
 
+   public void InitBattleUnit(BattleUnit battleUnit)
+   {
+      battleUnit.Init(planet);
+   }
+
    void OnFinished()
    {
       switch (taskParams.taskType)
@@ -60,12 +66,25 @@ public class PlanetTask : MonoBehaviour
             var splitArr = taskParams.value.Split('_');
             var type = splitArr[0];
 
+            GameObject go = null;
             if (type == "Planet")
-               ResFactory.Instance.CreatePlanet(splitArr[1]);
+            {
+               go = ResFactory.Instance.CreatePlanet(splitArr[1]);
+            }
+
             if (type == "BattleUnit")
-               ResFactory.Instance.CreateBattleUnit(splitArr[1]);
+            {
+               go=ResFactory.Instance.CreateBattleUnit(splitArr[1]);
+               InitBattleUnit(go.GetComponent<BattleUnit>());
+            }
+
             if (type == "Bullet")
-               ResFactory.Instance.CreateBullet(splitArr[1]);
+            {
+               go=ResFactory.Instance.CreateBullet(splitArr[1]);
+            }
+               
+            
+            
             break;
       }
    }
