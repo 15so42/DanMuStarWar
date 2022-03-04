@@ -8,6 +8,6 @@ public class BattleUnitManager : MonoBehaviour
 
     void OnBattleUnitCreate(BattleUnit battleUnit)
     {
-        
+        allBattleUnits.Add(battleUnit);
     }
 }

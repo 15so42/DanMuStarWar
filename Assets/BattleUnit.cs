@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Ludiq;
 using UnityEngine;
-
+[IncludeInSettings(true)]
 public class BattleUnit : MonoBehaviour
 {
-    private Planet planet;
+   
+    public Planet planet;
+
+    
 
     private MoveManager moveManager;
     private StateController stateController;
@@ -14,6 +18,11 @@ public class BattleUnit : MonoBehaviour
     {
         moveManager = GetComponent<MoveManager>();
         stateController = GetComponent<StateController>();
+    }
+
+    public Planet GetPlanet()
+    {
+        return this.planet;
     }
 
     public void Init(Planet planet)
