@@ -7,7 +7,7 @@ public class GuardAction : AIAction
     public override void Act(StateController controller)
     {
 
-        controller.moveManager.Guard();
+        controller.moveManager.Guard(controller.planet);
 
     }
 }

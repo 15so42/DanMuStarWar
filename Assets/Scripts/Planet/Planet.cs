@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class Planet : MonoBehaviour
     private TaskCenter[] taskCenters;
 
     public Player owner = null;
+    [Header("手动设置半径")] public float radius=5;
     
     // Start is called before the first frame update
     void Start()
@@ -27,6 +29,11 @@ public class Planet : MonoBehaviour
         AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_纸飞机",5)));
         AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_纸飞机",5)));
         AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_纸飞机",5)));
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position,radius);
     }
 
     public Player GetOwner()

@@ -19,7 +19,8 @@ public class MoveManager : MonoBehaviour
     public GameObject guardPos;
     public float guardHeight = 5;
     public float guardRotateSpeed = 20;
-    
+
+    private bool isGuard = false;
     public void Init(Planet planet)
     {
         this.planet = planet;
@@ -52,13 +53,26 @@ public class MoveManager : MonoBehaviour
     private void Update()
     {
         transform.Translate(Vector3.forward * (curSpeed * Time.deltaTime),Space.Self);
-        transform.forward=Vector3.Lerp(transform.forward,tmpTarget-transform.position,lerpValue*Time.deltaTime);
+        if (!isGuard)//巡航时不启用方向控制
+        {
+            transform.forward=Vector3.Lerp(transform.forward,tmpTarget-transform.position,lerpValue*Time.deltaTime);
+        }
+        
     }
 
-    public void Guard()
+    public void Guard(Planet planet)
     {
-        var position = guardPos.transform.position;
-        SetTmpTarget(position);
-        SetFinalTarget(position);
+        //var position = guardPos.transform.position;
+        if (Vector3.Distance(planet.transform.position, transform.position) < planet.radius + guardHeight)
+        {
+            //开始巡航
+            isGuard = true;
+        }
+
+        if (isGuard)
+        {
+            var transform1 = transform;
+            transform1.up = transform1.position - planet.transform.position;
+        }
     }
 }
