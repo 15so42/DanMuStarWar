@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
    private GameManager gameManager;
+   public HpCanvas hpCanvas;
    public void Init(GameManager gameManager)
    {
       this.gameManager = gameManager;
@@ -23,5 +24,10 @@ public class UIManager : MonoBehaviour
    public AccountUI GetAccountUiByPlayer(Player player)
    {
       return null;
+   }
+
+   public HpBar CreateHpBar(BattleUnit battleUnit)
+   {
+      return hpCanvas.CreateHpBar(battleUnit);
    }
 }

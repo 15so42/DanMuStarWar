@@ -254,7 +254,7 @@ MonoBehaviour:
   lerpValue: 10
   planet: {fileID: 0}
   guardPos: {fileID: 0}
-  guardHeight: 10
+  guardHeight: 4
   autoRotate: 0
 --- !u!114 &1557580831968210073
 MonoBehaviour:

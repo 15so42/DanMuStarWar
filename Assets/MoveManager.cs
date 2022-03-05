@@ -39,7 +39,7 @@ public class MoveManager : MonoBehaviour
     {
         this.finalTarget = finalTarget;
         this.tmpTarget = finalTarget;
-        Debug.Log("SetFinalTarget:"+finalTarget);
+        //Debug.Log("SetFinalTarget:"+finalTarget);
     }
 
     private void Update()

@@ -14,6 +14,9 @@ public class Planet : MonoBehaviour
     public Player owner = null;
     [Header("手动设置半径")] public float radius=5;
     
+    public List<Player> enemyPlayers=new List<Player>();
+    public List<Player> allyPlayers = new List<Player>();
+    
     // Start is called before the first frame update
     void Start()
     {
