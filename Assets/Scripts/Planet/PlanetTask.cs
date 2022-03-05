@@ -56,6 +56,7 @@ public class PlanetTask
    public void InitBattleUnit(BattleUnit battleUnit)
    {
       battleUnit.Init(planet);
+      
    }
 
    void OnFinished()

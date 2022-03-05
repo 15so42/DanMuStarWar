@@ -1,35 +1,42 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Bolt;
 using Ludiq;
 using UnityEngine;
 [IncludeInSettings(true)]
 public class BattleUnit : MonoBehaviour
 {
    
-    public Planet planet;
+    public Planet ownerPlanet;
 
-    
+    private StateMachine stateMachine;
 
     private MoveManager moveManager;
-    private StateController stateController;
+    
 
     private void Awake()
     {
         moveManager = GetComponent<MoveManager>();
-        stateController = GetComponent<StateController>();
+        stateMachine = GetComponent<StateMachine>();
+        stateMachine.enabled = false;
     }
 
-    public Planet GetPlanet()
+    private void Start()
     {
-        return this.planet;
+        EventCenter.Broadcast(EnumEventType.OnBattleUnitCreated,this);
+    }
+
+    public virtual Planet GetPlanet()
+    {
+        return this.ownerPlanet;
     }
 
     public void Init(Planet planet)
     {
-        this.planet = planet;
-        stateController.Init(planet);
-        stateController.SetupAI(true,null);
+        this.ownerPlanet = planet;
+        
         moveManager.Init(planet);
+        stateMachine.enabled = true;
     }
 }

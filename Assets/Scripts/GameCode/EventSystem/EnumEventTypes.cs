@@ -5,6 +5,7 @@ using UnityEngine;
 public enum EnumEventType
 {
     OnDanMuReceived,
-    
+    OnPlanetCreated,
+    OnBattleUnitCreated,
 }
 

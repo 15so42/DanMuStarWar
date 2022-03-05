@@ -43,11 +43,10 @@ GameObject:
   - component: {fileID: 170070407549726725}
   - component: {fileID: 1557580831968210077}
   - component: {fileID: 1557580831968210076}
-  - component: {fileID: 1557580831968210078}
-  - component: {fileID: 1557580831968210075}
   - component: {fileID: 1557580831968210074}
   - component: {fileID: 1557580831968210073}
   - component: {fileID: 1557580831968210072}
+  - component: {fileID: 919132147616305536}
   m_Layer: 0
   m_Name: "\u63A2\u7D22\u8239"
   m_TagString: Untagged
@@ -62,7 +61,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1827558003455365584}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -236,44 +235,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &1557580831968210078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1827558003455365584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 203094062a7323a4cb4968204231b635, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: {fileID: 11400000, guid: e87b7f1d2b5d90347a0d9f4c69cad7b4, type: 2}
-  enemyStats: {fileID: 0}
-  eyes: {fileID: 1557580831582316029}
-  remainState: {fileID: 11400000, guid: e87b7f1d2b5d90347a0d9f4c69cad7b4, type: 2}
-  navMeshAgent: {fileID: 0}
-  tankShooting: {fileID: 0}
-  wayPointList: []
-  nextWayPoint: 0
-  chaseTarget: {fileID: 0}
-  stateTimeElapsed: 0
-  planet: {fileID: 0}
-  moveManager: {fileID: 0}
-  targetPlanet: {fileID: 0}
---- !u!114 &1557580831968210075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1827558003455365584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2bf636484e9a9d4b977628e7f6f949e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  planet: {fileID: 0}
 --- !u!114 &1557580831968210074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,7 +255,7 @@ MonoBehaviour:
   planet: {fileID: 0}
   guardPos: {fileID: 0}
   guardHeight: 10
-  guardRotateSpeed: 10
+  autoRotate: 0
 --- !u!114 &1557580831968210073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,3 +287,17 @@ MonoBehaviour:
   _data:
     _json: '{"declarations":{"collection":{"$content":[],"$version":"A"},"$version":"A"}}'
     _objectReferences: []
+--- !u!114 &919132147616305536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827558003455365584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0277c26e39e8e446952afa9cb94b2b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerPlanet: {fileID: 0}
+  minePlanet: {fileID: 0}
