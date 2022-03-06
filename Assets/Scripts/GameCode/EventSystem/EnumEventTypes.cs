@@ -7,5 +7,6 @@ public enum EnumEventType
     OnDanMuReceived,
     OnPlanetCreated,
     OnBattleUnitCreated,
+    OnPlayerJoined,
 }
 

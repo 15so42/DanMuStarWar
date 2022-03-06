@@ -1,16 +1,24 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Ludiq;
 using UnityEngine;
 
+
+
 public class Planet : MonoBehaviour
 {
+    [Header("Models")] 
+    public List<PlanetConfig> planetConfigs;
+    
     private PlanetCommander planetCommander;
     [HideInInspector]
     public PlanetResMgr planetResMgr;
     private TaskCenter[] taskCenters;
 
+    [Header("可否被占领")]
+    public bool canBeOwner = false;
     public Player owner = null;
     [Header("手动设置半径")] public float radius=5;
     
@@ -20,6 +28,14 @@ public class Planet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //PlanetConfigs
+        planetConfigs = GetComponentsInChildren<PlanetConfig>().ToList();
+        foreach (var planetConfig in planetConfigs)
+        {
+            planetConfig.gameObject.SetActive(false);
+        }//先隐藏所有的模型，由SetUp决定使用哪种星球后再显示
+        
+
         planetCommander = GetComponent<PlanetCommander>();
         planetResMgr = GetComponent<PlanetResMgr>();
         taskCenters = GetComponents<TaskCenter>();
@@ -34,7 +50,35 @@ public class Planet : MonoBehaviour
         AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_探索船",5)));
         //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_纸飞机",5)));
         
+        //事件绑定
+        //任意玩家加入游戏均设置为自己的敌人，除非后期主动结盟
+        EventCenter.AddListener<Player>(EnumEventType.OnPlayerJoined,OnPlayerJoined);
+        
         EventCenter.Broadcast(EnumEventType.OnPlanetCreated,this);
+    }
+
+    void OnPlayerJoined(Player newPlayer)
+    {
+        if (owner!=null && newPlayer != owner)
+        {
+            enemyPlayers.Add(newPlayer);//新加入的玩家被当作敌人
+        }
+        
+    }
+
+    public void SetUpPlanet(string planetType)
+    {
+        var planetConfig = planetConfigs.Find(x => x.name == planetType);
+        if (planetConfig.spawnCloud == false)
+        {
+            GetComponent<CloudSpawner>().Close();
+        }
+    }
+
+    //由fighingManager在玩家进入游戏时选择星球并占领
+    void SetOwner(Player player)
+    {
+        this.owner = player;
     }
 
     private void OnDrawGizmos()

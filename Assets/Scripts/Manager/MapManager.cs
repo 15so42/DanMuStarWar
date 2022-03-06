@@ -4,18 +4,38 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
+    
+    private GameManager gameManager;
+    private FightingManager fightingManager;
+    
     [Header("地图范围")] public Vector3 start;
     public Vector3 end;
     
-    
-    
+    [Header("装饰")]
     public int stoneNum;
     public GameObject[] stones;
     public float minStoneSize = 2;
     public float stoneSize = 10;
-    public void Init()
+
+    [Header("星球预制体")] public GameObject[] planets;
+    public float planetNum;
+    public void Init(FightingManager fightingManager)
+    {
+        this.fightingManager = fightingManager;
+    }
+
+    public void PlaceAll()
     {
         SpawnStones();
+        SpawnPlanets();
+    }
+
+    void SpawnPlanets()
+    {
+        for (int i = 0; i < planetNum; i++)
+        {
+            
+        }
     }
 
     void SpawnStones()

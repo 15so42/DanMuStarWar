@@ -31,7 +31,7 @@ public class FightingManager : MonoBehaviour
     
 
     public List<Player> players=new List<Player>();
-    public int maxPlayerCount = 2;
+    public int maxPlayerCount = 8;
     
     //对局状态
     public GameStatus gameStatus = GameStatus.Init;
@@ -40,17 +40,20 @@ public class FightingManager : MonoBehaviour
     //UIManager
     public GameManager gameManager;
     public UIManager uiManager;
-    //Round Manager
+    //RoundManager 负责游戏内各种事件(比如时空震的发生时机之类的)
     public RoundManager roundManager;
 
-    [Header("回合时间")] public int roundDuration=45;
+    public MapManager mapManager;
+    
     [Header("最大允许挂机时间")] public int kickOutTime = 120;
     [Header("玩家最大匹配时间")] public int maxWaitingPlayerTime=240;
     private float firstPlayerJoinTime = 10;
 
     public void Init(GameManager gameManager)
     {
-        PlaceInitChess();
+        
+        mapManager.Init(this);
+        mapManager.PlaceAll();
         EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
         gameStatus = GameStatus.WaitingJoin;
 

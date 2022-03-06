@@ -21,8 +21,8 @@ public class BattleUnit : MonoBehaviour
     private HpBar hpUI;
 
     public GameManager gameManager;
-    public BattleUnitManager battleUnitManager;
-    public PlanetManager planetManager;
+    [HideInInspector] public BattleUnitManager battleUnitManager;
+    [HideInInspector] public PlanetManager planetManager;
 
     public float findEnemyDistance = 7;
     private void Awake()

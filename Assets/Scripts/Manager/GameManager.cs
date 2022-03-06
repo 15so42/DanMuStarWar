@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     public PlanetManager planetManager;//存放所有planet
     public BattleUnitManager battleUnitManager;//存放所有battleUnit
-    public MapManager mapManager;
+    
     
 
     public UIManager uiManager;
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     {
        
         uiManager.Init(this);
-        mapManager.Init();
+        
         fightingManager.Init(this);
         
         //moveChessManager由GridManager初始化

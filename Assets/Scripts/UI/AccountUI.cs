@@ -72,8 +72,8 @@ public class AccountUI : MonoBehaviour
     {
         //Debug.Log(player.userName+"开始新回合");
         fillImage.fillAmount = 1;
-        countDownText.text = fightingManager.roundDuration+"";
-        countDownCoroutine=StartCoroutine(CountDown(fightingManager.roundDuration));
+        //countDownText.text = fightingManager.roundDuration+"";
+        //countDownCoroutine=StartCoroutine(CountDown(fightingManager.roundDuration));
     }
 
     IEnumerator CountDown(int duration)
