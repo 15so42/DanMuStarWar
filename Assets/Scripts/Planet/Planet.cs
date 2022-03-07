@@ -11,6 +11,8 @@ public class Planet : MonoBehaviour
 {
     [Header("Models")] 
     public List<PlanetConfig> planetConfigs;
+
+    public string planetType;
     
     private PlanetCommander planetCommander;
     [HideInInspector]
@@ -26,17 +28,29 @@ public class Planet : MonoBehaviour
     public List<Player> allyPlayers = new List<Player>();
 
     
+   
 
     // Start is called before the first frame update
     void Awake()
     {
+        PlanetConfig planetConfig = null;
         //PlanetConfigs
         planetConfigs = GetComponentsInChildren<PlanetConfig>().ToList();
-        foreach (var planetConfig in planetConfigs)
+        foreach (var p in planetConfigs)
         {
-            planetConfig.gameObject.SetActive(false);
+            if(p.GameObject().name!=this.planetType){
+                p.gameObject.SetActive(false);
+                
+            }
+            else
+            {
+                planetConfig = p;
+            }
         }//先隐藏所有的模型，由SetUp决定使用哪种星球后再显示
-        
+        if (planetConfig!=null && planetConfig.spawnCloud == false)
+        {
+            GetComponent<CloudSpawner>().Close();
+        }
 
         planetCommander = GetComponent<PlanetCommander>();
         planetResMgr = GetComponent<PlanetResMgr>();
@@ -74,13 +88,9 @@ public class Planet : MonoBehaviour
         
     }
 
-    public void SetUpPlanet(string planetType)
+    public void SetUpPlanet(string planetType)//在Awake前执行
     {
-        var planetConfig = planetConfigs.Find(x => x.gameObject.name == planetType);
-        if (planetConfig!=null && planetConfig.spawnCloud == false)
-        {
-            GetComponent<CloudSpawner>().Close();
-        }
+        this.planetType = planetType;
         gameObject.SetActive(true);
     }
 

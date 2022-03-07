@@ -32,7 +32,9 @@ public class CloudSpawner : MonoBehaviour
     public void Close()
     {
         //关闭生成的云
-        iCloud.gameObject.SetActive(false);
+        if(iCloud)
+            iCloud.gameObject.SetActive(false);
+        this.enabled = false;
     }
 
     

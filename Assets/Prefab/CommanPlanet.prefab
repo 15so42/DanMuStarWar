@@ -5452,13 +5452,13 @@ GameObject:
   - component: {fileID: 5468216365159158747}
   - component: {fileID: 5468216365159158744}
   - component: {fileID: 5468216365159158745}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CommanPlanet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5468216365159158751
 Transform:
   m_ObjectHideFlags: 0
@@ -5513,7 +5513,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotateSpeed: 15
   rotateDir: {x: 0, y: 1, z: 1}
-  randomDir: 0
+  randomDir: 1
 --- !u!135 &5468216365159158746
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5553,6 +5553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planetConfigs: []
+  planetType: 
   planetResMgr: {fileID: 0}
   canBeOwner: 0
   radius: 6.91
