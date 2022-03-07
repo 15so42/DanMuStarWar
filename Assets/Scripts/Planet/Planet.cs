@@ -73,7 +73,7 @@ public class Planet : MonoBehaviour
        
     }
 
-    private void Start()
+    private void OnEnable()
     {
         EventCenter.Broadcast(EnumEventType.OnPlanetCreated,this);
     }

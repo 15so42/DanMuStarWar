@@ -64,24 +64,25 @@ public class MapManager : MonoBehaviour
         return start + Vector3.right * y * xSize + Vector3.forward * x * zSize;
     }
 
-    bool HasNearPlanet(int x, int y,int radius)//传入逻辑坐标
+    bool HasNearPlanet(int x, int y,int radius)//传入数据坐标
     {
         //下面用数据坐标
         var hasNear = false;
-        for (int i = y - radius; i <= y + radius; i++)
+        for (int i = x - radius; i <= x + radius; i++)
         {
-            for (int j = x - radius; j <= x + radius; j++)
+            for (int j = y - radius; j <= y + radius; j++)
             {
-                i = Mathf.Clamp(i, 0, zNum-1);
-                j= Mathf.Clamp(j,0,xNum-1);
+                var newi = Mathf.Clamp(i, 0, zNum-1);
+                var newj= Mathf.Clamp(j,0,xNum-1);
                 
-                if (!string.IsNullOrEmpty(grids[i, j]))
+                if (!string.IsNullOrEmpty(grids[newi, newj]))
                 {
                     hasNear = true;
                 }
             }
         }
 
+        
         return hasNear;
     }
 
@@ -92,13 +93,13 @@ public class MapManager : MonoBehaviour
         {
             var pfb = planets[Random.Range(0, planets.Length)];
             Vector2Int gridPos=new Vector2Int(Random.Range(0,zNum),Random.Range(0,xNum));
-            int retryCount = 1000;
-            while (String.IsNullOrEmpty(grids[gridPos.x, gridPos.y]) == false && HasNearPlanet(gridPos.x,gridPos.y,safeRadius) && retryCount>0)
+            int retryCount = 10000;
+            while ((String.IsNullOrEmpty(grids[gridPos.x, gridPos.y]) == false || HasNearPlanet(gridPos.x,gridPos.y,safeRadius)) && retryCount>0)
             {
                 gridPos=new Vector2Int(Random.Range(0,zNum),Random.Range(0,xNum));
                 retryCount--;
             }//已经有星球了
-            if(retryCount!=1000)
+            if(retryCount!=10000)
                 Debug.Log(retryCount);
             
             var worldPos = GetWorldPosByGridPos(gridPos.x,gridPos.y);

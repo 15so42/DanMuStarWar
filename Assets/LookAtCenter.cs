@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LookAtCenter : MonoBehaviour
 {
+    public Transform target;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +14,6 @@ public class LookAtCenter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(Vector3.zero);
+        transform.LookAt(target.transform.position);
     }
 }

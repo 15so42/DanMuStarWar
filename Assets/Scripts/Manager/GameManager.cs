@@ -22,11 +22,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-       
         uiManager.Init(this);
         
         fightingManager.Init(this);
@@ -36,6 +31,12 @@ public class GameManager : MonoBehaviour
         //设置帧率为30fps
         //Application.targetFrameRate = 30;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+       
+        
     }
 
   

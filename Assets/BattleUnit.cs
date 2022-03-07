@@ -42,10 +42,15 @@ public class BattleUnit : MonoBehaviour
         OnHpChanged(hpValue,props.maxHp);
     }
 
-    private void Start()
+    private void OnEnable()
     {
         EventCenter.Broadcast(EnumEventType.OnBattleUnitCreated,this);
         
+        
+    }
+
+    private void Start()
+    {
         //UI
         hpUI = GameManager.Instance.uiManager.CreateHpBar(this);
         hpUI.Init(this);

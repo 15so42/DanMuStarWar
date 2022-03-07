@@ -54,6 +54,7 @@ public class FightingManager : MonoBehaviour
         
         mapManager.Init(this);
         mapManager.PlaceAll();
+       
         EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
         gameStatus = GameStatus.WaitingJoin;
 
@@ -116,8 +117,25 @@ public class FightingManager : MonoBehaviour
         return players.Find(x => x.uid == uid);
     }
 
-    
-    
+
+    private void Start()
+    {
+        //生成星球和石头完成后，将相机父物体移动到所有星球中心，同时相机的lookAt目标更改为相机父物体
+        Camera mainCamera=Camera.main;
+        var MPCamera = mainCamera.GetComponent<MultipleTargetCamera>();
+        Vector3 center=Vector3.zero;
+        int planetNum = gameManager.planetManager.allPlanets.Count;
+        foreach (var p in gameManager.planetManager.allPlanets)
+        {
+            MPCamera.AddTarget(p.transform);
+            center += p.transform.position;
+        }
+
+        center = center / planetNum;
+        
+        mainCamera.transform.parent.transform.position = center;
+        
+    }
 
     private void Update()
     {
