@@ -24,9 +24,11 @@ public class Planet : MonoBehaviour
     
     public List<Player> enemyPlayers=new List<Player>();
     public List<Player> allyPlayers = new List<Player>();
+
     
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //PlanetConfigs
         planetConfigs = GetComponentsInChildren<PlanetConfig>().ToList();
@@ -54,8 +56,14 @@ public class Planet : MonoBehaviour
         //任意玩家加入游戏均设置为自己的敌人，除非后期主动结盟
         EventCenter.AddListener<Player>(EnumEventType.OnPlayerJoined,OnPlayerJoined);
         
+       
+    }
+
+    private void Start()
+    {
         EventCenter.Broadcast(EnumEventType.OnPlanetCreated,this);
     }
+
 
     void OnPlayerJoined(Player newPlayer)
     {
@@ -68,11 +76,12 @@ public class Planet : MonoBehaviour
 
     public void SetUpPlanet(string planetType)
     {
-        var planetConfig = planetConfigs.Find(x => x.name == planetType);
-        if (planetConfig.spawnCloud == false)
+        var planetConfig = planetConfigs.Find(x => x.gameObject.name == planetType);
+        if (planetConfig!=null && planetConfig.spawnCloud == false)
         {
             GetComponent<CloudSpawner>().Close();
         }
+        gameObject.SetActive(true);
     }
 
     //由fighingManager在玩家进入游戏时选择星球并占领

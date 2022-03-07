@@ -19,9 +19,19 @@ public class MapManager : MonoBehaviour
 
     [Header("星球预制体")] public GameObject[] planets;
     public float planetNum;
+    private List<string> plantesName=new List<string>();
     public void Init(FightingManager fightingManager)
     {
         this.fightingManager = fightingManager;
+        //这里不知道怎么写了，只能这样手动加了
+        plantesName.Add(GameConst.EARTH);
+        plantesName.Add(GameConst.EARTH_LIKE);
+        plantesName.Add(GameConst.GRAY_PLANET);
+        plantesName.Add(GameConst.MINE_PLANET);
+        plantesName.Add(GameConst.VIRTUAL_PLANET);
+        plantesName.Add(GameConst.TECH_PLANET);
+        plantesName.Add(GameConst.MC_PLANET);
+        plantesName.Add(GameConst.BIOLOGY_PLANET);
     }
 
     public void PlaceAll()
@@ -32,9 +42,14 @@ public class MapManager : MonoBehaviour
 
     void SpawnPlanets()
     {
+        var empty=new GameObject("planets");
         for (int i = 0; i < planetNum; i++)
         {
-            
+            var pfb = planets[Random.Range(0, planets.Length)];
+            Vector3 randomPos=new Vector3(Random.Range(start.x,end.x),0,Random.Range(start.z,end.z));
+            var go = GameObject.Instantiate(pfb, randomPos, Quaternion.identity, empty.transform);
+            Debug.Log("aaaaaaaaaa");
+            go.GetComponent<Planet>().SetUpPlanet(plantesName[Random.Range(0,plantesName.Count)]);
         }
     }
 
