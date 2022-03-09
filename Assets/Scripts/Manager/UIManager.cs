@@ -26,9 +26,9 @@ public class UIManager : MonoBehaviour
       return null;
    }
 
-   public HpBar CreateHpBar(BattleUnit battleUnit)
+   public HpBar CreateHpBar(GameEntity gameEntity)
    {
-      return hpCanvas.CreateHpBar(battleUnit);
+      return hpCanvas.CreateHpBar(gameEntity);
    }
 
    public PlanetUI CreatePlanetUI(Planet planet)

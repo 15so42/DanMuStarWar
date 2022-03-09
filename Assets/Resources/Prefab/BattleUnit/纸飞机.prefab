@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 6948146322907814711}
   - component: {fileID: 1336304993184929996}
   - component: {fileID: 4445753600229371254}
-  - component: {fileID: 739300972744288237}
   - component: {fileID: 3757573747645238810}
   - component: {fileID: 7837901603903057036}
+  - component: {fileID: 2892370320544496642}
   m_Layer: 0
   m_Name: "\u7EB8\u98DE\u673A"
   m_TagString: Untagged
@@ -104,7 +104,7 @@ MonoBehaviour:
   planet: {fileID: 0}
   guardPos: {fileID: 0}
   guardHeight: 10
-  guardRotateSpeed: 10
+  autoRotate: 0
 --- !u!114 &4445753600229371254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,30 +117,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2bf636484e9a9d4b977628e7f6f949e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &739300972744288237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8893547361963670242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7aaa7bb6b9384548b1e290d925e3732, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: {fileID: 11400000, guid: 599f6a1bd40f7524287ec287d16aba10, type: 2}
-  enemyStats: {fileID: 0}
-  eyes: {fileID: 0}
-  remainState: {fileID: 11400000, guid: 599f6a1bd40f7524287ec287d16aba10, type: 2}
-  navMeshAgent: {fileID: 0}
-  tankShooting: {fileID: 0}
-  wayPointList: []
-  nextWayPoint: 0
-  chaseTarget: {fileID: 0}
-  stateTimeElapsed: 0
-  planet: {fileID: 0}
-  moveManager: {fileID: 0}
+  props: {fileID: 0}
+  skillContainer: {fileID: 0}
+  hpUI: {fileID: 0}
+  hpUIOffse: {x: 0, y: 0, z: 0}
+  hpUIScale: {x: 0, y: 0, z: 0}
+  ownerPlanet: {fileID: 0}
+  gameManager: {fileID: 0}
+  battleUnitManager: {fileID: 0}
+  planetManager: {fileID: 0}
+  findEnemyDistance: 7
 --- !u!96 &3757573747645238810
 TrailRenderer:
   serializedVersion: 2
@@ -260,3 +246,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.453014, y: 0.6305392, z: 2.3754115}
   m_Center: {x: 0, y: -0.1376405, z: 0.0493412}
+--- !u!114 &2892370320544496642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8893547361963670242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914e3c1840d248249a912f2d376db74a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skills: []
+  simpleSkillUI: 1
+  gameEntity: {fileID: 0}

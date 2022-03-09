@@ -12,7 +12,7 @@ public class MapManager : MonoBehaviour
     
     [Header("地图范围")] public Vector3 start;
     public Vector3 end;
-    public float planetRadius = 80;
+    
     public int xSize = 1;
     public int zSize = 1;
     public int xNum = 10;
@@ -21,7 +21,8 @@ public class MapManager : MonoBehaviour
     public string[,] grids;//每个格子存放对应的星球，只用来生成，不用太在意
     [Header("星球最少间隔多少格子单位")]
     public int safeRadius = 1;
-    
+
+    public Vector3 stoneCenter = Vector3.zero;
     [Header("陨石地图范围")] public float stoneRadius=80;
     
     
@@ -123,7 +124,7 @@ public class MapManager : MonoBehaviour
         var empty=new GameObject("stones");
         for (int i = 0; i < stoneNum; i++)
         {
-            Vector3 randomPos=Random.insideUnitSphere*stoneRadius;
+            Vector3 randomPos=Random.insideUnitSphere*stoneRadius+stoneCenter;
             var stone=GameObject.Instantiate(stones[Random.Range(0, stones.Length)], randomPos, Quaternion.LookRotation(randomPos.normalized), empty.transform);
             stone.transform.localScale=Vector3.one*minStoneSize+Random.insideUnitSphere*stoneSize;
         }

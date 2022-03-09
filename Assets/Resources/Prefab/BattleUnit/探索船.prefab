@@ -47,6 +47,8 @@ GameObject:
   - component: {fileID: 1557580831968210073}
   - component: {fileID: 1557580831968210072}
   - component: {fileID: 919132147616305536}
+  - component: {fileID: -8077825836562316991}
+  - component: {fileID: -1573380236976527978}
   m_Layer: 0
   m_Name: "\u63A2\u7D22\u8239"
   m_TagString: Untagged
@@ -299,5 +301,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0277c26e39e8e446952afa9cb94b2b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  props: {fileID: 0}
+  skillContainer: {fileID: 0}
+  hpUI: {fileID: 0}
+  hpUIOffse: {x: 0, y: 5, z: 0}
+  hpUIScale: {x: 0.5, y: 1, z: 1}
   ownerPlanet: {fileID: 0}
+  gameManager: {fileID: 0}
+  battleUnitManager: {fileID: 0}
+  planetManager: {fileID: 0}
+  findEnemyDistance: 7
   minePlanet: {fileID: 0}
+--- !u!114 &-8077825836562316991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827558003455365584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914e3c1840d248249a912f2d376db74a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skills: []
+  simpleSkillUI: 1
+  gameEntity: {fileID: 0}
+--- !u!114 &-1573380236976527978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827558003455365584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 855df10198e6d344ca4723cbfdadc92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 100
+  hp: 100
+  pDef: 50
+  mDef: 50

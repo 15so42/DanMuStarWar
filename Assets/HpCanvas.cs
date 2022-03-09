@@ -10,7 +10,10 @@ public class HpCanvas : MonoBehaviour
     [Header("PlanetUI")]
     public GameObject planetUiPfb;
     public Transform planetUiParent;
-    public HpBar CreateHpBar(BattleUnit battleUnit)
+
+    [Header("SkillUI")] public GameObject skillUIPfb;
+    public Transform skillUIParent;
+    public HpBar CreateHpBar(GameEntity gameEntity)
     {
         return  GameObject.Instantiate(hpBarPfb, hpBarParent).GetComponent<HpBar>();
         
@@ -20,4 +23,6 @@ public class HpCanvas : MonoBehaviour
         return  GameObject.Instantiate(planetUiPfb, planetUiParent).GetComponent<PlanetUI>();
         
     }
+    
+    
 }

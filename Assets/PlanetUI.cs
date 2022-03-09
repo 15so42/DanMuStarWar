@@ -13,6 +13,8 @@ public class PlanetUI : MonoBehaviour
     [Header("UiConfig")] public TMP_Text moneyText;
     public TMP_Text techText;
     public TMP_Text populationText;
+
+    public Transform skillGroupUI;
     private void Awake()
     {
         mainCamera=Camera.main;
@@ -27,7 +29,7 @@ public class PlanetUI : MonoBehaviour
 
     void UpdateResUI()
     {
-        foreach (var t in owner.planetResMgr.allRes)
+        foreach (var t in owner.planetResContainer.allRes)
         {
             if (t.resourceType == ResourceType.Money)
             {
@@ -62,6 +64,6 @@ public class PlanetUI : MonoBehaviour
     public void Init(Planet planet)
     {
         this.owner = planet;
-        planet.planetResMgr.AddResChangeListener(onResChanged);
+        planet.planetResContainer.AddResChangeListener(onResChanged);
     }
 }

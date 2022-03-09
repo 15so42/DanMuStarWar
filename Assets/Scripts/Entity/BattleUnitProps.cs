@@ -28,7 +28,7 @@ public class BattleUnitProps : MonoBehaviour
             damage = attackInfo.value;
         }
 
-
-        return hp - damage;
+        hp -= damage;
+        return hp;
     }
 }

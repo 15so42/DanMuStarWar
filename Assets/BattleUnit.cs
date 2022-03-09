@@ -4,56 +4,46 @@ using System.Collections.Generic;
 using Bolt;
 using Ludiq;
 using UnityEngine;
+
 [IncludeInSettings(true)]
 public class BattleUnit : GameEntity
 {
    
     public Planet ownerPlanet;
 
-    private StateMachine stateMachine;
-
     private MoveManager moveManager;
 
-    public Action<int,int> onHpChanged;
-
-    public BattleUnitProps props;
-
-    private HpBar hpUI;
-
     public GameManager gameManager;
+    
     [HideInInspector] public BattleUnitManager battleUnitManager;
     [HideInInspector] public PlanetManager planetManager;
 
     public float findEnemyDistance = 7;
     private void Awake()
     {
+        base.Awake();
         moveManager = GetComponent<MoveManager>();
-        stateMachine = GetComponent<StateMachine>();
-        //stateMachine.enabled = false;
+       
+        
         
         gameManager=GameManager.Instance;
         planetManager = gameManager.planetManager;
         battleUnitManager = gameManager.battleUnitManager;
     }
 
-    public void OnAttacked(AttackInfo attackInfo)
-    {
-        var hpValue = props.OnAttacked(attackInfo);
-        OnHpChanged(hpValue,props.maxHp);
-    }
+   
 
     private void OnEnable()
     {
+        
         EventCenter.Broadcast(EnumEventType.OnBattleUnitCreated,this);
-        
-        
+
     }
 
     private void Start()
     {
-        //UI
-        hpUI = GameManager.Instance.uiManager.CreateHpBar(this);
-        hpUI.Init(this);
+       base.Start();
+       SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
     }
 
     public BattleUnit FindNearEnemy()
@@ -74,22 +64,17 @@ public class BattleUnit : GameEntity
 
         return enemy;
     }
-
-    public void OnHpChanged(int hp,int maxHP)
-    {
-        onHpChanged.Invoke(hp,maxHP);
-    }
-
-    public virtual Planet GetPlanet()
-    {
-        return this.ownerPlanet;
-    }
+    
 
     public void Init(Planet planet)
     {
         this.ownerPlanet = planet;
-        
         moveManager.Init(planet);
-        stateMachine.enabled = true;
+        
+    }
+
+    public override void LogTip(string tip)
+    {
+        Debug.Log(tip);
     }
 }

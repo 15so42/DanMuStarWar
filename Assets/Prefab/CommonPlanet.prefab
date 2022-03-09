@@ -5452,8 +5452,12 @@ GameObject:
   - component: {fileID: 5468216365159158747}
   - component: {fileID: 5468216365159158744}
   - component: {fileID: 5468216365159158745}
+  - component: {fileID: 91232668481969524}
+  - component: {fileID: 7741233802594850688}
+  - component: {fileID: 6587211922578868045}
+  - component: {fileID: 5408354761403215820}
   m_Layer: 9
-  m_Name: CommanPlanet
+  m_Name: CommonPlanet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5552,11 +5556,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47b2e7c867adb5347bcfa20305c3be43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  props: {fileID: 0}
+  skillContainer: {fileID: 0}
+  hpUI: {fileID: 0}
+  hpUIOffse: {x: 0, y: 30, z: 0}
+  hpUIScale: {x: 2, y: 1, z: 1}
   planetConfigs: []
   planetType: 
-  planetResMgr: {fileID: 0}
+  planetResContainer: {fileID: 0}
   canBeOwner: 0
   radius: 6.91
+  planetUi: {fileID: 0}
 --- !u!114 &5468216365159158745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5570,6 +5580,67 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allRes: []
+--- !u!114 &91232668481969524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5468216365159158726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1465209106, guid: c8d0ad23af520fe46aabe2b1fecf6462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"declarations":{"collection":{"$content":[],"$version":"A"},"$version":"A"}}'
+    _objectReferences: []
+--- !u!114 &7741233802594850688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5468216365159158726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1999370065, guid: dcd2196c4e9166f499793f2007fcda35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"nest":{"source":"Macro","macro":null,"embed":null}}'
+    _objectReferences: []
+--- !u!114 &6587211922578868045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5468216365159158726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 855df10198e6d344ca4723cbfdadc92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 100
+  hp: 100
+  pDef: 50
+  mDef: 50
+--- !u!114 &5408354761403215820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5468216365159158726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914e3c1840d248249a912f2d376db74a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skills: []
+  simpleSkillUI: 0
+  gameEntity: {fileID: 0}
 --- !u!1 &5468216365329188245
 GameObject:
   m_ObjectHideFlags: 0

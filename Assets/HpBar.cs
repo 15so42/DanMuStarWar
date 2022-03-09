@@ -8,8 +8,9 @@ public class HpBar : MonoBehaviour
 {
     public Image hpFill;
     public Vector3 offset=Vector3.up;
-    
-    private BattleUnit owner;
+
+    public Transform skillUiGroup;
+    private GameEntity owner;
 
     private Camera mainCamera;
     private void Awake()
@@ -38,10 +39,17 @@ public class HpBar : MonoBehaviour
         UpDatePos();
     }
 
-    public void Init(BattleUnit battleUnit)
+    public void Init(GameEntity gameEntity)
     {
-        this.owner = battleUnit;
-        battleUnit.onHpChanged += OnHpChanged;
+        this.owner = gameEntity;
+        gameEntity.onHpChanged += OnHpChanged;
+        this.offset = gameEntity.hpUIOffse;
+        this.transform.localScale = gameEntity.hpUIScale;
+    }
+
+    public void OnAddSkill(SkillBase skillBase)
+    {
+        
     }
     
     

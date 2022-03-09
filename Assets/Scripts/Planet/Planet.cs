@@ -16,7 +16,7 @@ public class Planet : GameEntity
     
     private PlanetCommander planetCommander;
     [HideInInspector]
-    public PlanetResMgr planetResMgr;
+    public PlanetResContainer planetResContainer;
     private TaskCenter[] taskCenters;
 
     [Header("可否被占领")]
@@ -34,6 +34,7 @@ public class Planet : GameEntity
     // Start is called before the first frame update
     void Awake()
     {
+        base.Awake();
         PlanetConfig planetConfig = null;
         //PlanetConfigs
         planetConfigs = GetComponentsInChildren<PlanetConfig>().ToList();
@@ -54,7 +55,7 @@ public class Planet : GameEntity
         }
 
         planetCommander = GetComponent<PlanetCommander>();
-        planetResMgr = GetComponent<PlanetResMgr>();
+        planetResContainer = GetComponent<PlanetResContainer>();
         taskCenters = GetComponents<TaskCenter>();
         
         
@@ -71,15 +72,21 @@ public class Planet : GameEntity
         //任意玩家加入游戏均设置为自己的敌人，除非后期主动结盟
         EventCenter.AddListener<Player>(EnumEventType.OnPlayerJoined,OnPlayerJoined);
         
+        
        
     }
 
     private void OnEnable()
     {
+        
         EventCenter.Broadcast(EnumEventType.OnPlanetCreated,this);
         planetUi = GameManager.Instance.uiManager.CreatePlanetUI(this);
         planetUi.Init(this);
+        //添加技能测试
+        SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
     }
+    
+    
 
 
     void OnPlayerJoined(Player newPlayer)
@@ -126,4 +133,11 @@ public class Planet : GameEntity
             taskCenter.Run();
         }
     }
+
+    public override void LogTip(string tip)
+    {
+        Debug.Log(tip);
+    }
+
+    
 }

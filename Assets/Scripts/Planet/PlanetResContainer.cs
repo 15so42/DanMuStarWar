@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlanetResMgr : MonoBehaviour
+public class PlanetResContainer : MonoBehaviour
 {
     public List<ResourceTable> allRes=new List<ResourceTable>();
 
