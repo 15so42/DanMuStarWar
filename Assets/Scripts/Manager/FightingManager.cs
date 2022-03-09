@@ -133,7 +133,7 @@ public class FightingManager : MonoBehaviour
 
         center = center / planetNum;
         
-        mainCamera.transform.parent.transform.position = center;
+        //mainCamera.transform.parent.transform.position = center;
         
     }
 

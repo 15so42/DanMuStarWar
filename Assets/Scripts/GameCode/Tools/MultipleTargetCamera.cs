@@ -56,6 +56,7 @@ public class MultipleTargetCamera : MonoBehaviour
     void Move()
     {
         Vector3 centerPoint = GetCenterPoint();
+        transform.parent.transform.position = centerPoint;
  
         //Vector3 newPosition = centerPoint + offset;
  
@@ -76,7 +77,7 @@ public class MultipleTargetCamera : MonoBehaviour
             bounds.Encapsulate(targets[i].position);
         }
  
-        return bounds.size.y*1.2f;
+        return bounds.size.x*1.4f;
     }
  
     Vector3 GetCenterPoint()

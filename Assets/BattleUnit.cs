@@ -5,7 +5,7 @@ using Bolt;
 using Ludiq;
 using UnityEngine;
 [IncludeInSettings(true)]
-public class BattleUnit : MonoBehaviour
+public class BattleUnit : GameEntity
 {
    
     public Planet ownerPlanet;

@@ -7,7 +7,7 @@ using UnityEngine;
 
 
 
-public class Planet : MonoBehaviour
+public class Planet : GameEntity
 {
     [Header("Models")] 
     public List<PlanetConfig> planetConfigs;
@@ -27,6 +27,7 @@ public class Planet : MonoBehaviour
     public List<Player> enemyPlayers=new List<Player>();
     public List<Player> allyPlayers = new List<Player>();
 
+    [Header("PlanetUI")] public PlanetUI planetUi;
     
    
 
@@ -76,6 +77,8 @@ public class Planet : MonoBehaviour
     private void OnEnable()
     {
         EventCenter.Broadcast(EnumEventType.OnPlanetCreated,this);
+        planetUi = GameManager.Instance.uiManager.CreatePlanetUI(this);
+        planetUi.Init(this);
     }
 
 

@@ -99,9 +99,13 @@ public class MapManager : MonoBehaviour
                 gridPos=new Vector2Int(Random.Range(0,zNum),Random.Range(0,xNum));
                 retryCount--;
             }//已经有星球了
-            if(retryCount!=10000)
-                Debug.Log(retryCount);
-            
+
+            if (retryCount == 0)
+            {
+                Debug.Log("没有足够空间:"+retryCount);
+                continue;
+            }
+
             var worldPos = GetWorldPosByGridPos(gridPos.x,gridPos.y);
             worldPos.y = Random.Range(-1 * heightRange, heightRange);
             

@@ -30,4 +30,9 @@ public class UIManager : MonoBehaviour
    {
       return hpCanvas.CreateHpBar(battleUnit);
    }
+
+   public PlanetUI CreatePlanetUI(Planet planet)
+   {
+      return hpCanvas.CreatePlanetUI(planet);
+   }
 }
