@@ -30,6 +30,8 @@ public class SkillContainer : MonoBehaviour
         else
         {
             trans.SetParent((gameEntity as Planet).planetUi.skillGroupUI);
+            trans.localScale=Vector3.one;
+            
         }
     }
     

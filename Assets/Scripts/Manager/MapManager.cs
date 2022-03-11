@@ -32,8 +32,10 @@ public class MapManager : MonoBehaviour
     public float minStoneSize = 2;
     public float stoneSize = 10;
 
-    [Header("星球预制体")] public GameObject[] planets;
-    public float planetNum;
+    [Header("可居住星球预制体")] public GameObject[] playerPlanets;
+    [Header("Res星球预制体")] public GameObject[] resPlanets;
+    public int playerPlanetNum=8;
+    public int resPlanetNum = 3;
     private List<string> plantesName=new List<string>();
     
     //分格子放星球
@@ -57,7 +59,7 @@ public class MapManager : MonoBehaviour
     public void PlaceAll()
     {
         SpawnStones();
-        SpawnPlanets();
+        SpawnAllPlanets();
     }
 
     Vector3 GetWorldPosByGridPos(int x,int y)
@@ -87,7 +89,13 @@ public class MapManager : MonoBehaviour
         return hasNear;
     }
 
-    void SpawnPlanets()
+    void SpawnAllPlanets()
+    {
+        SpawnPlanets(playerPlanets,playerPlanetNum);
+        SpawnPlanets(resPlanets,resPlanetNum);
+    }
+
+    void SpawnPlanets(GameObject[] planets,int planetNum)
     {
         var empty=new GameObject("planets");
         for (int i = 0; i < planetNum; i++)

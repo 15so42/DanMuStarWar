@@ -17,6 +17,6 @@ public class HealSkill : SkillBase
     {
         base.Play();
         gameEntity.OnAttacked(new AttackInfo(AttackType.Real, healValue));
-        Debug.Log("治疗");
+        //Debug.Log("治疗");
     }
 }

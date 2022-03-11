@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using Timer = System.Timers.Timer;
 
 public enum GameStatus
 {
@@ -44,30 +45,46 @@ public class FightingManager : MonoBehaviour
     public RoundManager roundManager;
 
     public MapManager mapManager;
-    
+
+    [Header("每回合加入时间")] public int waitingJoinSecond = 120;
     [Header("最大允许挂机时间")] public int kickOutTime = 120;
     [Header("玩家最大匹配时间")] public int maxWaitingPlayerTime=240;
     private float firstPlayerJoinTime = 10;
+
+    private UnityTimer.Timer waitingJoinTimer = null;
 
     public void Init(GameManager gameManager)
     {
         
         mapManager.Init(this);
-        mapManager.PlaceAll();
+        mapManager.PlaceAll();//生成场景
        
         EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
-        gameStatus = GameStatus.WaitingJoin;
-
+        
         
         this.gameManager = gameManager;
         uiManager = gameManager.uiManager;
         
+        StartWaitingJoin();
+        
+    }
+
+    void StartWaitingJoin()
+    {
+        gameStatus = GameStatus.WaitingJoin;
+        //开始倒计时
+        waitingJoinTimer=UnityTimer.Timer.Register(waitingJoinSecond, StartBattle, (time) =>
+        {
+            uiManager.UpdateWaitingJoinUI(time);
+        });
     }
     
     public Dictionary<int,PlayerStatus> playerStatusTable=new Dictionary<int, PlayerStatus>(){};
 
     public void JoinGame(Player player)
     {
+        //var ownerAblePlanets = PlanetManager.Instance.ownerAblePlanets;//可占领行星
+        
         if (players.Count < maxPlayerCount && !players.Contains(player) && players.Find(x=>x.uid==player.uid)==null )
         {
             players.Add(player);
@@ -77,39 +94,42 @@ public class FightingManager : MonoBehaviour
             }
             Debug.Log("玩家"+player.userName+"加入了游戏");
             TipsDialog.ShowDialog("玩家"+player.userName+"加入了游戏",null);
-            //同步UI
-            uiManager.OnPlayerJoined(player);
-            
-            
-            
-            
-            //游戏开始判断
-            if (players.Count == 2)
-            {
-                TipsDialog.ShowDialog("准备完毕，对局开始", () =>
-                {
-                    gameStatus = GameStatus.CountDownToFight;
-                    CountDownDialog.ShowDialog(3, () =>
-                    {
-                        TipsDialog.ShowDialog("红方先手",null);
-                        gameStatus = GameStatus.Playing;
-                        roundManager=new RoundManager();
-                        roundManager.Init(gameManager,players);
-                        
-                        //两个玩家更新活跃表
-                        foreach (var p in players)
-                        {
-                            playerStatusTable.Add(p.uid,new PlayerStatus()
-                            {
-                                lastActiveTime = Time.time,
-                                requestDraw = false
-                            });
-                        }
-                    });
-                });
-                
-            }
+           
+            EventCenter.Broadcast(EnumEventType.OnPlayerJoined);
         }
+
+        if (players.Count == maxPlayerCount)
+        {
+            waitingJoinTimer.Cancel();
+            StartBattle();
+        }
+    }
+
+    void StartBattle()
+    {
+        if (players.Count < 2)
+        {
+            StartWaitingJoin();
+            return;//重新等待
+        }
+        
+        
+        gameStatus = GameStatus.Playing;
+        
+        
+        roundManager=new RoundManager();
+        roundManager.Init(gameManager,players);
+                        
+        //两个玩家更新活跃表
+        foreach (var p in players)
+        {
+            playerStatusTable.Add(p.uid,new PlayerStatus()
+            {
+                lastActiveTime = Time.time,
+                requestDraw = false
+            });
+        }
+        EventCenter.Broadcast(EnumEventType.OnBattleStart);
     }
 
     public Player GetPlayerByUid(int uid)
@@ -272,10 +292,7 @@ public class FightingManager : MonoBehaviour
                 {
                     JoinGame(new Player(uid, userName, playerAccount.data.face,playerAccount.data.top_photo));
                 }
-                else
-                {
-                    TipsDialog.ShowDialog("Error:"+playerAccount.code+","+playerAccount.message,null);
-                }
+               
             }
         }
         

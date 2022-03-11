@@ -8,5 +8,6 @@ public enum EnumEventType
     OnPlanetCreated,
     OnBattleUnitCreated,
     OnPlayerJoined,
+    OnBattleStart,
 }
 

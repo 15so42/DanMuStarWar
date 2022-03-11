@@ -49,10 +49,20 @@ public class Planet : GameEntity
                 planetConfig = p;
             }
         }//先隐藏所有的模型，由SetUp决定使用哪种星球后再显示
-        if (planetConfig!=null && planetConfig.spawnCloud == false)
+        if (planetConfig!=null)
         {
-            GetComponent<CloudSpawner>().Close();
+            if (planetConfig.spawnCloud == false)
+            {
+                GetComponent<CloudSpawner>().Close();
+            }
+
+            if (planetConfig.canBeOwner == false)
+            {
+                canBeOwner = false;
+            }
+
         }
+        
 
         planetCommander = GetComponent<PlanetCommander>();
         planetResContainer = GetComponent<PlanetResContainer>();
@@ -85,6 +95,8 @@ public class Planet : GameEntity
         //添加技能测试
         SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
     }
+    
+    
     
     
 

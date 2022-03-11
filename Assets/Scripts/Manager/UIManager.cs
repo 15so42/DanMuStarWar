@@ -6,6 +6,8 @@ public class UIManager : MonoBehaviour
 {
    private GameManager gameManager;
    public HpCanvas hpCanvas;
+
+   public WaitingJoinUI waitingJoinUi;
    public void Init(GameManager gameManager)
    {
       this.gameManager = gameManager;
@@ -16,10 +18,12 @@ public class UIManager : MonoBehaviour
       Debug.Log("ResetUI待实现");
    }
 
-   public void OnPlayerJoined(Player player)
+   public void UpdateWaitingJoinUI(float time)
    {
-      Debug.Log(nameof(OnPlayerJoined)+"待实现");
+      waitingJoinUi.UpdateUI(time);
    }
+
+   
 
    public AccountUI GetAccountUiByPlayer(Player player)
    {
