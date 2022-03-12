@@ -10,6 +10,11 @@ public class BattleUnitProps : MonoBehaviour
     public int pDef = 50;//物理防御
     public int mDef = 50;//魔法防御
 
+    public GameEntity gameEntity;
+    public void Init(GameEntity gameEntity)
+    {
+        this.gameEntity = gameEntity;
+    }
     public int OnAttacked(AttackInfo attackInfo)
     {
         var damage = 1;
@@ -30,5 +35,10 @@ public class BattleUnitProps : MonoBehaviour
 
         hp -= damage;
         return hp;
+    }
+
+    public bool IsAlive()
+    {
+        return hp > 0;
     }
 }

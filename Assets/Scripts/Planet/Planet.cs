@@ -22,7 +22,6 @@ public class Planet : GameEntity
     [Header("可否被占领")]
     public bool canBeOwner = false;
     public Player owner = null;
-    [Header("手动设置半径")] public float radius=5;
     
     public List<Player> enemyPlayers=new List<Player>();
     public List<Player> allyPlayers = new List<Player>();
@@ -93,7 +92,7 @@ public class Planet : GameEntity
         planetUi = GameManager.Instance.uiManager.CreatePlanetUI(this);
         planetUi.Init(this);
         //添加技能测试
-        SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
+        //SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
     }
     
     

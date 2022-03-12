@@ -15,6 +15,10 @@ public abstract class GameEntity : MonoBehaviour
 
    public BattleUnitProps props;
    public SkillContainer skillContainer;
+   [Header("手动设置半径")] public float radius=5;
+   
+   
+   
 
    public HpBar hpUI;
    [Header("hpUIOffse")] public Vector3 hpUIOffse;
@@ -24,6 +28,7 @@ public abstract class GameEntity : MonoBehaviour
    {
       stateMachine = GetComponent<StateMachine>();
       props = GetComponent<BattleUnitProps>();
+      props.Init(this);
       skillContainer = GetComponent<SkillContainer>();
       
       skillContainer.Init(this);
@@ -36,6 +41,12 @@ public abstract class GameEntity : MonoBehaviour
       hpUI.Init(this);
       stateMachine.enabled = true;
    }
+
+   public bool IsAlive()
+   {
+      return props.IsAlive();
+   }
+   
 
    public abstract void LogTip(string tip);
    

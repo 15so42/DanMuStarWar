@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
  
 [RequireComponent(typeof(Camera))]
@@ -24,6 +25,12 @@ public class MultipleTargetCamera : MonoBehaviour
     void Start()
     {
         cam = GetComponent<Camera>();
+    }
+
+    public void BeginAnim()
+    {
+        Vector3 centerPoint = GetCenterPoint();
+        transform.parent.transform.DOMove(centerPoint,3f).SetEase(Ease.OutQuart);
     }
  
     void LateUpdate()
@@ -56,7 +63,7 @@ public class MultipleTargetCamera : MonoBehaviour
     void Move()
     {
         Vector3 centerPoint = GetCenterPoint();
-        transform.parent.transform.position = centerPoint;
+       
  
         //Vector3 newPosition = centerPoint + offset;
  

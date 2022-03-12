@@ -57,7 +57,7 @@ public class FightingManager : MonoBehaviour
     {
         
         mapManager.Init(this);
-        mapManager.PlaceAll();//生成场景
+        
        
         EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
         
@@ -95,7 +95,7 @@ public class FightingManager : MonoBehaviour
             Debug.Log("玩家"+player.userName+"加入了游戏");
             TipsDialog.ShowDialog("玩家"+player.userName+"加入了游戏",null);
            
-            EventCenter.Broadcast(EnumEventType.OnPlayerJoined);
+            EventCenter.Broadcast(EnumEventType.OnPlayerJoined,player);
         }
 
         if (players.Count == maxPlayerCount)
@@ -115,6 +115,20 @@ public class FightingManager : MonoBehaviour
         
         
         gameStatus = GameStatus.Playing;
+        mapManager.PlaceAll();//生成场景
+        
+        //生成星球和石头完成后，将相机父物体移动到所有星球中心，同时相机的lookAt目标更改为相机父物体
+        Camera mainCamera=Camera.main;
+        var MPCamera = mainCamera.GetComponent<MultipleTargetCamera>();
+        Vector3 center=Vector3.zero;
+        
+        foreach (var p in gameManager.planetManager.allPlanets)
+        {
+            MPCamera.AddTarget(p.transform);
+            center += p.transform.position;
+        }
+        MPCamera.BeginAnim();
+
         
         
         roundManager=new RoundManager();
@@ -140,20 +154,7 @@ public class FightingManager : MonoBehaviour
 
     private void Start()
     {
-        //生成星球和石头完成后，将相机父物体移动到所有星球中心，同时相机的lookAt目标更改为相机父物体
-        Camera mainCamera=Camera.main;
-        var MPCamera = mainCamera.GetComponent<MultipleTargetCamera>();
-        Vector3 center=Vector3.zero;
-        int planetNum = gameManager.planetManager.allPlanets.Count;
-        foreach (var p in gameManager.planetManager.allPlanets)
-        {
-            MPCamera.AddTarget(p.transform);
-            center += p.transform.position;
-        }
-
-        center = center / planetNum;
         
-        //mainCamera.transform.parent.transform.position = center;
         
     }
 

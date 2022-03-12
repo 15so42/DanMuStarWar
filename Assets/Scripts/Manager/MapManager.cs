@@ -32,26 +32,20 @@ public class MapManager : MonoBehaviour
     public float minStoneSize = 2;
     public float stoneSize = 10;
 
-    [Header("可居住星球预制体")] public GameObject[] playerPlanets;
-    [Header("Res星球预制体")] public GameObject[] resPlanets;
-    public int playerPlanetNum=8;
+    public GameObject[] planets;//预制体
+    [Header("可居住星球预制体")] public string[] playerPlanets;
+    [Header("Res星球预制体")] public string[] resPlanets;
+    public int playerPlanetNum=6;
     public int resPlanetNum = 3;
-    private List<string> plantesName=new List<string>();
+    
+   
     
     //分格子放星球
     
     public void Init(FightingManager fightingManager)
     {
         this.fightingManager = fightingManager;
-        //这里不知道怎么写了，只能这样手动加了
-        plantesName.Add(GameConst.EARTH);
-        plantesName.Add(GameConst.EARTH_LIKE);
-        plantesName.Add(GameConst.GRAY_PLANET);
-        plantesName.Add(GameConst.MINE_PLANET);
-        plantesName.Add(GameConst.VIRTUAL_PLANET);
-        plantesName.Add(GameConst.TECH_PLANET);
-        plantesName.Add(GameConst.MC_PLANET);
-        plantesName.Add(GameConst.BIOLOGY_PLANET);
+       
         
         grids=new string[zNum,xNum];
     }
@@ -95,7 +89,7 @@ public class MapManager : MonoBehaviour
         SpawnPlanets(resPlanets,resPlanetNum);
     }
 
-    void SpawnPlanets(GameObject[] planets,int planetNum)
+    void SpawnPlanets(string[] planetsName,int planetNum)
     {
         var empty=new GameObject("planets");
         for (int i = 0; i < planetNum; i++)
@@ -120,7 +114,7 @@ public class MapManager : MonoBehaviour
             
             
             var go = GameObject.Instantiate(pfb, worldPos, Quaternion.identity, empty.transform);
-            var planetName = plantesName[Random.Range(0, plantesName.Count)];
+            var planetName = planetsName[Random.Range(0, planetsName.Length)];
             go.GetComponent<Planet>().SetUpPlanet(planetName);
             grids[gridPos.x, gridPos.y] = planetName;
 

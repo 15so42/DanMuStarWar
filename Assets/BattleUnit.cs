@@ -19,7 +19,8 @@ public class BattleUnit : GameEntity
     [HideInInspector] public PlanetManager planetManager;
 
     public float findEnemyDistance = 7;
-    private void Awake()
+    public GameEntity chaseTarget = null;
+    protected void Awake()
     {
         base.Awake();
         moveManager = GetComponent<MoveManager>();
@@ -31,16 +32,20 @@ public class BattleUnit : GameEntity
         battleUnitManager = gameManager.battleUnitManager;
     }
 
+    public bool IsTargetAlive()
+    {
+        return chaseTarget != null && chaseTarget.IsAlive();
+    }
    
 
-    private void OnEnable()
+    protected void OnEnable()
     {
         
         EventCenter.Broadcast(EnumEventType.OnBattleUnitCreated,this);
 
     }
 
-    private void Start()
+    protected void Start()
     {
        base.Start();
        SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
@@ -63,6 +68,11 @@ public class BattleUnit : GameEntity
         }
 
         return enemy;
+    }
+
+    public void SetChaseTarget(BattleUnit target)
+    {
+        this.chaseTarget = target;
     }
     
 

@@ -27,6 +27,8 @@ public class MoveManager : MonoBehaviour
         this.planet = planet;
       
     }
+    
+    
 
    
 
@@ -35,10 +37,11 @@ public class MoveManager : MonoBehaviour
         this.tmpTarget = tmpTarget;
     }
 
-    public void SetFinalTarget(Vector3 finalTarget)
+    public void SetFinalTarget(Vector3 finalTarget,bool syncTmpTarget)
     {
         this.finalTarget = finalTarget;
-        this.tmpTarget = finalTarget;
+            if(syncTmpTarget)
+                this.tmpTarget = finalTarget;
         //Debug.Log("SetFinalTarget:"+finalTarget);
     }
 
@@ -48,6 +51,11 @@ public class MoveManager : MonoBehaviour
         if (autoRotate)//巡航时不启用方向控制
         {
             transform.forward=Vector3.Lerp(transform.forward,tmpTarget-transform.position,lerpValue*Time.deltaTime);
+        }
+
+        if (Vector3.Distance(transform.position, tmpTarget) < 1)
+        {
+            SetTmpTarget(finalTarget);
         }
         
     }
