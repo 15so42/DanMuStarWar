@@ -37,6 +37,7 @@ public class MapManager : MonoBehaviour
     [Header("Res星球预制体")] public string[] resPlanets;
     public int playerPlanetNum=6;
     public int resPlanetNum = 3;
+    public ColorTable colorTable;
     
    
     
@@ -87,6 +88,7 @@ public class MapManager : MonoBehaviour
     {
         SpawnPlanets(playerPlanets,playerPlanetNum);
         SpawnPlanets(resPlanets,resPlanetNum);
+        EventCenter.Broadcast(EnumEventType.OnPlanetsSpawned);
     }
 
     void SpawnPlanets(string[] planetsName,int planetNum)
@@ -112,10 +114,9 @@ public class MapManager : MonoBehaviour
             var worldPos = GetWorldPosByGridPos(gridPos.x,gridPos.y);
             worldPos.y = Random.Range(-1 * heightRange, heightRange);
             
-            
-            var go = GameObject.Instantiate(pfb, worldPos, Quaternion.identity, empty.transform);
             var planetName = planetsName[Random.Range(0, planetsName.Length)];
-            go.GetComponent<Planet>().SetUpPlanet(planetName);
+            var go = GameObject.Instantiate(pfb, worldPos, Quaternion.identity, empty.transform);
+            go.GetComponent<Planet>().SetUpPlanet(planetName,colorTable.colors[i]);
             grids[gridPos.x, gridPos.y] = planetName;
 
         }

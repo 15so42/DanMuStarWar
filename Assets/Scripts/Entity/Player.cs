@@ -10,6 +10,19 @@ public class Player
     public string faceUrl;
     public string top_photo;
     
+    //获得的Sprite
+    public Sprite faceIcon;
+    
+    public void Init()
+    {
+        
+    }
+
+    void OnIconDownload()
+    {
+        
+    }
+    
     public Player(int uid, string userName,string faceUrl,string top_photo)
     {
         this.uid = uid;

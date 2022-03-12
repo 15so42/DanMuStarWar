@@ -131,8 +131,8 @@ public class DanMuReciver : MonoBehaviour
 
             if (json == null)
             {
-                yield return new WaitForSeconds(tickInterval);
-                //网络获取失败，跳过，三秒后继续获取
+               
+                //网络获取失败，跳过
                 continue;
             }
 

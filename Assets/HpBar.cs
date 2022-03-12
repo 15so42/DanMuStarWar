@@ -27,12 +27,18 @@ public class HpBar : MonoBehaviour
     void UpdateHp(int hp,int maxHP)
     {
         hpFill.fillAmount = (float)hp / maxHP;
+        
     }
 
     void UpDatePos()
     {
         if(owner)
             transform.position = mainCamera.WorldToScreenPoint(owner.transform.position)+offset;
+    }
+
+    public void SetColor(Color color)
+    {
+        hpFill.color = color;
     }
 
     private void LateUpdate()
@@ -51,6 +57,7 @@ public class HpBar : MonoBehaviour
         var height = rect.rect.height;
         GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,width* gameEntity.hpUIScale.x );
         GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,height* gameEntity.hpUIScale.y );
+        //this.hpFill.color = color;
     }
 
     public void OnAddSkill(SkillBase skillBase)

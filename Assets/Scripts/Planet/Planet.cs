@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Bolt;
 using Ludiq;
 using UnityEngine;
 
@@ -27,25 +28,60 @@ public class Planet : GameEntity
     public List<Player> allyPlayers = new List<Player>();
 
     [Header("PlanetUI")] public PlanetUI planetUi;
+
+    public Color planetColor;
     
    
-
-    // Start is called before the first frame update
+    
+    
     void Awake()
     {
         base.Awake();
+        
+        planetCommander = GetComponent<PlanetCommander>();
+        taskCenters = GetComponents<TaskCenter>();
+        
+        planetResContainer = GetComponent<PlanetResContainer>();
+        
+       
+        
+      
+        
+        //事件绑定
+        //任意玩家加入游戏均设置为自己的敌人，除非后期主动结盟
+        EventCenter.AddListener<Player>(EnumEventType.OnPlayerJoined,OnPlayerJoined);
+        
+        
+       
+    }
+
+   
+
+
+    public void Start()
+    {
+        base.Start();
+        hpUI.SetColor(planetColor);
+        foreach (var t in taskCenters)
+        {
+            t.Init(this);
+        }
+        
         PlanetConfig planetConfig = null;
         //PlanetConfigs
         planetConfigs = GetComponentsInChildren<PlanetConfig>().ToList();
         foreach (var p in planetConfigs)
         {
-            if(p.GameObject().name!=this.planetType){
+            if(p.gameObject.name!=planetType){
                 p.gameObject.SetActive(false);
                 
             }
             else
-            {
+            {   
+                
                 planetConfig = p;
+                continue;
+                
             }
         }//先隐藏所有的模型，由SetUp决定使用哪种星球后再显示
         if (planetConfig!=null)
@@ -60,44 +96,26 @@ public class Planet : GameEntity
                 canBeOwner = false;
             }
 
+            planetResContainer.allRes = planetConfig.allRes;
+
         }
         
-
-        planetCommander = GetComponent<PlanetCommander>();
-        planetResContainer = GetComponent<PlanetResContainer>();
-        taskCenters = GetComponents<TaskCenter>();
-        
-        
-        
-        foreach (var t in taskCenters)
+        //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_纸飞机",5)));
+        if (planetResContainer.GetResNumByType(ResourceType.Population) > 0)
         {
-            t.Init(this);
+            
         }
-        //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_纸飞机",5)));
-        AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_探索船",5)));
-        //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_纸飞机",5)));
         
-        //事件绑定
-        //任意玩家加入游戏均设置为自己的敌人，除非后期主动结盟
-        EventCenter.AddListener<Player>(EnumEventType.OnPlayerJoined,OnPlayerJoined);
-        
-        
-       
-    }
-
-    private void OnEnable()
-    {
         
         EventCenter.Broadcast(EnumEventType.OnPlanetCreated,this);
         planetUi = GameManager.Instance.uiManager.CreatePlanetUI(this);
         planetUi.Init(this);
+        
         //添加技能测试
         //SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
     }
-    
-    
-    
-    
+
+  
 
 
     void OnPlayerJoined(Player newPlayer)
@@ -109,16 +127,21 @@ public class Planet : GameEntity
         
     }
 
-    public void SetUpPlanet(string planetType)//在Awake前执行
+    public void SetUpPlanet(string targetPlanetType,Color color)//在Awake前执行
     {
-        this.planetType = planetType;
+        planetType = targetPlanetType;
         gameObject.SetActive(true);
+        planetColor = color;
     }
 
     //由fighingManager在玩家进入游戏时选择星球并占领
-    void SetOwner(Player player)
+    public void SetOwner(Player player)
     {
         this.owner = player;
+        planetUi.SetOwner(player);
+        AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_探索船",5)));
+        AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_战斗机",5)));
+        
     }
 
     private void OnDrawGizmos()

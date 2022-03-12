@@ -61,6 +61,8 @@ public class FightingManager : MonoBehaviour
        
         EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
         
+        EventCenter.AddListener(EnumEventType.OnPlanetsSpawned,SetOwners);
+        
         
         this.gameManager = gameManager;
         uiManager = gameManager.uiManager;
@@ -144,7 +146,25 @@ public class FightingManager : MonoBehaviour
             });
         }
         EventCenter.Broadcast(EnumEventType.OnBattleStart);
+        
+        
     }
+
+    //玩家占领星球
+    void SetOwners()
+    {
+        UnityTimer.Timer.Register(1, () =>
+        {
+            //玩家依次占领星球
+            for (int i = 0; i < players.Count; i++)
+            {
+                PlanetManager.Instance.allPlanets[i].SetOwner(players[i]);
+            }
+        });
+
+    }
+    
+    
 
     public Player GetPlayerByUid(int uid)
     {

@@ -2712,7 +2712,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnCloud: 0
-  canBeOwner: 0
+  canBeOwner: 1
+  allRes:
+  - resourceType: 0
+    resourceNum: 500
+  - resourceType: 1
+    resourceNum: 1000
+  - resourceType: 2
+    resourceNum: 0
 --- !u!1 &5125773805363645065
 GameObject:
   m_ObjectHideFlags: 0
@@ -2759,6 +2766,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnCloud: 0
   canBeOwner: 1
+  allRes:
+  - resourceType: 0
+    resourceNum: 1000
+  - resourceType: 1
+    resourceNum: 100
+  - resourceType: 2
+    resourceNum: 10
 --- !u!1 &5270162469231348198
 GameObject:
   m_ObjectHideFlags: 0
@@ -5464,7 +5478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5468216365159158751
 Transform:
   m_ObjectHideFlags: 0
@@ -5560,6 +5574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   props: {fileID: 0}
   skillContainer: {fileID: 0}
+  radius: 6.91
   hpUI: {fileID: 0}
   hpUIOffse: {x: 0, y: 30, z: 0}
   hpUIScale: {x: 2, y: 1, z: 1}
@@ -5567,7 +5582,6 @@ MonoBehaviour:
   planetType: 
   planetResContainer: {fileID: 0}
   canBeOwner: 0
-  radius: 6.91
   planetUi: {fileID: 0}
 --- !u!114 &5468216365159158745
 MonoBehaviour:
@@ -5628,6 +5642,7 @@ MonoBehaviour:
   hp: 100
   pDef: 50
   mDef: 50
+  gameEntity: {fileID: 0}
 --- !u!114 &5408354761403215820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6570,6 +6585,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnCloud: 0
   canBeOwner: 1
+  allRes:
+  - resourceType: 0
+    resourceNum: 1000
+  - resourceType: 1
+    resourceNum: 100
+  - resourceType: 2
+    resourceNum: 10
 --- !u!1 &8451639168634042825
 GameObject:
   m_ObjectHideFlags: 0
@@ -6695,6 +6717,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnCloud: 0
   canBeOwner: 1
+  allRes:
+  - resourceType: 0
+    resourceNum: 1000
+  - resourceType: 1
+    resourceNum: 100
+  - resourceType: 2
+    resourceNum: 10
 --- !u!1 &8451639168697794641
 GameObject:
   m_ObjectHideFlags: 0
@@ -6898,7 +6927,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnCloud: 0
-  canBeOwner: 0
+  canBeOwner: 1
+  allRes:
+  - resourceType: 0
+    resourceNum: 5000
+  - resourceType: 1
+    resourceNum: 0
+  - resourceType: 2
+    resourceNum: 0
 --- !u!1 &8451639169174404769
 GameObject:
   m_ObjectHideFlags: 0
@@ -6945,6 +6981,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnCloud: 0
   canBeOwner: 1
+  allRes:
+  - resourceType: 0
+    resourceNum: 1000
+  - resourceType: 1
+    resourceNum: 100
+  - resourceType: 2
+    resourceNum: 10
 --- !u!1 &8451639169280303627
 GameObject:
   m_ObjectHideFlags: 0
@@ -6990,7 +7033,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnCloud: 0
-  canBeOwner: 0
+  canBeOwner: 1
+  allRes:
+  - resourceType: 0
+    resourceNum: 10000
+  - resourceType: 1
+    resourceNum: 10000
+  - resourceType: 2
+    resourceNum: 0
 --- !u!1 &8451639169555734392
 GameObject:
   m_ObjectHideFlags: 0
@@ -7036,7 +7086,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnCloud: 0
-  canBeOwner: 0
+  canBeOwner: 1
+  allRes:
+  - resourceType: 0
+    resourceNum: 0
+  - resourceType: 1
+    resourceNum: 1000
+  - resourceType: 2
+    resourceNum: 0
 --- !u!1 &8451639169566274585
 GameObject:
   m_ObjectHideFlags: 0

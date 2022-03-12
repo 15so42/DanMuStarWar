@@ -48,6 +48,7 @@ public class BattleUnit : GameEntity
     protected void Start()
     {
        base.Start();
+       hpUI.SetColor(ownerPlanet.planetColor);
        SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
     }
 
@@ -66,7 +67,7 @@ public class BattleUnit : GameEntity
                
             }
         }
-
+        
         return enemy;
     }
 

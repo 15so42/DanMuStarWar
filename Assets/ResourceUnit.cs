@@ -13,7 +13,7 @@ public enum ResourceType
 public struct ResourceTable
 {
     public ResourceType resourceType;
-    public float resourceNum;
+    public int resourceNum;
 }
 public class ResourceUnit : MonoBehaviour
 {

@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlanetUI : MonoBehaviour
 {
+    public Transform playerArea;
+    public Image playerIcon;
+    public Text playerName;
+    
     public Vector3 offset=Vector3.up;
     
     private Planet owner;
@@ -20,6 +25,12 @@ public class PlanetUI : MonoBehaviour
         mainCamera=Camera.main;
     }
 
+    public void SetOwner(Player player)
+    {
+        playerArea.gameObject.SetActive(true);
+        playerIcon.sprite=player.faceIcon;
+        playerName.text = player.userName;
+    }
     
     //资源数量更新
     public void onResChanged(ResourceType resType, int num)

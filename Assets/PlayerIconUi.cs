@@ -20,6 +20,7 @@ public class PlayerIconUi : MonoBehaviour
 
     private FightingManager fightingManager;
 
+    
 
     public void Init(Player player)
     {
@@ -30,9 +31,10 @@ public class PlayerIconUi : MonoBehaviour
     public void OnPlayerJoined(Player player)
     {
         nickName.text = player.userName;
+        this.player = player;
         StartCoroutine(DownSprite(player.faceUrl, faceImg));
         
-        this.player = player;
+       
     }
     
     IEnumerator DownSprite(string url,Image image)
@@ -53,7 +55,7 @@ public class PlayerIconUi : MonoBehaviour
              
             Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
             image.sprite = sprite;
-            
+            player.faceIcon = sprite;//给player添加icon
         }
     }
 

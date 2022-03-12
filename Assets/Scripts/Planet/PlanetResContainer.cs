@@ -29,4 +29,9 @@ public class PlanetResContainer : MonoBehaviour
     {
         onResChanged += action;
     }
+
+    public int GetResNumByType(ResourceType resourceType)
+    {
+        return allRes.Find(x => x.resourceType == resourceType).resourceNum;
+    }
 }
