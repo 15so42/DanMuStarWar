@@ -49,7 +49,7 @@ public class BattleUnit : GameEntity
     {
        base.Start();
        hpUI.SetColor(ownerPlanet.planetColor);
-       SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
+       //SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
     }
 
     public BattleUnit FindNearEnemy()
@@ -59,7 +59,7 @@ public class BattleUnit : GameEntity
         {
             if (Vector3.Distance(unit.transform.position, transform.position) < findEnemyDistance)
             {
-                if (ownerPlanet.enemyPlayers.Contains(unit.ownerPlanet.owner))//敌对状态
+                if (ownerPlanet.enemyPlanets.Contains(unit.ownerPlanet))//敌对状态
                 {
                     enemy = unit;
                     break;

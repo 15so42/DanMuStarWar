@@ -1,9 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using BattleScene.Scripts;
 using UnityEngine;
 
 public class LineRenderManager : MonoBehaviour
 {
+    public static LineRenderManager Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     public GameObject lineRenderPfb;
 
     private GameObject parent;
@@ -19,9 +28,26 @@ public class LineRenderManager : MonoBehaviour
         
     }
 
-    public void SetLineRender(Vector3 startPos, Vector3 endPos)
+    public LineRenderer SetLineRender(Vector3 startPos, Vector3 endPos,GameObject pfb=null)
     {
-        GameObject lineRender=GameObject.Instantiate(lineRenderPfb,parent.transform);
-        lineRender.GetComponent<LineRenderer>().SetPositions(new[]{startPos,endPos});
+        if (pfb == null)
+            pfb = lineRenderPfb;
+        else
+        {
+            pfb = lineRenderPfb;
+        }
+
+        GameObject lineRenderGo = null;
+        RecycleAbleObject lineRender=UnityObjectPoolManager.Allocate(pfb.name);
+        if(lineRender==null)
+            lineRenderGo = GameObject.Instantiate(pfb,parent.transform);
+        else
+        {
+            lineRenderGo = lineRender.gameObject;
+        }
+        
+        var lr = lineRenderGo.GetComponent<LineRenderer>();
+        lr.SetPositions(new[]{startPos,endPos});
+        return lr;
     }
 }

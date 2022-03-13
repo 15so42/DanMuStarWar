@@ -8,7 +8,7 @@ public class Weapon : MonoBehaviour
 {
     public float attackDistance;
     public BattleUnit owner;
-    private LineRenderer lineRenderer;
+    
     
     //武器攻速计时
     public float attackSpeed = 1;
@@ -23,10 +23,12 @@ public class Weapon : MonoBehaviour
     [Header("伤害配置")] public AttackType attackType;
     
     public int attackValue = 1;
+    public GameObject lineRendererPfb;
     public void Init(BattleUnit owner)
     {
         this.owner = owner;
 
+        
         timer = 1 / attackSpeed;
     }
 
@@ -63,18 +65,20 @@ public class Weapon : MonoBehaviour
                 
             RaycastHit hitInfo=new RaycastHit();
             
-            if (Physics.Raycast(transform.position, newVec, rayDistance))
+            if (Physics.Raycast(transform.position, newVec,out hitInfo, rayDistance))
             {
                 var prop = hitInfo.collider.GetComponent<BattleUnitProps>();
                 if (prop)
                 {
                     prop.gameEntity.OnAttacked(new AttackInfo(attackType,attackValue));
                 }
-                lineRenderer.SetPositions(new Vector3[]{transform.position,hitInfo.point});
+                //lineRenderer.SetPositions(new Vector3[]{transform.position,hitInfo.point});
+                LineRenderManager.Instance.SetLineRender(transform.position, hitInfo.point, lineRendererPfb);
             }
             else
             {
-                lineRenderer.SetPositions(new Vector3[]{transform.position,transform.position+dir*rayDistance});
+                LineRenderManager.Instance.SetLineRender(transform.position, transform.position+dir*rayDistance, lineRendererPfb);
+                //lineRenderer.SetPositions(new Vector3[]{transform.position,transform.position+dir*rayDistance});
             }
         }
     }

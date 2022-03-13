@@ -26,13 +26,18 @@ public class Planet : GameEntity
     
     public List<Player> enemyPlayers=new List<Player>();
     public List<Player> allyPlayers = new List<Player>();
+    
+    public List<Planet> enemyPlanets=new List<Planet>();
 
     [Header("PlanetUI")] public PlanetUI planetUi;
 
     public Color planetColor;
     
-   
+    public Transform spawnPoint;
     
+   //LineRenders
+   public List<LineRenderer> enemyPlanetLines=new List<LineRenderer>();
+    private List<LineRenderer> lineRenderers=new List<LineRenderer>();
     
     void Awake()
     {
@@ -51,7 +56,7 @@ public class Planet : GameEntity
         //任意玩家加入游戏均设置为自己的敌人，除非后期主动结盟
         EventCenter.AddListener<Player>(EnumEventType.OnPlayerJoined,OnPlayerJoined);
         
-        
+        EventCenter.AddListener<Planet>(EnumEventType.OnPlanetCreated,OnPlayerCreated);
        
     }
 
@@ -113,14 +118,25 @@ public class Planet : GameEntity
         
         //添加技能测试
         //SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
+
+        foreach (var p in enemyPlanets)
+        {
+            //var lr=LineRenderManager.Instance.SetLineRender(transform.position, p.transform.position);
+            //lineRenderers.Add(lr);
+        }
     }
 
-  
+
+    void OnPlayerCreated(Planet planet)
+    {
+        if(this!=planet)
+            enemyPlanets.Add(planet);
+    }
 
 
     void OnPlayerJoined(Player newPlayer)
     {
-        if (owner!=null && newPlayer != owner)
+        if (newPlayer!=null && owner!=null && newPlayer != owner)
         {
             enemyPlayers.Add(newPlayer);//新加入的玩家被当作敌人
         }
@@ -146,7 +162,7 @@ public class Planet : GameEntity
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(transform.position,radius);
+        Gizmos.DrawWireSphere(transform.position,radius);
     }
 
     public Player GetOwner()

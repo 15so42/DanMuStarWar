@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac4e543d9fa1c6049a8ed5d5c74a36b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curSpeed: 2
+  curSpeed: 3.5
   maxSpeed: 10
   finalTarget: {x: 0, y: 0, z: 0}
   tmpTarget: {x: 0, y: 0, z: 0}
@@ -303,6 +303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   props: {fileID: 0}
   skillContainer: {fileID: 0}
+  radius: 5
   hpUI: {fileID: 0}
   hpUIOffse: {x: 0, y: 5, z: 0}
   hpUIScale: {x: 0.5, y: 1, z: 1}
@@ -311,6 +312,7 @@ MonoBehaviour:
   battleUnitManager: {fileID: 0}
   planetManager: {fileID: 0}
   findEnemyDistance: 7
+  chaseTarget: {fileID: 0}
   minePlanet: {fileID: 0}
 --- !u!114 &-8077825836562316991
 MonoBehaviour:
@@ -343,3 +345,4 @@ MonoBehaviour:
   hp: 100
   pDef: 50
   mDef: 50
+  gameEntity: {fileID: 0}

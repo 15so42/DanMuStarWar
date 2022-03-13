@@ -75,13 +75,13 @@ public class PlanetTask
 
             if (type == "BattleUnit")
             {
-               go=ResFactory.Instance.CreateBattleUnit(splitArr[1]);
+               go=ResFactory.Instance.CreateBattleUnit(splitArr[1],planet.spawnPoint.transform.position);
                InitBattleUnit(go.GetComponent<BattleUnit>());
             }
 
             if (type == "Bullet")
             {
-               go=ResFactory.Instance.CreateBullet(splitArr[1]);
+               go=ResFactory.Instance.CreateBullet(splitArr[1],Vector3.zero);
             }
                
             

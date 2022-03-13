@@ -22,18 +22,25 @@ namespace GameCode.Tools
             return go;
         }
 
-        public GameObject CreateBattleUnit(string name)
+        public GameObject CreateBattleUnit(string name,Vector3 pos)
         {
             GameObject go = InsByResLoad(battleUnitPath, name);
+            go.transform.position = pos;
             return go;
         }
 
-        public GameObject CreateBullet(string name)
+        public GameObject CreateBullet(string name,Vector3 pos)
         {
             RecycleAbleObject poolGo = UnityObjectPoolManager.Allocate(name);
             if (poolGo != null)
+            {
+                poolGo.transform.position = pos;
                 return poolGo.gameObject;
+                
+            }
+
             GameObject go = InsByResLoad(bulletPath, name);
+            go.transform.position = pos;
             return go;
         }
     }

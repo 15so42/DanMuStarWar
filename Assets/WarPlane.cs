@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,4 +25,8 @@ public class WarPlane : BattleUnit
       
    }
 
+   private void OnDrawGizmos()
+   {
+      Gizmos.DrawWireSphere(transform.position,findEnemyDistance);
+   }
 }

@@ -258,7 +258,7 @@ MonoBehaviour:
   lerpValue: 10
   planet: {fileID: 0}
   guardPos: {fileID: 0}
-  guardHeight: 4
+  guardHeight: 20
   autoRotate: 0
 --- !u!114 &3480640897934166587
 MonoBehaviour:
@@ -338,7 +338,6 @@ MonoBehaviour:
   props: {fileID: 0}
   skillContainer: {fileID: 0}
   radius: 5
-  entityColor: {r: 0, g: 0, b: 0, a: 0}
   hpUI: {fileID: 0}
   hpUIOffse: {x: 0, y: 5, z: 0}
   hpUIScale: {x: 0.5, y: 0, z: 0}
@@ -346,7 +345,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   battleUnitManager: {fileID: 0}
   planetManager: {fileID: 0}
-  findEnemyDistance: 7
+  findEnemyDistance: 300
   chaseTarget: {fileID: 0}
   weapons:
   - {fileID: 8620575627302575712}
@@ -491,13 +490,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5c05521744e134a954ab2448bd9685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDistance: 15
+  attackDistance: 300
   owner: {fileID: 0}
-  attackSpeed: 1
+  attackSpeed: 2
   scatteringAngel: 5
   rayDistance: 20
   attackType: 0
-  attackValue: 1
+  attackValue: 5
+  lineRendererPfb: {fileID: 2911532761280341683, guid: c497201a23cb24e48a947ff52f9caf98,
+    type: 3}
 --- !u!1 &8252288742481056575
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,7 +517,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &745514600799517738
 Transform:
   m_ObjectHideFlags: 0

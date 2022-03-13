@@ -5498,6 +5498,7 @@ Transform:
   - {fileID: 8451639169555734395}
   - {fileID: 8451639168687030176}
   - {fileID: 8451639168422833537}
+  - {fileID: 2248002857993935211}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5582,7 +5583,11 @@ MonoBehaviour:
   planetType: 
   planetResContainer: {fileID: 0}
   canBeOwner: 0
+  enemyPlanets: []
   planetUi: {fileID: 0}
+  planetColor: {r: 0, g: 0, b: 0, a: 0}
+  spawnPoint: {fileID: 2248002857993935211}
+  enemyPlanetLines: []
 --- !u!114 &5468216365159158745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5790,6 +5795,36 @@ MonoBehaviour:
   rotateSpeed: 10
   rotateDir: {x: 0, y: 0, z: 1}
   randomDir: 0
+--- !u!1 &7543440018270509650
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2248002857993935211}
+  m_Layer: 9
+  m_Name: SpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2248002857993935211
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7543440018270509650}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 14.59}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5468216365159158751}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8007947917677958802
 GameObject:
   m_ObjectHideFlags: 0
