@@ -157,12 +157,12 @@ public class Planet : GameEntity
     public void SetIndex(int index)
     {
         planetIndex = index;
-        planetUi.SetIndex(index);
+        planetUi.SetIndex(planetIndex);
     }
     void OnPlayerCreated(Planet planet)
     {
-        if(this!=planet)
-            enemyPlanets.Add(planet);
+        //if(this!=planet)
+            //enemyPlanets.Add(planet);
     }
 
 
@@ -188,6 +188,9 @@ public class Planet : GameEntity
         this.owner = player;
         planetUi.SetOwner(player);
         AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_探索船",5)));
+        AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_探索船",5)));
+        AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_战斗机",5)));
+        AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_战斗机",5)));
         AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_战斗机",5)));
         
     }

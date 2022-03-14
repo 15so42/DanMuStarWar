@@ -9,6 +9,7 @@ namespace GameCode.Tools
         public string planetPath="Prefab/Planet/";
         public string battleUnitPath="Prefab/BattleUnit/";
         public string bulletPath="Prefab/Bullet/";
+        public string fxPath = "Prefab/Fx/";
 
         GameObject InsByResLoad(string path, string name)
         {
@@ -40,6 +41,21 @@ namespace GameCode.Tools
             }
 
             GameObject go = InsByResLoad(bulletPath, name);
+            go.transform.position = pos;
+            return go;
+        }
+        
+        public GameObject CreateFx(string name,Vector3 pos)
+        {
+            RecycleAbleObject poolGo = UnityObjectPoolManager.Allocate(name);
+            if (poolGo != null)
+            {
+                poolGo.transform.position = pos;
+                return poolGo.gameObject;
+                
+            }
+
+            GameObject go = InsByResLoad(fxPath, name);
             go.transform.position = pos;
             return go;
         }

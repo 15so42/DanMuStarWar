@@ -27,6 +27,10 @@ public class DebugManager : MonoBehaviour
         {
             Time.timeScale = 1;
         }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Time.timeScale = 2;
+        }
         
         if (Input.GetKeyDown(KeyCode.G))
         {

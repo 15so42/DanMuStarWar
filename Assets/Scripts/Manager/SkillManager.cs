@@ -41,6 +41,10 @@ public class SkillManager : MonoBehaviour
     }
     public void AddSkill(string skillName, GameEntity target)
     {
+        if (target.AddSkillCheck(skillName)==false)//不能添加重复的，如果已经有了则刷新持续时间然后返回false
+        {
+            return;
+        }
         var skill = GetSkillInstance(skillName);
         skill.Init(target);
         var skillItemUi = GameObject.Instantiate(skillItemUiPfb).GetComponent<SkillItemUI>();

@@ -70,4 +70,9 @@ public abstract class GameEntity : MonoBehaviour
    
    }
 
+   public virtual bool AddSkillCheck(string skillName)
+   {
+      return skillContainer.AddSkillCheck(skillName);
+   }
+
 }

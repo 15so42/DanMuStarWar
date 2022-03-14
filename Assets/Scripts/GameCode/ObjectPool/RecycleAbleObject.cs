@@ -10,7 +10,7 @@ namespace BattleScene.Scripts
         public bool autoRecycle = false;
 
         private Timer recycleTimer;
-        void OnEnable()
+        public void OnEnable()
         {
             if (autoRecycle)
             {

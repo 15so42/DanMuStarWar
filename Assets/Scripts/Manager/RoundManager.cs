@@ -49,7 +49,7 @@ public class RoundManager : MonoBehaviour
 
     void ParseClaimWar(int uid,string trim)
     {
-        string pattern = @"^(宣战){1}(\d{4})$";
+        string pattern = @"^(宣战){1}(\d{1})$";
         if (Regex.IsMatch(trim, pattern))
         {
             Debug.Log("解析宣战命令:"+trim);
@@ -59,7 +59,7 @@ public class RoundManager : MonoBehaviour
             var victimPlanet = GetPlanetByIndex(enemyIndex);
 
             attckerPlanet.ClaimWar(victimPlanet);
-            victimPlanet.ClaimWar(victimPlanet);
+            victimPlanet.ClaimWar(attckerPlanet);
         }
     }
     

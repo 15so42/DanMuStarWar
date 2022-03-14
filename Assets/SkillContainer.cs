@@ -15,19 +15,26 @@ public class SkillContainer : MonoBehaviour
         this.gameEntity = gameEntity;
         
     }
+    
+    public virtual bool AddSkillCheck(string skillName)
+    {
+        var skill = skills.Find(x => x.skillName == skillName);
+        if (skill)
+        {
+            skill.ResetTimer();
+            //添加同名技能时 重置对应技能冷却时间
+            return false;
+
+        }
+
+        return true;
+    }
 
     //传入skillItem，生成技能之后对UI进行初始化
     
     public void AddSkill(SkillItemUI skillItemUi)
     {
-        var skill = skills.Find(x => x.skillName == skillItemUi.skillBase.skillName);
-        if (skill)
-        {
-            skill.ResetTimer();
-            //添加同名技能时 重置对应技能冷却时间
-            return ;
-            
-        }
+        
         skills.Add(skillItemUi.skillBase);
         //UI处理
         var trans = skillItemUi.transform;

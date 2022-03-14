@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,8 +22,9 @@ public class PlanetUI : MonoBehaviour
 
     public Transform skillGroupUI;
 
+    
     private Player player;
-    private int planetIndex;
+    public int planetIndex;
     public void SetIndex(int index)
     {
         this.planetIndex = index;
@@ -37,7 +39,7 @@ public class PlanetUI : MonoBehaviour
     {
         this.player = player;
         playerArea.gameObject.SetActive(true);
-        playerIcon.sprite=player.faceIcon;
+        //playerIcon.sprite=player.faceIcon;
         playerName.text = "["+planetIndex+"]"+player.userName;
     }
     

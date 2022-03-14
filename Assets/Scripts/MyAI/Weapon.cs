@@ -23,7 +23,7 @@ public class Weapon : MonoBehaviour
     [Header("伤害配置")] public AttackType attackType;
     
     public int attackValue = 1;
-    public GameObject lineRendererPfb;
+   
     public void Init(BattleUnit owner)
     {
         this.owner = owner;
@@ -55,7 +55,7 @@ public class Weapon : MonoBehaviour
     public void Fire()
     {
         var dir = owner.chaseTarget.transform.position - transform.position;
-        var distance = dir.sqrMagnitude;
+        var distance = Vector3.Distance(owner.chaseTarget.transform.position, transform.position);
         if ( distance< attackDistance)
         {
           
@@ -68,18 +68,30 @@ public class Weapon : MonoBehaviour
             if (Physics.Raycast(transform.position, newVec,out hitInfo, rayDistance))
             {
                 var prop = hitInfo.collider.GetComponent<BattleUnitProps>();
-                if (prop)
+                if (prop && prop.gameEntity!=owner)
                 {
-                    prop.gameEntity.OnAttacked(new AttackInfo(attackType,attackValue));
+                    prop.gameEntity.OnAttacked(new AttackInfo(owner,attackType,attackValue));
                 }
                 //lineRenderer.SetPositions(new Vector3[]{transform.position,hitInfo.point});
-                LineRenderManager.Instance.SetLineRender(transform.position, hitInfo.point, lineRendererPfb);
+                //LineRenderManager.Instance.SetLineRender(transform.position, hitInfo.point, lineRendererPfb);
+                FireFx(transform.position,hitInfo);
             }
             else
             {
-                LineRenderManager.Instance.SetLineRender(transform.position, transform.position+dir*rayDistance, lineRendererPfb);
+                //LineRenderManager.Instance.SetLineRender(transform.position, transform.position+dir*rayDistance, lineRendererPfb);
                 //lineRenderer.SetPositions(new Vector3[]{transform.position,transform.position+dir*rayDistance});
+                FireFx(transform.position,transform.position+dir*rayDistance);
             }
         }
+    }
+
+    public virtual void FireFx(Vector3 startPos,RaycastHit hitInfo)
+    {
+        FireFx(startPos,hitInfo.point);
+    }
+
+    public virtual void FireFx(Vector3 startPos, Vector3 endPos)
+    {
+       
     }
 }

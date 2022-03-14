@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Bolt;
 using Ludiq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [IncludeInSettings(true)]
 public class BattleUnit : GameEntity
@@ -41,7 +42,7 @@ public class BattleUnit : GameEntity
     protected void OnEnable()
     {
         
-        EventCenter.Broadcast(EnumEventType.OnBattleUnitCreated,this);
+        
 
     }
 
@@ -50,6 +51,8 @@ public class BattleUnit : GameEntity
        base.Start();
        hpUI.SetColor(ownerPlanet.planetColor);
        //SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
+       
+       EventCenter.Broadcast(EnumEventType.OnBattleUnitCreated,this);
     }
 
     public BattleUnit FindNearEnemy()
@@ -59,6 +62,8 @@ public class BattleUnit : GameEntity
         {
             foreach (var enemyUnit in planet.battleUnits)
             {
+                if(Random.RandomRange(0,2)>0)
+                    continue;
                 if (Vector3.Distance(enemyUnit.transform.position, transform.position) < findEnemyDistance)
                 {
                    

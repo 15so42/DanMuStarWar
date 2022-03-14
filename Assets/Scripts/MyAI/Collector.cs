@@ -7,7 +7,7 @@ public class Collector : BattleUnit
 {
    public Planet minePlanet;//采矿目标星球
 
- 
+   public GameObject scanFx;
    public Planet FindAnyResPlanet()
    {
       Planet ret = null;
@@ -24,6 +24,11 @@ public class Collector : BattleUnit
       }
 
       return ret;
+   }
+
+   public void UpdateScanFx()
+   {
+      scanFx.transform.up = transform.position-minePlanet.transform.position;
    }
 
    public  override void OnAttacked(AttackInfo attackInfo)
