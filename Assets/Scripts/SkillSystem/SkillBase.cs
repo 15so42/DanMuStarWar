@@ -7,29 +7,40 @@ public abstract class SkillBase : ScriptableObject
 {
     public string skillName;
     public Sprite icon;
+    [Header("是否是Buff")] public bool isBuff;
     
     public int cd;//冷却时间
-    [HideInInspector]private float timer = 0;
+    [HideInInspector]public float timer = 0;
 
     [Header("可使用次数,-1表示无限次")]
     public int life=-1;
 
+    public bool autoLife=true;
+
+    [Header("可堆叠层数")] public int stackAbleCount = 1;
+    [Header("被动技能，就绪后无需等待命令直接Act")]
     public bool passive;
 
     [HideInInspector]public GameEntity gameEntity;
     [HideInInspector]public bool ready = true;//主动节能是否准备完成
-    [HideInInspector]public bool finished = false;//技能是否完成
+    [HideInInspector]public bool finished = false;//技能是否完成,SkillContainer自动清除已经完成的技能和buff
     
     //事件
     public Action onFinished;
-    public Action<int> onLifeChanged;
+    public Action<int> onLifeChangedAction;
     public virtual void Init(GameEntity gameEntity)
     {
         timer = cd;
         this.gameEntity = gameEntity;
+        onLifeChangedAction += OnLifeChanged;
     }
 
-    //上层调用
+    public void ResetTimer()
+    {
+        timer = cd;
+    }
+
+    //上层调用，主动释放
     public virtual bool Use()
     {
         var errCode = PlayCheck();
@@ -42,7 +53,12 @@ public abstract class SkillBase : ScriptableObject
         return false;
     }
 
-    private ErrorCode PlayCheck()
+    public void ChangeLife(int newLife)
+    {
+        life = newLife;
+        onLifeChangedAction.Invoke(newLife);
+    }
+    public virtual ErrorCode PlayCheck()
     {
         if(finished)
             return null;
@@ -50,21 +66,30 @@ public abstract class SkillBase : ScriptableObject
         if(!ready)
             return new ErrorCode(ErrorType.Failure,"技能尚未准备好");
         Play();
+        if (autoLife)
+        {
+            ChangeLife(--life);
+        }
 
-        life--;
-        onLifeChanged?.Invoke(life);
+        
+        
+        return new ErrorCode(ErrorType.Success,"成功");
+    }
+
+    public void OnLifeChanged(int life)
+    {
         if (life == 0)
         {
-            finished = true;
             onFinished?.Invoke();
+            finished = true;
         }
         else
         {
             timer = cd;//重置冷却时间
             
         }
-        return new ErrorCode(ErrorType.Success,"成功");
     }
+    
 
     public float GetLeftCdRatio()
     {

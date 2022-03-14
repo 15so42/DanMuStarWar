@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 /// <summary>
@@ -34,6 +36,32 @@ public class RoundManager : MonoBehaviour
     {
         return players.Find(x => x.uid == uid);
     }
+
+    Planet GetPlantByPlayerUid(int uid)
+    {
+        return PlanetManager.Instance.allPlanets.Find(x => x.owner.uid == uid);
+    }
+
+    Planet GetPlanetByIndex(int index)
+    {
+        return PlanetManager.Instance.allPlanets[index];
+    }
+
+    void ParseClaimWar(int uid,string trim)
+    {
+        string pattern = @"^(宣战){1}(\d{4})$";
+        if (Regex.IsMatch(trim, pattern))
+        {
+            Debug.Log("解析宣战命令:"+trim);
+            int enemyIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
+
+            var attckerPlanet = GetPlantByPlayerUid(uid);
+            var victimPlanet = GetPlanetByIndex(enemyIndex);
+
+            attckerPlanet.ClaimWar(victimPlanet);
+            victimPlanet.ClaimWar(victimPlanet);
+        }
+    }
     
     //解析命令
     private void ParseCommand(int uid, string text)
@@ -43,6 +71,12 @@ public class RoundManager : MonoBehaviour
         {
             //局外人
             return;
+        }
+        var trim=Regex.Replace(text.Trim(), "\\s+", "");//去除所有空格
+        
+        if (text.StartsWith("宣战"))
+        {
+            ParseClaimWar(uid, trim);
         }
         
         

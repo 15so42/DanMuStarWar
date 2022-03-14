@@ -34,7 +34,7 @@ public class BattleUnit : GameEntity
 
     public bool IsTargetAlive()
     {
-        return chaseTarget != null && chaseTarget.IsAlive();
+        return chaseTarget != null && chaseTarget.IsAlive() && Vector3.Distance(chaseTarget.transform.position,transform.position)<findEnemyDistance;
     }
    
 
@@ -55,18 +55,21 @@ public class BattleUnit : GameEntity
     public BattleUnit FindNearEnemy()
     {
         BattleUnit enemy = null;
-        foreach (var unit in battleUnitManager.allBattleUnits)
+        foreach (var planet in ownerPlanet.enemyPlanets)
         {
-            if (Vector3.Distance(unit.transform.position, transform.position) < findEnemyDistance)
+            foreach (var enemyUnit in planet.battleUnits)
             {
-                if (ownerPlanet.enemyPlanets.Contains(unit.ownerPlanet))//敌对状态
+                if (Vector3.Distance(enemyUnit.transform.position, transform.position) < findEnemyDistance)
                 {
-                    enemy = unit;
-                    break;
-                }
+                   
+                        enemy = enemyUnit;
+                        break;
+                    
                
+                }
             }
         }
+       
         
         return enemy;
     }

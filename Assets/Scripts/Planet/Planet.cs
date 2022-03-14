@@ -10,6 +10,9 @@ using UnityEngine;
 
 public class Planet : GameEntity
 {
+
+    //星球序号，用于宣战结盟等操作
+    public int planetIndex = 0;
     [Header("Models")] 
     public List<PlanetConfig> planetConfigs;
 
@@ -35,9 +38,12 @@ public class Planet : GameEntity
     
     public Transform spawnPoint;
     
-   //LineRenders
-   public List<LineRenderer> enemyPlanetLines=new List<LineRenderer>();
+    //LineRenders
+    public List<LineRenderer> enemyPlanetLines=new List<LineRenderer>();
     private List<LineRenderer> lineRenderers=new List<LineRenderer>();
+    
+    //自己单位管理
+    public List<BattleUnit> battleUnits=new List<BattleUnit>();
     
     void Awake()
     {
@@ -56,11 +62,22 @@ public class Planet : GameEntity
         //任意玩家加入游戏均设置为自己的敌人，除非后期主动结盟
         EventCenter.AddListener<Player>(EnumEventType.OnPlayerJoined,OnPlayerJoined);
         
+        
         EventCenter.AddListener<Planet>(EnumEventType.OnPlanetCreated,OnPlayerCreated);
+        
+        EventCenter.AddListener<BattleUnit>(EnumEventType.OnBattleUnitCreated,OnBattleUnitCreated);
+        
+        
        
     }
 
-   
+    void OnBattleUnitCreated(BattleUnit battleUnit)
+    {
+        if (battleUnit.ownerPlanet == this)
+        {
+            battleUnits.Add(battleUnit);
+        }
+    }
 
 
     public void Start()
@@ -126,7 +143,22 @@ public class Planet : GameEntity
         }
     }
 
+    /// <summary>
+    /// 宣战
+    /// </summary>
+    /// <param name="planet"></param>
+    public void ClaimWar(Planet planet)
+    {
+        enemyPlanets.Add(planet);
+        enemyPlayers.Add(planet.owner);
+        LineRenderManager.Instance.SetLineRender(transform.position, planet.transform.position);
+    }
 
+    public void SetIndex(int index)
+    {
+        planetIndex = index;
+        planetUi.SetIndex(index);
+    }
     void OnPlayerCreated(Planet planet)
     {
         if(this!=planet)

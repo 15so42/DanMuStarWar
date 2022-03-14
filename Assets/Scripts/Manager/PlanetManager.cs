@@ -19,7 +19,10 @@ public class PlanetManager : MonoBehaviour
 
     void OnPlanetCreated(Planet planet)
     {
+        planet.SetIndex(allPlanets.Count);
         allPlanets.Add(planet);
+        
+       
         if (planet.canBeOwner)
         {
             ownerAblePlanets.Add(planet);

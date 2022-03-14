@@ -20,6 +20,14 @@ public class PlanetUI : MonoBehaviour
     public TMP_Text populationText;
 
     public Transform skillGroupUI;
+
+    private Player player;
+    private int planetIndex;
+    public void SetIndex(int index)
+    {
+        this.planetIndex = index;
+        //playerName.text = "["+index+"]"+player.userName;
+    }
     private void Awake()
     {
         mainCamera=Camera.main;
@@ -27,9 +35,10 @@ public class PlanetUI : MonoBehaviour
 
     public void SetOwner(Player player)
     {
+        this.player = player;
         playerArea.gameObject.SetActive(true);
         playerIcon.sprite=player.faceIcon;
-        playerName.text = player.userName;
+        playerName.text = "["+planetIndex+"]"+player.userName;
     }
     
     //资源数量更新

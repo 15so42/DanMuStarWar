@@ -50,7 +50,7 @@ public abstract class GameEntity : MonoBehaviour
 
    public abstract void LogTip(string tip);
    
-   public void OnAttacked(AttackInfo attackInfo)
+   public virtual void OnAttacked(AttackInfo attackInfo)
    {
       var hpValue = props.OnAttacked(attackInfo);
       OnHpChanged(hpValue,props.maxHp);

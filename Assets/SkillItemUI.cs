@@ -24,7 +24,7 @@ public class SkillItemUI : MonoBehaviour
         fill.fillAmount = 1;
         
         skillBase.onFinished += OnFinished;//技能完毕事件，技能使用完后对应Ui自毁
-        skillBase.onLifeChanged += OnLifeChanged;
+        skillBase.onLifeChangedAction += OnLifeChanged;
     }
 
     private void Update()
@@ -35,6 +35,7 @@ public class SkillItemUI : MonoBehaviour
     void OnFinished()
     {
         Destroy(gameObject);
+        
     }
 
     void OnLifeChanged(int life)

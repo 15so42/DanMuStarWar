@@ -16,8 +16,18 @@ public class SkillContainer : MonoBehaviour
         
     }
 
+    //传入skillItem，生成技能之后对UI进行初始化
+    
     public void AddSkill(SkillItemUI skillItemUi)
     {
+        var skill = skills.Find(x => x.skillName == skillItemUi.skillBase.skillName);
+        if (skill)
+        {
+            skill.ResetTimer();
+            //添加同名技能时 重置对应技能冷却时间
+            return ;
+            
+        }
         skills.Add(skillItemUi.skillBase);
         //UI处理
         var trans = skillItemUi.transform;

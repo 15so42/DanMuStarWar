@@ -11,6 +11,7 @@ public class SkillManager : MonoBehaviour
     [Header("出场自带技能")]
     public List<SkillBase> initSkill=new List<SkillBase>();
     public List<SkillBase> allSkill=new List<SkillBase>();
+    public List<BuffBase> allBuff=new List<BuffBase>();
 
     public GameObject skillItemUiPfb;
     private void Awake()
@@ -30,6 +31,14 @@ public class SkillManager : MonoBehaviour
         
     }
 
+    public void AddBuff(string buffName, GameEntity target)
+    {
+        var skill = GetBuffInstance(buffName);
+        skill.Init(target);
+        var skillItemUi = GameObject.Instantiate(skillItemUiPfb).GetComponent<SkillItemUI>();
+        skillItemUi.Init(skill);
+        target.AddSkill(skillItemUi);
+    }
     public void AddSkill(string skillName, GameEntity target)
     {
         var skill = GetSkillInstance(skillName);
@@ -44,5 +53,11 @@ public class SkillManager : MonoBehaviour
     {
         var skill = allSkill.Find(x => x.name == skillName);
         return Object.Instantiate(skill);
+    }
+
+    public BuffBase GetBuffInstance(string buffName)
+    {
+        var buff = allBuff.Find(x => x.name == buffName);
+        return Object.Instantiate(buff);
     }
 }
