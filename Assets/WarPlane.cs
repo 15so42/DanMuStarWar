@@ -34,6 +34,8 @@ public class WarPlane : BattleUnit
    {
       base.OnAttacked(attackInfo);
       //if(!chaseTarget)
+      var battleUnit = attackInfo.attacker as BattleUnit;
+      if( battleUnit != null && battleUnit.ownerPlanet!=ownerPlanet) 
          SetChaseTarget(attackInfo.attacker as BattleUnit);
    }
 

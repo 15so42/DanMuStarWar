@@ -2,10 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityTimer;
 
 public class PlanetResContainer : MonoBehaviour
 {
+    public float tickTime = 20;
+    private float timer=20;
     public List<ResourceTable> allRes=new List<ResourceTable>();
+
+    private void Start()
+    {
+        timer = tickTime;
+    }
 
     //Action
     public Action<ResourceType, int> onResChanged = null;
@@ -55,5 +63,22 @@ public class PlanetResContainer : MonoBehaviour
     public int GetResNumByType(ResourceType resourceType)
     {
         return allRes.Find(x => x.resourceType == resourceType).resourceNum;
+    }
+
+    /// <summary>
+    /// 科技，人口自增长
+    /// </summary>
+    void Update()
+    {
+        timer -= Time.deltaTime;
+        if (timer <= 0)
+        {
+            timer = tickTime;
+            var techRes = allRes.Find(x => x.resourceType == ResourceType.Tech);
+            techRes.resourceNum = (int)(techRes.resourceNum * 1.1);
+            
+            var populationRes = allRes.Find(x => x.resourceType == ResourceType.Population);
+            populationRes.resourceNum = (int)(populationRes.resourceNum * 1.1);
+        }
     }
 }

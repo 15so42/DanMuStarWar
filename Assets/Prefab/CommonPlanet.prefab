@@ -5579,7 +5579,7 @@ MonoBehaviour:
   hpUI: {fileID: 0}
   hpUIOffse: {x: 0, y: 30, z: 0}
   hpUIScale: {x: 2, y: 1, z: 1}
-  index: 0
+  planetIndex: 0
   planetConfigs: []
   planetType: 
   planetResContainer: {fileID: 0}
@@ -5602,6 +5602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd8994c074cc7ae4fb301e0741959e2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tickTime: 20
   allRes: []
 --- !u!114 &91232668481969524
 MonoBehaviour:

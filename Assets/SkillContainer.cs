@@ -41,7 +41,8 @@ public class SkillContainer : MonoBehaviour
         if (simpleSkillUI)
         {
             trans.SetParent(gameEntity.hpUI.skillUiGroup);
-            skillItemUi.transform.localScale=Vector3.one* 0.5f;
+            trans.gameObject.SetActive(false);
+            skillItemUi.transform.localScale=new Vector3(1,1,1);
             skillItemUi.lifeCount.enabled = false;
         }
         else
@@ -69,5 +70,13 @@ public class SkillContainer : MonoBehaviour
             }
         
         
+    }
+
+    public void SortSkill()
+    {
+       /* for (int i = 0; i < SkillItemUI; i++)
+        {
+            
+        }*/
     }
 }

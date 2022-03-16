@@ -134,7 +134,7 @@ public class Planet : GameEntity
         planetUi.Init(this);
         
         //添加技能测试
-        //SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
+        SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
 
         foreach (var p in enemyPlanets)
         {

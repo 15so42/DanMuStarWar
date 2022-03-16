@@ -50,9 +50,10 @@ public class BattleUnit : GameEntity
     {
        base.Start();
        hpUI.SetColor(ownerPlanet.planetColor);
-       //SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
+      
        
        EventCenter.Broadcast(EnumEventType.OnBattleUnitCreated,this);
+        SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
     }
 
     public BattleUnit FindNearEnemy()
