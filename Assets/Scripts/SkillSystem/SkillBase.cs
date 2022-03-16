@@ -5,6 +5,10 @@ using UnityEngine;
 
 public abstract class SkillBase : ScriptableObject
 {
+    //注入UI，用以排序，虽然有点打乱独立性，但是影响很小
+    [Header("注入UI用以排序")]
+    public SkillItemUI skillItemUi;//不用这个ui要实现排序太过复杂，只能这样了
+    
     public string skillName;
     public Sprite icon;
     [Header("是否是Buff")] public bool isBuff;
@@ -88,6 +92,11 @@ public abstract class SkillBase : ScriptableObject
             timer = cd;//重置冷却时间
             
         }
+    }
+
+    public void SetItemIndex(int index)
+    {
+        skillItemUi.skillIndex.text = index + "";
     }
     
 

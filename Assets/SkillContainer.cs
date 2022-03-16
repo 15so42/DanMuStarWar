@@ -36,6 +36,7 @@ public class SkillContainer : MonoBehaviour
     {
         
         skills.Add(skillItemUi.skillBase);
+        skillItemUi.skillBase.skillItemUi = skillItemUi;
         //UI处理
         var trans = skillItemUi.transform;
         if (simpleSkillUI)
@@ -66,17 +67,17 @@ public class SkillContainer : MonoBehaviour
                 else
                 {
                     skills[i].Update();
+                    skills[i].SetItemIndex(i);
                 }
             }
+            //删除无用技能，对技能重新排序
+            SortSkill();
         
         
     }
 
     public void SortSkill()
     {
-       /* for (int i = 0; i < SkillItemUI; i++)
-        {
-            
-        }*/
+        
     }
 }
