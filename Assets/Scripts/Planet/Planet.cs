@@ -5,7 +5,7 @@ using System.Linq;
 using Bolt;
 using Ludiq;
 using UnityEngine;
-
+using Random = UnityEngine.Random;
 
 
 public class Planet : GameEntity
@@ -134,7 +134,8 @@ public class Planet : GameEntity
         planetUi.Init(this);
         
         //添加技能测试
-        SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
+        var initSkills = SkillManager.Instance.initSkill;
+        SkillManager.Instance.AddSkill(initSkills[Random.Range(0,initSkills.Count)].skillName, this);
 
         foreach (var p in enemyPlanets)
         {
@@ -205,7 +206,7 @@ public class Planet : GameEntity
         return owner;
     }
 
-    private void AddTask(PlanetTask planetTask)
+    public void AddTask(PlanetTask planetTask)
     {
         taskCenters[0].AddTask(planetTask);
     }
@@ -224,5 +225,15 @@ public class Planet : GameEntity
         Debug.Log(tip);
     }
 
+
+    public void ChangeSkill(int index)
+    {
+        //skillContainer.ChangeSkill()
+    }
+
+    public void UseSkill(int index)
+    {
+        skillContainer.UseSkill(index);
+    }
     
 }

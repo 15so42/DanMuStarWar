@@ -53,17 +53,22 @@ public class BattleUnit : GameEntity
       
        
        EventCenter.Broadcast(EnumEventType.OnBattleUnitCreated,this);
-        SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
+        //SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
     }
 
-    public BattleUnit FindNearEnemy()
+    public BattleUnit FindNearEnemy(bool onlyEnemyPlanet)
     {
         BattleUnit enemy = null;
-        foreach (var planet in ownerPlanet.enemyPlanets)
+        var enemyPlanets = ownerPlanet.enemyPlanets;
+        if (!onlyEnemyPlanet)
+        {
+            enemyPlanets = PlanetManager.Instance.allPlanets;
+        }
+        foreach (var planet in enemyPlanets)
         {
             foreach (var enemyUnit in planet.battleUnits)
             {
-                if(Random.RandomRange(0,2)>0)
+                if(Random.RandomRange(0,10)>0)
                     continue;
                 if (Vector3.Distance(enemyUnit.transform.position, transform.position) < findEnemyDistance)
                 {

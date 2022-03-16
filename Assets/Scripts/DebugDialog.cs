@@ -18,6 +18,7 @@ public class DebugDialog : Dialog
 
     public string initName = "Player0";
     public int initUid = 336223980;
+    public int playerIndex = 0;
     
     public static void ShowDialog()
     {
@@ -35,6 +36,7 @@ public class DebugDialog : Dialog
             container.transform.localPosition=new Vector3(380,-206,0);
             initName = "Player1";
             initUid = 23204263;
+            playerIndex = 1;
         }
         else
         {
@@ -54,7 +56,7 @@ public class DebugDialog : Dialog
         submitButton.onClick.AddListener(() =>
         {
             var message = inputField.text;
-            DanMuReciver.Instance.SendFakeDanMu(initName,initUid,message);
+            DanMuReciver.Instance.SendFakeDanMu(initName,GameManager.Instance.fightingManager.players[playerIndex].uid,message);
         });
         
         upArrow.onClick.AddListener(() =>

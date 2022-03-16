@@ -7,11 +7,11 @@ public abstract class SkillBase : ScriptableObject
 {
     //注入UI，用以排序，虽然有点打乱独立性，但是影响很小
     [Header("注入UI用以排序")]
-    public SkillItemUI skillItemUi;//不用这个ui要实现排序太过复杂，只能这样了
+    [HideInInspector]public SkillItemUI skillItemUi;//不用这个ui要实现排序太过复杂，只能这样了
     
     public string skillName;
     public Sprite icon;
-    [Header("是否是Buff")] public bool isBuff;
+    [Header("是否是Buff[暂未使用]")] public bool isBuff;
     
     public int cd;//冷却时间
     [HideInInspector]public float timer = 0;
@@ -105,7 +105,7 @@ public abstract class SkillBase : ScriptableObject
         return (float) timer / cd;
     }
 
-    public virtual void Play()
+    protected virtual void Play()
     {
         
     }

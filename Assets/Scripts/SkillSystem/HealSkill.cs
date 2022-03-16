@@ -13,10 +13,11 @@ public class HealSkill : SkillBase
         prop=gameEntity.GetComponent<BattleUnitProps>();
     }
 
-    public override void Play()
+    protected override void Play()
     {
         base.Play();
         gameEntity.OnAttacked(new AttackInfo(gameEntity,AttackType.Real, healValue));
         //Debug.Log("治疗");
     }
+    
 }

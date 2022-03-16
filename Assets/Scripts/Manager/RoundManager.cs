@@ -63,6 +63,36 @@ public class RoundManager : MonoBehaviour
         }
     }
     
+    void ParseChangeSkill(int uid,string trim)
+    {
+        string pattern = @"^(换技能){1}(\d{1})$";
+        if (Regex.IsMatch(trim, pattern))
+        {
+            Debug.Log("解析换技能命令:"+trim);
+            int skillIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
+
+            var planet=GetPlantByPlayerUid(uid);
+            planet.ChangeSkill(skillIndex);
+            
+           
+        }
+    }
+    
+    void ParseUseSkill(int uid,string trim)
+    {
+        string pattern = @"^(使用技能){1}(\d{1})$";
+        if (Regex.IsMatch(trim, pattern))
+        {
+            Debug.Log("解析使用技能命令:"+trim);
+            int skillIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
+
+            var planet=GetPlantByPlayerUid(uid);
+            planet.UseSkill(skillIndex);
+            
+           
+        }
+    }
+    
     //解析命令
     private void ParseCommand(int uid, string text)
     {
@@ -77,6 +107,11 @@ public class RoundManager : MonoBehaviour
         if (text.StartsWith("宣战"))
         {
             ParseClaimWar(uid, trim);
+        }
+        
+        if (text.StartsWith("使用技能"))
+        {
+            ParseUseSkill(uid, trim);
         }
         
         

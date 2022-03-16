@@ -30,6 +30,11 @@ public class SkillContainer : MonoBehaviour
         return true;
     }
 
+    public void UseSkill(int index)
+    {
+        skills[index].PlayCheck();
+    }
+
     //传入skillItem，生成技能之后对UI进行初始化
     
     public void AddSkill(SkillItemUI skillItemUi)
