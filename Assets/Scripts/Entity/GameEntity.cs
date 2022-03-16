@@ -75,4 +75,13 @@ public abstract class GameEntity : MonoBehaviour
       return skillContainer.AddSkillCheck(skillName);
    }
 
+   public virtual void DieFx()
+   {
+      
+   }
+   public virtual void Die()
+   {
+      
+   }
+
 }

@@ -102,4 +102,12 @@ public class BattleUnit : GameEntity
     {
         Debug.Log(tip);
     }
+
+    public override void Die()
+    {
+        base.Die();
+        ownerPlanet.battleUnits.Remove(this);
+        DieFx();
+        Destroy(gameObject);
+    }
 }
