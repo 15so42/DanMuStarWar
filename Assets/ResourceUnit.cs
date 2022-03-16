@@ -10,7 +10,7 @@ public enum ResourceType
     Population,//人口，人口决定建造和生产速度。部分星球上有可获取人口(奴役太难听了）
 }
 [Serializable]
-public struct ResourceTable
+public class ResourceTable
 {
     public ResourceType resourceType;
     public int resourceNum;

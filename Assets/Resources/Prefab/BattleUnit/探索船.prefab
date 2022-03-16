@@ -5128,6 +5128,20 @@ MonoBehaviour:
   chaseTarget: {fileID: 0}
   minePlanet: {fileID: 0}
   scanFx: {fileID: 992889948948382102}
+  canCollectRes:
+  - resourceType: 0
+    resourceNum: 0
+  - resourceType: 1
+    resourceNum: 0
+  - resourceType: 2
+    resourceNum: 0
+  collectSpeeds:
+  - resourceType: 0
+    speed: 100
+  - resourceType: 1
+    speed: 10
+  - resourceType: 2
+    speed: 1
 --- !u!114 &-8077825836562316991
 MonoBehaviour:
   m_ObjectHideFlags: 0

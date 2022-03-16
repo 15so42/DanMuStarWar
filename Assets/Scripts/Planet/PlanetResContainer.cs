@@ -20,6 +20,28 @@ public class PlanetResContainer : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// add
+    /// </summary>
+    /// <param name="resTable"></param>
+    /// <param name="add"></param>
+    public void AddRes(ResourceType resourceType,int num)
+    {
+
+        ResourceTable resT = allRes.Find(x => x.resourceType == resourceType);
+        resT.resourceNum += num;
+        UpdateRes(resourceType,num);
+    }
+
+    public void ReduceRes(ResourceType resourceType, int num)
+    {
+        AddRes(resourceType,-1*num);
+    }
+    public void UpdateRes(ResourceType resourceType,int num)
+    {
+        
+        OnResChanged(resourceType,num);
+    }
     public void OnResChanged(ResourceType resType,int num)
     {
         onResChanged.Invoke(resType,num);

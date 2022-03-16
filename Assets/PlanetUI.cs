@@ -87,5 +87,6 @@ public class PlanetUI : MonoBehaviour
     {
         this.owner = planet;
         planet.planetResContainer.AddResChangeListener(onResChanged);
+        UpdateResUI();
     }
 }
