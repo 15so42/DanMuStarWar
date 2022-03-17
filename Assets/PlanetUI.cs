@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,11 +20,18 @@ public class PlanetUI : MonoBehaviour
     [Header("UiConfig")] public TMP_Text moneyText;
     public TMP_Text techText;
     public TMP_Text populationText;
+    [Header("骰子点数")]
+    public TMP_Text dicePointText;
+
 
     public Transform skillGroupUI;
 
+    public Transform msgBg;
+    public Text msgText;
+    
     
     private Player player;
+    [HideInInspector]
     public int planetIndex;
     public void SetIndex(int index)
     {
@@ -65,10 +73,22 @@ public class PlanetUI : MonoBehaviour
             {
                 populationText.text = t.resourceNum.ToString();
             }
+            //
+            if (t.resourceType == ResourceType.Tech)
+            {
+                populationText.text = "LV:"+owner.GetTechLevelByRes()+"";
+            }
+            if (t.resourceType == ResourceType.DicePoint)
+            {
+                dicePointText.text = t.resourceNum.ToString();
+            }
         }
+       
 
        
     }
+    
+    
 
    
 
@@ -88,5 +108,20 @@ public class PlanetUI : MonoBehaviour
         this.owner = planet;
         planet.planetResContainer.AddResChangeListener(onResChanged);
         UpdateResUI();
+    }
+
+    public void LogTip(string msg)
+    {
+        
+        msgBg.transform.localScale=Vector3.zero;
+        msgBg.gameObject.SetActive(true);
+        msgText.text = msg;
+
+        msgBg.transform.DOScale(Vector3.one, 1);
+        UnityTimer.Timer.Register(2, () =>
+        {
+            msgBg.gameObject.SetActive(false);
+        });
+
     }
 }

@@ -17,6 +17,8 @@ public  class GameConst
    //子弹
    public const string BULLET_NORMAL = "Bullet";
    
+   
+
    //FX
    public const string FX_BULLET_HIT = "BulletHitFx";
 }

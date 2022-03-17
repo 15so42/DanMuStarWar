@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Bolt;
+using GameCode.Tools;
 using UnityEngine;
 
 [RequireComponent(typeof(StateMachine))]
@@ -81,7 +82,8 @@ public abstract class GameEntity : MonoBehaviour
    }
    public virtual void Die()
    {
-      
+      ResFactory.Instance.CreateFx(GameConst.FX_BULLET_HIT, transform.position);
+      Destroy(gameObject);
    }
 
 }

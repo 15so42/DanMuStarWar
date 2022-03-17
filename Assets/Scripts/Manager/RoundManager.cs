@@ -93,6 +93,49 @@ public class RoundManager : MonoBehaviour
         }
     }
     
+    void ParseRemoveSkill(int uid,string trim)
+    {
+        string pattern = @"^(移除技能){1}(\d{1})$";
+        if (Regex.IsMatch(trim, pattern))
+        {
+            Debug.Log("解析移除技能命令:"+trim);
+            int skillIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
+
+            var planet=GetPlantByPlayerUid(uid);
+            planet.RemoveSkill(skillIndex);
+            
+           
+        }
+    }
+    
+    void ParseGetSkill(int uid,string trim)
+    {
+        string pattern = @"^(抽取技能)$";
+        if (Regex.IsMatch(trim, pattern))
+        {
+            Debug.Log("解析抽取技能命令:"+trim);
+           
+            var planet=GetPlantByPlayerUid(uid);
+            planet.GetSkill();
+            
+           
+        }
+    }
+    
+    void ParseShowSkillDesc(int uid,string trim)
+    {
+        string pattern = @"^(技能说明)$";
+        if (Regex.IsMatch(trim, pattern))
+        {
+            Debug.Log("解析查看技能说明命令:"+trim);
+           
+            var planet=GetPlantByPlayerUid(uid);
+            planet.skillContainer.ShowSkillDesc();
+
+
+        }
+    }
+    
     //解析命令
     private void ParseCommand(int uid, string text)
     {
@@ -112,6 +155,26 @@ public class RoundManager : MonoBehaviour
         if (text.StartsWith("使用技能"))
         {
             ParseUseSkill(uid, trim);
+        }
+        
+        if (text.StartsWith("换技能"))
+        {
+            ParseChangeSkill(uid, trim);
+        }
+        
+        if (text.StartsWith("移除技能"))
+        {
+            ParseRemoveSkill(uid, trim);
+        }
+        
+        if (text.StartsWith("抽取技能"))
+        {
+            ParseGetSkill(uid, trim);
+        }
+        
+        if (text.StartsWith("技能说明"))
+        {
+            ParseShowSkillDesc(uid, trim);
         }
         
         

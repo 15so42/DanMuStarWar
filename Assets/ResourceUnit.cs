@@ -8,6 +8,7 @@ public enum ResourceType
     Money,
     Tech,//决定生产队列等级
     Population,//人口，人口决定建造和生产速度。部分星球上有可获取人口(奴役太难听了）
+    DicePoint,//骰子点
 }
 [Serializable]
 public class ResourceTable

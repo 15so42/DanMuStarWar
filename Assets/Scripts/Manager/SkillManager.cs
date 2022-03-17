@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 //此类没有先后顺序影响，直接单例
 public class SkillManager : MonoBehaviour
@@ -12,6 +13,11 @@ public class SkillManager : MonoBehaviour
     public List<SkillBase> initSkill=new List<SkillBase>();
     public List<SkillBase> allSkill=new List<SkillBase>();
     public List<BuffBase> allBuff=new List<BuffBase>();
+    
+    public List<SkillBase> lv1Skill=new List<SkillBase>();
+    public List<SkillBase> lv2Skill=new List<SkillBase>();
+    public List<SkillBase> lv3SKill = new List<SkillBase>();
+    public List<SkillBase> lv4Skill = new List<SkillBase>();
 
     public GameObject skillItemUiPfb;
     private void Awake()
@@ -63,5 +69,29 @@ public class SkillManager : MonoBehaviour
     {
         var buff = allBuff.Find(x => x.name == buffName);
         return Object.Instantiate(buff);
+    }
+
+    
+    public List<SkillBase> GetSkillListByTech(int techLevel)
+    {
+        if (techLevel == 1)
+            return lv1Skill;
+        if (techLevel == 2)
+            return lv2Skill;
+        if (techLevel == 3)
+            return lv3SKill;
+        if (techLevel == 4)
+            return lv4Skill;
+        
+        
+        if (techLevel < 1)
+            return lv1Skill;
+        
+        return lv4Skill;
+    }
+    public SkillBase GetRandomSkillByTech(int techLevel)
+    {
+        var skillList = GetSkillListByTech(techLevel);
+        return skillList[Random.Range(0, skillList.Count)];
     }
 }

@@ -17,8 +17,8 @@ public class SkillItemUI : MonoBehaviour
     public TMP_Text lifeCount;
 
     public SkillBase skillBase;
-    
 
+    private UnityTimer.Timer showDescTimer;
     public void Init(SkillBase skillBase)
     {
         this.skillName.text = skillBase.skillName+"";
@@ -29,6 +29,16 @@ public class SkillItemUI : MonoBehaviour
         
         skillBase.onFinished += OnFinished;//技能完毕事件，技能使用完后对应Ui自毁
         skillBase.onLifeChangedAction += OnLifeChanged;
+    }
+
+    public void ShowSkillDesc()
+    {
+        var lastText = this.skillName.text;//记录之前的文字
+        this.skillName.text = this.skillBase.desc;
+        UnityTimer.Timer.Register(5, () =>
+        {
+            this.skillName.text = lastText;
+        });
     }
 
     public void UpdateIndex(int index)
@@ -51,5 +61,9 @@ public class SkillItemUI : MonoBehaviour
     {
         lifeCount.text = life.ToString();
     }
-    
+
+    private void OnDisable()
+    {
+        showDescTimer?.Cancel();
+    }
 }

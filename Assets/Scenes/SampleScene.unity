@@ -2113,17 +2113,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initSkill:
-  - {fileID: 11400000, guid: b0b6512f21cdbd242b84d7b233721e10, type: 2}
-  - {fileID: 11400000, guid: 855f2f1aff4615f43ad8993cee9275be, type: 2}
-  - {fileID: 11400000, guid: b77557278d31ac141bfac5533694a321, type: 2}
+  - {fileID: 11400000, guid: b00b5a252ff046e4f87d8b32bfdd39a1, type: 2}
+  - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
   allSkill:
-  - {fileID: 11400000, guid: b90669981f6aac24da8769b64ce6d897, type: 2}
   - {fileID: 11400000, guid: b0b6512f21cdbd242b84d7b233721e10, type: 2}
   - {fileID: 11400000, guid: 3c8612a6bdae19c46bcd654238bd9d58, type: 2}
-  - {fileID: 11400000, guid: 7bbecb9bfff21b54abd52cc432a4ad25, type: 2}
+  - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
+  - {fileID: 11400000, guid: b00b5a252ff046e4f87d8b32bfdd39a1, type: 2}
   - {fileID: 11400000, guid: 855f2f1aff4615f43ad8993cee9275be, type: 2}
+  - {fileID: 11400000, guid: 7bbecb9bfff21b54abd52cc432a4ad25, type: 2}
   - {fileID: 11400000, guid: b77557278d31ac141bfac5533694a321, type: 2}
+  - {fileID: 11400000, guid: b90669981f6aac24da8769b64ce6d897, type: 2}
   allBuff: []
+  lv1Skill:
+  - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
+  - {fileID: 11400000, guid: b00b5a252ff046e4f87d8b32bfdd39a1, type: 2}
+  - {fileID: 11400000, guid: b77557278d31ac141bfac5533694a321, type: 2}
+  lv2Skill:
+  - {fileID: 11400000, guid: 3c8612a6bdae19c46bcd654238bd9d58, type: 2}
+  - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
+  - {fileID: 11400000, guid: 855f2f1aff4615f43ad8993cee9275be, type: 2}
+  - {fileID: 11400000, guid: b0b6512f21cdbd242b84d7b233721e10, type: 2}
+  lv3SKill:
+  - {fileID: 11400000, guid: b0b6512f21cdbd242b84d7b233721e10, type: 2}
+  - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
+  - {fileID: 11400000, guid: b00b5a252ff046e4f87d8b32bfdd39a1, type: 2}
+  - {fileID: 11400000, guid: b0b6512f21cdbd242b84d7b233721e10, type: 2}
+  - {fileID: 11400000, guid: 855f2f1aff4615f43ad8993cee9275be, type: 2}
+  - {fileID: 11400000, guid: 7bbecb9bfff21b54abd52cc432a4ad25, type: 2}
+  - {fileID: 11400000, guid: b77557278d31ac141bfac5533694a321, type: 2}
+  lv4Skill:
+  - {fileID: 11400000, guid: b0b6512f21cdbd242b84d7b233721e10, type: 2}
+  - {fileID: 11400000, guid: b0b6512f21cdbd242b84d7b233721e10, type: 2}
+  - {fileID: 11400000, guid: 3c8612a6bdae19c46bcd654238bd9d58, type: 2}
+  - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
+  - {fileID: 11400000, guid: b00b5a252ff046e4f87d8b32bfdd39a1, type: 2}
+  - {fileID: 11400000, guid: 855f2f1aff4615f43ad8993cee9275be, type: 2}
+  - {fileID: 11400000, guid: 7bbecb9bfff21b54abd52cc432a4ad25, type: 2}
+  - {fileID: 11400000, guid: b77557278d31ac141bfac5533694a321, type: 2}
   skillItemUiPfb: {fileID: 1383040578392754508, guid: a4c3206efad44f94cb52038eaf681ef1,
     type: 3}
 --- !u!1 &1402390108

@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9ffd8c15d874474a90a8236162bffa8, type: 3}
-  m_Name: "Skill_\u56DE\u590D_LV1"
+  m_Script: {fileID: 11500000, guid: aa6bf9168f594a047b2cdc72986a41b8, type: 3}
+  m_Name: "Skill_\u6218\u6597\u673A_LV1"
   m_EditorClassIdentifier: 
-  skillName: "Skill_\u56DE\u590D_LV1"
-  icon: {fileID: 21300000, guid: ba0998b69bda33642b0aeccfb88745ef, type: 3}
+  desc: "\u751F\u4EA7\u6218\u6597\u673A"
+  skillItemUi: {fileID: 0}
+  skillName: "Skill_\u6218\u6597\u673A_LV1"
+  icon: {fileID: 21300000, guid: 23434dda1b009534c9816c9ccd998cdd, type: 3}
   isBuff: 0
   cd: 5
   timer: 0
@@ -22,6 +24,7 @@ MonoBehaviour:
   stackAbleCount: 1
   passive: 1
   gameEntity: {fileID: 0}
-  ready: 0
+  ready: 1
   finished: 0
-  healValue: 1
+  unitName: "BattleUnit_\u6218\u6597\u673A"
+  duration: 6

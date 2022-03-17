@@ -5135,12 +5135,16 @@ MonoBehaviour:
     resourceNum: 0
   - resourceType: 2
     resourceNum: 0
+  - resourceType: 3
+    resourceNum: 0
   collectSpeeds:
   - resourceType: 0
     speed: 100
   - resourceType: 1
-    speed: 10
+    speed: 1
   - resourceType: 2
+    speed: 1
+  - resourceType: 3
     speed: 1
 --- !u!114 &-8077825836562316991
 MonoBehaviour:

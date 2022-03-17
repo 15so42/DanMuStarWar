@@ -7,6 +7,7 @@ public class SkillContainer : MonoBehaviour
 {
     public List<SkillBase> skills=new List<SkillBase>();
 
+    private int maxSkillCount = 3;
     public bool simpleSkillUI = false;
     
     public GameEntity gameEntity;
@@ -34,6 +35,31 @@ public class SkillContainer : MonoBehaviour
     {
         skills[index].PlayCheck();
     }
+
+    public void ChangeSkill(int index)
+    {
+        skills[index].Kill();
+        int techLv = (gameEntity as Planet).GetTechLevelByRes();
+        AddRandomSkill(techLv);
+        
+    }
+
+    public void ShowSkillDesc()
+    {
+        for (int i = 0; i < skills.Count; i++)
+        {
+            skills[i].skillItemUi.ShowSkillDesc();
+        }
+    }
+  
+
+    public void AddRandomSkill(int techLevel)
+    {
+        var skillName = SkillManager.Instance.GetRandomSkillByTech(techLevel).skillName;
+        SkillManager.Instance.AddSkill(skillName,gameEntity);
+    }
+    
+    
 
     //传入skillItem，生成技能之后对UI进行初始化
     
@@ -84,5 +110,11 @@ public class SkillContainer : MonoBehaviour
     public void SortSkill()
     {
         
+    }
+
+    public void RemoveSkill(int index)
+    {
+        skills[index].Kill();
+        skills.RemoveAt(index);
     }
 }

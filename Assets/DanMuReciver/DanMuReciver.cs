@@ -48,11 +48,24 @@ public class DanMuReciver : MonoBehaviour
         string result = null;
         try
         {
+            /*Stream st = resp.GetResponseStream();
+            StreamReader sr = new StreamReader(st, Encoding.GetEncoding("UTF-8"));
+            txt = sr.ReadToEnd();
+            sr.Close();
+            st.Close();*/
+            
+            
             HttpWebResponse response = (HttpWebResponse) request.GetResponse();
-            using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+            Stream st = response.GetResponseStream();
+            StreamReader sr = new StreamReader(st, Encoding.UTF8);
+            result = sr.ReadToEnd();
+            sr.Close();
+            st.Close();
+            
+            /*using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
             {
                 result= reader.ReadToEnd();
-            }
+            }*/
         } catch (WebException wex)
         {
             if (wex != null)
@@ -128,10 +141,11 @@ public class DanMuReciver : MonoBehaviour
         while (true) { 
             SetRequest();
             string json = Response();
+            //string json = null;
 
             if (json == null)
             {
-               
+               yield return new WaitForSeconds(2);
                 //网络获取失败，跳过
                 continue;
             }

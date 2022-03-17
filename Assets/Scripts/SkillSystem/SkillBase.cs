@@ -5,6 +5,8 @@ using UnityEngine;
 
 public abstract class SkillBase : ScriptableObject
 {
+    [Header("描述")]
+    public string desc="无描述";
     //注入UI，用以排序，虽然有点打乱独立性，但是影响很小
     [Header("注入UI用以排序")]
     [HideInInspector]public SkillItemUI skillItemUi;//不用这个ui要实现排序太过复杂，只能这样了
@@ -122,6 +124,11 @@ public abstract class SkillBase : ScriptableObject
             }
             
         }
+    }
+
+    public virtual void Kill()
+    {
+        Destroy(this);
     }
 
 }

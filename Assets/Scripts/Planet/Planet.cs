@@ -44,6 +44,10 @@ public class Planet : GameEntity
     
     //自己单位管理
     public List<BattleUnit> battleUnits=new List<BattleUnit>();
+
+    [Header("移除技能需要的骰子点数")]
+    public int removeDicePoint = 2;
+    public int maxSkillCount = 3;
     
     void Awake()
     {
@@ -188,11 +192,12 @@ public class Planet : GameEntity
     {
         this.owner = player;
         planetUi.SetOwner(player);
-        AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_探索船",5)));
-        AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_探索船",5)));
-        AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_战斗机",5)));
-        AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_战斗机",5)));
-        AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_战斗机",5)));
+        //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_探索船",5)));
+        //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_探索船",5)));
+        //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_战斗机",5)));
+        //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_战斗机",5)));
+        //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_战斗机",5)));
+
         
     }
 
@@ -223,17 +228,68 @@ public class Planet : GameEntity
     public override void LogTip(string tip)
     {
         Debug.Log(tip);
+        planetUi.LogTip(tip);
     }
 
 
     public void ChangeSkill(int index)
     {
-        //skillContainer.ChangeSkill()
+        if (skillContainer.skills[index])
+        {
+            skillContainer.ChangeSkill(index);
+            planetResContainer.ReduceRes(ResourceType.Tech,2);
+        }
+        
     }
 
     public void UseSkill(int index)
     {
-        skillContainer.UseSkill(index);
+        if(skillContainer.skills[index])
+            skillContainer.UseSkill(index);
+    }
+
+    public int GetTechLevelByRes()
+    {
+        int techLevel = 1;
+        var techPoint= planetResContainer.GetResNumByType(ResourceType.Tech);
+        if (techPoint > 25)
+        {
+            techLevel = 2;
+        }
+        
+        if (techPoint > 125)
+            techLevel = 3;
+        
+        if (techPoint > 625)
+            techLevel = 4;
+        return techLevel;
+    }
+    public void GetSkill()
+    {
+        if (skillContainer.skills.Count >= maxSkillCount)
+        {
+            LogTip("技能栏位已满");
+            return;
+        }
+        skillContainer.AddRandomSkill(GetTechLevelByRes());
+        planetResContainer.ReduceRes(ResourceType.Tech,1);
+    }
+    
+    
+    
+    public void RemoveSkill(int index)
+    {
+        if(skillContainer.skills[index]==null)
+            return;
+        if (planetResContainer.GetResNumByType(ResourceType.DicePoint) > removeDicePoint)
+        {
+            skillContainer.RemoveSkill(index);
+        }
+        else
+        {
+            LogTip("移除技能所需点数不够");
+        }
+        
     }
     
 }
