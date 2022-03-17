@@ -237,7 +237,7 @@ public class Planet : GameEntity
         if (skillContainer.skills[index])
         {
             skillContainer.ChangeSkill(index);
-            planetResContainer.ReduceRes(ResourceType.Tech,2);
+            planetResContainer.ReduceRes(ResourceType.DicePoint,2);
         }
         
     }
@@ -252,15 +252,15 @@ public class Planet : GameEntity
     {
         int techLevel = 1;
         var techPoint= planetResContainer.GetResNumByType(ResourceType.Tech);
-        if (techPoint > 25)
+        if (techPoint > 100)
         {
             techLevel = 2;
         }
         
-        if (techPoint > 125)
+        if (techPoint > 500)
             techLevel = 3;
         
-        if (techPoint > 625)
+        if (techPoint > 2500)
             techLevel = 4;
         return techLevel;
     }
@@ -272,7 +272,7 @@ public class Planet : GameEntity
             return;
         }
         skillContainer.AddRandomSkill(GetTechLevelByRes());
-        planetResContainer.ReduceRes(ResourceType.Tech,1);
+        planetResContainer.ReduceRes(ResourceType.DicePoint,1);
     }
     
     
@@ -284,6 +284,7 @@ public class Planet : GameEntity
         if (planetResContainer.GetResNumByType(ResourceType.DicePoint) > removeDicePoint)
         {
             skillContainer.RemoveSkill(index);
+            planetResContainer.ReduceRes(ResourceType.DicePoint,1);
         }
         else
         {
@@ -291,5 +292,20 @@ public class Planet : GameEntity
         }
         
     }
-    
+
+    public override void Die()
+    {
+        base.Die();
+        for (int i = 0; i < battleUnits.Count; i++)
+        {
+            battleUnits[i].Die();
+        }
+        EventCenter.Broadcast(EnumEventType.OnPlanetDie,this);
+        //Destroy(gameObject);
+        
+        Destroy(hpUI.gameObject);
+        Destroy(planetUi.gameObject);
+        gameObject.SetActive(false);
+       
+    }
 }

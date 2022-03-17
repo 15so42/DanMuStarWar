@@ -16,7 +16,7 @@ public class HealSkill : SkillBase
     protected override void Play()
     {
         base.Play();
-        gameEntity.OnAttacked(new AttackInfo(gameEntity,AttackType.Real, healValue));
+        gameEntity.OnAttacked(new AttackInfo(gameEntity,AttackType.Heal, healValue));
         //Debug.Log("治疗");
     }
     

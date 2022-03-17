@@ -5,7 +5,8 @@ using UnityEngine;
 public enum AttackType{
     Physics,
     Magic,
-    Real
+    Real,
+    Heal
 }
 public class AttackInfo
 {

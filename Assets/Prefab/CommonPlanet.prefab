@@ -2717,7 +2717,7 @@ MonoBehaviour:
   - resourceType: 0
     resourceNum: 500
   - resourceType: 1
-    resourceNum: 1000
+    resourceNum: 20
   - resourceType: 2
     resourceNum: 0
   - resourceType: 3
@@ -2772,7 +2772,7 @@ MonoBehaviour:
   - resourceType: 0
     resourceNum: 1000
   - resourceType: 1
-    resourceNum: 100
+    resourceNum: 10
   - resourceType: 2
     resourceNum: 10
   - resourceType: 3
@@ -5580,6 +5580,7 @@ MonoBehaviour:
   props: {fileID: 0}
   skillContainer: {fileID: 0}
   radius: 6.91
+  die: 0
   hpUI: {fileID: 0}
   hpUIOffse: {x: 0, y: 30, z: 0}
   hpUIScale: {x: 2, y: 1, z: 1}
@@ -5594,6 +5595,8 @@ MonoBehaviour:
   spawnPoint: {fileID: 2248002857993935211}
   enemyPlanetLines: []
   battleUnits: []
+  removeDicePoint: 2
+  maxSkillCount: 3
 --- !u!114 &5468216365159158745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6631,7 +6634,7 @@ MonoBehaviour:
   - resourceType: 0
     resourceNum: 1000
   - resourceType: 1
-    resourceNum: 100
+    resourceNum: 15
   - resourceType: 2
     resourceNum: 10
   - resourceType: 3
@@ -6765,7 +6768,7 @@ MonoBehaviour:
   - resourceType: 0
     resourceNum: 1000
   - resourceType: 1
-    resourceNum: 100
+    resourceNum: 15
   - resourceType: 2
     resourceNum: 10
   - resourceType: 3
@@ -6978,7 +6981,7 @@ MonoBehaviour:
   - resourceType: 0
     resourceNum: 5000
   - resourceType: 1
-    resourceNum: 0
+    resourceNum: 10
   - resourceType: 2
     resourceNum: 0
   - resourceType: 3
@@ -7033,7 +7036,7 @@ MonoBehaviour:
   - resourceType: 0
     resourceNum: 1000
   - resourceType: 1
-    resourceNum: 100
+    resourceNum: 20
   - resourceType: 2
     resourceNum: 10
   - resourceType: 3
@@ -7088,7 +7091,7 @@ MonoBehaviour:
   - resourceType: 0
     resourceNum: 10000
   - resourceType: 1
-    resourceNum: 10000
+    resourceNum: 2000
   - resourceType: 2
     resourceNum: 0
   - resourceType: 3

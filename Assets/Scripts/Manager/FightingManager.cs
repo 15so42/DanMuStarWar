@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Timers;
+using Ludiq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -29,7 +30,7 @@ public class PlayerStatus
 
 public class FightingManager : MonoBehaviour
 {
-    
+    public static FightingManager Instance;
 
     public List<Player> players=new List<Player>();
     public int maxPlayerCount = 8;
@@ -53,6 +54,9 @@ public class FightingManager : MonoBehaviour
 
     private UnityTimer.Timer waitingJoinTimer = null;
 
+    [Header("重启对局时清除星球和单位")] public GameObject planetRoot;
+    public GameObject battleUnitRoot;
+
     public void Init(GameManager gameManager)
     {
         
@@ -68,7 +72,8 @@ public class FightingManager : MonoBehaviour
         uiManager = gameManager.uiManager;
         
         StartWaitingJoin();
-        
+        Instance = this;
+
     }
 
     void StartWaitingJoin()
@@ -79,6 +84,7 @@ public class FightingManager : MonoBehaviour
         {
             uiManager.UpdateWaitingJoinUI(time);
         });
+        EventCenter.Broadcast(EnumEventType.OnStartWaitingJoin);
     }
     
     public Dictionary<int,PlayerStatus> playerStatusTable=new Dictionary<int, PlayerStatus>(){};
@@ -126,7 +132,7 @@ public class FightingManager : MonoBehaviour
         
         foreach (var p in gameManager.planetManager.allPlanets)
         {
-            MPCamera.AddTarget(p.transform);
+            //MPCamera.AddTarget(p.transform);
             center += p.transform.position;
         }
         MPCamera.BeginAnim();
@@ -238,13 +244,7 @@ public class FightingManager : MonoBehaviour
         }
     }
 
-    void PlaceInitChess()
-    {
-        //foreach (var team in teams)
-        //{
-        //    team.PlaceInitChess(GameManager.Instance);
-        //}
-    }
+    
     /// <summary>
     /// 对局结束
     /// </summary>
@@ -280,11 +280,27 @@ public class FightingManager : MonoBehaviour
         players.Clear();
         uiManager.ResetUi();
         roundManager = null;
+        playerStatusTable.Clear();
         
-        PlaceInitChess();
+        mapManager.Init(this);
+
+        // var planets = planetRoot.GetComponentsInChildren<Transform>();
+        // for (int i = 0; i < planets.Length; i++)
+        // {
+        //     Destroy(planets[i].gameObject);
+        // }
+        //
+        // var units = battleUnitRoot.GetComponentsInChildren<Transform>();
+        // for (int i = 0; i < units.Length; i++)
+        // {
+        //     Destroy(units[i].gameObject);
+        // }
+        
+        
+        StartWaitingJoin();
 
         gameStatus = GameStatus.WaitingJoin;
-        TipsDialog.ShowDialog("✪ ω ✪棋盘初始化完成,输入加入游戏即可游玩",null);
+        TipsDialog.ShowDialog("初始化完成，等待加入游戏",null);
 
     }
     
@@ -317,6 +333,11 @@ public class FightingManager : MonoBehaviour
             }
         }
         
-    }  
+    }
+
+    public void GameOver(Planet planet)
+    {
+        BattleOverDialog.ShowDialog(15,planet.owner,StartNewBattle);
+    }
 }
 

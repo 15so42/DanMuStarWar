@@ -23,7 +23,7 @@ public class RoundManager : MonoBehaviour
     /// </summary>
     public void Stop()
     {
-        
+        EventCenter.RemoveListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
     }
 
     private void OnDanMuReceived(string userName,int uid,string time,string text)
@@ -179,4 +179,6 @@ public class RoundManager : MonoBehaviour
         
         
     }
+
+    
 }

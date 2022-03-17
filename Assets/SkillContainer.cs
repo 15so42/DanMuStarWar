@@ -55,7 +55,7 @@ public class SkillContainer : MonoBehaviour
 
     public void AddRandomSkill(int techLevel)
     {
-        var skillName = SkillManager.Instance.GetRandomSkillByTech(techLevel).skillName;
+        var skillName = SkillManager.Instance.GetRandomSkillByTech(techLevel,skills).skillName;
         SkillManager.Instance.AddSkill(skillName,gameEntity);
     }
     
@@ -115,6 +115,7 @@ public class SkillContainer : MonoBehaviour
     public void RemoveSkill(int index)
     {
         skills[index].Kill();
+        
         skills.RemoveAt(index);
     }
 }

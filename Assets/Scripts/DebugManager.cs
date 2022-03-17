@@ -36,6 +36,11 @@ public class DebugManager : MonoBehaviour
         {
             BattleOverDialog.ShowDialog(15,new Player(1,"云上空", "ss","ss"),null );
         }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            PlanetManager.Instance.BattleOverByAdmin();
+        }
         
         
     }

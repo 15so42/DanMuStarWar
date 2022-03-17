@@ -21,6 +21,8 @@ public class BattleUnit : GameEntity
 
     public float findEnemyDistance = 7;
     public GameEntity chaseTarget = null;
+
+    
     protected void Awake()
     {
         base.Awake();
@@ -31,6 +33,7 @@ public class BattleUnit : GameEntity
         gameManager=GameManager.Instance;
         planetManager = gameManager.planetManager;
         battleUnitManager = gameManager.battleUnitManager;
+       
     }
 
     public bool IsTargetAlive()
@@ -56,9 +59,9 @@ public class BattleUnit : GameEntity
         //SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
     }
 
-    public BattleUnit FindNearEnemy(bool onlyEnemyPlanet)
+    public GameEntity FindNearEnemy(bool onlyEnemyPlanet)
     {
-        BattleUnit enemy = null;
+        GameEntity enemy = null;
         var enemyPlanets = ownerPlanet.enemyPlanets;
         if (!onlyEnemyPlanet)
         {
@@ -68,7 +71,7 @@ public class BattleUnit : GameEntity
         {
             foreach (var enemyUnit in planet.battleUnits)
             {
-                if(Random.RandomRange(0,10)>0)
+                if(Random.Range(0,planet.battleUnits.Count)>0)
                     continue;
                 if (Vector3.Distance(enemyUnit.transform.position, transform.position) < findEnemyDistance)
                 {
@@ -79,7 +82,15 @@ public class BattleUnit : GameEntity
                
                 }
             }
+
+            if (Random.Range(0, enemyPlanets.Count) > 0)
+            {
+                continue;
+            }
+
+            enemy = planet;
         }
+
        
         
         return enemy;
@@ -106,8 +117,14 @@ public class BattleUnit : GameEntity
     public override void Die()
     {
         base.Die();
+        stateMachine.enabled = false;
         ownerPlanet.battleUnits.Remove(this);
         DieFx();
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        
+        Destroy(hpUI.gameObject);
+        
+        gameObject.SetActive(false);
+        
     }
 }

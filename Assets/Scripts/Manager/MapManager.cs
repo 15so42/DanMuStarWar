@@ -38,7 +38,10 @@ public class MapManager : MonoBehaviour
     public int playerPlanetNum=6;
     public int resPlanetNum = 3;
     public ColorTable colorTable;
-    
+
+
+    [Header("存放位置")] public Transform planetRoot;
+    //public Transform battleUnitRoot;
    
     
     //分格子放星球
@@ -49,11 +52,12 @@ public class MapManager : MonoBehaviour
        
         
         grids=new string[zNum,xNum];
+        SpawnStones();
     }
 
     public void PlaceAll()
     {
-        SpawnStones();
+        
         SpawnAllPlanets();
     }
 
@@ -94,6 +98,7 @@ public class MapManager : MonoBehaviour
     void SpawnPlanets(string[] planetsName,int planetNum)
     {
         var empty=new GameObject("planets");
+        empty.transform.SetParent(planetRoot);
         for (int i = 0; i < planetNum; i++)
         {
             var pfb = planets[Random.Range(0, planets.Length)];

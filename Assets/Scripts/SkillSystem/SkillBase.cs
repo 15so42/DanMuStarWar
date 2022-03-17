@@ -128,6 +128,7 @@ public abstract class SkillBase : ScriptableObject
 
     public virtual void Kill()
     {
+        skillItemUi.Kill();
         Destroy(this);
     }
 

@@ -53,8 +53,14 @@ public class SkillItemUI : MonoBehaviour
 
     void OnFinished()
     {
-        Destroy(gameObject);
+        if(gameObject)
+            Destroy(gameObject);
         
+    }
+
+    public void Kill()
+    {
+        Destroy(gameObject);
     }
 
     void OnLifeChanged(int life)

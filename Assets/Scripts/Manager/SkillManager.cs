@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
@@ -89,9 +90,15 @@ public class SkillManager : MonoBehaviour
         
         return lv4Skill;
     }
-    public SkillBase GetRandomSkillByTech(int techLevel)
+    public SkillBase GetRandomSkillByTech(int techLevel,List<SkillBase> skills)
     {
         var skillList = GetSkillListByTech(techLevel);
-        return skillList[Random.Range(0, skillList.Count)];
+        var tSkill=skillList[Random.Range(0, skillList.Count)];
+        while (skills.Find(x => x.skillName == tSkill.skillName) != null)//找到的是同名技能
+        {
+            tSkill=skillList[Random.Range(0, skillList.Count)];
+        }
+
+        return tSkill;
     }
 }

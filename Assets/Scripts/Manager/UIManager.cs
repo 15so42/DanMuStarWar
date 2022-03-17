@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
 
    public void ResetUi()
    {
+      waitingJoinUi.gameObject.SetActive(true);
+      waitingJoinUi.ResetUi();
       Debug.Log("ResetUI待实现");
    }
 

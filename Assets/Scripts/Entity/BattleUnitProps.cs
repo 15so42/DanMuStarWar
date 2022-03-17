@@ -32,8 +32,17 @@ public class BattleUnitProps : MonoBehaviour
         {
             damage = attackInfo.value;
         }
+        
+        if (attackInfo.attackType == AttackType.Heal)
+        {
+            damage = -1 * attackInfo.value;
+        }
 
         hp -= damage;
+        if (hp > maxHp)
+            hp = maxHp;
+
+       
         return hp;
     }
 

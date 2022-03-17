@@ -28,8 +28,8 @@ public class PlanetUI : MonoBehaviour
 
     public Transform msgBg;
     public Text msgText;
-    
-    
+
+    private Sequence sequence;
     private Player player;
     [HideInInspector]
     public int planetIndex;
@@ -65,10 +65,7 @@ public class PlanetUI : MonoBehaviour
             {
                 moneyText.text = t.resourceNum.ToString();
             }
-            if (t.resourceType == ResourceType.Tech)
-            {
-                techText.text = t.resourceNum.ToString();
-            }
+            
             if (t.resourceType == ResourceType.Population)
             {
                 populationText.text = t.resourceNum.ToString();
@@ -76,7 +73,7 @@ public class PlanetUI : MonoBehaviour
             //
             if (t.resourceType == ResourceType.Tech)
             {
-                populationText.text = "LV:"+owner.GetTechLevelByRes()+"";
+                techText.text = t.resourceNum+"["+owner.GetTechLevelByRes()+"]";
             }
             if (t.resourceType == ResourceType.DicePoint)
             {
@@ -116,8 +113,10 @@ public class PlanetUI : MonoBehaviour
         msgBg.transform.localScale=Vector3.zero;
         msgBg.gameObject.SetActive(true);
         msgText.text = msg;
-
-        msgBg.transform.DOScale(Vector3.one, 1);
+        
+        sequence?.Kill();
+        
+        sequence?.Append(msgBg.transform.DOScale(Vector3.one, 1));
         UnityTimer.Timer.Register(2, () =>
         {
             msgBg.gameObject.SetActive(false);

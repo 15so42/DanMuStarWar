@@ -19,6 +19,17 @@ public class WaitingJoinUI : MonoBehaviour
       EventCenter.AddListener(EnumEventType.OnBattleStart,OnBattleStarted);
    }
 
+   public void ResetUi()
+   {
+      var maxPlayer = PlanetManager.Instance.ownerAblePlanets.Count;
+      playerNumText.text = "等待玩家加入中[0"+"/"+maxPlayer+"]";
+      var children = playerGroupTrans.GetComponentsInChildren<Transform>();
+      for (int i = 0; i < children.Length; i++)
+      {
+         Destroy(children[i].gameObject);
+      }
+   }
+
    private void Start()
    {
       countDownMaxTime = GameManager.Instance.fightingManager.waitingJoinSecond;
