@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Networking;
 
 
 public class DanMuReciver : MonoBehaviour
@@ -22,7 +23,7 @@ public class DanMuReciver : MonoBehaviour
 
     //弹幕接收器
     string url = "https://api.live.bilibili.com/xlive/web-room/v1/dM/gethistory?roomid=880235";
-    HttpWebRequest request;
+    UnityWebRequest request;
 
 
     //全局变量
@@ -36,10 +37,12 @@ public class DanMuReciver : MonoBehaviour
 
     public void SetRequest()
     {
-        request = (HttpWebRequest)WebRequest.Create(url);
-        request.Method = "GET";
-        request.Accept = "application/json, text/javascript, */*; q=0.01";
-        request.ContentType = "application/x-www-form-urlencoded;charset=UTF-8";
+        //request = (HttpWebRequest)WebRequest.Create(url);
+        //request.Method = "GET";
+        //request.Accept = "application/json, text/javascript, */*; q=0.01";
+        //request.ContentType = "application/x-www-form-urlencoded;charset=UTF-8";
+        
+        request = UnityWebRequest.Get(url);
     }
 
     private UnityTimer.Timer reconnectTimer;
@@ -55,12 +58,12 @@ public class DanMuReciver : MonoBehaviour
             st.Close();*/
             
             
-            HttpWebResponse response = (HttpWebResponse) request.GetResponse();
+           /* HttpWebResponse response = (HttpWebResponse) request.GetResponse();
             Stream st = response.GetResponseStream();
             StreamReader sr = new StreamReader(st, Encoding.UTF8);
             result = sr.ReadToEnd();
             sr.Close();
-            st.Close();
+            st.Close();*/
             
             /*using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
             {
@@ -140,7 +143,23 @@ public class DanMuReciver : MonoBehaviour
     {
         while (true) { 
             SetRequest();
-            string json = Response();
+            yield return request.SendWebRequest();
+            
+            if(request.isNetworkError || request.isHttpError) {
+                Debug.LogError(request.error);
+            }
+            else
+            {
+                var json = request.downloadHandler.text;
+               
+                ResponseResult ret = JsonMapper.ToObject<ResponseResult>(json);
+
+                ParseDanMu(ret);
+            }
+            
+            
+            
+            /*string json = Response();
             //string json = null;
 
             if (json == null)
@@ -157,7 +176,7 @@ public class DanMuReciver : MonoBehaviour
 
             ParseDanMu(ret);
             
-            yield return new WaitForSeconds(tickInterval);
+            yield return new WaitForSeconds(tickInterval);*/
         }
     }
 
