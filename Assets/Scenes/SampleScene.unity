@@ -427,6 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96433212ffaea9a4e879be3352490e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveDataHelper: {fileID: 11400000, guid: 3437982f7aa0a0944bcd76f8277b828d, type: 2}
   lastMessageStrList: []
   tickInterval: 2
   debugMode: 0
@@ -900,13 +901,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc26ce551d1c27408643af3eacb2ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPlayerCount: 2
+  maxPlayerCount: 6
   gameStatus: 0
   gameManager: {fileID: 0}
   uiManager: {fileID: 0}
   roundManager: {fileID: 0}
   mapManager: {fileID: 1581382676}
-  waitingJoinSecond: 120
+  waitingJoinSecond: 45
   kickOutTime: 120
   maxWaitingPlayerTime: 240
   planetRoot: {fileID: 0}
@@ -1212,7 +1213,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &828491476
 RectTransform:
   m_ObjectHideFlags: 0

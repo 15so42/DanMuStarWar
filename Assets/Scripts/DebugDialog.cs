@@ -56,7 +56,10 @@ public class DebugDialog : Dialog
         submitButton.onClick.AddListener(() =>
         {
             var message = inputField.text;
-            DanMuReciver.Instance.SendFakeDanMu(initName,GameManager.Instance.fightingManager.players[playerIndex].uid,message);
+            var uid = initUid;
+            if(GameManager.Instance.fightingManager.players.Count>playerIndex)
+                uid=GameManager.Instance.fightingManager.players[playerIndex].uid;
+            DanMuReciver.Instance.SendFakeDanMu(initName,initUid,message);
         });
         
         upArrow.onClick.AddListener(() =>

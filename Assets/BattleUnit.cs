@@ -7,7 +7,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [IncludeInSettings(true)]
-public class BattleUnit : GameEntity
+public class BattleUnit : GameEntity,IAttackAble,IVictimAble
 {
    
     public Planet ownerPlanet;
@@ -20,7 +20,7 @@ public class BattleUnit : GameEntity
     [HideInInspector] public PlanetManager planetManager;
 
     public float findEnemyDistance = 7;
-    public GameEntity chaseTarget = null;
+    public IVictimAble chaseTarget = null;
 
     
     protected void Awake()
@@ -38,16 +38,12 @@ public class BattleUnit : GameEntity
 
     public bool IsTargetAlive()
     {
-        return chaseTarget != null && chaseTarget.IsAlive() && Vector3.Distance(chaseTarget.transform.position,transform.position)<findEnemyDistance;
+        var target = chaseTarget?.GetVictimEntity();
+        return chaseTarget != null && target.IsAlive() && Vector3.Distance(target.transform.position,transform.position)<findEnemyDistance;
     }
    
 
-    protected void OnEnable()
-    {
-        
-        
-
-    }
+ 
 
     protected void Start()
     {
@@ -67,36 +63,34 @@ public class BattleUnit : GameEntity
         {
             enemyPlanets = PlanetManager.Instance.allPlanets;
         }
-        foreach (var planet in enemyPlanets)
+
+        if (enemyPlanets.Count <= 0)
+            return null;
+        var planet = enemyPlanets[Random.Range(0, enemyPlanets.Count)];
+        if(planet)
         {
-            foreach (var enemyUnit in planet.battleUnits)
+            if (planet.battleUnits.Count == 0)
             {
-                if(Random.Range(0,planet.battleUnits.Count)>0)
-                    continue;
+                enemy = planet;
+            }
+            else
+            {
+                var enemyUnit = planet.battleUnits[Random.Range(0, planet.battleUnits.Count)];
                 if (Vector3.Distance(enemyUnit.transform.position, transform.position) < findEnemyDistance)
                 {
                    
-                        enemy = enemyUnit;
-                        break;
-                    
-               
+                    enemy = enemyUnit;
+                
                 }
             }
 
-            if (Random.Range(0, enemyPlanets.Count) > 0)
-            {
-                continue;
-            }
-
-            enemy = planet;
         }
-
-       
         
+            
         return enemy;
     }
 
-    public void SetChaseTarget(BattleUnit target)
+    public void SetChaseTarget(IVictimAble target)
     {
         this.chaseTarget = target;
     }
@@ -127,4 +121,44 @@ public class BattleUnit : GameEntity
         gameObject.SetActive(false);
         
     }
+    
+    public override void OnAttacked(AttackInfo attackInfo)
+    {
+        base.OnAttacked(attackInfo);
+        if (!IsTargetAlive())//当自己处于和平状态时被袭击
+        {
+            if(Math.Abs(supportDistance) < 0.5f)
+                return;
+            if (attackInfo.attacker.GetAttackerOwner() == GetVictimOwner())
+            {
+                return;
+                
+            }
+            for (int i = 0; i < ownerPlanet.battleUnits.Count; i++)
+            {
+                if (Vector3.Distance(ownerPlanet.battleUnits[i].transform.position, transform.position) < supportDistance)
+                {
+                    var supportAble = ownerPlanet.battleUnits[i].GetComponent<ISupportAble>();
+                    if (supportAble != null)
+                    {
+                        supportAble.Support(attackInfo.attacker as BattleUnit);
+                    }
+                }
+            }
+        }
+       
+    }
+
+
+    public override GameEntity GetAttackerOwner()
+    {
+        return ownerPlanet;
+    }
+
+    public override GameEntity GetVictimOwner()
+    {
+        return ownerPlanet;
+    }
+
+   
 }

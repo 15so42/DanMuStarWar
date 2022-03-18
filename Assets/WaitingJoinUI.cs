@@ -21,10 +21,10 @@ public class WaitingJoinUI : MonoBehaviour
 
    public void ResetUi()
    {
-      var maxPlayer = PlanetManager.Instance.ownerAblePlanets.Count;
+      var maxPlayer = FightingManager.Instance.maxPlayerCount;
       playerNumText.text = "等待玩家加入中[0"+"/"+maxPlayer+"]";
       var children = playerGroupTrans.GetComponentsInChildren<Transform>();
-      for (int i = 0; i < children.Length; i++)
+      for (int i = 1; i < children.Length; i++)
       {
          Destroy(children[i].gameObject);
       }
@@ -47,7 +47,7 @@ public class WaitingJoinUI : MonoBehaviour
 
    public void OnPlayerJoined(Player player)
    {
-      var maxPlayer = PlanetManager.Instance.ownerAblePlanets.Count;
+      var maxPlayer = FightingManager.Instance.maxPlayerCount;
       playerNumText.text = "等待玩家加入中["+GameManager.Instance.fightingManager.players.Count+"/"+maxPlayer+"]";
       var icon = GameObject.Instantiate(playerIconPfb, playerGroupTrans);
       icon.GetComponent<PlayerIconUi>().Init(player);

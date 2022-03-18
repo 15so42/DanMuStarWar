@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Bolt;
 using Ludiq;
 using TMPro;
 using UnityEngine;
@@ -51,6 +52,8 @@ public class SkillItemUI : MonoBehaviour
         this.fill.fillAmount = skillBase.GetLeftCdRatio();
     }
 
+  
+
     void OnFinished()
     {
         if(gameObject)
@@ -71,5 +74,6 @@ public class SkillItemUI : MonoBehaviour
     private void OnDisable()
     {
         showDescTimer?.Cancel();
+        skillBase.onFinished -= OnFinished;//技能完毕事件，技能使用完后对应Ui自毁
     }
 }

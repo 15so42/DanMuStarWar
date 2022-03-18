@@ -5,9 +5,9 @@ using UnityEngine;
 public class PacMan : BattleUnit
 {
     public float eatDistance = 4;
-    public void Attack()
+    public override void Attack()
     {
-        if (Vector3.Distance(transform.position, chaseTarget.transform.position) < eatDistance)
+        if (Vector3.Distance(transform.position, chaseTarget.GetVictimEntity().transform.position) < eatDistance)
         {
             chaseTarget.OnAttacked(new AttackInfo(this,AttackType.Physics,10));
         }

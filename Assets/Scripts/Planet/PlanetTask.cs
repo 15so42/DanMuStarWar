@@ -76,6 +76,7 @@ public class PlanetTask
             if (type == "BattleUnit")
             {
                go=ResFactory.Instance.CreateBattleUnit(splitArr[1],planet.spawnPoint.transform.position);
+               go.name = go.name + planet.name;
                InitBattleUnit(go.GetComponent<BattleUnit>());
             }
 

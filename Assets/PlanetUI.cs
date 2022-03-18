@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using DG.Tweening;
@@ -49,8 +50,17 @@ public class PlanetUI : MonoBehaviour
         playerArea.gameObject.SetActive(true);
         //playerIcon.sprite=player.faceIcon;
         playerName.text = "["+planetIndex+"]"+player.userName;
+        
     }
-    
+
+    private void Start()
+    {
+        if (owner.planetResContainer.GetResNumByType(ResourceType.Population) == 0)
+        {
+            playerName.text = "[无人星球(不可加入)]";
+        }
+    }
+
     //资源数量更新
     public void onResChanged(ResourceType resType, int num)
     {
@@ -115,7 +125,8 @@ public class PlanetUI : MonoBehaviour
         msgText.text = msg;
         
         sequence?.Kill();
-        
+
+        sequence = DOTween.Sequence();
         sequence?.Append(msgBg.transform.DOScale(Vector3.one, 1));
         UnityTimer.Timer.Register(2, () =>
         {

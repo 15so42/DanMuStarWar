@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class WarPlane : BattleUnit
+public class WarPlane : BattleUnit,ISupportAble
 {
    public List<Weapon> weapons=new List<Weapon>();
 
@@ -19,7 +19,7 @@ public class WarPlane : BattleUnit
       }
    }
    
-   public void Attack()
+   public override void Attack()
    {
       foreach (var w in weapons)
       {
@@ -34,13 +34,29 @@ public class WarPlane : BattleUnit
    {
       base.OnAttacked(attackInfo);
       //if(!chaseTarget)
-      var battleUnit = attackInfo.attacker as BattleUnit;
-      if( battleUnit != null && battleUnit.ownerPlanet!=ownerPlanet) 
-         SetChaseTarget(attackInfo.attacker as BattleUnit);
+      var attacker = attackInfo.attacker;
+      var attackerOwner = attacker.GetAttackerOwner();
+      var victimOwner = GetVictimOwner();
+      var aName=attacker.GetAttackEntity().gameObject;
+      var vName=gameObject.name;
+      
+      if ( attackerOwner != victimOwner) 
+      {
+         var victim = attacker.GetAttackEntity();
+         SetChaseTarget(victim);
+      }
+         
    }
 
    private void OnDrawGizmos()
    {
       Gizmos.DrawWireSphere(transform.position,findEnemyDistance);
    }
+
+   public void Support(BattleUnit attacker)
+   {
+      SetChaseTarget(attacker);
+   }
+
+   
 }

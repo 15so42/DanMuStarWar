@@ -8,7 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(StateMachine))]
 [RequireComponent(typeof(BattleUnitProps))]
 [RequireComponent(typeof(SkillContainer))]
-public abstract class GameEntity : MonoBehaviour
+public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
 {
    protected StateMachine stateMachine;
    
@@ -17,6 +17,7 @@ public abstract class GameEntity : MonoBehaviour
    public BattleUnitProps props;
    public SkillContainer skillContainer;
    [Header("手动设置半径")] public float radius=5;
+   [Header("友军支援距离")] public float supportDistance=30;
 
    public bool die = false;
    
@@ -56,6 +57,8 @@ public abstract class GameEntity : MonoBehaviour
    {
       var hpValue = props.OnAttacked(attackInfo);
       OnHpChanged(hpValue,props.maxHp);
+      
+
       if (hpValue <= 0)
       {
          Die();
@@ -91,11 +94,43 @@ public abstract class GameEntity : MonoBehaviour
      //Destroy(gameObject);不销毁，销毁可能导致各种引用丢失的问题
    }
 
+   private void OnDestroy()
+   {
+      EventCenter.RemoveListener(EnumEventType.OnStartWaitingJoin,OnStartWaitingJoin);
+      
+   }
+
    public virtual void OnStartWaitingJoin()
    {
       if(gameObject)
       //为新的流程做好准备
-      Destroy(gameObject);
+         Destroy(gameObject);
    }
 
+   public virtual GameEntity GetAttackerOwner()
+   {
+      return null;//需重写
+   }
+
+   public virtual GameEntity GetAttackEntity()
+   {
+      return this;
+   }
+
+   public virtual void Attack()
+   {
+     //Do nothing
+   }
+   
+   
+
+   public virtual GameEntity GetVictimOwner()
+   {
+      return null;//需重写
+   }
+
+   public virtual GameEntity GetVictimEntity()
+   {
+      return this;
+   }
 }

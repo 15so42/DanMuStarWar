@@ -730,6 +730,8 @@ MonoBehaviour:
   props: {fileID: 0}
   skillContainer: {fileID: 0}
   radius: 3
+  supportDistance: 0
+  die: 0
   hpUI: {fileID: 0}
   hpUIOffse: {x: 0, y: 5, z: 0}
   hpUIScale: {x: 1, y: 1, z: 1}
@@ -738,7 +740,6 @@ MonoBehaviour:
   battleUnitManager: {fileID: 0}
   planetManager: {fileID: 0}
   findEnemyDistance: 400
-  chaseTarget: {fileID: 0}
   eatDistance: 5
 --- !u!54 &7905838483529104777
 Rigidbody:

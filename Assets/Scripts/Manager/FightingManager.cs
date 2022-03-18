@@ -106,7 +106,7 @@ public class FightingManager : MonoBehaviour
             EventCenter.Broadcast(EnumEventType.OnPlayerJoined,player);
         }
 
-        if (players.Count == maxPlayerCount)
+        if (gameStatus==GameStatus.WaitingJoin && players.Count == maxPlayerCount)
         {
             waitingJoinTimer.Cancel();
             StartBattle();
@@ -190,6 +190,7 @@ public class FightingManager : MonoBehaviour
 
         var draw=true;//和棋
 
+        return;
         //Debug.Log(gameStatus);
         if (gameStatus == GameStatus.WaitingJoin)
         {
@@ -277,6 +278,10 @@ public class FightingManager : MonoBehaviour
 
     public void StartNewBattle()
     {
+        roundManager.Stop();
+        playerStatusTable.Clear();
+        
+        gameStatus =  GameStatus.WaitingNewFighting;
         players.Clear();
         uiManager.ResetUi();
         roundManager = null;
@@ -320,17 +325,36 @@ public class FightingManager : MonoBehaviour
     private void OnDanMuReceived(string userName,int uid,string time,string text )
     {
         //找到队伍
-        if (gameStatus==GameStatus.WaitingJoin && text.Split(' ')[0] == "加入"||text.Split(' ')[0] == "加入游戏")
+        if ( text.Split(' ')[0] == "加入"||text.Split(' ')[0] == "加入游戏")
         {
-            if (gameStatus == GameStatus.WaitingJoin)
-            {
+            
                 var playerAccount = BiliUserInfoQuerier.Query(uid);
                 if (playerAccount.code == 0 && players.Count<maxPlayerCount)
                 {
-                    JoinGame(new Player(uid, userName, playerAccount.data.face,playerAccount.data.top_photo));
+
+
+                    var player = new Player(uid, userName, playerAccount.data.face, playerAccount.data.top_photo);
+                    JoinGame(player);
+                    if (gameStatus == GameStatus.Playing)
+                    {
+                        for (int i = 0; i < PlanetManager.Instance.allPlanets.Count; i++)
+                        {
+                            var planet = PlanetManager.Instance.allPlanets[i];
+                            if (planet.owner == null)
+                            {
+                                planet.SetOwner(player);
+                                TipsDialog.ShowDialog(player.userName+"加入了游戏",null);
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    TipsDialog.ShowDialog("人数已满，加入失败",null);
                 }
                
-            }
+            
         }
         
     }

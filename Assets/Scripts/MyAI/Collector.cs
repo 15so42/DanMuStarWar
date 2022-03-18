@@ -23,17 +23,15 @@ public class Collector : BattleUnit
    public Planet FindAnyResPlanet()
    {
       Planet ret = null;
-      foreach (var planet in GameManager.Instance.planetManager.allPlanets)
+      
+      var planets=GameManager.Instance.planetManager.allPlanets;
+
+      var planet = planets[UnityEngine.Random.Range(0, planets.Count)];
+      if (planet.planetResContainer.HasAnyRes() && planet.owner == null && planet != this.ownerPlanet)
       {
-         if(Random.Range(0,2)>0)
-            continue;//为选择星球增加随机性
-         if (planet.planetResContainer.HasAnyRes() && planet.owner==null && planet!=this.ownerPlanet)
-         {
-            ret = planet;
-            break;
-            
-         }
+         ret = planet;
       }
+      
 
       return ret;
    }
@@ -67,13 +65,22 @@ public class Collector : BattleUnit
    
    public void Deliver()
    {
+      var tipStr = "";
       //获取资源
       foreach (var t in canCollectRes)
       {
          var resourceTable = t;
          ownerPlanet.planetResContainer.AddRes(resourceTable.resourceType,resourceTable.resourceNum);
+         
+         if(resourceTable.resourceType==ResourceType.DicePoint)
+            tipStr+="骰子 +"+resourceTable.resourceNum+"  ";
+         if(resourceTable.resourceType==ResourceType.Tech)
+            tipStr+="科技 +"+resourceTable.resourceNum+"  ";
+         
          resourceTable.resourceNum=0;
+         
       }
+      ownerPlanet.LogTip(tipStr);
       
    }
    

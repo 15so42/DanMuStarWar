@@ -90,12 +90,12 @@ public class MapManager : MonoBehaviour
 
     void SpawnAllPlanets()
     {
-        SpawnPlanets(playerPlanets,playerPlanetNum);
-        SpawnPlanets(resPlanets,resPlanetNum);
+        SpawnPlanets(playerPlanets,playerPlanetNum,false);
+        SpawnPlanets(resPlanets,resPlanetNum,true);
         EventCenter.Broadcast(EnumEventType.OnPlanetsSpawned);
     }
 
-    void SpawnPlanets(string[] planetsName,int planetNum)
+    void SpawnPlanets(string[] planetsName,int planetNum,bool resPlanet)
     {
         var empty=new GameObject("planets");
         empty.transform.SetParent(planetRoot);
@@ -121,7 +121,7 @@ public class MapManager : MonoBehaviour
             
             var planetName = planetsName[Random.Range(0, planetsName.Length)];
             var go = GameObject.Instantiate(pfb, worldPos, Quaternion.identity, empty.transform);
-            go.GetComponent<Planet>().SetUpPlanet(planetName,colorTable.colors[i]);
+            go.GetComponent<Planet>().SetUpPlanet(planetName,colorTable.colors[resPlanet?playerPlanetNum+i:i]);
             grids[gridPos.x, gridPos.y] = planetName;
 
         }

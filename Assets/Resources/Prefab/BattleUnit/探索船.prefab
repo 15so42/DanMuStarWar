@@ -5117,6 +5117,8 @@ MonoBehaviour:
   props: {fileID: 0}
   skillContainer: {fileID: 0}
   radius: 1
+  supportDistance: 30
+  die: 0
   hpUI: {fileID: 0}
   hpUIOffse: {x: 0, y: 5, z: 0}
   hpUIScale: {x: 0.5, y: 1, z: 1}
@@ -5125,7 +5127,6 @@ MonoBehaviour:
   battleUnitManager: {fileID: 0}
   planetManager: {fileID: 0}
   findEnemyDistance: 7
-  chaseTarget: {fileID: 0}
   minePlanet: {fileID: 0}
   scanFx: {fileID: 992889948948382102}
   canCollectRes:

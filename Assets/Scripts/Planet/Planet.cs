@@ -7,8 +7,19 @@ using Ludiq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+public class LineRenderPair
+{
+    public Planet planet;
+    public LineRenderer line;
 
-public class Planet : GameEntity
+    public LineRenderPair(Planet planet, LineRenderer line)
+    {
+        this.planet = planet;
+        this.line = line;
+    }
+}
+
+public class Planet : GameEntity,IAttackAble
 {
 
     //星球序号，用于宣战结盟等操作
@@ -39,7 +50,7 @@ public class Planet : GameEntity
     public Transform spawnPoint;
     
     //LineRenders
-    public List<LineRenderer> enemyPlanetLines=new List<LineRenderer>();
+    public List<LineRenderPair> enemyPlanetLines=new List<LineRenderPair>();
     private List<LineRenderer> lineRenderers=new List<LineRenderer>();
     
     //自己单位管理
@@ -70,6 +81,7 @@ public class Planet : GameEntity
         EventCenter.AddListener<Planet>(EnumEventType.OnPlanetCreated,OnPlayerCreated);
         
         EventCenter.AddListener<BattleUnit>(EnumEventType.OnBattleUnitCreated,OnBattleUnitCreated);
+        EventCenter.AddListener<Planet>(EnumEventType.OnPlanetDie,DestroyWarLine);
         
         
        
@@ -156,7 +168,14 @@ public class Planet : GameEntity
     {
         enemyPlanets.Add(planet);
         enemyPlayers.Add(planet.owner);
-        LineRenderManager.Instance.SetLineRender(transform.position, planet.transform.position);
+        var line = LineRenderManager.Instance.SetLineRender(transform.position, planet.transform.position);
+        enemyPlanetLines.Add(new LineRenderPair(planet, line));
+    }
+
+    void DestroyWarLine(Planet planet)
+    {
+        var line = enemyPlanetLines.Find(x => x.planet == planet)?.line;
+        Destroy(line);
     }
 
     public void SetIndex(int index)
@@ -198,7 +217,8 @@ public class Planet : GameEntity
         //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_战斗机",5)));
         //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_战斗机",5)));
 
-        
+        gameObject.name = player.userName;
+
     }
 
     private void OnDrawGizmos()
@@ -227,7 +247,7 @@ public class Planet : GameEntity
 
     public override void LogTip(string tip)
     {
-        Debug.Log(tip);
+        //Debug.Log(tip);
         planetUi.LogTip(tip);
     }
 
@@ -237,6 +257,7 @@ public class Planet : GameEntity
         if (planetResContainer.GetResNumByType(ResourceType.DicePoint) <= 1)
         {
             LogTip("骰子点数不足");
+            return;
         }
         if (skillContainer.skills.Count>index &&skillContainer.skills[index])
         {
@@ -251,6 +272,7 @@ public class Planet : GameEntity
         if (planetResContainer.GetResNumByType(ResourceType.DicePoint) <= 0)
         {
             LogTip("骰子点数不足");
+            return;
         }
         if(skillContainer.skills.Count>index && skillContainer.skills[index])
             skillContainer.UseSkill(index);
@@ -277,6 +299,7 @@ public class Planet : GameEntity
         if (planetResContainer.GetResNumByType(ResourceType.DicePoint) <= 0)
         {
             LogTip("骰子点数不足");
+            return;
         }
         if (skillContainer.skills.Count >= maxSkillCount)
         {
@@ -294,6 +317,7 @@ public class Planet : GameEntity
         if (planetResContainer.GetResNumByType(ResourceType.DicePoint) <= 0)
         {
             LogTip("骰子点数不足");
+            return;
         }
         if(skillContainer.skills.Count<=index || skillContainer.skills[index]==null)
             return;
@@ -324,4 +348,6 @@ public class Planet : GameEntity
         gameObject.SetActive(false);
        
     }
+
+    
 }

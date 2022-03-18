@@ -27,7 +27,7 @@ public class BiliUserInfoQuerier : MonoBehaviour
             using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
             {
                 var ret= reader.ReadToEnd();
-                Debug.Log(ret);
+                //Debug.Log(ret);
                 AccountInfo accountInfo = JsonMapper.ToObject<AccountInfo>(ret);
                 return accountInfo;
             }

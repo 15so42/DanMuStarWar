@@ -13,6 +13,8 @@ public class DanMuReciver : MonoBehaviour
 {
     public static DanMuReciver Instance;
 
+    public SaveDataHelper saveDataHelper;
+    
     private void Awake()
     {
         Instance = this;
@@ -89,13 +91,13 @@ public class DanMuReciver : MonoBehaviour
     {
         StartCoroutine(ReciveDanMu());
         DontDestroyOnLoad(gameObject);
-        string lastReadUnixStr = PlayerPrefs.GetString("lastReadUnix","0");
-        lastReadUnix =  Convert.ToInt64(lastReadUnixStr);
+      
     }
 
     public void ParseDanMu(ResponseResult ret)
     {
-        lastReadUnix = Convert.ToInt64(PlayerPrefs.GetString("lastReadUnix","0"));
+        
+        lastReadUnix = saveDataHelper.lastReadUnix;
         //从头读取每条弹幕，直到时间大于上次读取时间，
         for(int i = 0; i < ret.data.room.Count; i++)
         {
@@ -133,9 +135,9 @@ public class DanMuReciver : MonoBehaviour
                 lastMessageStrList.Add(str);//存储最后一秒的uid
 
                 lastReadUnix = unix;
-                //lastReadUid = uid;
-                PlayerPrefs.SetString("lastReadUnix",lastReadUnix+"");
                 
+                saveDataHelper.lastReadUnix = lastReadUnix;
+
             }
         }
     }

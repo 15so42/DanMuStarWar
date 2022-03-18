@@ -49,9 +49,9 @@ public class BattleOverDialog : Dialog<BattleOverDialogContext>
         StartCoroutine(CountDown(dialogContext.duration));
         if(dialogContext.player!=null){
             drawText.gameObject.SetActive(false);
-            AccountUI accountUi = GameManager.Instance.uiManager.GetAccountUiByPlayer(dialogContext.player);
-            winnerText.text = "胜者: " + accountUi.player.userName;
-            face.sprite = accountUi.faceImg.sprite;
+          
+            winnerText.text = "胜者: " + dialogContext.player.userName;
+            face.sprite = dialogContext.player.faceIcon;
         }
         else
         {

@@ -49,11 +49,36 @@ public class PlanetManager : MonoBehaviour
         TipsDialog.ShowDialog(planet.owner+"的星球毁灭了",null);
         allPlanets.Remove(planet);
         ownerAblePlanets.Remove(planet);
-        if (allPlanets.Count == 1)
+        
+        //获得剩余玩家数
+        var count = 0;
+        Planet lastPlanet = null;
+        
+        for (int i = 0; i < allPlanets.Count; i++)
         {
-            FightingManager.Instance.GameOver(planet);
-            allPlanets[0].Die();
+            if (allPlanets[i].owner != null)
+            {
+                count++;
+                lastPlanet = allPlanets[i];
+            }
+        }
+        
+       
+        if (count == 1)
+        {
+            FightingManager.Instance.GameOver(lastPlanet);
+            //清除剩下所有的星球
+            
+            for (int i = 0; i < allPlanets.Count; i++)
+            {
+                
+                   allPlanets[i].Die();
+                   i--;
+
+
+            }
             allPlanets.Clear();
+
         }
 
        
@@ -66,9 +91,10 @@ public class PlanetManager : MonoBehaviour
     /// </summary>
     public void BattleOverByAdmin()
     {
-        for (int i = 0; i < allPlanets.Count - 1; i++)
+        for (int i = 0; i < allPlanets.Count ; i++)
         {
-            allPlanets[i].OnAttacked(new AttackInfo(null,AttackType.Real,1000));
+            allPlanets[i].OnAttacked(new AttackInfo(null,AttackType.Real,5000));
+            i--;
         }
     }
 }

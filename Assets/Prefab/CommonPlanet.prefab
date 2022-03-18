@@ -5550,7 +5550,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 6.87183
   m_Center: {x: 0.0043582916, y: -0.0068729506, z: -0.026920915}
 --- !u!114 &5468216365159158747
 MonoBehaviour:
@@ -5580,6 +5580,7 @@ MonoBehaviour:
   props: {fileID: 0}
   skillContainer: {fileID: 0}
   radius: 6.91
+  supportDistance: 30
   die: 0
   hpUI: {fileID: 0}
   hpUIOffse: {x: 0, y: 30, z: 0}
@@ -5609,7 +5610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd8994c074cc7ae4fb301e0741959e2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tickTime: 20
+  tickTime: 30
   allRes: []
 --- !u!114 &91232668481969524
 MonoBehaviour:
@@ -5653,8 +5654,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855df10198e6d344ca4723cbfdadc92c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
-  hp: 100
+  maxHp: 1000
+  hp: 1000
   pDef: 50
   mDef: 50
   gameEntity: {fileID: 0}

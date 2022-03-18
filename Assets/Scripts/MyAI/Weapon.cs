@@ -54,8 +54,8 @@ public class Weapon : MonoBehaviour
     }
     public void Fire()
     {
-        var dir = owner.chaseTarget.transform.position - transform.position;
-        var distance = Vector3.Distance(owner.chaseTarget.transform.position, transform.position);
+        var dir = owner.chaseTarget.GetVictimEntity().transform.position - transform.position;
+        var distance = Vector3.Distance(owner.chaseTarget.GetVictimEntity().transform.position, transform.position);
         if ( distance< attackDistance)
         {
           
@@ -68,7 +68,11 @@ public class Weapon : MonoBehaviour
             if (Physics.Raycast(transform.position, newVec,out hitInfo, rayDistance))
             {
                 var prop = hitInfo.collider.GetComponent<BattleUnitProps>();
-                if (prop && prop.gameEntity!=owner)
+                var attackerOwner = owner.GetAttackerOwner();
+                var victimOwner = prop.gameEntity.GetVictimOwner();
+                if(attackerOwner==victimOwner)
+                    return;//避免友军伤害
+                if (prop && prop.gameEntity!=owner && prop.gameEntity)
                 {
                     prop.gameEntity.OnAttacked(new AttackInfo(owner,attackType,attackValue));
                 }
