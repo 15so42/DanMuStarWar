@@ -93,6 +93,7 @@ public abstract class GameEntity : MonoBehaviour
 
    public virtual void OnStartWaitingJoin()
    {
+      if(gameObject)
       //为新的流程做好准备
       Destroy(gameObject);
    }
