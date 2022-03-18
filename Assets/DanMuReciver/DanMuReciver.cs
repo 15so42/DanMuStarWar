@@ -48,43 +48,7 @@ public class DanMuReciver : MonoBehaviour
         request = UnityWebRequest.Get(url);
     }
 
-    private UnityTimer.Timer reconnectTimer;
-    public string Response()
-    {
-        string result = null;
-        try
-        {
-            /*Stream st = resp.GetResponseStream();
-            StreamReader sr = new StreamReader(st, Encoding.GetEncoding("UTF-8"));
-            txt = sr.ReadToEnd();
-            sr.Close();
-            st.Close();*/
-            
-            
-           /* HttpWebResponse response = (HttpWebResponse) request.GetResponse();
-            Stream st = response.GetResponseStream();
-            StreamReader sr = new StreamReader(st, Encoding.UTF8);
-            result = sr.ReadToEnd();
-            sr.Close();
-            st.Close();*/
-            
-            /*using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
-            {
-                result= reader.ReadToEnd();
-            }*/
-        } catch (WebException wex)
-        {
-            if (wex != null)
-            {
-
-                Debug.LogError("网络暂时出现异常，请稍后");
-
-            }
-        }
-
-        return result;
-
-    }
+    
     
     // Start is called before the first frame update
     void Start()
@@ -145,7 +109,9 @@ public class DanMuReciver : MonoBehaviour
     IEnumerator ReciveDanMu()
     {
         while (true) { 
-            SetRequest();
+            
+            request = UnityWebRequest.Get(url);
+            request.timeout = 1;
             yield return request.SendWebRequest();
             
             if(request.isNetworkError || request.isHttpError) {
@@ -159,27 +125,8 @@ public class DanMuReciver : MonoBehaviour
 
                 ParseDanMu(ret);
             }
+            yield return new WaitForSeconds(tickInterval);
             
-            
-            
-            /*string json = Response();
-            //string json = null;
-
-            if (json == null)
-            {
-               yield return new WaitForSeconds(2);
-                //网络获取失败，跳过
-                continue;
-            }
-
-            if(debugMode)
-                Debug.Log(json);
-
-            ResponseResult ret = JsonMapper.ToObject<ResponseResult>(json);
-
-            ParseDanMu(ret);
-            
-            yield return new WaitForSeconds(tickInterval);*/
         }
     }
 

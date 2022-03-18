@@ -69,8 +69,10 @@ public class Weapon : MonoBehaviour
             {
                 var prop = hitInfo.collider.GetComponent<BattleUnitProps>();
                 var attackerOwner = owner.GetAttackerOwner();
+                if(prop==null || prop.gameEntity==null)
+                    return;
                 var victimOwner = prop.gameEntity.GetVictimOwner();
-                if(attackerOwner==victimOwner)
+                if(victimOwner==null || attackerOwner==victimOwner)
                     return;//避免友军伤害
                 if (prop && prop.gameEntity!=owner && prop.gameEntity)
                 {

@@ -44,7 +44,7 @@ public class RoundManager : MonoBehaviour
 
     Planet GetPlanetByIndex(int index)
     {
-        return PlanetManager.Instance.allPlanets[index];
+        return PlanetManager.Instance.allPlanets.Find(x => x.planetIndex == index);
     }
 
     void ParseClaimWar(int uid,string trim)
@@ -111,7 +111,7 @@ public class RoundManager : MonoBehaviour
     void ParseGetSkill(int uid,string trim)
     {
         string pattern = @"^(抽取技能)$";
-        if (Regex.IsMatch(trim, pattern))
+        if (Regex.IsMatch(trim, pattern) || trim=="C" || trim=="c")
         {
             Debug.Log("解析抽取技能命令:"+trim);
            
@@ -167,7 +167,7 @@ public class RoundManager : MonoBehaviour
             ParseRemoveSkill(uid, trim);
         }
         
-        if (text.StartsWith("抽取技能"))
+        if (text.StartsWith("抽取技能") || text=="C" || text=="c")
         {
             ParseGetSkill(uid, trim);
         }

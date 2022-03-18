@@ -36,7 +36,7 @@ public class SkillItemUI : MonoBehaviour
     {
         var lastText = this.skillName.text;//记录之前的文字
         this.skillName.text = this.skillBase.desc;
-        UnityTimer.Timer.Register(5, () =>
+        showDescTimer=UnityTimer.Timer.Register(5, () =>
         {
             this.skillName.text = lastText;
         });
@@ -52,6 +52,7 @@ public class SkillItemUI : MonoBehaviour
         this.fill.fillAmount = skillBase.GetLeftCdRatio();
     }
 
+    
   
 
     void OnFinished()

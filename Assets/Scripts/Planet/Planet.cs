@@ -19,7 +19,7 @@ public class LineRenderPair
     }
 }
 
-public class Planet : GameEntity,IAttackAble
+public class Planet : GameEntity
 {
 
     //星球序号，用于宣战结盟等操作
@@ -349,5 +349,16 @@ public class Planet : GameEntity,IAttackAble
        
     }
 
+    public override GameEntity GetAttackerOwner()
+    {
+        return this;
+    }
+
+    public override GameEntity GetVictimOwner()
+    {
+        return this;
+    }
+
+   
     
 }

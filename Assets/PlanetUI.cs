@@ -57,7 +57,7 @@ public class PlanetUI : MonoBehaviour
     {
         if (owner.planetResContainer.GetResNumByType(ResourceType.Population) == 0)
         {
-            playerName.text = "[无人星球(不可加入)]";
+            playerName.text = "["+planetIndex+"]无人星球(不可加入)";
         }
     }
 
