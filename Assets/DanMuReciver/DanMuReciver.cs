@@ -12,6 +12,7 @@ using UnityEngine.Networking;
 public class DanMuReciver : MonoBehaviour
 {
     public static DanMuReciver Instance;
+    public string roomId = "478323";
 
     public SaveDataHelper saveDataHelper;
     
@@ -25,34 +26,21 @@ public class DanMuReciver : MonoBehaviour
 
     //弹幕接收器
     //string url = "https://api.live.bilibili.com/xlive/web-room/v1/dM/gethistory?roomid=880235";
-    string url = "https://api.live.bilibili.com/xlive/web-room/v1/dM/gethistory?roomid=478323";
+    string url = "https://api.live.bilibili.com/xlive/web-room/v1/dM/gethistory?roomid=";
     UnityWebRequest request;
 
 
     //全局变量
     long lastReadUnix;//可能每次检测之间有多条弹幕，从上一次读取时间以后读取之后的所有弹幕
     //int lastReadUid =0;
-
-
-    public float tickInterval=5f;//轮询间隔
-    //Debug
-    public bool debugMode;
-
-    public void SetRequest()
-    {
-        //request = (HttpWebRequest)WebRequest.Create(url);
-        //request.Method = "GET";
-        //request.Accept = "application/json, text/javascript, */*; q=0.01";
-        //request.ContentType = "application/x-www-form-urlencoded;charset=UTF-8";
-        
-        request = UnityWebRequest.Get(url);
-    }
-
+    
+    public float tickInterval=2f;//轮询间隔
     
     
     // Start is called before the first frame update
     void Start()
     {
+        url = url + roomId;
         StartCoroutine(ReciveDanMu());
         DontDestroyOnLoad(gameObject);
       
@@ -154,19 +142,7 @@ public class DanMuReciver : MonoBehaviour
         
         PlayerPrefs.SetInt("lastReadUnix",(int)lastReadUnix);
     }
-
-    /* // <summary>
-    /// 将Unix时间戳转换为dateTime格式
-    /// </summary>
-    /// <param name="time"></param>
-    /// <returns></returns>
-    public  DateTime UnixTimeToDateTime(long time)
-    {
-        if (time < 0)
-            throw new ArgumentOutOfRangeException("time is out of range");
- 
-        return TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1)).AddSeconds(time);
-    }*/
+    
 }
 
 

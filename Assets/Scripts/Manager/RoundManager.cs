@@ -66,7 +66,8 @@ public class RoundManager : MonoBehaviour
     void ParseChangeSkill(int uid,string trim)
     {
         string pattern = @"^(换技能){1}(\d{1})$";
-        if (Regex.IsMatch(trim, pattern))
+        string letterPattern = @"^(h|H){1}(\d{1})$";
+        if (Regex.IsMatch(trim, pattern) || Regex.IsMatch(trim, letterPattern))
         {
             Debug.Log("解析换技能命令:"+trim);
             int skillIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
@@ -78,10 +79,11 @@ public class RoundManager : MonoBehaviour
         }
     }
     
-    void ParseUseSkill(int uid,string trim)
+    void ParseUseSkill(int uid,string trim)//使用技能1或者u1或者U1
     {
         string pattern = @"^(使用技能){1}(\d{1})$";
-        if (Regex.IsMatch(trim, pattern))
+        string letterPattern = @"^(s|S){1}(\d{1})$";
+        if (Regex.IsMatch(trim, pattern) ||Regex.IsMatch(trim, letterPattern))
         {
             Debug.Log("解析使用技能命令:"+trim);
             int skillIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
@@ -96,7 +98,8 @@ public class RoundManager : MonoBehaviour
     void ParseRemoveSkill(int uid,string trim)
     {
         string pattern = @"^(移除技能){1}(\d{1})$";
-        if (Regex.IsMatch(trim, pattern))
+        string letterPattern = @"^(y|Y){1}(\d{1})$";
+        if (Regex.IsMatch(trim, pattern) || Regex.IsMatch(trim, letterPattern))
         {
             Debug.Log("解析移除技能命令:"+trim);
             int skillIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
@@ -108,15 +111,15 @@ public class RoundManager : MonoBehaviour
         }
     }
     
-    void ParseGetSkill(int uid,string trim)
+    void ParseRollSkill(int uid,string trim)
     {
         string pattern = @"^(抽取技能)$";
-        if (Regex.IsMatch(trim, pattern) || trim=="C" || trim=="c")
+        if (Regex.IsMatch(trim, pattern) || trim=="c" || trim=="C")
         {
             Debug.Log("解析抽取技能命令:"+trim);
            
             var planet=GetPlantByPlayerUid(uid);
-            planet.GetSkill();
+            planet.RollSkill();
             
            
         }
@@ -152,24 +155,24 @@ public class RoundManager : MonoBehaviour
             ParseClaimWar(uid, trim);
         }
         
-        if (text.StartsWith("使用技能"))
+        if (text.StartsWith("使用技能")||text.StartsWith("s")||text.StartsWith("S"))
         {
             ParseUseSkill(uid, trim);
         }
         
-        if (text.StartsWith("换技能"))
+        if (text.StartsWith("换技能") || text.StartsWith("h") || text.StartsWith("H"))
         {
             ParseChangeSkill(uid, trim);
         }
         
-        if (text.StartsWith("移除技能"))
+        if (text.StartsWith("移除技能") || text.StartsWith("y") || text.StartsWith("Y"))
         {
             ParseRemoveSkill(uid, trim);
         }
         
-        if (text.StartsWith("抽取技能") || text=="C" || text=="c")
+        if (text.StartsWith("抽取技能") || text=="c" || text=="C")
         {
-            ParseGetSkill(uid, trim);
+            ParseRollSkill(uid, trim);
         }
         
         if (text.StartsWith("技能说明"))

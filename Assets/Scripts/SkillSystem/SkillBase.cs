@@ -5,6 +5,9 @@ using UnityEngine;
 
 public abstract class SkillBase : ScriptableObject
 {
+
+    [Header("点数")] public int usePoint=1;
+    public int removePoint = 1;
     [Header("描述")]
     public string desc="无描述";
     //注入UI，用以排序，虽然有点打乱独立性，但是影响很小

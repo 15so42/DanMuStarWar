@@ -2721,7 +2721,7 @@ MonoBehaviour:
   - resourceType: 2
     resourceNum: 0
   - resourceType: 3
-    resourceNum: 10
+    resourceNum: 5
 --- !u!1 &5125773805363645065
 GameObject:
   m_ObjectHideFlags: 0
@@ -2776,7 +2776,7 @@ MonoBehaviour:
   - resourceType: 2
     resourceNum: 10
   - resourceType: 3
-    resourceNum: 10
+    resourceNum: 5
 --- !u!1 &5270162469231348198
 GameObject:
   m_ObjectHideFlags: 0
@@ -6655,7 +6655,7 @@ MonoBehaviour:
   - resourceType: 2
     resourceNum: 10
   - resourceType: 3
-    resourceNum: 10
+    resourceNum: 5
 --- !u!1 &8451639168634042825
 GameObject:
   m_ObjectHideFlags: 0
@@ -6789,7 +6789,7 @@ MonoBehaviour:
   - resourceType: 2
     resourceNum: 10
   - resourceType: 3
-    resourceNum: 10
+    resourceNum: 5
 --- !u!1 &8451639168697794641
 GameObject:
   m_ObjectHideFlags: 0
@@ -7002,7 +7002,7 @@ MonoBehaviour:
   - resourceType: 2
     resourceNum: 0
   - resourceType: 3
-    resourceNum: 10
+    resourceNum: 5
 --- !u!1 &8451639169174404769
 GameObject:
   m_ObjectHideFlags: 0
@@ -7057,7 +7057,7 @@ MonoBehaviour:
   - resourceType: 2
     resourceNum: 10
   - resourceType: 3
-    resourceNum: 10
+    resourceNum: 5
 --- !u!1 &8451639169280303627
 GameObject:
   m_ObjectHideFlags: 0
@@ -7112,7 +7112,7 @@ MonoBehaviour:
   - resourceType: 2
     resourceNum: 0
   - resourceType: 3
-    resourceNum: 10
+    resourceNum: 5
 --- !u!1 &8451639169555734392
 GameObject:
   m_ObjectHideFlags: 0
@@ -7167,7 +7167,7 @@ MonoBehaviour:
   - resourceType: 2
     resourceNum: 0
   - resourceType: 3
-    resourceNum: 10
+    resourceNum: 5
 --- !u!1 &8451639169566274585
 GameObject:
   m_ObjectHideFlags: 0

@@ -252,32 +252,8 @@ public class Planet : GameEntity
     }
 
 
-    public void ChangeSkill(int index)
-    {
-        if (planetResContainer.GetResNumByType(ResourceType.DicePoint) <= 1)
-        {
-            LogTip("骰子点数不足");
-            return;
-        }
-        if (skillContainer.skills.Count>index &&skillContainer.skills[index])
-        {
-            skillContainer.ChangeSkill(index);
-            planetResContainer.ReduceRes(ResourceType.DicePoint,2);
-        }
-        
-    }
-
-    public void UseSkill(int index)
-    {
-        if (planetResContainer.GetResNumByType(ResourceType.DicePoint) <= 0)
-        {
-            LogTip("骰子点数不足");
-            return;
-        }
-        if(skillContainer.skills.Count>index && skillContainer.skills[index])
-            skillContainer.UseSkill(index);
-    }
-
+   
+    
     public int GetTechLevelByRes()
     {
         int techLevel = 1;
@@ -294,7 +270,20 @@ public class Planet : GameEntity
             techLevel = 4;
         return techLevel;
     }
-    public void GetSkill()
+
+    #region MyRegion
+
+    public SkillBase GetSkillByIndex(int index)
+    {
+        if (skillContainer.skills.Count > index && skillContainer.skills[index])
+        {
+            return skillContainer.skills[index];
+        }
+
+        return null;
+    }
+
+    public void RollSkill()
     {
         if (planetResContainer.GetResNumByType(ResourceType.DicePoint) <= 0)
         {
@@ -311,27 +300,68 @@ public class Planet : GameEntity
     }
     
     
-    
-    public void RemoveSkill(int index)
+    public void UseSkill(int index)
     {
-        if (planetResContainer.GetResNumByType(ResourceType.DicePoint) <= 0)
+        var skill = GetSkillByIndex(index);
+        if (skill == null)
+        {
+            LogTip("序号错误");
+            return;
+        }
+        
+        if (planetResContainer.GetResNumByType(ResourceType.DicePoint) < skill.usePoint)
         {
             LogTip("骰子点数不足");
             return;
         }
-        if(skillContainer.skills.Count<=index || skillContainer.skills[index]==null)
+
+        
+        skillContainer.UseSkill(index);
+        planetResContainer.ReduceRes(ResourceType.DicePoint,skill.usePoint);
+        
+            
+    }
+    
+    public void ChangeSkill(int index)
+    {
+        var skill = GetSkillByIndex(index);
+        if (skill == null)
+        {
+            LogTip("序号错误");
             return;
-        if (planetResContainer.GetResNumByType(ResourceType.DicePoint) > removeDicePoint)
-        {
-            skillContainer.RemoveSkill(index);
-            planetResContainer.ReduceRes(ResourceType.DicePoint,1);
-        }
-        else
-        {
-            LogTip("移除技能所需点数不够");
         }
         
+        if (planetResContainer.GetResNumByType(ResourceType.DicePoint) < skill.removePoint+1)
+        {
+            LogTip("换技能骰子点数不足");
+            return;
+        }
+        
+        skillContainer.ChangeSkill(index); 
+        planetResContainer.ReduceRes(ResourceType.DicePoint,skill.removePoint+1);
+        
+        
     }
+    
+    public void RemoveSkill(int index)
+    {
+        var skill = GetSkillByIndex(index);
+        if (skill == null)
+        {
+            LogTip("序号错误");
+            return;
+        }
+        
+        if (planetResContainer.GetResNumByType(ResourceType.DicePoint) < skill.removePoint)
+        {
+            LogTip("移除技能所需点数不够");
+            return;
+        }
+
+        skillContainer.RemoveSkill(index);
+        planetResContainer.ReduceRes(ResourceType.DicePoint,skill.removePoint);
+    }
+    #endregion
 
     public override void Die()
     {
