@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ffd8c15d874474a90a8236162bffa8, type: 3}
   m_Name: "Skill_\u7EF4\u4FEE_LV1"
   m_EditorClassIdentifier: 
-  desc: "\u56DE\u590D25\u70B9HP"
+  usePoint: 1
+  removePoint: 1
+  desc: "\u56DE\u590D250\u70B9HP"
   skillItemUi: {fileID: 0}
   skillName: "Skill_\u7EF4\u4FEE_LV1"
   icon: {fileID: 21300000, guid: ba0998b69bda33642b0aeccfb88745ef, type: 3}
@@ -26,4 +28,4 @@ MonoBehaviour:
   gameEntity: {fileID: 0}
   ready: 0
   finished: 0
-  healValue: 25
+  healValue: 250

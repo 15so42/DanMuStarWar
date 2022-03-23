@@ -59,6 +59,11 @@ public class PlanetUI : MonoBehaviour
         {
             playerName.text = "["+planetIndex+"]无人星球(不可加入)";
         }
+
+        else
+        {
+            playerName.text = "[" + planetIndex + "]" + "(可加入)";
+        }
     }
 
     //资源数量更新

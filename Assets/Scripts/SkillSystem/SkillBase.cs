@@ -101,7 +101,7 @@ public abstract class SkillBase : ScriptableObject
 
     public void SetItemIndex(int index)
     {
-        skillItemUi.skillIndex.text = index + "";
+        skillItemUi.skillIndex.text = index+1 + "";
     }
     
 

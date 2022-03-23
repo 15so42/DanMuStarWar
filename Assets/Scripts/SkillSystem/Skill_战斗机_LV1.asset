@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6bf9168f594a047b2cdc72986a41b8, type: 3}
   m_Name: "Skill_\u6218\u6597\u673A_LV1"
   m_EditorClassIdentifier: 
+  usePoint: 1
+  removePoint: 1
   desc: "\u751F\u4EA7\u6218\u6597\u673A"
   skillItemUi: {fileID: 0}
   skillName: "Skill_\u6218\u6597\u673A_LV1"
@@ -22,7 +24,7 @@ MonoBehaviour:
   life: 1
   autoLife: 1
   stackAbleCount: 1
-  passive: 1
+  passive: 0
   gameEntity: {fileID: 0}
   ready: 1
   finished: 0

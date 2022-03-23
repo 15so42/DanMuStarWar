@@ -427,10 +427,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96433212ffaea9a4e879be3352490e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomId: 880235
   saveDataHelper: {fileID: 11400000, guid: 3437982f7aa0a0944bcd76f8277b828d, type: 2}
   lastMessageStrList: []
   tickInterval: 1
-  debugMode: 0
 --- !u!1 &444909843
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,7 +901,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc26ce551d1c27408643af3eacb2ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPlayerCount: 6
+  maxPlayerCount: 2
   gameStatus: 0
   gameManager: {fileID: 0}
   uiManager: {fileID: 0}
@@ -2582,7 +2582,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1563027091

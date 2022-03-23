@@ -17,6 +17,9 @@ public class SkillItemUI : MonoBehaviour
     public Image fill;
     public TMP_Text lifeCount;
 
+    public Text usePointText;
+    public Text removePointText;
+
     public SkillBase skillBase;
 
     private UnityTimer.Timer showDescTimer;
@@ -27,6 +30,8 @@ public class SkillItemUI : MonoBehaviour
         icon.sprite = skillBase.icon;
         lifeCount.text = this.skillBase.life+"";
         fill.fillAmount = 1;
+        usePointText.text = skillBase.usePoint + "";
+        removePointText.text = skillBase.removePoint + "";
         
         skillBase.onFinished += OnFinished;//技能完毕事件，技能使用完后对应Ui自毁
         skillBase.onLifeChangedAction += OnLifeChanged;
@@ -44,7 +49,7 @@ public class SkillItemUI : MonoBehaviour
 
     public void UpdateIndex(int index)
     {
-        skillIndex.text = index + "";
+        skillIndex.text = index+1 + "";
     }
 
     private void Update()

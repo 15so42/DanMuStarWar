@@ -273,11 +273,11 @@ public class Planet : GameEntity
 
     #region MyRegion
 
-    public SkillBase GetSkillByIndex(int index)
+    public SkillBase GetSkillByIndex(int index)//使用的从1开始的读法
     {
-        if (skillContainer.skills.Count > index && skillContainer.skills[index])
+        if (index>0 && skillContainer.skills.Count >= index && skillContainer.skills[index-1])
         {
-            return skillContainer.skills[index];
+            return skillContainer.skills[index-1];
         }
 
         return null;
@@ -316,7 +316,7 @@ public class Planet : GameEntity
         }
 
         
-        skillContainer.UseSkill(index);
+        skillContainer.UseSkill(index-1);
         planetResContainer.ReduceRes(ResourceType.DicePoint,skill.usePoint);
         
             
@@ -337,7 +337,7 @@ public class Planet : GameEntity
             return;
         }
         
-        skillContainer.ChangeSkill(index); 
+        skillContainer.ChangeSkill(index-1); 
         planetResContainer.ReduceRes(ResourceType.DicePoint,skill.removePoint+1);
         
         
@@ -358,7 +358,7 @@ public class Planet : GameEntity
             return;
         }
 
-        skillContainer.RemoveSkill(index);
+        skillContainer.RemoveSkill(index-1);
         planetResContainer.ReduceRes(ResourceType.DicePoint,skill.removePoint);
     }
     #endregion

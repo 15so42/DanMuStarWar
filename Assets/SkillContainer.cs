@@ -33,7 +33,8 @@ public class SkillContainer : MonoBehaviour
 
     public void UseSkill(int index)
     {
-        skills[index].PlayCheck();
+        if(skills[index].passive==false)
+            skills[index].PlayCheck();
     }
 
     public void ChangeSkill(int index)
