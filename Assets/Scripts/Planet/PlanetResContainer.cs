@@ -75,10 +75,18 @@ public class PlanetResContainer : MonoBehaviour
         {
             timer = tickTime;
             var techRes = allRes.Find(x => x.resourceType == ResourceType.Tech);
+            techRes.resourceNum = (int)(techRes.resourceNum + 10);
             techRes.resourceNum = (int)(techRes.resourceNum * 1.1);
+            UpdateRes(techRes.resourceType,techRes.resourceNum);
             
-            var populationRes = allRes.Find(x => x.resourceType == ResourceType.Population);
-            populationRes.resourceNum = (int)(populationRes.resourceNum * 1.1);
+            var diceRes = allRes.Find(x => x.resourceType == ResourceType.DicePoint);
+            diceRes.resourceNum = (int) diceRes.resourceNum + 3;
+            diceRes.resourceNum = (int)(diceRes.resourceNum * 1.1);
+            UpdateRes(diceRes.resourceType,diceRes.resourceNum);
+            
+            
+            //var populationRes = allRes.Find(x => x.resourceType == ResourceType.Population);
+            //populationRes.resourceNum = (int)(populationRes.resourceNum * 1.1);
         }
     }
 }

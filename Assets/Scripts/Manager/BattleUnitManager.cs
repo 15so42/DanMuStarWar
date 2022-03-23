@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class BattleUnitManager : MonoBehaviour
 {
+    public static BattleUnitManager Instance;
+    
     public List<BattleUnit> allBattleUnits=new List<BattleUnit>();
 
     private void Awake()
     {
+        Instance = this;
         EventCenter.AddListener<BattleUnit>(EnumEventType.OnBattleUnitCreated,OnBattleUnitCreated);
     }
 

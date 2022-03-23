@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using Random = System.Random;
 
 /// <summary>
 /// 局内处理
 /// </summary>
-public class RoundManager : MonoBehaviour
+public class RoundManager
 {
+    
+    private float timer = 0;
+    
     private GameManager gameManager;
     private List<Player> players=new List<Player>();
     public void Init(GameManager gameManager, List<Player> players)
@@ -16,6 +20,16 @@ public class RoundManager : MonoBehaviour
         this.gameManager = gameManager;
         this.players = players;
         EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
+    }
+
+    public void Update()
+    {
+        timer += Time.deltaTime;
+        if (timer > 5)
+        {
+            GameEnvEventManager.Instance.PlayRandomEvent();
+            timer = -1000;
+        }
     }
 
     /// <summary>

@@ -16,9 +16,12 @@ public  class GameConst
    
    //子弹
    public const string BULLET_NORMAL = "Bullet";
+   public const string BULLET_SOLAR_STORM = "SolarStormBullet";
    
-   
+   //BattleUnit
+   public const string BATTLE_UNIT_LOOTER = "劫掠者";
 
    //FX
    public const string FX_BULLET_HIT = "BulletHitFx";
+   public const string FX_SOLAR_STORM = "SolarStormFx";
 }

@@ -166,6 +166,10 @@ public class Planet : GameEntity
     /// <param name="planet"></param>
     public void ClaimWar(Planet planet)
     {
+        if (planet == this)
+        {
+            TipsDialog.ShowDialog("不能对自己宣战",null);
+        }
         enemyPlanets.Add(planet);
         enemyPlayers.Add(planet.owner);
         var line = LineRenderManager.Instance.SetLineRender(transform.position, planet.transform.position);
@@ -175,7 +179,8 @@ public class Planet : GameEntity
     void DestroyWarLine(Planet planet)
     {
         var line = enemyPlanetLines.Find(x => x.planet == planet)?.line;
-        Destroy(line);
+        if(line)
+            Destroy(line.gameObject);
     }
 
     public void SetIndex(int index)

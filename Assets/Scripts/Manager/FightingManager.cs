@@ -186,7 +186,10 @@ public class FightingManager : MonoBehaviour
 
     private void Update()
     {
-        
+        if (roundManager!=null)
+        {
+            roundManager.Update();
+        }
 
         var draw=true;//和棋
 
