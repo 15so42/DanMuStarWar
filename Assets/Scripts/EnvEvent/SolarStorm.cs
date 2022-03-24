@@ -14,8 +14,9 @@ public class SolarStorm : GameEnvEvent
     public override void Run()
     {
         var battleUnits = BattleUnitManager.Instance.allBattleUnits;
-        Camera mainCamera=Camera.main;
-        mainCamera.transform.DOShakePosition(1, 3);
+        var mainCamera=Camera.main.GetComponent<MultipleTargetCamera>();
+        mainCamera.ShakeCamera();
+        
         //mainCamera.GetComponent<CameraShake>().Play();
         ResFactory.Instance.CreateFx(GameConst.FX_SOLAR_STORM, Vector3.zero);
         /*for (int i = 0; i < battleUnits.Count; i++)

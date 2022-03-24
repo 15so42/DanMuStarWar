@@ -48,14 +48,26 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     protected void Start()
     {
        base.Start();
-       hpUI.SetColor(ownerPlanet.planetColor);
+       if (showHpUI)
+       {
+           if (ownerPlanet)
+           {
+               hpUI.SetColor(ownerPlanet.planetColor);
+           }
+           else
+           {
+               hpUI.SetColor(Color.white);
+           }
+       }
+       
+       
       
        
        EventCenter.Broadcast(EnumEventType.OnBattleUnitCreated,this);
         //SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
     }
 
-    public GameEntity FindNearEnemy(bool onlyEnemyPlanet)
+    public virtual GameEntity FindNearEnemy(bool onlyEnemyPlanet)
     {
         GameEntity enemy = null;
         var enemyPlanets = ownerPlanet.enemyPlanets;
@@ -115,8 +127,12 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         ownerPlanet.battleUnits.Remove(this);
         DieFx();
         //Destroy(gameObject);
+
+        if (showHpUI)
+        {
+            Destroy(hpUI.gameObject);
+        }
         
-        Destroy(hpUI.gameObject);
         
         gameObject.SetActive(false);
         

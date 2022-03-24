@@ -20,8 +20,9 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    [Header("友军支援距离")] public float supportDistance=30;
 
    public bool die = false;
-   
 
+
+   public bool showHpUI=true;
    public HpBar hpUI;
    [Header("hpUIOffse")] public Vector3 hpUIOffse;
    [Header("HPUIScale")] public Vector3 hpUIScale;
@@ -40,8 +41,12 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    public void Start()
    {
       //UI
-      hpUI = GameManager.Instance.uiManager.CreateHpBar(this);
-      hpUI.Init(this);
+      if (showHpUI)
+      {
+         hpUI = GameManager.Instance.uiManager.CreateHpBar(this);
+         hpUI.Init(this);
+      }
+
       stateMachine.enabled = true;
    }
 

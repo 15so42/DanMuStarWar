@@ -3,111 +3,99 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
- 
+
+public enum CameraStatus
+{
+    Normal,
+    CloseUp,
+    Shake,
+}
+
 [RequireComponent(typeof(Camera))]
 public class MultipleTargetCamera : MonoBehaviour
 {
-    public List<Transform> targets;
- 
-    public Vector3 offset;
-    public float smoothTime = .5f;
- 
-    public float maxZoom = 40f;
-    public float minZoom = 10f;
-    public float zoomLimiter = 50f;
- 
-    private Vector3 velocity;
     private Camera cam;
+    public Vector3 center;
+    public Vector3 offset;
 
-    public bool moveAble = false;
+    public CameraStatus cameraStatus;
 
-    public Bounds bounds = new Bounds();
+   
+    private GameObject closeUpObj;
+    private float closeUpDistance = 10;
+    private float closeUpTimer=0;
     void Start()
     {
         cam = GetComponent<Camera>();
+        EventCenter.AddListener<Planet>(EnumEventType.OnPlanetCreated,OnPlanetCreated);
+        EventCenter.AddListener(EnumEventType.OnPlanetsSpawned,OnPlanetsSpawned);
     }
 
     public void BeginAnim()
     {
-        Vector3 centerPoint = GetCenterPoint();
-        transform.parent.transform.DOMove(centerPoint,3f).SetEase(Ease.OutQuart);
+        transform.transform.DOMove(center+offset,3f).SetEase(Ease.OutQuart);
+    }
+
+    void OnPlanetCreated(Planet planet)
+    {
+        
+    }
+
+    void OnPlanetsSpawned()
+    {
+        BeginAnim();
+    }
+
+    public void ShakeCamera()
+    {
+        cameraStatus = CameraStatus.Shake;
+        transform.DOShakePosition(1, 3).OnComplete(() =>
+        {
+            cameraStatus = CameraStatus.Normal;
+        });
+    }
+    public void StartCloseUpObj(GameObject go,float distance)
+    {
+        closeUpObj = go;
+       
+        closeUpDistance = distance;
+        cameraStatus = CameraStatus.CloseUp;
+    }
+
+    public void StopCloseUp()
+    {
+        cameraStatus = CameraStatus.Normal;
     }
  
     void LateUpdate()
     {
-        if (targets.Count == 0)
-            return;
- 
-        if(moveAble)
-            Move();
-        Zoom();
-        transform.LookAt(bounds.center);
-    }
-
-    public void AddTarget(Transform transform)
-    {
-        targets.Add(transform);
-    }
-
-    public void ClearTargets()
-    {
-        targets.Clear();
-    }
-    
-    void Zoom()
-    {
-        float newZoom = Mathf.Lerp(maxZoom, minZoom, GetGreatestDistance() / zoomLimiter);
-        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, newZoom, Time.deltaTime);
-    }
- 
-    void Move()
-    {
-        Vector3 centerPoint = GetCenterPoint();
-       
- 
-        //Vector3 newPosition = centerPoint + offset;
- 
-        //transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, smoothTime);
-    }
- 
-    float GetGreatestDistance()
-    {
-        var bounds = new Bounds(targets[0].position, Vector3.zero);
-        for (int i = 0; i < targets.Count; i++)
+        
+        if (cameraStatus==CameraStatus.CloseUp)
         {
-            if (targets[i] == null)
+            closeUpTimer += Time.deltaTime;
+            if (closeUpTimer > 5)
             {
-                targets.RemoveAt(i);
-                i--;
+                StopCloseUp();
             }
-
-            bounds.Encapsulate(targets[i].position);
+            transform.LookAt(closeUpObj.transform.position);
+            //transform.RotateAround(closeUpObj.transform.position,10*Time.deltaTime);
+            transform.position = Vector3.Slerp( transform.position,closeUpObj.transform.position + closeUpObj.transform.forward * closeUpDistance,1f*Time.deltaTime);
+            
         }
- 
-        return bounds.size.x*1.4f;
-    }
- 
-    Vector3 GetCenterPoint()
-    {
-        if(targets.Count<=0)
-            return Vector3.zero;
-        if (targets.Count == 1)
+        else if (cameraStatus == CameraStatus.Shake)
         {
-            return targets[0].position;
+            //DoNothing
         }
+        else
+        {
+            transform.position = center + offset;
+            transform.LookAt(center);
+        }
+       
+    }
+
     
-        bounds = new Bounds(targets[0].position, Vector3.zero);
-        for (int i = 0; i < targets.Count; i++)
-        {
-            bounds.Encapsulate(targets[i].position);
-        }
- 
-        return bounds.center;
-    }
+   
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color=Color.red;
-        Gizmos.DrawWireCube(bounds.center,bounds.size);
-    }
+  
 }

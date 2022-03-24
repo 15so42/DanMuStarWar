@@ -126,16 +126,10 @@ public class FightingManager : MonoBehaviour
         mapManager.PlaceAll();//生成场景
         
         //生成星球和石头完成后，将相机父物体移动到所有星球中心，同时相机的lookAt目标更改为相机父物体
-        Camera mainCamera=Camera.main;
+        /*Camera mainCamera=Camera.main;
         var MPCamera = mainCamera.GetComponent<MultipleTargetCamera>();
-        Vector3 center=Vector3.zero;
         
-        foreach (var p in gameManager.planetManager.allPlanets)
-        {
-            //MPCamera.AddTarget(p.transform);
-            center += p.transform.position;
-        }
-        MPCamera.BeginAnim();
+        MPCamera.BeginAnim();*/
 
         
         

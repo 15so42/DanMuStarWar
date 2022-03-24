@@ -12,12 +12,21 @@ public class Looters : GameEnvEvent
    
     public override void Run()
     {
+        List<GameObject> looterList=new List<GameObject>();
+        var camera = Camera.main.GetComponent<MultipleTargetCamera>();
+        var center =camera.center;
         var lootersCount = UnityEngine.Random.Range(1, 4);
         for (int i = 0; i < lootersCount; i++)
         {
+            var pos = UnityEngine.Random.insideUnitSphere.normalized * 100;
+            pos.y = UnityEngine.Random.Range(-20, 20);
             var battleUnit = ResFactory.Instance.CreateBattleUnit(GameConst.BATTLE_UNIT_LOOTER,
-                UnityEngine.Random.insideUnitSphere.normalized * 300f);
+                pos);
+            battleUnit.transform.LookAt(center);
+            looterList.Add(battleUnit);
         }
+        
+        camera.StartCloseUpObj(looterList[UnityEngine.Random.Range(0,looterList.Count)],30f);
     }
 
    

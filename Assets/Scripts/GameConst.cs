@@ -20,6 +20,7 @@ public  class GameConst
    
    //BattleUnit
    public const string BATTLE_UNIT_LOOTER = "劫掠者";
+   public const string BATTLE_UNIT_LOOTER_PLANE = "劫掠者舰载机";
 
    //FX
    public const string FX_BULLET_HIT = "BulletHitFx";
