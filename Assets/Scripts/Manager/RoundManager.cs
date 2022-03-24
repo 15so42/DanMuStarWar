@@ -76,6 +76,22 @@ public class RoundManager
             victimPlanet.ClaimWar(attckerPlanet);
         }
     }
+
+    void ParseDefend(int uid, string trim)
+    {
+        string pattern = @"^(驻守){1}(\d{1})$";
+        if (Regex.IsMatch(trim, pattern))
+        {
+            Debug.Log("解析驻守命令:"+trim);
+            int targetIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
+
+            var attckerPlanet = GetPlantByPlayerUid(uid);
+            var target = GetPlanetByIndex(targetIndex);
+
+            attckerPlanet.ClaimDefend(target);
+            
+        }
+    }
     
     void ParseChangeSkill(int uid,string trim)
     {
@@ -165,6 +181,11 @@ public class RoundManager
         var trim=Regex.Replace(text.Trim(), "\\s+", "");//去除所有空格
         
         if (text.StartsWith("宣战"))
+        {
+            ParseClaimWar(uid, trim);
+        }
+        
+        if (text.StartsWith("驻守"))
         {
             ParseClaimWar(uid, trim);
         }

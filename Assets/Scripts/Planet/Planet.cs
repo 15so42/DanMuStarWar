@@ -42,6 +42,7 @@ public class Planet : GameEntity
     public List<Player> allyPlayers = new List<Player>();
     
     public List<Planet> enemyPlanets=new List<Planet>();
+    public List<Planet> colonyPlanets = new List<Planet>();
 
     [Header("PlanetUI")] public PlanetUI planetUi;
 
@@ -172,6 +173,22 @@ public class Planet : GameEntity
         }
         enemyPlanets.Add(planet);
         enemyPlayers.Add(planet.owner);
+        var line = LineRenderManager.Instance.SetLineRender(transform.position, planet.transform.position);
+        enemyPlanetLines.Add(new LineRenderPair(planet, line));
+    }
+    
+    public void ClaimDefend(Planet planet)
+    {
+        if (planet == this)
+        {
+            TipsDialog.ShowDialog("不能驻守自己",null);
+        }
+        colonyPlanets.Add(planet);
+
+        for (int i = 0; i < battleUnits.Count; i+=2)
+        {
+            battleUnits[i].ChangeOwnerPlanet(planet);
+        }
         var line = LineRenderManager.Instance.SetLineRender(transform.position, planet.transform.position);
         enemyPlanetLines.Add(new LineRenderPair(planet, line));
     }

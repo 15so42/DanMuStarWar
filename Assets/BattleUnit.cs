@@ -106,7 +106,12 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     {
         this.chaseTarget = target;
     }
-    
+
+    public void ChangeOwnerPlanet(Planet planet)
+    {
+        ownerPlanet = planet;
+        CustomEvent.Trigger(gameObject, "OnOwnerPlanetChanged");
+    }
 
     public void Init(Planet planet)
     {
