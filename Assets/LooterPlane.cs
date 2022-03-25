@@ -61,4 +61,10 @@ public class LooterPlane : WarPlane
             
         return enemy;
     }
+
+    public override void Die()
+    {
+        base.Die();
+    }
+    
 }

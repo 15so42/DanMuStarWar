@@ -1023,8 +1023,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855df10198e6d344ca4723cbfdadc92c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
-  hp: 100
+  maxHp: 2000
+  hp: 2000
   pDef: 50
   mDef: 50
   gameEntity: {fileID: 0}
@@ -1045,6 +1045,7 @@ MonoBehaviour:
   radius: 5
   supportDistance: 30
   die: 0
+  showHpUI: 1
   hpUI: {fileID: 0}
   hpUIOffse: {x: 0, y: 0, z: 0}
   hpUIScale: {x: 0, y: 0, z: 0}
@@ -1053,6 +1054,10 @@ MonoBehaviour:
   battleUnitManager: {fileID: 0}
   planetManager: {fileID: 0}
   findEnemyDistance: 7
+  canDefendOtherPlanet: 0
+  dicePoint: 0
+  techPoint: 0
+  looterPlanes: []
 --- !u!1 &6178362123685165557
 GameObject:
   m_ObjectHideFlags: 0

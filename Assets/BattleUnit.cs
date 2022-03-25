@@ -22,6 +22,8 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     public float findEnemyDistance = 7;
     public IVictimAble chaseTarget = null;
 
+    [Header("可驻守")]
+    public bool canDefendOtherPlanet=true;
     
     protected void Awake()
     {
@@ -129,11 +131,15 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     {
         base.Die();
         stateMachine.enabled = false;
-        ownerPlanet.battleUnits.Remove(this);
+        if (ownerPlanet)
+        {
+            ownerPlanet.battleUnits.Remove(this);
+        }
+        
         DieFx();
         //Destroy(gameObject);
 
-        if (showHpUI)
+        if (showHpUI && hpUI)
         {
             Destroy(hpUI.gameObject);
         }

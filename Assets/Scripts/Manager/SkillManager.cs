@@ -24,6 +24,11 @@ public class SkillManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        lv2Skill = lv2Skill.Concat(lv1Skill).ToList();
+        lv3SKill = lv3SKill.Concat(lv2Skill).ToList();
+        lv4Skill = lv4Skill.Concat(lv3SKill).ToList();
+
+        allSkill = allSkill.Concat(lv4Skill).ToList();
     }
 
     // Start is called before the first frame update

@@ -14,6 +14,7 @@ public class LineRenderManager : MonoBehaviour
     }
 
     public GameObject lineRenderPfb;
+    public GameObject colonyLinePfb;
 
     private GameObject parent;
     // Start is called before the first frame update
@@ -32,10 +33,7 @@ public class LineRenderManager : MonoBehaviour
     {
         if (pfb == null)
             pfb = lineRenderPfb;
-        else
-        {
-            pfb = lineRenderPfb;
-        }
+       
 
         GameObject lineRenderGo = null;
         RecycleAbleObject lineRender=UnityObjectPoolManager.Allocate(pfb.name);

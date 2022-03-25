@@ -31,10 +31,20 @@ public class SkillContainer : MonoBehaviour
         return true;
     }
 
-    public void UseSkill(int index)
+    public bool UseSkill(int index)
     {
-        if(skills[index].passive==false)
-            skills[index].PlayCheck();
+        ErrorCode errCode = null;
+        if(skills[index].passive==false)//主动技能
+            errCode=skills[index].PlayCheck();
+        else//被动技能
+        {
+            return false;
+        }
+        
+        if(errCode!=null && errCode.code!=ErrorType.Success)
+            return false;
+        return true;
+
     }
 
     public void ChangeSkill(int index)

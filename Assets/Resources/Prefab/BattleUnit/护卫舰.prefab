@@ -305,6 +305,7 @@ MonoBehaviour:
   radius: 1
   supportDistance: 30
   die: 0
+  showHpUI: 1
   hpUI: {fileID: 0}
   hpUIOffse: {x: 0, y: 5, z: 0}
   hpUIScale: {x: 0.5, y: 0, z: 0}
@@ -313,6 +314,7 @@ MonoBehaviour:
   battleUnitManager: {fileID: 0}
   planetManager: {fileID: 0}
   findEnemyDistance: 30
+  canDefendOtherPlanet: 1
   weapons:
   - {fileID: 0}
 --- !u!1 &2729318951462193991
@@ -340,7 +342,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2729318951462193991}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2, y: 0, z: -1.12}
+  m_LocalPosition: {x: -0.993, y: 0, z: -1.321}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2950280209295106313}
@@ -786,7 +788,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5517975627857016901}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.14, y: 0, z: -1.13}
+  m_LocalPosition: {x: 0.883, y: 0, z: -1.217}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2950280209295106313}

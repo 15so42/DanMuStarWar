@@ -25,10 +25,10 @@ public class RoundManager
     public void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 5)
+        if (timer >180)
         {
             GameEnvEventManager.Instance.PlayRandomEvent();
-            timer = -1000;
+            timer = 0;
         }
     }
 
@@ -88,6 +88,7 @@ public class RoundManager
             var attckerPlanet = GetPlantByPlayerUid(uid);
             var target = GetPlanetByIndex(targetIndex);
 
+            
             attckerPlanet.ClaimDefend(target);
             
         }
@@ -187,7 +188,7 @@ public class RoundManager
         
         if (text.StartsWith("驻守"))
         {
-            ParseClaimWar(uid, trim);
+            ParseDefend(uid, trim);
         }
         
         if (text.StartsWith("使用技能")||text.StartsWith("s")||text.StartsWith("S"))

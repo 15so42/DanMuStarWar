@@ -52,7 +52,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
 
    public bool IsAlive()
    {
-      return props.IsAlive();
+      return props.IsAlive() || die==false;
    }
    
 
@@ -95,6 +95,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    }
    public virtual void Die()
    {
+      die = true;
       ResFactory.Instance.CreateFx(GameConst.FX_BULLET_HIT, transform.position);
      //Destroy(gameObject);不销毁，销毁可能导致各种引用丢失的问题
    }

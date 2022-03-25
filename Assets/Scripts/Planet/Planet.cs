@@ -52,6 +52,7 @@ public class Planet : GameEntity
     
     //LineRenders
     public List<LineRenderPair> enemyPlanetLines=new List<LineRenderPair>();
+    public List<LineRenderPair> colonyPlanetLines=new List<LineRenderPair>();
     private List<LineRenderer> lineRenderers=new List<LineRenderer>();
     
     //自己单位管理
@@ -179,18 +180,31 @@ public class Planet : GameEntity
     
     public void ClaimDefend(Planet planet)
     {
+        if (planet.owner != null)
+        {
+            LogTip("目标星球已被占领");
+            return;
+        }
         if (planet == this)
         {
-            TipsDialog.ShowDialog("不能驻守自己",null);
+            LogTip("不能驻守自己");
+            return;
         }
+
+        enemyPlanets.Remove(planet);
+        DestroyWarLine(planet);
         colonyPlanets.Add(planet);
 
-        for (int i = 0; i < battleUnits.Count; i+=2)
+        for (int i = 0; i < battleUnits.Count; i+=Random.Range(1,3))
         {
+            if (battleUnits[i].ownerPlanet == planet || battleUnits[i].canDefendOtherPlanet==false)
+            {
+                continue;
+            }
             battleUnits[i].ChangeOwnerPlanet(planet);
         }
-        var line = LineRenderManager.Instance.SetLineRender(transform.position, planet.transform.position);
-        enemyPlanetLines.Add(new LineRenderPair(planet, line));
+        var line = LineRenderManager.Instance.SetLineRender(transform.position, planet.transform.position,LineRenderManager.Instance.colonyLinePfb);
+        colonyPlanetLines.Add(new LineRenderPair(planet, line));
     }
 
     void DestroyWarLine(Planet planet)
@@ -198,6 +212,9 @@ public class Planet : GameEntity
         var line = enemyPlanetLines.Find(x => x.planet == planet)?.line;
         if(line)
             Destroy(line.gameObject);
+        var colonyLine = colonyPlanetLines.Find(x => x.planet == planet)?.line;
+        if(colonyLine)
+            Destroy(colonyLine.gameObject);
     }
 
     public void SetIndex(int index)
@@ -338,8 +355,9 @@ public class Planet : GameEntity
         }
 
         
-        skillContainer.UseSkill(index-1);
-        planetResContainer.ReduceRes(ResourceType.DicePoint,skill.usePoint);
+        var useSuccess=skillContainer.UseSkill(index-1);
+        if(useSuccess)
+            planetResContainer.ReduceRes(ResourceType.DicePoint,skill.usePoint);
         
             
     }

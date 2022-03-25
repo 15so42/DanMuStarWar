@@ -12,8 +12,9 @@ public class Looter : BattleUnit
    public List<LooterPlane> looterPlanes=new List<LooterPlane>();
    void Start()
    {
+      base.Start();
       StartCoroutine(SpawnLooterPlaneC());
-      Timer.Register(120f, Die);
+      Timer.Register(360, Die);
    }
    //舰载机
    void SpawnLooterPlane()
