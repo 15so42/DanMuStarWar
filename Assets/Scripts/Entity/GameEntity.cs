@@ -64,7 +64,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
       OnHpChanged(hpValue,props.maxHp);
       
 
-      if (hpValue <= 0)
+      if (hpValue <= 0 && !die)
       {
          Die();
       }
@@ -95,9 +95,11 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    }
    public virtual void Die()
    {
+      if(die)
+         return;
       die = true;
       ResFactory.Instance.CreateFx(GameConst.FX_BULLET_HIT, transform.position);
-     //Destroy(gameObject);不销毁，销毁可能导致各种引用丢失的问题
+      //Destroy(gameObject);不销毁，销毁可能导致各种引用丢失的问题
    }
 
    private void OnDestroy()

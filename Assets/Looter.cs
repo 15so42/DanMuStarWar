@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using GameCode.Tools;
 using UnityEngine;
@@ -10,11 +11,12 @@ public class Looter : BattleUnit
    public int techPoint;
    
    public List<LooterPlane> looterPlanes=new List<LooterPlane>();
+   private UnityTimer.Timer dieTimer;
    void Start()
    {
       base.Start();
       StartCoroutine(SpawnLooterPlaneC());
-      Timer.Register(360, Die);
+      dieTimer=Timer.Register(360, Die);
    }
    //舰载机
    void SpawnLooterPlane()
@@ -47,5 +49,8 @@ public class Looter : BattleUnit
       }
    }
 
-
+   private void OnDisable()
+   {
+      dieTimer?.Cancel();
+   }
 }

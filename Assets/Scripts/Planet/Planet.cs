@@ -80,7 +80,7 @@ public class Planet : GameEntity
         EventCenter.AddListener<Player>(EnumEventType.OnPlayerJoined,OnPlayerJoined);
         
         
-        EventCenter.AddListener<Planet>(EnumEventType.OnPlanetCreated,OnPlayerCreated);
+        EventCenter.AddListener<Planet>(EnumEventType.OnPlanetCreated,OnPlanetCreated);
         
         EventCenter.AddListener<BattleUnit>(EnumEventType.OnBattleUnitCreated,OnBattleUnitCreated);
         EventCenter.AddListener<Planet>(EnumEventType.OnPlanetDie,DestroyWarLine);
@@ -171,6 +171,17 @@ public class Planet : GameEntity
         if (planet == this)
         {
             TipsDialog.ShowDialog("不能对自己宣战",null);
+            return;
+        }
+        if (planet.die)
+        {
+            TipsDialog.ShowDialog("无法对已淘汰星球宣战",null);
+            return;
+        }
+        if (planet.owner==null)
+        {
+            TipsDialog.ShowDialog("无法对无人星球宣战",null);
+            return;
         }
         enemyPlanets.Add(planet);
         enemyPlayers.Add(planet.owner);
@@ -222,7 +233,7 @@ public class Planet : GameEntity
         planetIndex = index;
         planetUi.SetIndex(planetIndex);
     }
-    void OnPlayerCreated(Planet planet)
+    void OnPlanetCreated(Planet planet)
     {
         //if(this!=planet)
             //enemyPlanets.Add(planet);
@@ -414,8 +425,9 @@ public class Planet : GameEntity
         //Destroy(gameObject);
         
         Destroy(hpUI.gameObject);
-        Destroy(planetUi.gameObject);
-        gameObject.SetActive(false);
+        //Destroy(planetUi.gameObject);
+        planetUi.UpdateOwnerOnDie();
+        //gameObject.SetActive(false);
        
     }
 

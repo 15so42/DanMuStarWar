@@ -5583,6 +5583,7 @@ MonoBehaviour:
   radius: 6.91
   supportDistance: 30
   die: 0
+  showHpUI: 1
   hpUI: {fileID: 0}
   hpUIOffse: {x: 0, y: 30, z: 0}
   hpUIScale: {x: 4, y: 2, z: 1}
@@ -5592,6 +5593,7 @@ MonoBehaviour:
   planetResContainer: {fileID: 0}
   canBeOwner: 0
   enemyPlanets: []
+  colonyPlanets: []
   planetUi: {fileID: 263385022979831298, guid: a6228bbe1c64ec34e989e284dd10627f, type: 3}
   planetColor: {r: 0, g: 0, b: 0, a: 0}
   spawnPoint: {fileID: 2248002857993935211}
@@ -5654,8 +5656,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855df10198e6d344ca4723cbfdadc92c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 1000
-  hp: 1000
+  maxHp: 300
+  hp: 300
   pDef: 50
   mDef: 50
   gameEntity: {fileID: 0}

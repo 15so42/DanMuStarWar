@@ -32,7 +32,8 @@ public class PlayerIconUi : MonoBehaviour
     {
         nickName.text = player.userName;
         this.player = player;
-        StartCoroutine(DownSprite(player.faceUrl, faceImg));
+        //if(gameObject.activeSelf) 
+            FightingManager.Instance.StartCoroutine(DownSprite(player.faceUrl, faceImg));
         
        
     }

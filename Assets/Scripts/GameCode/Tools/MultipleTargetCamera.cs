@@ -64,6 +64,7 @@ public class MultipleTargetCamera : MonoBehaviour
 
     public void StopCloseUp()
     {
+        closeUpTimer = 0;
         cameraStatus = CameraStatus.Normal;
     }
  

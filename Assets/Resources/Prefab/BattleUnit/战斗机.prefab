@@ -338,7 +338,7 @@ MonoBehaviour:
   props: {fileID: 0}
   skillContainer: {fileID: 0}
   radius: 1
-  supportDistance: 30
+  supportDistance: 300
   die: 0
   showHpUI: 1
   hpUI: {fileID: 0}

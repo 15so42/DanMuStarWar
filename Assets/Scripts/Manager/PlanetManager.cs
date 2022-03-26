@@ -15,65 +15,55 @@ public class PlanetManager : MonoBehaviour
     }
     public List<Planet> allPlanets=new List<Planet>();
 
-    public List<Planet> ownerAblePlanets=new List<Planet>();
+    //public List<Planet> ownerAblePlanets=new List<Planet>();
 
     
-    public int GetAlivePlanetCount()
-    {
-        int count=0;
-        for (int i = 0; i < ownerAblePlanets.Count; i++)
-        {
-            if (ownerAblePlanets[i] != null && ownerAblePlanets[i].die == false)
-            {
-                count++;
-            }
-        }
-
-        return count;
-    }
+    
 
     void OnPlanetCreated(Planet planet)
     {
         planet.SetIndex(allPlanets.Count);
         allPlanets.Add(planet);
-        
-       
-        if (planet.canBeOwner)
-        {
-            ownerAblePlanets.Add(planet);
-        }
+
+
+        // if (planet.canBeOwner)
+        // {
+        //     ownerAblePlanets.Add(planet);
+        // }
     }
 
     void OnPlanetDie(Planet planet)
     {
-        TipsDialog.ShowDialog(planet.owner+"的星球毁灭了",null);
-        allPlanets.Remove(planet);
-        ownerAblePlanets.Remove(planet);
+        TipsDialog.ShowDialog(planet.owner==null?"无人星球毁灭了": planet.owner.userName + "的星球毁灭了",null);
+        //allPlanets.Remove(planet);
+       
         
         //获得剩余玩家数
         var count = 0;
-        Planet lastPlanet = null;
+        Planet lastAlivePlanet = null;//最后存活的星球
         
         for (int i = 0; i < allPlanets.Count; i++)
         {
-            if (allPlanets[i].owner != null)
+            if (allPlanets[i].die == false && allPlanets[i].owner!=null)//存活并且有玩家
             {
                 count++;
-                lastPlanet = allPlanets[i];
+                lastAlivePlanet = allPlanets[i];
             }
         }
         
        
-        if (count == 1)
+        if (count == 1)//如果存活的星球只剩最后一个
         {
-            FightingManager.Instance.GameOver(lastPlanet);
+            FightingManager.Instance.GameOver(lastAlivePlanet);
             //清除剩下所有的星球
             
             for (int i = 0; i < allPlanets.Count; i++)
             {
                 
-                   allPlanets[i].Die();
-                   i--;
+                if(allPlanets[i].die)//已经死过的不用再死了
+                    continue;
+                allPlanets[i].Die();
+                i--;
 
 
             }

@@ -35,10 +35,11 @@ public class WarPlane : BattleUnit,ISupportAble
       base.OnAttacked(attackInfo);
       //if(!chaseTarget)
       var attacker = attackInfo.attacker;
+      if(attacker==null)//attacker为null表示是系统，或者事件导致的扣血
+         return;
       var attackerOwner = attacker.GetAttackerOwner();
       var victimOwner = GetVictimOwner();
-      var aName=attacker.GetAttackEntity().gameObject;
-      var vName=gameObject.name;
+      
       
       if ( attackerOwner != victimOwner) 
       {
@@ -55,6 +56,7 @@ public class WarPlane : BattleUnit,ISupportAble
 
    public void Support(BattleUnit attacker)
    {
+      
       SetChaseTarget(attacker);
    }
 

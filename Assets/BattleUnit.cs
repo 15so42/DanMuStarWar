@@ -90,7 +90,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
             else
             {
                 var enemyUnit = planet.battleUnits[Random.Range(0, planet.battleUnits.Count)];
-                if (Vector3.Distance(enemyUnit.transform.position, transform.position) < findEnemyDistance)
+                if (enemyUnit && enemyUnit.die==false && enemyUnit.GetVictimOwner()!=GetAttackerOwner() && Vector3.Distance(enemyUnit.transform.position, transform.position) < findEnemyDistance)
                 {
                    
                     enemy = enemyUnit;
@@ -152,18 +152,18 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     public override void OnAttacked(AttackInfo attackInfo)
     {
         base.OnAttacked(attackInfo);
-        if (!IsTargetAlive())//当自己处于和平状态时被袭击
+        if (/*!*/IsTargetAlive())//当自己处于和平状态时被袭击
         {
             if(Math.Abs(supportDistance) < 0.5f)
                 return;
-            if (attackInfo.attacker.GetAttackerOwner() == GetVictimOwner())
+            if (attackInfo.attacker.GetAttackerOwner() == GetVictimOwner())//同一阵营
             {
                 return;
                 
             }
             for (int i = 0; i < ownerPlanet.battleUnits.Count; i++)
             {
-                if (Vector3.Distance(ownerPlanet.battleUnits[i].transform.position, transform.position) < supportDistance)
+                if (ownerPlanet.battleUnits[i]!=this && Vector3.Distance(ownerPlanet.battleUnits[i].transform.position, transform.position) < supportDistance)
                 {
                     var supportAble = ownerPlanet.battleUnits[i].GetComponent<ISupportAble>();
                     if (supportAble != null)

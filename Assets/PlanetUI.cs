@@ -99,6 +99,13 @@ public class PlanetUI : MonoBehaviour
 
        
     }
+
+    public void UpdateOwnerOnDie()
+    {
+        
+        playerName.text = "["+planetIndex+"][淘汰]"+player.userName;
+        
+    }
     
     
 
