@@ -24,6 +24,8 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
 
    public bool showHpUI=true;
    public HpBar hpUI;
+
+   
    [Header("hpUIOffse")] public Vector3 hpUIOffse;
    [Header("HPUIScale")] public Vector3 hpUIScale;
 
@@ -72,7 +74,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    
    public void OnHpChanged(int hp,int maxHP)
    {
-      onHpChanged.Invoke(hp,maxHP);
+      onHpChanged?.Invoke(hp,maxHP);
    }
 
    public virtual void AddSkill(SkillItemUI skillItemUi)

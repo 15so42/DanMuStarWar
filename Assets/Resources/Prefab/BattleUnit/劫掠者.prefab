@@ -1047,8 +1047,8 @@ MonoBehaviour:
   die: 0
   showHpUI: 1
   hpUI: {fileID: 0}
-  hpUIOffse: {x: 0, y: 0, z: 0}
-  hpUIScale: {x: 0, y: 0, z: 0}
+  hpUIOffse: {x: 0, y: -30, z: 0}
+  hpUIScale: {x: 1.5, y: 1.75, z: 0}
   ownerPlanet: {fileID: 0}
   gameManager: {fileID: 0}
   battleUnitManager: {fileID: 0}

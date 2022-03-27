@@ -19,6 +19,19 @@ public class LineRenderPair
     }
 }
 
+public class ColonyPair
+{
+    public Planet owner;
+    public float point;
+
+    public ColonyPair(Planet owner, int point)
+    {
+        this.owner = owner;
+        this.point = point;
+    }
+}
+
+
 public class Planet : GameEntity
 {
 
@@ -47,6 +60,15 @@ public class Planet : GameEntity
     [Header("PlanetUI")] public PlanetUI planetUi;
 
     public Color planetColor;
+    //ringUI
+    private ColonyRingUi ringUi;
+    public Action<float, float> onColonyPointChanged;
+    public Vector3 ringOffset;
+    public Vector3 ringUiScale;
+    //占领点计算
+    public List<ColonyPair> colonyPairs=new List<ColonyPair>();
+    [Header("被占领点数")] public float colonyPoint;
+    public bool occupied = false;
     
     public Transform spawnPoint;
     
@@ -58,10 +80,10 @@ public class Planet : GameEntity
     //自己单位管理
     public List<BattleUnit> battleUnits=new List<BattleUnit>();
 
-    [Header("移除技能需要的骰子点数")]
-    public int removeDicePoint = 2;
-    public int maxSkillCount = 3;
     
+    public int maxSkillCount = 3;
+
+      
     void Awake()
     {
         base.Awake();
@@ -84,10 +106,103 @@ public class Planet : GameEntity
         
         EventCenter.AddListener<BattleUnit>(EnumEventType.OnBattleUnitCreated,OnBattleUnitCreated);
         EventCenter.AddListener<Planet>(EnumEventType.OnPlanetDie,DestroyWarLine);
+        EventCenter.AddListener<Planet>(EnumEventType.OnPlanetDie,DestroyDefendLine);
+        
+        //驻守
+        EventCenter.AddListener<Planet,Planet>(EnumEventType.OnPlanetOccupied,OnPlanetOccupied);
+        EventCenter.AddListener<Planet,Planet>(EnumEventType.OnColonyLost,OnColonyLost);
         
         
        
     }
+
+    public void SetRingPoint(float point)
+    {
+        colonyPoint = Mathf.Clamp(point, 0, 100);
+        
+        onColonyPointChanged?.Invoke(colonyPoint,100);
+    }
+
+
+    public void OnPlanetOccupied(Planet attacker,Planet colony)
+    {
+        if (attacker == this)
+        {
+            LogTip("占领" + colony.planetIndex);
+
+            colonyPlanets.Add(colony);
+            var line = LineRenderManager.Instance.SetLineRender(transform.position, colony.transform.position,
+                LineRenderManager.Instance.colonyLinePfb);
+            colonyPlanetLines.Add(new LineRenderPair(colony, line));
+        }
+    }
+    
+    public void OnColonyLost(Planet owner,Planet colony)
+    {
+        if (owner==this)
+        {
+            LogTip("星球"+colony.planetIndex+"失守");
+        }
+    }
+    
+    
+
+    /// <summary>
+    /// 被驻守
+    /// </summary>
+    /// <param name="planet"></param>
+    /// <param name="point"></param>
+    public void Defend(Planet planet,float point)
+    {
+        
+        var pair = colonyPairs.Find(x => x.owner == planet);
+        if ( pair == null)
+        {
+            pair = new ColonyPair(planet, 0);
+            colonyPairs.Add(pair);
+        }
+
+        var removedOther = false;
+        for (int i = 0; i < colonyPairs.Count; i++)
+        {
+            var p = colonyPairs[i];
+            if (p != pair)
+            {
+                if (p.point > 0)
+                {
+                    p.point -= point;//削除其余势力的点数
+                    if (p.point <= 0)//其余势力被削弱到0
+                    {
+                        EventCenter.Broadcast(EnumEventType.OnColonyLost,p.owner,this);
+                    }
+                    removedOther = true;
+                }
+                
+                break;
+            }
+        }
+
+        if (removedOther == false)
+            pair.point += point;
+
+        var sumPoint = 0f;
+        //统计所有势力的点数
+        for (int i = 0; i < colonyPairs.Count; i++)
+        {
+            var p = colonyPairs[i];
+           
+                sumPoint += p.point;//削除其余势力的点数
+                if (sumPoint >= 100)
+                {
+                    EventCenter.Broadcast(EnumEventType.OnPlanetOccupied,p.owner,this);
+                    break;
+                }
+            
+        }
+        SetRingPoint(sumPoint);
+
+    }
+    
 
     void OnBattleUnitCreated(BattleUnit battleUnit)
     {
@@ -102,6 +217,16 @@ public class Planet : GameEntity
     {
         base.Start();
         hpUI.SetColor(planetColor);
+        
+        
+        ringUi = GameManager.Instance.uiManager.CreateRingUi(this);
+        ringUi.Init(this,planetColor);
+        SetRingPoint(0);
+        //if(colonyPoint==0)
+        //    ringUi.gameObject.SetActive(false);
+        
+
+        
         foreach (var t in taskCenters)
         {
             t.Init(this);
@@ -173,22 +298,24 @@ public class Planet : GameEntity
             TipsDialog.ShowDialog("不能对自己宣战",null);
             return;
         }
-        if (planet.die)
+        if (this.die || planet.die)
         {
             TipsDialog.ShowDialog("无法对已淘汰星球宣战",null);
             return;
         }
-        if (planet.owner==null)
+        if (owner==null || planet.owner==null)
         {
             TipsDialog.ShowDialog("无法对无人星球宣战",null);
             return;
         }
+        
         enemyPlanets.Add(planet);
         enemyPlayers.Add(planet.owner);
         var line = LineRenderManager.Instance.SetLineRender(transform.position, planet.transform.position);
         enemyPlanetLines.Add(new LineRenderPair(planet, line));
     }
-    
+
+   
     public void ClaimDefend(Planet planet)
     {
         if (planet.owner != null)
@@ -204,7 +331,9 @@ public class Planet : GameEntity
 
         enemyPlanets.Remove(planet);
         DestroyWarLine(planet);
-        colonyPlanets.Add(planet);
+        
+        var line = LineRenderManager.Instance.SetLineRender(transform.position, planet.transform.position,LineRenderManager.Instance.colonyLinePfb);
+        Destroy(line.gameObject,5f);
 
         for (int i = 0; i < battleUnits.Count; i+=Random.Range(1,3))
         {
@@ -212,17 +341,35 @@ public class Planet : GameEntity
             {
                 continue;
             }
-            battleUnits[i].ChangeOwnerPlanet(planet);
+
+            battleUnits[i].SetDefendTarget(planet);
+            
         }
-        var line = LineRenderManager.Instance.SetLineRender(transform.position, planet.transform.position,LineRenderManager.Instance.colonyLinePfb);
-        colonyPlanetLines.Add(new LineRenderPair(planet, line));
+       
     }
+
+   
 
     void DestroyWarLine(Planet planet)
     {
+        if (planet == this)
+        {
+            //自己
+            foreach (var t in enemyPlanetLines)
+            {
+                Destroy(t.line.gameObject);
+            }
+            
+            return;
+        }
         var line = enemyPlanetLines.Find(x => x.planet == planet)?.line;
         if(line)
             Destroy(line.gameObject);
+       
+    }
+    
+    void DestroyDefendLine(Planet planet)
+    {
         var colonyLine = colonyPlanetLines.Find(x => x.planet == planet)?.line;
         if(colonyLine)
             Destroy(colonyLine.gameObject);
@@ -261,6 +408,7 @@ public class Planet : GameEntity
     {
         this.owner = player;
         planetUi.SetOwner(player);
+        ringUi.gameObject.SetActive(false);
         //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_探索船",5)));
         //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_探索船",5)));
         //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_战斗机",5)));
@@ -441,6 +589,12 @@ public class Planet : GameEntity
         return this;
     }
 
-   
+    public override void OnStartWaitingJoin()
+    {
+        Destroy(planetUi.gameObject);
+        if(gameObject)
+            //为新的流程做好准备
+            Destroy(gameObject);
+    }
     
 }

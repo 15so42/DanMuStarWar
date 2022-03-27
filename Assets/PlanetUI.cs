@@ -103,7 +103,7 @@ public class PlanetUI : MonoBehaviour
     public void UpdateOwnerOnDie()
     {
         
-        playerName.text = "["+planetIndex+"][淘汰]"+player.userName;
+        playerName.text = "["+planetIndex+"][荒废]"+(player==null?"":player.userName+"");
         
     }
     

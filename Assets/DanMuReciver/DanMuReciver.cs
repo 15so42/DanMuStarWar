@@ -37,6 +37,7 @@ public class DanMuReciver : MonoBehaviour
     public float tickInterval=2f;//轮询间隔
     
     
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -99,7 +100,7 @@ public class DanMuReciver : MonoBehaviour
         while (true) { 
             
             request = UnityWebRequest.Get(url);
-            request.timeout = 1;
+            request.timeout = 3;
             yield return request.SendWebRequest();
             
             if(request.isNetworkError || request.isHttpError) {

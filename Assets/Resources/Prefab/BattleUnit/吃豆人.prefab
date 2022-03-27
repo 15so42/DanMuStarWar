@@ -732,14 +732,16 @@ MonoBehaviour:
   radius: 3
   supportDistance: 0
   die: 0
+  showHpUI: 1
   hpUI: {fileID: 0}
-  hpUIOffse: {x: 0, y: 5, z: 0}
-  hpUIScale: {x: 1, y: 1, z: 1}
+  hpUIOffse: {x: 0, y: 10, z: 0}
+  hpUIScale: {x: 1.25, y: 1.75, z: 1}
   ownerPlanet: {fileID: 0}
   gameManager: {fileID: 0}
   battleUnitManager: {fileID: 0}
   planetManager: {fileID: 0}
   findEnemyDistance: 400
+  canDefendOtherPlanet: 0
   eatDistance: 5
 --- !u!54 &7905838483529104777
 Rigidbody:

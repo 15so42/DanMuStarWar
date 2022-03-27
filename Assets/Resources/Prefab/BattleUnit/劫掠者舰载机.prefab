@@ -145,7 +145,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 62ffcddda77c20449a261e88a5e692f7, type: 2}
+  - {fileID: 2100000, guid: ed7dc6de91739c2478bc1caf037b8915, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -311,8 +311,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855df10198e6d344ca4723cbfdadc92c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
-  hp: 100
+  maxHp: 50
+  hp: 50
   pDef: 50
   mDef: 50
   gameEntity: {fileID: 0}
@@ -342,6 +342,7 @@ MonoBehaviour:
   battleUnitManager: {fileID: 0}
   planetManager: {fileID: 0}
   findEnemyDistance: 45
+  canDefendOtherPlanet: 1
   weapons: []
   ownerLooter: {fileID: 0}
 --- !u!1 &4561632202099805166

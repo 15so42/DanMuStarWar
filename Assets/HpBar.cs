@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class HpBar : MonoBehaviour
 {
+    public Image hpBg;
     public Image hpFill;
     public Vector3 offset=Vector3.up;
 
@@ -22,6 +23,12 @@ public class HpBar : MonoBehaviour
     public void OnHpChanged(int hp,int maxHP)
     {
        UpdateHp(hp,maxHP);
+    }
+
+    private void OnDestroy()
+    {
+        owner.onHpChanged =null;
+        
     }
 
     void UpdateHp(int hp,int maxHP)
@@ -52,11 +59,13 @@ public class HpBar : MonoBehaviour
         gameEntity.onHpChanged += OnHpChanged;
         this.offset = gameEntity.hpUIOffse;
         //this.transform.localScale = gameEntity.hpUIScale;
-        var rect = GetComponent<RectTransform>();
+        var rect = hpBg.GetComponent<RectTransform>();
         var width = rect.rect.width;
         var height = rect.rect.height;
-        GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,width* gameEntity.hpUIScale.x );
-        GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,height* gameEntity.hpUIScale.y );
+        hpBg.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,width* gameEntity.hpUIScale.x );
+        hpBg.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,height* gameEntity.hpUIScale.y );
+        
+      
         //this.hpFill.color = color;
     }
 
