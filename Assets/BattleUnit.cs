@@ -132,9 +132,10 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     
     public void SetDefendTarget(Planet planet)
     {
-        isDefending = true;
         defendingPlanet = planet;
         CustomEvent.Trigger(gameObject, "OnDefendPlanetSet");
+        isDefending = true;
+        
     }
     public void ChangeOwnerPlanet(Planet planet)
     {
@@ -183,7 +184,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         {
             if(Math.Abs(supportDistance) < 0.5f)
                 return;
-            if (attackInfo.attacker.GetAttackerOwner() == GetVictimOwner())//同一阵营
+            if (attackInfo.attacker==null || attackInfo.attacker.GetAttackerOwner() == GetVictimOwner())//同一阵营
             {
                 return;
                 

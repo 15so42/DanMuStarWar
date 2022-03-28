@@ -5129,6 +5129,8 @@ MonoBehaviour:
   planetManager: {fileID: 0}
   findEnemyDistance: 7
   canDefendOtherPlanet: 0
+  defendingPlanet: {fileID: 0}
+  isDefending: 0
   minePlanet: {fileID: 0}
   scanFx: {fileID: 992889948948382102}
   canCollectRes:
@@ -5144,11 +5146,11 @@ MonoBehaviour:
   - resourceType: 0
     speed: 100
   - resourceType: 1
-    speed: 1
+    speed: 10
   - resourceType: 2
     speed: 1
   - resourceType: 3
-    speed: 1
+    speed: 3
 --- !u!114 &-8077825836562316991
 MonoBehaviour:
   m_ObjectHideFlags: 0

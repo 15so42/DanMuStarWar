@@ -311,8 +311,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855df10198e6d344ca4723cbfdadc92c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 50
-  hp: 50
+  maxHp: 10
+  hp: 10
   pDef: 50
   mDef: 50
   gameEntity: {fileID: 0}
@@ -343,6 +343,8 @@ MonoBehaviour:
   planetManager: {fileID: 0}
   findEnemyDistance: 45
   canDefendOtherPlanet: 1
+  defendingPlanet: {fileID: 0}
+  isDefending: 0
   weapons: []
   ownerLooter: {fileID: 0}
 --- !u!1 &4561632202099805166

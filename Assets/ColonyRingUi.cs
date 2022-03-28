@@ -30,6 +30,11 @@ public class ColonyRingUi : MonoBehaviour
         
     }
 
+    public void SetColor(Color color)
+    {
+        ring.color = color;
+    }
+
     void UpdateRing(float point,float maxPoint)
     {
         if(Math.Abs(point) < 0.1f)

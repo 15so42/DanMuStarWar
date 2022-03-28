@@ -47,7 +47,7 @@ public class SolarStorm : GameEnvEvent
                 var victim = hitInfo.collider.GetComponent<IVictimAble>();
                 if (victim!=null)
                 {
-                    victim.OnAttacked(new AttackInfo(null,AttackType.Magic,Random.Range(10,60)));
+                    victim.OnAttacked(new AttackInfo(null,AttackType.Magic,Random.Range(5,15)));
                 }
 
                 var bullet = ResFactory.Instance.CreateBullet(GameConst.BULLET_SOLAR_STORM, RandomPoint).GetComponent<Bullet>();

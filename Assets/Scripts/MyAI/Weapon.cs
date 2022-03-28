@@ -54,6 +54,8 @@ public class Weapon : MonoBehaviour
     }
     public void Fire()
     {
+        if(owner.chaseTarget.GetVictimEntity().die)
+            return;
         var dir = owner.chaseTarget.GetVictimEntity().transform.position - transform.position;
         var distance = Vector3.Distance(owner.chaseTarget.GetVictimEntity().transform.position, transform.position);
         if ( distance< attackDistance)

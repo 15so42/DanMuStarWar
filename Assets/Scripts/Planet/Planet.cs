@@ -126,10 +126,11 @@ public class Planet : GameEntity
 
     public void OnPlanetOccupied(Planet attacker,Planet colony)
     {
-        if (attacker == this)
+        if (attacker == this && colonyPlanets.Contains(colony)==false)
         {
             LogTip("占领" + colony.planetIndex);
-
+            if(colony.hpUI)
+                colony.hpUI.SetColor(attacker.planetColor);
             colonyPlanets.Add(colony);
             var line = LineRenderManager.Instance.SetLineRender(transform.position, colony.transform.position,
                 LineRenderManager.Instance.colonyLinePfb);
@@ -139,9 +140,11 @@ public class Planet : GameEntity
     
     public void OnColonyLost(Planet owner,Planet colony)
     {
-        if (owner==this)
+        if (owner==this && colonyPlanets.Contains(colony))
         {
             LogTip("星球"+colony.planetIndex+"失守");
+            DestroyDefendLine(colony);
+            colonyPlanets.Remove(colony);
         }
     }
     
@@ -183,7 +186,11 @@ public class Planet : GameEntity
         }
 
         if (removedOther == false)
+        {
             pair.point += point;
+            ringUi.SetColor(pair.owner.planetColor);
+        }
+            
 
         var sumPoint = 0f;
         //统计所有势力的点数
@@ -370,6 +377,16 @@ public class Planet : GameEntity
     
     void DestroyDefendLine(Planet planet)
     {
+        if (planet == this)
+        {
+            //自己
+            foreach (var t in colonyPlanetLines)
+            {
+                Destroy(t.line.gameObject);
+            }
+            
+            return;
+        }
         var colonyLine = colonyPlanetLines.Find(x => x.planet == planet)?.line;
         if(colonyLine)
             Destroy(colonyLine.gameObject);
@@ -379,6 +396,7 @@ public class Planet : GameEntity
     {
         planetIndex = index;
         planetUi.SetIndex(planetIndex);
+        gameObject.name = planetIndex+"";
     }
     void OnPlanetCreated(Planet planet)
     {
@@ -401,6 +419,8 @@ public class Planet : GameEntity
         planetType = targetPlanetType;
         gameObject.SetActive(true);
         planetColor = color;
+        
+        
     }
 
     //由fighingManager在玩家进入游戏时选择星球并占领
@@ -571,7 +591,8 @@ public class Planet : GameEntity
         }
         EventCenter.Broadcast(EnumEventType.OnPlanetDie,this);
         //Destroy(gameObject);
-        
+
+        Destroy(ringUi);
         Destroy(hpUI.gameObject);
         //Destroy(planetUi.gameObject);
         planetUi.UpdateOwnerOnDie();
