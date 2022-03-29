@@ -106,7 +106,7 @@ public class Planet : GameEntity
         
         EventCenter.AddListener<BattleUnit>(EnumEventType.OnBattleUnitCreated,OnBattleUnitCreated);
         EventCenter.AddListener<Planet>(EnumEventType.OnPlanetDie,DestroyWarLine);
-        EventCenter.AddListener<Planet>(EnumEventType.OnPlanetDie,DestroyDefendLine);
+        
         
         //驻守
         EventCenter.AddListener<Planet,Planet>(EnumEventType.OnPlanetOccupied,OnPlanetOccupied);
@@ -118,7 +118,8 @@ public class Planet : GameEntity
 
     public void SetRingPoint(float point)
     {
-        colonyPoint = Mathf.Clamp(point, 0, 100);
+        colonyPoint = point;
+        colonyPoint = Mathf.Clamp(colonyPoint, 0, 100);
         
         onColonyPointChanged?.Invoke(colonyPoint,100);
     }
@@ -149,21 +150,36 @@ public class Planet : GameEntity
             colonyPlanets.Remove(colony);
         }
     }
-    
-    
 
+
+
+    public void Recall(Planet planet)
+    {
+        for (int i = 0; i < battleUnits.Count; i++)
+        {
+            if (battleUnits[i] && battleUnits[i].isDefending && battleUnits[i].defendingPlanet == planet)
+            {
+                battleUnits[i].isDefending = false;
+                battleUnits[i].defendingPlanet = null;
+                battleUnits[i].Recall();
+            }
+        }
+    }
+    
     /// <summary>
     /// 被驻守
     /// </summary>
-    /// <param name="planet"></param>
+    /// <param name="colonist"></param>
     /// <param name="point"></param>
-    public void Defend(Planet planet,float point)
+    public void Defend(Planet colonist,float point)
     {
         
-        var pair = colonyPairs.Find(x => x.owner == planet);
+        if(owner!=null)
+            return;
+        var pair = colonyPairs.Find(x => x.owner == colonist);
         if ( pair == null)
         {
-            pair = new ColonyPair(planet, 0);
+            pair = new ColonyPair(colonist, 0);
             colonyPairs.Add(pair);
         }
 
@@ -187,7 +203,7 @@ public class Planet : GameEntity
             }
         }
 
-        if (removedOther == false)
+        if (removedOther == false && colonyPoint<100)
         {
             pair.point += point;
             ringUi.SetColor(pair.owner.planetColor);
@@ -329,7 +345,12 @@ public class Planet : GameEntity
             var chance = Random.Range(0, 10) < 5;
             if (chance && battleUnits[i] && !battleUnits[i].die && battleUnits[i].canAttack)
             {
-                battleUnits[i].SetChaseTarget(enemyUnits[Random.Range(0,enemyUnits.Count)]);
+                GameEntity target = planet;
+                if (enemyUnits.Count > 0)
+                {
+                    target = enemyUnits[Random.Range(0, enemyUnits.Count)];
+                }
+                battleUnits[i].SetChaseTarget(target);
             }
         }
         
@@ -359,7 +380,7 @@ public class Planet : GameEntity
 
         for (int i = 0; i < battleUnits.Count; i+=Random.Range(1,3))
         {
-            if (battleUnits[i].ownerPlanet == planet || battleUnits[i].canDefendOtherPlanet==false)
+            if (battleUnits[i].canDefendOtherPlanet==false || battleUnits[i].isDefending)
             {
                 continue;
             }
@@ -392,16 +413,6 @@ public class Planet : GameEntity
     
     void DestroyDefendLine(Planet planet)
     {
-        if (planet == this)
-        {
-            //自己
-            foreach (var t in colonyPlanetLines)
-            {
-                Destroy(t.line.gameObject);
-            }
-            
-            return;
-        }
         var colonyLine = colonyPlanetLines.Find(x => x.planet == planet)?.line;
         if(colonyLine)
             Destroy(colonyLine.gameObject);
@@ -628,6 +639,7 @@ public class Planet : GameEntity
     public override void OnStartWaitingJoin()
     {
         Destroy(planetUi.gameObject);
+        Destroy(ringUi.gameObject);
         if(gameObject)
             //为新的流程做好准备
             Destroy(gameObject);

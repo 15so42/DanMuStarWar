@@ -3565,12 +3565,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   start: {x: -120, y: 0, z: 50}
   end: {x: 120, y: 0, z: 175.57}
-  xSize: 14
-  zSize: 14
-  xNum: 18
-  zNum: 10
+  xSize: 19
+  zSize: 21
+  xNum: 14
+  zNum: 7
   heightRange: 20
-  safeRadius: 3
+  safeRadius: 2
   stoneCenter: {x: 0, y: 0, z: 110}
   stoneRadius: 160
   stoneNum: 200

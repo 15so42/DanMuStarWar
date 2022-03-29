@@ -141,6 +141,12 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
             defendingPlanet.Defend(GetAttackerOwner() as Planet,Time.deltaTime);
         }
     }
+
+
+    public void Recall()
+    {
+        CustomEvent.Trigger(gameObject, "OnDefendPlanetSet");
+    }
     
     public void SetDefendTarget(Planet planet)
     {

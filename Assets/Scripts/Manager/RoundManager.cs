@@ -76,6 +76,23 @@ public class RoundManager
             victimPlanet.ClaimWar(attckerPlanet);
         }
     }
+    
+    void ParseRecall(int uid,string trim)
+    {
+        string pattern = @"^(召回){1}(\d{1})$";
+        string letterPattern = @"^(z|Z){1}(\d{1})$";
+        if (Regex.IsMatch(trim, pattern) || Regex.IsMatch(trim, letterPattern))
+        {
+            Debug.Log("解析召回命令:"+trim);
+            int enemyIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
+
+            var uidPlanet = GetPlantByPlayerUid(uid);
+            var defendPlanet = GetPlanetByIndex(enemyIndex);
+
+            uidPlanet.Recall(defendPlanet);
+            
+        }
+    }
 
     void ParseDefend(int uid, string trim)
     {
@@ -191,6 +208,11 @@ public class RoundManager
             ParseDefend(uid, trim);
         }
         
+        if (text.StartsWith("召回") )
+        {
+            ParseRecall(uid, trim);
+        }
+        
         if (text.StartsWith("使用技能")||text.StartsWith("s")||text.StartsWith("S"))
         {
             ParseUseSkill(uid, trim);
@@ -210,6 +232,8 @@ public class RoundManager
         {
             ParseRollSkill(uid, trim);
         }
+        
+        
         
         if (text.StartsWith("技能说明"))
         {

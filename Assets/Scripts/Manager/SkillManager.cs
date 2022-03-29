@@ -99,8 +99,8 @@ public class SkillManager : MonoBehaviour
     {
         var skillList = GetSkillListByTech(techLevel);
         var tSkill=skillList[Random.Range(0, skillList.Count)];
-        var curSkill = skills.Find(x => x.skillName == tSkill.skillName);
-        while (curSkill!=null && curSkill.passive )//找到的是同名技能并且是被动技能，重找
+        var curSkill = skills.Find(x => x.skillName == tSkill.skillName);//找到同名技能
+        while (curSkill!=null && tSkill.passive )//找到的是同名技能并且是被动技能，重找
         {
             tSkill=skillList[Random.Range(0, skillList.Count)];
         }
