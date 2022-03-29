@@ -22,6 +22,9 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     public float findEnemyDistance = 7;
     public IVictimAble chaseTarget = null;
 
+    [Header("可进攻单位")] 
+    public bool canAttack = true;
+    
     [Header("可驻守")]
     public bool canDefendOtherPlanet=true;
 

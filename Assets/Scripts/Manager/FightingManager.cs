@@ -403,7 +403,7 @@ public class FightingManager : MonoBehaviour
                         for (int i = 0; i < PlanetManager.Instance.allPlanets.Count; i++)
                         {
                             var planet = PlanetManager.Instance.allPlanets[i];
-                            if (planet.owner == null && Math.Abs(planet.colonyPoint) < 1)//没有玩家且没有被占领
+                            if (planet.owner == null && Math.Abs(planet.colonyPoint) < 1 && planet.occupied==false)//没有玩家且没有被占领
                             {
                                 var newPlayer = new Player(uid, userName,  "", "");
                                 JoinGame(newPlayer);

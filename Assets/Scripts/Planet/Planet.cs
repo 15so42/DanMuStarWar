@@ -129,6 +129,7 @@ public class Planet : GameEntity
         if (attacker == this && colonyPlanets.Contains(colony)==false)
         {
             LogTip("占领" + colony.planetIndex);
+            occupied = true;
             if(colony.hpUI)
                 colony.hpUI.SetColor(attacker.planetColor);
             colonyPlanets.Add(colony);
@@ -143,6 +144,7 @@ public class Planet : GameEntity
         if (owner==this && colonyPlanets.Contains(colony))
         {
             LogTip("星球"+colony.planetIndex+"失守");
+            occupied = false;
             DestroyDefendLine(colony);
             colonyPlanets.Remove(colony);
         }
@@ -318,6 +320,19 @@ public class Planet : GameEntity
         
         enemyPlanets.Add(planet);
         enemyPlayers.Add(planet.owner);
+
+        var enemyUnits = planet.battleUnits;
+        
+        //派遣军队
+        for (int i = 0; i < battleUnits.Count; i++)
+        {
+            var chance = Random.Range(0, 10) < 5;
+            if (chance && battleUnits[i] && !battleUnits[i].die && battleUnits[i].canAttack)
+            {
+                battleUnits[i].SetChaseTarget(enemyUnits[Random.Range(0,enemyUnits.Count)]);
+            }
+        }
+        
         var line = LineRenderManager.Instance.SetLineRender(transform.position, planet.transform.position);
         enemyPlanetLines.Add(new LineRenderPair(planet, line));
     }
