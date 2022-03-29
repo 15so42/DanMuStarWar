@@ -19,15 +19,6 @@ public class SkillContainer : MonoBehaviour
     
     public virtual bool AddSkillCheck(string skillName)
     {
-        var skill = skills.Find(x => x.skillName == skillName);
-        if (skill)
-        {
-            skill.ResetTimer();
-            //添加同名技能时 重置对应技能冷却时间
-            return false;
-
-        }
-
         return true;
     }
 

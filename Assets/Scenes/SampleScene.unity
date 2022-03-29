@@ -776,6 +776,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 335691946}
   m_CullTransparentMesh: 0
+--- !u!1 &390667739
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 390667740}
+  - component: {fileID: 390667742}
+  - component: {fileID: 390667741}
+  m_Layer: 0
+  m_Name: BiliBiliLive
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &390667740
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390667739}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1518290375}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &390667741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390667739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 597e0fe39f65ced4f86b68c7ba4d969b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &390667742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390667739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c391071e50f683408417ef408e43b08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  danMuMsgs: []
+  lastDanMuCount: 0
+  giftMsgs: []
+  lastGiftCount: 0
+  roomId: 880235
 --- !u!1 &438274592
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,7 +875,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438274592}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96433212ffaea9a4e879be3352490e55, type: 3}
   m_Name: 
@@ -1007,6 +1068,49 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &486641837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 486641838}
+  - component: {fileID: 486641839}
+  m_Layer: 0
+  m_Name: SaveDataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &486641838
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486641837}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1969265784}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &486641839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486641837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e1938836f6b24d4b9d1c0e391c0f257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &502668701
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,6 +1586,7 @@ MonoBehaviour:
   maxWaitingPlayerTime: 240
   planetRoot: {fileID: 0}
   battleUnitRoot: {fileID: 0}
+  saveDataManager: {fileID: 486641839}
 --- !u!4 &723415765
 Transform:
   m_ObjectHideFlags: 0
@@ -3122,6 +3227,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 438274593}
+  - {fileID: 390667740}
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3222,6 +3328,7 @@ MonoBehaviour:
   playerIconPfb: {fileID: 7523104651291407707, guid: 87fe8d5b2d3182e47adf2651cd0f9a93,
     type: 3}
   playerGroupTrans: {fileID: 939175303}
+  playerIconUis: []
 --- !u!114 &1537421701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3839,6 +3946,7 @@ Transform:
   - {fileID: 1091838497}
   - {fileID: 690583539}
   - {fileID: 1475135730}
+  - {fileID: 486641838}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4009,6 +4117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpCanvas: {fileID: 1402390113}
   waitingJoinUi: {fileID: 1537421700}
+  planetUis: []
 --- !u!1001 &809074438010174905
 PrefabInstance:
   m_ObjectHideFlags: 0

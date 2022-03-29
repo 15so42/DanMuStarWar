@@ -53,7 +53,7 @@ public class SkillManager : MonoBehaviour
     }
     public void AddSkill(string skillName, GameEntity target)
     {
-        if (target.AddSkillCheck(skillName)==false)//不能添加重复的，如果已经有了则刷新持续时间然后返回false
+        if (target.AddSkillCheck(skillName)==false)//可以添加重复的
         {
             return;
         }
@@ -99,7 +99,8 @@ public class SkillManager : MonoBehaviour
     {
         var skillList = GetSkillListByTech(techLevel);
         var tSkill=skillList[Random.Range(0, skillList.Count)];
-        while (skills.Find(x => x.skillName == tSkill.skillName) != null)//找到的是同名技能
+        var curSkill = skills.Find(x => x.skillName == tSkill.skillName);
+        while (curSkill!=null && curSkill.passive )//找到的是同名技能并且是被动技能，重找
         {
             tSkill=skillList[Random.Range(0, skillList.Count)];
         }
