@@ -9,6 +9,7 @@ using Ludiq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Timer = System.Timers.Timer;
 
@@ -316,7 +317,8 @@ public class FightingManager : MonoBehaviour
 
         BattleOverDialog.ShowDialog(15,winner, () =>
         {
-            StartNewBattle();
+            SceneManager.LoadScene("StarWarScene");
+            //StartNewBattle();
         });
     }
     
