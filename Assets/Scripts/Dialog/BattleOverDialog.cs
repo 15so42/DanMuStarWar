@@ -51,7 +51,7 @@ public class BattleOverDialog : Dialog<BattleOverDialogContext>
             drawText.gameObject.SetActive(false);
           
             winnerText.text = "胜者: " + dialogContext.player.userName;
-            face.sprite = dialogContext.player.faceIcon;
+            face.sprite = FightingManager.Instance.uiManager.waitingJoinUi.GetPlayerIconUiByUid(dialogContext.player.uid).faceImg.sprite;
         }
         else
         {

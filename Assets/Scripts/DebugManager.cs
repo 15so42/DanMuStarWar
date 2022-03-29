@@ -34,7 +34,7 @@ public class DebugManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.G))
         {
-            BattleOverDialog.ShowDialog(15,new Player(1,"云上空", "ss","ss"),null );
+            BattleOverDialog.ShowDialog(15,new Player(1,"云上空","s","s"),null );
         }
 
         if (Input.GetKeyDown(KeyCode.K))

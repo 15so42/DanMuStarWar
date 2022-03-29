@@ -26,6 +26,8 @@ public class Collector : BattleUnit
       
       var planets=GameManager.Instance.planetManager.allPlanets;
 
+      if (planets.Count == 0)
+         return null;//游戏已经结束
       var planet = planets[UnityEngine.Random.Range(0, planets.Count)];
       if (planet.planetResContainer.HasAnyRes() && planet.owner == null && planet != this.ownerPlanet && ownerPlanet.colonyPlanets.Contains(planet))
       {

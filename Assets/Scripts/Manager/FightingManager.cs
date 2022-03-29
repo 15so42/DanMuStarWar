@@ -57,6 +57,9 @@ public class FightingManager : MonoBehaviour
     [Header("重启对局时清除星球和单位")] public GameObject planetRoot;
     public GameObject battleUnitRoot;
 
+    //存档读档
+    public SaveDataManager saveDataManager;
+    public PlayerDataTable playerDataTable;
     public void Init(GameManager gameManager)
     {
         
@@ -71,10 +74,67 @@ public class FightingManager : MonoBehaviour
         this.gameManager = gameManager;
         uiManager = gameManager.uiManager;
         
+        saveDataManager.LoadByJson();//异步读档
+        
         StartWaitingJoin();
         Instance = this;
 
     }
+
+    
+    public void OnGiftReceived(int uid, string userName, int num,string giftName,int totalCoin)
+    {
+        AddPlayerDataValue(uid,"giftPoint", totalCoin / 100);
+        TipsDialog.ShowDialog(userName+"获得"+ totalCoin/100+ "个礼物点",null);
+        var playerInGame = GetPlayerByUid(uid);
+        if (playerInGame != null)
+        {
+            uiManager.GetPlanetUiByPlayer(playerInGame).UpdatGiftPointUI(playerInGame);
+        }
+       
+
+    }
+    
+    #region 存档
+    private void Save()
+    {
+        saveDataManager.SaveByJson();
+    }
+
+    //开启战绩系统
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="key">"giftPoint,winCount,loseCount"</param>
+    /// <param name="value"></param>
+    public void AddPlayerDataValue(int uid,string key,int value)
+    {
+        PlayerData playerData = playerDataTable.FindByUid(uid);
+        if (key == "giftPoint")
+        {
+            playerData.giftPoint+=value;
+        }
+
+        if (key == "winCount")
+        {
+            playerData.winCount += value;
+        }
+
+        if (key == "loseCount")
+        {
+            playerData.loseCount += value;
+        }
+       
+        playerDataTable.UpdateByUid(uid,playerData);
+        Save();
+    }
+    
+    
+    
+
+    #endregion
 
     void StartWaitingJoin()
     {
@@ -100,7 +160,7 @@ public class FightingManager : MonoBehaviour
             {
                 firstPlayerJoinTime = Time.time;
             }
-            Debug.Log("玩家"+player.userName+"加入了游戏");
+            
             TipsDialog.ShowDialog("玩家"+player.userName+"加入了游戏",null);
            
             EventCenter.Broadcast(EnumEventType.OnPlayerJoined,player);
@@ -321,26 +381,36 @@ public class FightingManager : MonoBehaviour
 
     private void OnDanMuReceived(string userName,int uid,string time,string text )
     {
-        //找到队伍
-        if ( text.Split(' ')[0] == "加入"||text.Split(' ')[0] == "加入游戏")
+        
+        
+        if (gameStatus==GameStatus.WaitingJoin && text.Split(' ')[0] == "加入"||text.Split(' ')[0] == "加入游戏")
         {
-            
-                var playerAccount = BiliUserInfoQuerier.Query(uid);
-                if (playerAccount.code == 0 && players.Count<maxPlayerCount)
+            if (gameStatus == GameStatus.WaitingJoin)
+            {
+                
+                if (players.Count<maxPlayerCount)
                 {
-
-
-                    var player = new Player(uid, userName, playerAccount.data.face, playerAccount.data.top_photo);
-                    JoinGame(player);
-                    if (gameStatus == GameStatus.Playing)
+                    if (gameStatus == GameStatus.WaitingJoin)
+                    {
+                        var newPlayer = new Player(uid, userName,  "", "");
+                        JoinGame(newPlayer);
+                        BiliUserInfoQuerier.Instance.Query(uid,newPlayer);
+                    }
+                    
+                    
+                    if (gameStatus == GameStatus.Playing)//游戏运行中的话额外给玩家找到能占领的星球
                     {
                         for (int i = 0; i < PlanetManager.Instance.allPlanets.Count; i++)
                         {
                             var planet = PlanetManager.Instance.allPlanets[i];
-                            if (planet.owner == null)
+                            if (planet.owner == null && Math.Abs(planet.colonyPoint) < 1)//没有玩家且没有被占领
                             {
-                                planet.SetOwner(player);
-                                TipsDialog.ShowDialog(player.userName+"加入了游戏",null);
+                                var newPlayer = new Player(uid, userName,  "", "");
+                                JoinGame(newPlayer);
+                                BiliUserInfoQuerier.Instance.Query(uid,newPlayer);
+                                planet.SetOwner(newPlayer);
+                                
+                               
                                 break;
                             }
                         }
@@ -350,9 +420,11 @@ public class FightingManager : MonoBehaviour
                 {
                     TipsDialog.ShowDialog("人数已满，加入失败",null);
                 }
-               
-            
+                
+            }
         }
+        
+        
         
     }
 

@@ -8,6 +8,9 @@ public class UIManager : MonoBehaviour
    public HpCanvas hpCanvas;
 
    public WaitingJoinUI waitingJoinUi;
+   
+   public List<PlanetUI> planetUis=new List<PlanetUI>();
+   
    public void Init(GameManager gameManager)
    {
       this.gameManager = gameManager;
@@ -27,9 +30,9 @@ public class UIManager : MonoBehaviour
 
    
 
-   public AccountUI GetAccountUiByPlayer(Player player)
+   public PlanetUI GetPlanetUiByPlayer(Player player)
    {
-      return null;
+      return planetUis.Find(x => x.player == player);
    }
 
    public HpBar CreateHpBar(GameEntity gameEntity)

@@ -12,6 +12,8 @@ public class WaitingJoinUI : MonoBehaviour
    public GameObject playerIconPfb;
    public Transform playerGroupTrans;
    
+   public List<PlayerIconUi> playerIconUis=new List<PlayerIconUi>();
+   
    private int countDownMaxTime = 120;
    public void Awake()
    {
@@ -50,6 +52,13 @@ public class WaitingJoinUI : MonoBehaviour
       var maxPlayer = FightingManager.Instance.maxPlayerCount;
       playerNumText.text = "等待玩家加入中["+GameManager.Instance.fightingManager.players.Count+"/"+maxPlayer+"]";
       var icon = GameObject.Instantiate(playerIconPfb, playerGroupTrans);
-      icon.GetComponent<PlayerIconUi>().Init(player);
+      var iconUi=icon.GetComponent<PlayerIconUi>();
+      iconUi.Init(player);
+      playerIconUis.Add(iconUi);
+   }
+
+   public PlayerIconUi GetPlayerIconUiByUid(int uid)
+   {
+      return playerIconUis.Find(x => x.player.uid == uid);
    }
 }

@@ -16,6 +16,7 @@ public class PlanetUI : MonoBehaviour
     public Vector3 offset=Vector3.up;
     
     private Planet owner;
+    
 
     private Camera mainCamera;
     [Header("UiConfig")] public TMP_Text moneyText;
@@ -31,7 +32,7 @@ public class PlanetUI : MonoBehaviour
     public Text msgText;
 
     private Sequence sequence;
-    private Player player;
+    public Player player;
     [HideInInspector]
     public int planetIndex;
     public void SetIndex(int index)
@@ -70,6 +71,11 @@ public class PlanetUI : MonoBehaviour
     public void onResChanged(ResourceType resType, int num)
     {
         UpdateResUI();
+    }
+
+    public void UpdatGiftPointUI(Player player)
+    {
+        Debug.Log("礼物UI尚未实现");
     }
 
     void UpdateResUI()
