@@ -697,8 +697,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855df10198e6d344ca4723cbfdadc92c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
-  hp: 100
+  maxHp: 500
+  hp: 500
   pDef: 50
   mDef: 50
   gameEntity: {fileID: 0}
@@ -742,6 +742,8 @@ MonoBehaviour:
   planetManager: {fileID: 0}
   findEnemyDistance: 400
   canDefendOtherPlanet: 0
+  defendingPlanet: {fileID: 0}
+  isDefending: 0
   eatDistance: 5
 --- !u!54 &7905838483529104777
 Rigidbody:

@@ -45,9 +45,14 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     public bool IsTargetAlive()
     {
         var target = chaseTarget?.GetVictimEntity();
-        return chaseTarget != null && target.IsAlive() && Vector3.Distance(target.transform.position,transform.position)<findEnemyDistance;
+        return chaseTarget != null && target.IsAlive() ;
     }
-   
+
+    public bool IsInFindRange()
+    {
+        var target = chaseTarget?.GetVictimEntity();
+        return chaseTarget != null  && Vector3.Distance(target.transform.position,transform.position)<findEnemyDistance;
+    }
 
  
 
@@ -87,11 +92,15 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         var planet = enemyPlanets[Random.Range(0, enemyPlanets.Count)];
         if(planet)
         {
-            if (planet.battleUnits.Count == 0)
+            if (planet.battleUnits.Count == 0  )
             {
-                if (isDefending && planet == defendingPlanet)
+                if (isDefending && planet == defendingPlanet )
                     return null;
-                enemy = planet;
+                if (Vector3.Distance(planet.transform.position, transform.position) < findEnemyDistance)
+                {
+                    enemy = planet;
+                }
+               
             }
             else
             {

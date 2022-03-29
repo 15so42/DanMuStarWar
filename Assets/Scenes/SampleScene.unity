@@ -2899,6 +2899,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 13a02a3dc4c25184b884e12ed46e3936, type: 2}
   - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
   - {fileID: 11400000, guid: b77557278d31ac141bfac5533694a321, type: 2}
+  - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
+  - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
+  - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
+  - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
   lv2Skill:
   - {fileID: 11400000, guid: 3c8612a6bdae19c46bcd654238bd9d58, type: 2}
   - {fileID: 11400000, guid: b0b6512f21cdbd242b84d7b233721e10, type: 2}
@@ -3090,7 +3094,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   events:
   - {fileID: 11400000, guid: b9d6d5ce6feaf9343a8f79abe8618e17, type: 2}
-  - {fileID: 11400000, guid: 40362e82e1ac3274d9b4f4b94c9e7032, type: 2}
 --- !u!1 &1518290374
 GameObject:
   m_ObjectHideFlags: 0
