@@ -317,8 +317,8 @@ public class FightingManager : MonoBehaviour
 
         BattleOverDialog.ShowDialog(15,winner, () =>
         {
-            SceneManager.LoadScene("StarWarScene");
-            //StartNewBattle();
+            //SceneManager.LoadScene( SceneManager.GetActiveScene().name );
+            StartNewBattle();
         });
     }
     

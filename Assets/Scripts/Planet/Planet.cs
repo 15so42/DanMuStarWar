@@ -639,7 +639,7 @@ public class Planet : GameEntity
     public override void OnStartWaitingJoin()
     {
         Destroy(planetUi.gameObject);
-        Destroy(ringUi.gameObject);
+        
         if(gameObject)
             //为新的流程做好准备
             Destroy(gameObject);
