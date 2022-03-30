@@ -55,14 +55,15 @@ public class Collector : BattleUnit
       //获取资源
       for (int i = 0; i < canCollectRes.Count; i++)
       {
-         canCollectRes[i].resourceNum+=collectSpeeds[i].speed;
+         if (minePlanet.planetResContainer.GetResNumByType(canCollectRes[i].resourceType) > 0)
+         {
+            canCollectRes[i].resourceNum+=collectSpeeds[i].speed;
+            minePlanet.planetResContainer.ReduceRes(canCollectRes[i].resourceType,collectSpeeds[i].speed);
+         }
+         
       }
       
-      //星球减少资源
-      for (int j = 0; j < minePlanet.planetResContainer.allRes.Count; j++){
-         
-        minePlanet.planetResContainer.ReduceRes(minePlanet.planetResContainer.allRes[j].resourceType,collectSpeeds[j].speed);
-      }
+     
    }
    
    public void Deliver()

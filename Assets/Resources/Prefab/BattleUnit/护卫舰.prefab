@@ -314,7 +314,7 @@ MonoBehaviour:
   battleUnitManager: {fileID: 0}
   planetManager: {fileID: 0}
   findEnemyDistance: 30
-  canAttack: 0
+  canAttack: 1
   canDefendOtherPlanet: 1
   defendingPlanet: {fileID: 0}
   isDefending: 0

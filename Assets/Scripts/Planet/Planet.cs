@@ -83,6 +83,7 @@ public class Planet : GameEntity
     
     public int maxSkillCount = 3;
 
+  
       
     void Awake()
     {
@@ -361,6 +362,8 @@ public class Planet : GameEntity
    
     public void ClaimDefend(Planet planet)
     {
+        if(planet==null)
+            return;
         if (planet.owner != null)
         {
             LogTip("目标星球已被占领");
@@ -618,12 +621,35 @@ public class Planet : GameEntity
         EventCenter.Broadcast(EnumEventType.OnPlanetDie,this);
         //Destroy(gameObject);
 
+        if (lastAttacker != null)//死亡时把一般资源给击杀者
+        {
+
+            var attackerOwnerEntity = lastAttacker.GetAttackerOwner();
+            
+            if (attackerOwnerEntity && attackerOwnerEntity as Planet)
+            {
+                var attackerOwnerPlanet = attackerOwnerEntity as Planet;
+                var tech=planetResContainer.GetResNumByType(ResourceType.Tech);
+                var dice = planetResContainer.GetResNumByType(ResourceType.DicePoint);
+                
+                planetResContainer.ReduceRes(ResourceType.Tech,tech/2);
+                planetResContainer.ReduceRes(ResourceType.DicePoint,dice/2);
+
+                if (attackerOwnerPlanet != null)
+                {
+                    attackerOwnerPlanet.planetResContainer.AddRes(ResourceType.Tech, tech / 2);
+                    attackerOwnerPlanet.planetResContainer.AddRes(ResourceType.DicePoint, dice / 2);
+                }
+            }
+        }
+
         Destroy(ringUi);
         Destroy(hpUI.gameObject);
         //Destroy(planetUi.gameObject);
         planetUi.UpdateOwnerOnDie();
         //gameObject.SetActive(false);
-       
+        owner = null;
+
     }
 
     public override GameEntity GetAttackerOwner()

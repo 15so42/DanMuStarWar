@@ -28,6 +28,9 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    
    [Header("hpUIOffse")] public Vector3 hpUIOffse;
    [Header("HPUIScale")] public Vector3 hpUIScale;
+   
+   //击杀管理
+   protected IAttackAble lastAttacker;//最后一击
 
    public void Awake()
    {
@@ -68,6 +71,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
 
       if (hpValue <= 0 && !die)
       {
+         lastAttacker = attackInfo.attacker;
          Die();
       }
    }
