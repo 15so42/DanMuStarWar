@@ -35,7 +35,7 @@ public class ColonyRingUi : MonoBehaviour
         ring.color = color;
     }
 
-    void UpdateRing(float point,float maxPoint)
+    public void UpdateRing(float point,float maxPoint)
     {
         if(Math.Abs(point) < 0.1f)
             ringBG.CrossFadeAlpha(0,1f,true);

@@ -24,6 +24,8 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
 
     [Header("可进攻单位")] 
     public bool canAttack = true;
+
+    public bool inWar = false;
     
     [Header("可驻守")]
     public bool canDefendOtherPlanet=true;
@@ -81,13 +83,28 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         //SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);
     }
 
+    public bool IsEntityPlanet(GameEntity entity)
+    {
+        if (entity != null && entity.GetVictimEntity().GetComponent<Planet>() && !entity.die)
+        {
+            return true;
+        }
+
+        return false;
+    }
+    
+    /// <summary>
+    /// 自动判断是否war状态
+    /// </summary>
+    /// <param name="onlyEnemyPlanet"></param>
+    /// <returns></returns>
     public virtual GameEntity FindNearEnemy(bool onlyEnemyPlanet)
     {
         GameEntity enemy = null;
-        var enemyPlanets = ownerPlanet.enemyPlanets;
+        var enemyPlanets = ownerPlanet.enemyPlanets;//敌对星球中寻找
         if (!onlyEnemyPlanet)
         {
-            enemyPlanets = PlanetManager.Instance.allPlanets;
+            enemyPlanets = PlanetManager.Instance.allPlanets;//所有星球中寻找敌人
         }
 
         if (enemyPlanets.Count <= 0)
@@ -95,26 +112,31 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         var planet = enemyPlanets[Random.Range(0, enemyPlanets.Count)];
         if(planet)
         {
-            if (planet.battleUnits.Count == 0  )
+            if (planet.die)
+                return null;
+
+            if (isDefending && planet == defendingPlanet)//避开自己驻守的星球
+                return null;
+
+            if (planet.battleUnits.Count == 0)
             {
-                if (isDefending && planet == defendingPlanet )
-                    return null;
-                if (Vector3.Distance(planet.transform.position, transform.position) < findEnemyDistance)
+                if (inWar || Vector3.Distance(planet.transform.position, transform.position) < findEnemyDistance) //宣战状态
                 {
                     enemy = planet;
+                    return enemy;
                 }
-               
+
+                return null;
             }
-            else
+
+            
+            var enemyUnit = planet.battleUnits[Random.Range(0, planet.battleUnits.Count)];
+            if (enemyUnit && enemyUnit.die == false && enemyUnit.GetVictimOwner() != GetAttackerOwner() &&
+                (inWar ||Vector3.Distance(enemyUnit.transform.position, transform.position) < findEnemyDistance))
             {
-                var enemyUnit = planet.battleUnits[Random.Range(0, planet.battleUnits.Count)];
-                if (enemyUnit && enemyUnit.die==false && enemyUnit.GetVictimOwner()!=GetAttackerOwner() &&  Vector3.Distance(enemyUnit.transform.position, transform.position) < findEnemyDistance)
-                {
-                   
-                    enemy = enemyUnit;
-                
-                }
+                enemy = enemyUnit;
             }
+            
 
         }
         
@@ -127,11 +149,25 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         this.chaseTarget = target;
     }
 
+    public void ClaimWar()
+    {
+        inWar = true;
+    }
+
     public Planet GetAroundPlanet()
     {
+        if (inWar && chaseTarget!=null && chaseTarget.GetVictimEntity().GetComponent<Planet>())
+        {
+            return chaseTarget as Planet;
+        }
         if (isDefending)
             return defendingPlanet;
         return ownerPlanet;
+    }
+
+    public void WarOver()//战争结束，清除战争状态
+    {
+        inWar = false;
     }
 
     public void DefendPlanet()
@@ -212,10 +248,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
                 if (ownerPlanet.battleUnits[i]!=this && Vector3.Distance(ownerPlanet.battleUnits[i].transform.position, transform.position) < supportDistance)
                 {
                     var supportAble = ownerPlanet.battleUnits[i].GetComponent<ISupportAble>();
-                    if (supportAble != null)
-                    {
-                        supportAble.Support(attackInfo.attacker as BattleUnit);
-                    }
+                    supportAble?.Support(attackInfo.attacker as BattleUnit);
                 }
             }
         }

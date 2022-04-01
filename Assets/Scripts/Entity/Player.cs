@@ -10,7 +10,8 @@ public class Player
     
     public string faceUrl;
     public string top_photo;
-    
+
+    public bool die;
    
     public Action onGetUrl;
   

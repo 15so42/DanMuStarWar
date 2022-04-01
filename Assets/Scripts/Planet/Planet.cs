@@ -343,20 +343,26 @@ public class Planet : GameEntity
         //派遣军队
         for (int i = 0; i < battleUnits.Count; i++)
         {
-            var chance = Random.Range(0, 10) < 5;
+            var chance = Random.Range(0, 10) < 10;//全部派出
             if (chance && battleUnits[i] && !battleUnits[i].die && battleUnits[i].canAttack)
             {
                 GameEntity target = planet;
                 if (enemyUnits.Count > 0)
                 {
-                    target = enemyUnits[Random.Range(0, enemyUnits.Count)];
+                    //target = enemyUnits[Random.Range(0, enemyUnits.Count)];
                 }
+                
+                battleUnits[i].ClaimWar();
                 battleUnits[i].SetChaseTarget(target);
             }
         }
         
         var line = LineRenderManager.Instance.SetLineRender(transform.position, planet.transform.position);
-        enemyPlanetLines.Add(new LineRenderPair(planet, line));
+        if (enemyPlanetLines.Find(x => x.planet == planet) == null)
+        {
+            enemyPlanetLines.Add(new LineRenderPair(planet, line));
+        }
+        
     }
 
    
@@ -364,7 +370,7 @@ public class Planet : GameEntity
     {
         if(planet==null)
             return;
-        if (planet.owner != null)
+        if (planet.owner != null && planet.owner.die==false)
         {
             LogTip("目标星球已被占领");
             return;
@@ -457,6 +463,7 @@ public class Planet : GameEntity
     {
         this.owner = player;
         planetUi.SetOwner(player);
+        
         ringUi.gameObject.SetActive(false);
         //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_探索船",5)));
         //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_探索船",5)));
@@ -642,13 +649,16 @@ public class Planet : GameEntity
                 }
             }
         }
-
-        Destroy(ringUi);
-        Destroy(hpUI.gameObject);
+        ringUi.gameObject.SetActive(true);
+        ringUi.UpdateRing(0,100);
+        //Destroy(ringUi);
+        //Destroy(hpUI.gameObject);
         //Destroy(planetUi.gameObject);
         planetUi.UpdateOwnerOnDie();
         //gameObject.SetActive(false);
-        owner = null;
+        //owner = null;
+        if(owner!=null)//野生星球没有主人
+            owner.die = true;
 
     }
 

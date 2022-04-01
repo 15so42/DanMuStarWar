@@ -190,10 +190,11 @@ public class RoundManager
     //解析命令
     private void ParseCommand(int uid, string text)
     {
-        var validUser = (GetPlayerByUid(uid) != null);
-        if (!validUser)
+        var user = GetPlayerByUid(uid);
+        var validUser = user != null;
+        if (!validUser || user.die)
         {
-            //局外人
+            //局外人或者已经淘汰
             return;
         }
         var trim=Regex.Replace(text.Trim(), "\\s+", "");//去除所有空格

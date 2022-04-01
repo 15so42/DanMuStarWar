@@ -29,7 +29,7 @@ public class Collector : BattleUnit
       if (planets.Count == 0)
          return null;//游戏已经结束
       var planet = planets[UnityEngine.Random.Range(0, planets.Count)];
-      if (planet.planetResContainer.HasAnyRes() && planet.owner == null && planet != this.ownerPlanet && ownerPlanet.colonyPlanets.Contains(planet))
+      if (planet.planetResContainer.HasAnyRes() && (planet.owner == null || planet.owner.die) && planet != this.ownerPlanet && ownerPlanet.colonyPlanets.Contains(planet))
       {
          ret = planet;
       }

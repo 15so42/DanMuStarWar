@@ -1581,7 +1581,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   uiManager: {fileID: 0}
   mapManager: {fileID: 1581382676}
-  waitingJoinSecond: 60
+  waitingJoinSecond: 10
   kickOutTime: 120
   maxWaitingPlayerTime: 240
   planetRoot: {fileID: 0}
@@ -2367,7 +2367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27169219e00de1a4db73fe3d2220375c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  center: {x: 0, y: 2, z: 128.44}
+  center: {x: 0, y: -3.1, z: 119.8}
   offset: {x: 0, y: 198.08, z: 100}
   cameraStatus: 0
 --- !u!114 &963194233
@@ -3073,7 +3073,6 @@ MonoBehaviour:
   initSkill:
   - {fileID: 11400000, guid: b00b5a252ff046e4f87d8b32bfdd39a1, type: 2}
   - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
-  - {fileID: 11400000, guid: 13a02a3dc4c25184b884e12ed46e3936, type: 2}
   allSkill:
   - {fileID: 11400000, guid: b90669981f6aac24da8769b64ce6d897, type: 2}
   allBuff: []
@@ -3083,14 +3082,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
   - {fileID: 11400000, guid: b77557278d31ac141bfac5533694a321, type: 2}
   - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
-  - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
   lv2Skill:
   - {fileID: 11400000, guid: 3c8612a6bdae19c46bcd654238bd9d58, type: 2}
   - {fileID: 11400000, guid: 855f2f1aff4615f43ad8993cee9275be, type: 2}
+  - {fileID: 11400000, guid: b0b6512f21cdbd242b84d7b233721e10, type: 2}
+  - {fileID: 11400000, guid: af6987b6e6b68c647901a316dc48a3f4, type: 2}
+  - {fileID: 11400000, guid: 7552a09c5d31fcb4383318ea86eaedb5, type: 2}
+  - {fileID: 11400000, guid: 2f28f0ba77297c142b3eceafd5287d20, type: 2}
   lv3SKill:
   - {fileID: 11400000, guid: c6bfd7e73bcc4164680234b69c9d04cf, type: 2}
   - {fileID: 11400000, guid: 7bbecb9bfff21b54abd52cc432a4ad25, type: 2}
   - {fileID: 11400000, guid: a19239f31f7d1934a8d28210d5996f84, type: 2}
+  - {fileID: 11400000, guid: e523c16a30e4cb84089d33631ae5cf6f, type: 2}
+  - {fileID: 11400000, guid: 89d64442a8548d94cafd550e7fcce0d3, type: 2}
   lv4Skill:
   - {fileID: 11400000, guid: e75f798e859527a4fb51888c80470b77, type: 2}
   skillItemUiPfb: {fileID: 1383040578392754508, guid: a4c3206efad44f94cb52038eaf681ef1,

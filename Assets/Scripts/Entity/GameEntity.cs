@@ -17,7 +17,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    public BattleUnitProps props;
    public SkillContainer skillContainer;
    [Header("手动设置半径")] public float radius=5;
-   [Header("友军支援距离")] public float supportDistance=30;
+   [Header("呼叫友军来支援的距离")] public float supportDistance=30;
 
    public bool die = false;
 

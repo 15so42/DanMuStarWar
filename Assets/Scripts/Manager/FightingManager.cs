@@ -385,10 +385,9 @@ public class FightingManager : MonoBehaviour
     {
         
         
-        if (gameStatus==GameStatus.WaitingJoin && text.Split(' ')[0] == "加入"||text.Split(' ')[0] == "加入游戏")
+        if (text.Split(' ')[0] == "加入"||text.Split(' ')[0] == "加入游戏")
         {
-            if (gameStatus == GameStatus.WaitingJoin)
-            {
+           
                 
                 if (players.Count<maxPlayerCount)
                 {
@@ -405,7 +404,7 @@ public class FightingManager : MonoBehaviour
                         for (int i = 0; i < PlanetManager.Instance.allPlanets.Count; i++)
                         {
                             var planet = PlanetManager.Instance.allPlanets[i];
-                            if (planet.owner == null && Math.Abs(planet.colonyPoint) < 1 && planet.occupied==false)//没有玩家且没有被占领
+                            if (planet.owner == null && Math.Abs(planet.colonyPoint) < 1 && planet.occupied==false && planet.die==false)//没有玩家且没有被占领
                             {
                                 var newPlayer = new Player(uid, userName,  "", "");
                                 JoinGame(newPlayer);
@@ -423,7 +422,7 @@ public class FightingManager : MonoBehaviour
                     TipsDialog.ShowDialog("人数已满，加入失败",null);
                 }
                 
-            }
+            
         }
         
         

@@ -36,7 +36,7 @@ public class PlayerIconUi : MonoBehaviour
             
             player.onGetUrl += () =>
             {
-                StartCoroutine(DownSprite(player.faceUrl, faceImg));
+                FightingManager.Instance.StartCoroutine(DownSprite(player.faceUrl, faceImg));
                 //StartCoroutine(DownSprite(player.top_photo, topBg));
             };
        
