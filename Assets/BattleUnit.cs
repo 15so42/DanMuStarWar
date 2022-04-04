@@ -56,7 +56,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     public bool IsInFindRange()
     {
         var target = chaseTarget?.GetVictimEntity();
-        return chaseTarget != null  && Vector3.Distance(target.transform.position,transform.position)<findEnemyDistance;
+        return target != null  && Vector3.Distance(target.transform.position,transform.position)<findEnemyDistance;
     }
 
  
@@ -243,9 +243,11 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
                 return;
                 
             }
+            if(ownerPlanet==null)
+                return;
             for (int i = 0; i < ownerPlanet.battleUnits.Count; i++)
             {
-                if (ownerPlanet.battleUnits[i]!=this && Vector3.Distance(ownerPlanet.battleUnits[i].transform.position, transform.position) < supportDistance)
+                if (ownerPlanet.battleUnits[i]!=null && ownerPlanet.battleUnits[i]!=this && Vector3.Distance(ownerPlanet.battleUnits[i].transform.position, transform.position) < supportDistance)
                 {
                     var supportAble = ownerPlanet.battleUnits[i].GetComponent<ISupportAble>();
                     supportAble?.Support(attackInfo.attacker as BattleUnit);

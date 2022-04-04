@@ -46,7 +46,7 @@ public class Collector : BattleUnit
    public  override void OnAttacked(AttackInfo attackInfo)
    {
       base.OnAttacked(attackInfo);
-      SkillManager.Instance.AddSkill("Skill_加速_LV1",this);
+      //SkillManager.Instance.AddSkill("Skill_加速_LV1",this);
    }
 
  

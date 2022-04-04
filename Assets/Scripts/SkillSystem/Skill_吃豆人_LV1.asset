@@ -30,3 +30,4 @@ MonoBehaviour:
   finished: 0
   unitName: "BattleUnit_\u5403\u8C46\u4EBA"
   duration: 0
+  num: 1

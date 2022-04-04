@@ -175,8 +175,12 @@ public class Planet : GameEntity
     public void Defend(Planet colonist,float point)
     {
         
-        if(owner!=null)
+        if(owner!=null && owner.die==false){//目标星球有玩家并且存活，无法占领
+            colonist.Recall(this);//殖民者召回在本星球上的战舰
+            SetRingPoint(0);
             return;
+        }
+            
         var pair = colonyPairs.Find(x => x.owner == colonist);
         if ( pair == null)
         {
@@ -198,6 +202,10 @@ public class Planet : GameEntity
                         EventCenter.Broadcast(EnumEventType.OnColonyLost,p.owner,this);
                     }
                     removedOther = true;
+                }
+                else//如果这个人的势力已经被削减，去削减另一个人的势力
+                {
+                    continue;
                 }
                 
                 break;
@@ -357,9 +365,10 @@ public class Planet : GameEntity
             }
         }
         
-        var line = LineRenderManager.Instance.SetLineRender(transform.position, planet.transform.position);
+        
         if (enemyPlanetLines.Find(x => x.planet == planet) == null)
         {
+            var line = LineRenderManager.Instance.SetLineRender(transform.position, planet.transform.position);
             enemyPlanetLines.Add(new LineRenderPair(planet, line));
         }
         
@@ -625,7 +634,15 @@ public class Planet : GameEntity
         {
             battleUnits[i].Die();
         }
-        EventCenter.Broadcast(EnumEventType.OnPlanetDie,this);
+
+        try
+        {
+            EventCenter.Broadcast(EnumEventType.OnPlanetDie, this);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("死亡事件异常："+e);
+        }
         //Destroy(gameObject);
 
         if (lastAttacker != null)//死亡时把一般资源给击杀者
@@ -652,7 +669,8 @@ public class Planet : GameEntity
         ringUi.gameObject.SetActive(true);
         ringUi.UpdateRing(0,100);
         //Destroy(ringUi);
-        //Destroy(hpUI.gameObject);
+        Destroy(hpUI.gameObject);
+        //hpUI.gameObject.SetActive(false);
         //Destroy(planetUi.gameObject);
         planetUi.UpdateOwnerOnDie();
         //gameObject.SetActive(false);

@@ -31,10 +31,15 @@ public class PlanetUI : MonoBehaviour
     public Transform msgBg;
     public Text msgText;
 
+    //UI动效
     private Sequence sequence;
+    private UnityTimer.Timer timer; 
+    
     public Player player;
     [HideInInspector]
     public int planetIndex;
+
+    public string nameLabel;
     public void SetIndex(int index)
     {
         this.planetIndex = index;
@@ -54,23 +59,27 @@ public class PlanetUI : MonoBehaviour
         
     }
 
+    public void UpdateNameLabel(string s)
+    {
+        
+    }
+
     private void Start()
     {
-        if (owner.planetResContainer.GetResNumByType(ResourceType.Population) == 0)
-        {
-            playerName.text = "["+planetIndex+"]无人星球(不可加入)";
-        }
-
-        else
-        {
-            playerName.text = "[" + planetIndex + "]" + "(可加入)";
-        }
+        nameLabel= "[" + planetIndex + "]" + "(等待加入)";
+        UpdateNameLabel(nameLabel);
     }
 
     //资源数量更新
     public void onResChanged(ResourceType resType, int num)
     {
         UpdateResUI();
+    }
+
+    //被占领
+    public void OnColonyStart()
+    {
+        
     }
 
     public void UpdatGiftPointUI(Player player)
@@ -108,9 +117,8 @@ public class PlanetUI : MonoBehaviour
 
     public void UpdateOwnerOnDie()
     {
-        
-        playerName.text = "["+planetIndex+"][荒废]"+(player==null?"":player.userName+"");
-        
+        nameLabel="["+planetIndex+"][荒废]"+(player==null?"无人星球":player.userName+"");
+        UpdateNameLabel(nameLabel);
     }
     
     
@@ -137,6 +145,7 @@ public class PlanetUI : MonoBehaviour
 
     public void LogTip(string msg)
     {
+        timer?.Cancel();
         
         msgBg.transform.localScale=Vector3.zero;
         msgBg.gameObject.SetActive(true);
@@ -146,7 +155,7 @@ public class PlanetUI : MonoBehaviour
 
         sequence = DOTween.Sequence();
         sequence?.Append(msgBg.transform.DOScale(Vector3.one, 1));
-        UnityTimer.Timer.Register(2, () =>
+        timer=UnityTimer.Timer.Register(2, () =>
         {
             msgBg.gameObject.SetActive(false);
         });

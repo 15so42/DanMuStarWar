@@ -50,16 +50,12 @@ public class SolarStorm : GameEnvEvent
                     victim.OnAttacked(new AttackInfo(null,AttackType.Magic,Random.Range(5,15)));
                 }
 
-                var bullet = ResFactory.Instance.CreateBullet(GameConst.BULLET_SOLAR_STORM, RandomPoint).GetComponent<Bullet>();
-                bullet.SetEndPos(hitInfo.point);
+                // var bullet = ResFactory.Instance.CreateBullet(GameConst.BULLET_SOLAR_STORM, RandomPoint).GetComponent<Bullet>();
+                // bullet.SetEndPos(hitInfo.point);
                 GameObject fx = ResFactory.Instance.CreateFx(GameConst.FX_BULLET_HIT, hitInfo.point);
                 
             }
-            else
-            {
-                var bullet = ResFactory.Instance.CreateBullet(GameConst.BULLET_SOLAR_STORM, RandomPoint).GetComponent<Bullet>();
-                bullet.SetEndPos(RandomPoint+Vector3.forward*1000);
-            }
+            
             yield return null;
         }
     }

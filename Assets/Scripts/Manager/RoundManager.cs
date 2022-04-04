@@ -53,7 +53,7 @@ public class RoundManager
 
     Planet GetPlantByPlayerUid(int uid)
     {
-        return PlanetManager.Instance.allPlanets.Find(x => x.owner.uid == uid);
+        return PlanetManager.Instance.allPlanets.Find(x => x.owner!=null && x.owner.uid == uid);
     }
 
     Planet GetPlanetByIndex(int index)
@@ -70,7 +70,11 @@ public class RoundManager
             int enemyIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
 
             var attckerPlanet = GetPlantByPlayerUid(uid);
+            if(attckerPlanet==null)
+                return;
             var victimPlanet = GetPlanetByIndex(enemyIndex);
+            if(victimPlanet==null)
+                return;
 
             attckerPlanet.ClaimWar(victimPlanet);
             victimPlanet.ClaimWar(attckerPlanet);
@@ -87,6 +91,8 @@ public class RoundManager
             int enemyIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
 
             var uidPlanet = GetPlantByPlayerUid(uid);
+            if(uidPlanet==null)
+                return;
             var defendPlanet = GetPlanetByIndex(enemyIndex);
 
             uidPlanet.Recall(defendPlanet);
@@ -103,6 +109,8 @@ public class RoundManager
             int targetIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
 
             var attckerPlanet = GetPlantByPlayerUid(uid);
+            if(attckerPlanet==null)
+                return;
             var target = GetPlanetByIndex(targetIndex);
 
             
@@ -121,7 +129,8 @@ public class RoundManager
             int skillIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
 
             var planet=GetPlantByPlayerUid(uid);
-            planet.ChangeSkill(skillIndex);
+            if(planet)
+                planet.ChangeSkill(skillIndex);
             
            
         }
@@ -137,7 +146,8 @@ public class RoundManager
             int skillIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
 
             var planet=GetPlantByPlayerUid(uid);
-            planet.UseSkill(skillIndex);
+            if(planet)
+                planet.UseSkill(skillIndex);
             
            
         }
@@ -153,7 +163,8 @@ public class RoundManager
             int skillIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
 
             var planet=GetPlantByPlayerUid(uid);
-            planet.RemoveSkill(skillIndex);
+            if(planet)
+                planet.RemoveSkill(skillIndex);
             
            
         }
@@ -167,7 +178,8 @@ public class RoundManager
             Debug.Log("解析抽取技能命令:"+trim);
            
             var planet=GetPlantByPlayerUid(uid);
-            planet.RollSkill();
+            if(planet)
+                planet.RollSkill();
             
            
         }
@@ -181,7 +193,8 @@ public class RoundManager
             Debug.Log("解析查看技能说明命令:"+trim);
            
             var planet=GetPlantByPlayerUid(uid);
-            planet.skillContainer.ShowSkillDesc();
+            if(planet)
+                planet.skillContainer.ShowSkillDesc();
 
 
         }
@@ -192,7 +205,8 @@ public class RoundManager
     {
         var user = GetPlayerByUid(uid);
         var validUser = user != null;
-        if (!validUser || user.die)
+        var planet = GetPlantByPlayerUid(uid);
+        if (!validUser || user.die || planet.die)
         {
             //局外人或者已经淘汰
             return;

@@ -31,6 +31,11 @@ public class DebugManager : MonoBehaviour
         {
             Time.timeScale = 2;
         }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            DanMuReciver.Instance.SendFakeDanMu("第三者",3,"加入游戏");
+        }
         
         if (Input.GetKeyDown(KeyCode.G))
         {
