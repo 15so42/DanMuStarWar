@@ -118,6 +118,8 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
             if (isDefending && planet == defendingPlanet)//避开自己驻守的星球
                 return null;
 
+            
+            
             if (planet.battleUnits.Count == 0)
             {
                 if (inWar || Vector3.Distance(planet.transform.position, transform.position) < findEnemyDistance) //宣战状态
@@ -129,13 +131,21 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
                 return null;
             }
 
-            
-            var enemyUnit = planet.battleUnits[Random.Range(0, planet.battleUnits.Count)];
-            if (enemyUnit && enemyUnit.die == false && enemyUnit.GetVictimOwner() != GetAttackerOwner() &&
-                (inWar ||Vector3.Distance(enemyUnit.transform.position, transform.position) < findEnemyDistance))
+            foreach (var enemyUnit in planet.battleUnits)
             {
-                enemy = enemyUnit;
+                if (enemyUnit == null)
+                {
+                    continue;
+                }
+                    
+                if ((inWar ||Vector3.Distance(enemyUnit.transform.position, transform.position) < findEnemyDistance) &&
+                    enemyUnit && enemyUnit.die == false && enemyUnit.GetVictimOwner() != GetAttackerOwner() )//随机从所有单位找一个，优先检测距离节省资源
+                {
+                    enemy = enemyUnit;
+                    break;
+                }
             }
+            
             
 
         }
@@ -234,7 +244,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     public override void OnAttacked(AttackInfo attackInfo)
     {
         base.OnAttacked(attackInfo);
-        if (!IsTargetAlive())//当自己处于和平状态时被袭击
+        if (true || !IsTargetAlive())//当自己处于和平状态时被袭击
         {
             if(Math.Abs(supportDistance) < 0.5f)
                 return;

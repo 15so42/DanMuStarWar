@@ -116,9 +116,15 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
 
    public virtual void OnStartWaitingJoin()
    {
-      if(gameObject)
-      //为新的流程做好准备
+      if (!die)
+      {
+         Die();
+      }
+
+      if (gameObject)
+      {
          Destroy(gameObject);
+      }
    }
 
    public virtual GameEntity GetAttackerOwner()

@@ -7,9 +7,10 @@ public class PacMan : BattleUnit
 {
     public float eatDistance = 4;
 
+    private UnityTimer.Timer dieTimer;
     private void OnEnable()
     {
-        Destroy(gameObject, 180f);
+        dieTimer = UnityTimer.Timer.Register(180, Die);
     }
 
     public override void Attack()
@@ -18,5 +19,10 @@ public class PacMan : BattleUnit
         {
             chaseTarget.OnAttacked(new AttackInfo(this,AttackType.Physics,10));
         }
+    }
+
+    private void OnDisable()
+    {
+        dieTimer?.Cancel();
     }
 }

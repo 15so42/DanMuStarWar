@@ -2250,7 +2250,7 @@ MonoBehaviour:
   m_CellSize: {x: 80, y: 80}
   m_Spacing: {x: 36.57, y: 68.67}
   m_Constraint: 1
-  m_ConstraintCount: 3
+  m_ConstraintCount: 4
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2442,7 +2442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {x: 0, y: -3.1, z: 119.8}
-  offset: {x: 0, y: 198.08, z: 100}
+  offset: {x: 0, y: 200, z: 100}
   cameraStatus: 0
 --- !u!114 &963194233
 MonoBehaviour:
@@ -3148,6 +3148,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b00b5a252ff046e4f87d8b32bfdd39a1, type: 2}
   allSkill:
   - {fileID: 11400000, guid: b90669981f6aac24da8769b64ce6d897, type: 2}
+  - {fileID: 11400000, guid: 46beaf6eff6d20a41a2103bf51a498bb, type: 2}
   allBuff: []
   lv1Skill:
   - {fileID: 11400000, guid: b00b5a252ff046e4f87d8b32bfdd39a1, type: 2}

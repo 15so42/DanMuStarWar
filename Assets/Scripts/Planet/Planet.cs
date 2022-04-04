@@ -82,8 +82,13 @@ public class Planet : GameEntity
 
     
     public int maxSkillCount = 3;
-
-  
+    //自动抽卡，每隔三秒，卡槽没满就抽
+    public bool autoRoll = true;
+    private float autoRollTimer = 0;
+    
+    //紧急维修
+    public bool urgentRepair = false;
+    
       
     void Awake()
     {
@@ -115,6 +120,20 @@ public class Planet : GameEntity
         
         
        
+    }
+
+    public void UrgentRepair()
+    {
+        if (!urgentRepair)
+        {
+            SkillManager.Instance.AddSkill("Skill_紧急维修_LV1",this);
+            urgentRepair = true;
+        }
+        else
+        {
+            LogTip("紧急维修次数已用尽");
+        }
+            
     }
 
     public void SetRingPoint(float point)
@@ -396,7 +415,7 @@ public class Planet : GameEntity
         var line = LineRenderManager.Instance.SetLineRender(transform.position, planet.transform.position,LineRenderManager.Instance.colonyLinePfb);
         Destroy(line.gameObject,5f);
 
-        for (int i = 0; i < battleUnits.Count; i+=Random.Range(1,3))
+        for (int i = 0; i < battleUnits.Count; i++)
         {
             if (battleUnits[i].canDefendOtherPlanet==false || battleUnits[i].isDefending)
             {
@@ -415,14 +434,16 @@ public class Planet : GameEntity
     {
         if (planet == this)
         {
-            //自己
+            //自己死了，把自己连别人的线删了
             foreach (var t in enemyPlanetLines)
             {
+                if(t==null || t.line==null || t.line.gameObject==null){continue;}
                 Destroy(t.line.gameObject);
             }
             
             return;
         }
+        //别人死了，把自己连别人的线删了
         var line = enemyPlanetLines.Find(x => x.planet == planet)?.line;
         if(line)
             Destroy(line.gameObject);
@@ -505,6 +526,16 @@ public class Planet : GameEntity
         foreach (var taskCenter in taskCenters)
         {
             taskCenter.Run();
+        }
+
+        autoRollTimer += Time.deltaTime;
+        if (autoRollTimer > 6 && autoRoll)
+        {
+            if (skillContainer.skills.Count < maxSkillCount)
+            {
+                RollSkill();
+                autoRollTimer = 0;
+            }
         }
     }
 
@@ -632,7 +663,11 @@ public class Planet : GameEntity
         base.Die();
         for (int i = 0; i < battleUnits.Count; i++)
         {
-            battleUnits[i].Die();
+            if (battleUnits[i])
+            {
+                battleUnits[i].Die();
+            }
+            
         }
 
         try
@@ -650,8 +685,10 @@ public class Planet : GameEntity
 
             var attackerOwnerEntity = lastAttacker.GetAttackerOwner();
             
+            
             if (attackerOwnerEntity && attackerOwnerEntity as Planet)
             {
+                SkillManager.Instance.AddSkill("Skill_紧急维修_LV1",attackerOwnerEntity);
                 var attackerOwnerPlanet = attackerOwnerEntity as Planet;
                 var tech=planetResContainer.GetResNumByType(ResourceType.Tech);
                 var dice = planetResContainer.GetResNumByType(ResourceType.DicePoint);
@@ -679,6 +716,8 @@ public class Planet : GameEntity
             owner.die = true;
 
     }
+    
+    
 
     public override GameEntity GetAttackerOwner()
     {
@@ -693,10 +732,9 @@ public class Planet : GameEntity
     public override void OnStartWaitingJoin()
     {
         Destroy(planetUi.gameObject);
+        Destroy(ringUi.gameObject);
         
-        if(gameObject)
-            //为新的流程做好准备
-            Destroy(gameObject);
+        base.OnStartWaitingJoin();
     }
     
 }

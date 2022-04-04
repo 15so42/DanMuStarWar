@@ -200,6 +200,54 @@ public class RoundManager
         }
     }
     
+    void ParseUrgentRepair(int uid,string trim)
+    {
+        if (trim == "紧急维修")
+        {
+            Debug.Log("解析紧急维修命令:"+trim);
+           
+            var planet=GetPlantByPlayerUid(uid);
+            if(planet)
+                planet.UrgentRepair();
+        }
+    }
+    
+    void ParseCloseAutoRoll(int uid,string trim)
+    {
+        if (trim == "关闭自动抽卡")
+        {
+            Debug.Log("解析关闭自动抽卡命令:"+trim);
+           
+            var planet=GetPlantByPlayerUid(uid);
+            if(planet)
+                planet.autoRoll=false;
+        }
+    }
+    
+    void ParseOpenAutoRoll(int uid,string trim)
+    {
+        if (trim == "开启自动抽卡")
+        {
+            Debug.Log("解析开启自动抽卡命令:"+trim);
+           
+            var planet=GetPlantByPlayerUid(uid);
+            if(planet)
+                planet.autoRoll=true;
+        }
+    }
+    
+    void ParseSurrender(int uid,string trim)
+    {
+        if (trim == "投降")
+        {
+            Debug.Log("解析投降命令:"+trim);
+           
+            var planet=GetPlantByPlayerUid(uid);
+            if (planet)
+                planet.Die();
+        }
+    }
+    
     //解析命令
     private void ParseCommand(int uid, string text)
     {
@@ -247,12 +295,30 @@ public class RoundManager
         {
             ParseRollSkill(uid, trim);
         }
+
+        if (text == "紧急维修")
+        {
+            ParseUrgentRepair(uid,trim);
+        }
         
+        if (text == "关闭自动抽卡")
+        {
+            ParseCloseAutoRoll(uid,trim);
+        }
+        if (text == "开启自动抽卡")
+        {
+            ParseOpenAutoRoll(uid,trim);
+        }
         
         
         if (text.StartsWith("技能说明"))
         {
             ParseShowSkillDesc(uid, trim);
+        }
+
+        if (text == "投降")
+        {
+            ParseSurrender(uid, trim);
         }
         
         

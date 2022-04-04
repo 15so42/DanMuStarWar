@@ -306,7 +306,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "[\u7B49\u5F85\u52A0\u5165]"
+  m_Text: 
 --- !u!114 &1920952559772605980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -644,7 +644,9 @@ MonoBehaviour:
   skillGroupUI: {fileID: 5678699587550960556}
   msgBg: {fileID: 3929913240693808834}
   msgText: {fileID: 4229839752487619829}
+  skillContainer: {fileID: 5678699587550960556}
   planetIndex: 9
+  nameLabel: 
 --- !u!1 &7716515436532666389
 GameObject:
   m_ObjectHideFlags: 0

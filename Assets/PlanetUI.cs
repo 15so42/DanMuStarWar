@@ -30,6 +30,7 @@ public class PlanetUI : MonoBehaviour
 
     public Transform msgBg;
     public Text msgText;
+    public Transform skillContainer;
 
     //UI动效
     private Sequence sequence;
@@ -61,13 +62,22 @@ public class PlanetUI : MonoBehaviour
 
     public void UpdateNameLabel(string s)
     {
-        
+        nameLabel = s;
+        playerName.text = s;
     }
 
     private void Start()
     {
-        nameLabel= "[" + planetIndex + "]" + "(等待加入)";
-        UpdateNameLabel(nameLabel);
+        
+        if (owner.planetResContainer.GetResNumByType(ResourceType.Population) == 0)
+        {
+            playerName.text = "["+planetIndex+"]无人星球(不可加入)";
+        }
+
+        else
+        {
+            playerName.text = "[" + planetIndex + "]" + "(可加入)";
+        }
     }
 
     //资源数量更新
@@ -76,11 +86,7 @@ public class PlanetUI : MonoBehaviour
         UpdateResUI();
     }
 
-    //被占领
-    public void OnColonyStart()
-    {
-        
-    }
+    
 
     public void UpdatGiftPointUI(Player player)
     {
@@ -119,6 +125,7 @@ public class PlanetUI : MonoBehaviour
     {
         nameLabel="["+planetIndex+"][荒废]"+(player==null?"无人星球":player.userName+"");
         UpdateNameLabel(nameLabel);
+        skillContainer.gameObject.SetActive(false);
     }
     
     
