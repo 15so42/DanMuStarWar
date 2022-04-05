@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class BulletWeapon : Weapon
 {
+   public string bulletName="Bullet";
    public override void FireFx(Vector3 startPos, RaycastHit hitInfo)
    {
       base.FireFx(startPos, hitInfo);
@@ -17,7 +18,7 @@ public class BulletWeapon : Weapon
    public override void FireFx(Vector3 startPos, Vector3 endPos)
    {
       base.FireFx(startPos, endPos);
-      GameObject bullet = ResFactory.Instance.CreateBullet(GameConst.BULLET_NORMAL,startPos);
+      GameObject bullet = ResFactory.Instance.CreateBullet(bulletName,startPos);
       bullet.GetComponent<Bullet>().SetEndPos(endPos);
       Vector3 dir = endPos - startPos;
       bullet.transform.forward = dir;
