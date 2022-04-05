@@ -83,7 +83,7 @@ public class Planet : GameEntity
     
     public int maxSkillCount = 3;
     //自动抽卡，每隔三秒，卡槽没满就抽
-    public bool autoRoll = true;
+    public bool autoRoll = false;
     private float autoRollTimer = 0;
     
     //紧急维修

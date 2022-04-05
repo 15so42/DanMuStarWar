@@ -57,7 +57,7 @@ public class PlanetUI : MonoBehaviour
         playerArea.gameObject.SetActive(true);
         //playerIcon.sprite=player.faceIcon;
         playerName.text = "["+planetIndex+"]"+player.userName;
-        
+        skillContainer.gameObject.SetActive(true);
     }
 
     public void UpdateNameLabel(string s)
@@ -78,6 +78,7 @@ public class PlanetUI : MonoBehaviour
         {
             playerName.text = "[" + planetIndex + "]" + "(可加入)";
         }
+        //skillContainer.gameObject.SetActive(false);
     }
 
     //资源数量更新

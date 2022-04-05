@@ -63,12 +63,18 @@ public class RoundManager
 
     void ParseClaimWar(int uid,string trim)
     {
-        string pattern = @"^(宣战){1}(\d{1})$";
+        string pattern = @"^(宣战){1}(\d{1,2})$";
         if (Regex.IsMatch(trim, pattern))
         {
-            Debug.Log("解析宣战命令:"+trim);
-            int enemyIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
-
+            
+            var subStringCount = 1;
+            if(Regex.IsMatch(trim, @"\d{2}$"))
+            {
+                subStringCount = 2;
+            }
+            
+            int enemyIndex = Int32.Parse(trim.Substring(trim.Length-subStringCount,subStringCount));
+            Debug.Log("解析宣战命令:"+enemyIndex);
             var attckerPlanet = GetPlantByPlayerUid(uid);
             if(attckerPlanet==null)
                 return;
@@ -83,13 +89,18 @@ public class RoundManager
     
     void ParseRecall(int uid,string trim)
     {
-        string pattern = @"^(召回){1}(\d{1})$";
-        string letterPattern = @"^(z|Z){1}(\d{1})$";
+        string pattern = @"^(召回){1}(\d{1,2})$";
+        string letterPattern = @"^(z|Z){1}(\d{1,2})$";
         if (Regex.IsMatch(trim, pattern) || Regex.IsMatch(trim, letterPattern))
         {
-            Debug.Log("解析召回命令:"+trim);
-            int enemyIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
-
+           
+            var subStringCount = 1;
+            if(Regex.IsMatch(trim, @"\d{2}$"))
+            {
+                subStringCount = 2;
+            }
+            int enemyIndex = Int32.Parse(trim.Substring(trim.Length-subStringCount,subStringCount));
+            Debug.Log("解析召回命令:"+enemyIndex);
             var uidPlanet = GetPlantByPlayerUid(uid);
             if(uidPlanet==null)
                 return;
@@ -102,12 +113,18 @@ public class RoundManager
 
     void ParseDefend(int uid, string trim)
     {
-        string pattern = @"^(驻守){1}(\d{1})$";
+        string pattern = @"^(驻守){1}(\d{1,2})$";
         if (Regex.IsMatch(trim, pattern))
         {
-            Debug.Log("解析驻守命令:"+trim);
-            int targetIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
-
+            
+            var subStringCount = 1;
+            if(Regex.IsMatch(trim, @"\d{2}$"))
+            {
+                subStringCount = 2;
+            }
+           
+            int targetIndex = Int32.Parse(trim.Substring(trim.Length-subStringCount,subStringCount));
+            Debug.Log("解析驻守命令:"+targetIndex);
             var attckerPlanet = GetPlantByPlayerUid(uid);
             if(attckerPlanet==null)
                 return;

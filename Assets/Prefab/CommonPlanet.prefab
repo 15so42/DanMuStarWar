@@ -5603,6 +5603,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 2248002857993935211}
   battleUnits: []
   maxSkillCount: 3
+  autoRoll: 0
   urgentRepair: 0
 --- !u!114 &5468216365159158745
 MonoBehaviour:

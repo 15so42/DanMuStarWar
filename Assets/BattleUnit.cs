@@ -244,7 +244,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     public override void OnAttacked(AttackInfo attackInfo)
     {
         base.OnAttacked(attackInfo);
-        if (true || !IsTargetAlive())//当自己处于和平状态时被袭击
+        if (!IsTargetAlive())//当自己处于和平状态时被袭击
         {
             if(Math.Abs(supportDistance) < 0.5f)
                 return;

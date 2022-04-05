@@ -1650,7 +1650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc26ce551d1c27408643af3eacb2ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPlayerCount: 6
+  maxPlayerCount: 8
   gameStatus: 0
   gameManager: {fileID: 0}
   uiManager: {fileID: 0}
@@ -2442,7 +2442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {x: 0, y: -3.1, z: 119.8}
-  offset: {x: 0, y: 200, z: 100}
+  offset: {x: 0, y: 260, z: 0}
   cameraStatus: 0
 --- !u!114 &963194233
 MonoBehaviour:
@@ -3158,6 +3158,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
   - {fileID: 11400000, guid: b00b5a252ff046e4f87d8b32bfdd39a1, type: 2}
   - {fileID: 11400000, guid: 8750f43b7d46a3c4a828432e2786105c, type: 2}
+  - {fileID: 11400000, guid: 3c8612a6bdae19c46bcd654238bd9d58, type: 2}
+  - {fileID: 11400000, guid: b77557278d31ac141bfac5533694a321, type: 2}
+  - {fileID: 11400000, guid: 280800b63e0c2c042824139fde46321e, type: 2}
   lv2Skill:
   - {fileID: 11400000, guid: 855f2f1aff4615f43ad8993cee9275be, type: 2}
   - {fileID: 11400000, guid: b0b6512f21cdbd242b84d7b233721e10, type: 2}
@@ -3167,6 +3170,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: af6987b6e6b68c647901a316dc48a3f4, type: 2}
   - {fileID: 11400000, guid: 9dc2df51cb228ff41badf1d88c42ec25, type: 2}
   - {fileID: 11400000, guid: 6c1299cb1ac233f4f82434d8a8a94ffe, type: 2}
+  - {fileID: 11400000, guid: a19239f31f7d1934a8d28210d5996f84, type: 2}
+  - {fileID: 11400000, guid: c6bfd7e73bcc4164680234b69c9d04cf, type: 2}
+  - {fileID: 11400000, guid: 94dd3133c3d07fe42ad5ea479c5bb17d, type: 2}
   lv3SKill:
   - {fileID: 11400000, guid: 7bbecb9bfff21b54abd52cc432a4ad25, type: 2}
   - {fileID: 11400000, guid: e523c16a30e4cb84089d33631ae5cf6f, type: 2}
@@ -3722,12 +3728,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90d76f0978860c4c8a49eff2ad00df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  start: {x: -120, y: 0, z: 50}
-  end: {x: 120, y: 0, z: 175.57}
+  start: {x: -150, y: 0, z: 50}
+  end: {x: 150, y: 0, z: 180}
   xSize: 18
-  zSize: 21
-  xNum: 14
-  zNum: 7
+  zSize: 14
+  xNum: 18
+  zNum: 11
   heightRange: 20
   safeRadius: 2
   stoneCenter: {x: 0, y: 0, z: 110}
@@ -3751,8 +3757,8 @@ MonoBehaviour:
   - "\u77FF\u661F"
   - "\u865A\u6570\u4E4B\u661F"
   - "\u79D1\u6280\u4E4B\u661F"
-  playerPlanetNum: 6
-  resPlanetNum: 4
+  playerPlanetNum: 8
+  resPlanetNum: 5
   colorTable: {fileID: 11400000, guid: 09969591bfaee2240b86f2535ee14349, type: 2}
   planetRoot: {fileID: 0}
 --- !u!1001 &1671430799
