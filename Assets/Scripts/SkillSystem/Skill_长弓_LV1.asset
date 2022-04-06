@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6bf9168f594a047b2cdc72986a41b8, type: 3}
   m_Name: "Skill_\u957F\u5F13_LV1"
   m_EditorClassIdentifier: 
-  usePoint: 1
+  usePoint: 30
   removePoint: 1
   desc: "\u751F\u4EA7\u957F\u5F13"
   skillItemUi: {fileID: 0}

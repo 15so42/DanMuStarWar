@@ -57,7 +57,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
 
    public bool IsAlive()
    {
-      return props.IsAlive() || die==false;
+      return  die==false;
    }
    
 

@@ -505,6 +505,7 @@ MonoBehaviour:
   rayDistance: 60
   attackType: 0
   attackValue: 1
+  bulletName: Bullet
 --- !u!114 &6833295164789909611
 MonoBehaviour:
   m_ObjectHideFlags: 0

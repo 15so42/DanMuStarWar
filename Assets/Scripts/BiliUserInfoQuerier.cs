@@ -31,7 +31,7 @@ public class BiliUserInfoQuerier : MonoBehaviour
         var url = baseUrl + "?" + "mid=" + uid;
             
         UnityWebRequest request = UnityWebRequest.Get(url);
-        request.SetRequestHeader("Access-Control-Allow-Origin", "*");
+        
         request.timeout = 15;
         yield return request.SendWebRequest();
             

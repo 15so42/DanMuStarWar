@@ -317,7 +317,7 @@ public class FightingManager : MonoBehaviour
 
         BattleOverDialog.ShowDialog(15,winner, () =>
         {
-            //SceneManager.LoadScene( SceneManager.GetActiveScene().name );
+            //SceneManager.LoadScene( SceneManager.GetActiveScene().buildIndex );
             StartNewBattle();
         });
     }
@@ -383,7 +383,10 @@ public class FightingManager : MonoBehaviour
 
     private void OnDanMuReceived(string userName,int uid,string time,string text )
     {
-        
+        if (text.Split(' ')[0] == "点歌")
+        {
+            SongHime.Instance.RequestSongByName(text.Split(' ')[1]);
+        }
         
         if (text.Split(' ')[0] == "加入"||text.Split(' ')[0] == "加入游戏")
         {

@@ -167,7 +167,7 @@ public class Planet : GameEntity
             LogTip("星球"+colony.planetIndex+"失守");
             occupied = false;
             DestroyDefendLine(colony);
-            colonyPlanets.Remove(colony);
+            
         }
     }
 
@@ -452,9 +452,13 @@ public class Planet : GameEntity
     
     void DestroyDefendLine(Planet planet)
     {
-        var colonyLine = colonyPlanetLines.Find(x => x.planet == planet)?.line;
-        if(colonyLine)
-            Destroy(colonyLine.gameObject);
+        var colonyLinePair = colonyPlanetLines.Find(x => x.planet == planet);
+        if (colonyLinePair.line)
+        {
+            colonyPlanetLines.Remove(colonyLinePair);
+            Destroy(colonyLinePair.line.gameObject);
+        }
+            
     }
 
     public void SetIndex(int index)

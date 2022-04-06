@@ -28,4 +28,4 @@ MonoBehaviour:
   gameEntity: {fileID: 0}
   ready: 0
   finished: 0
-  healValue: -5
+  healValue: -2

@@ -41,7 +41,7 @@ public class SkillItemUI : MonoBehaviour
     {
         var lastText = this.skillName.text;//记录之前的文字
         this.skillName.text = this.skillBase.desc;
-        showDescTimer=UnityTimer.Timer.Register(5, () =>
+        showDescTimer=UnityTimer.Timer.Register(6, () =>
         {
             this.skillName.text = lastText;
         });
