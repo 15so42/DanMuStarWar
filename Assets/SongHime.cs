@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using LitJson;
-using NAudio;
-using NAudio.Wave;
+
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityTimer;
@@ -183,27 +182,7 @@ public class SongHime : MonoBehaviour
    }
 
 
-   private bool LoadAudioFromData(byte[] data)
-   {
-      try
-      {
-         MemoryStream tmpStr = new MemoryStream(data);
-         var mMainOutputStream = new Mp3FileReader(tmpStr);
-         WaveFileWriter.CreateWaveFile(Application.streamingAssetsPath, mMainOutputStream);
-          var mVolumeStream = new WaveChannel32(mMainOutputStream);
-
-         var mWaveOutDevice = new WaveOutEvent();
-         mWaveOutDevice.Init(mVolumeStream);
-         mWaveOutDevice.Play();
-         return true;
-      }
-      catch (System.Exception ex)
-      {
-         Debug.LogError("Error! " + ex.Message);
-      }
-
-      return false;
-   }
+  
    
    
    IEnumerator DownSong(string url,Action<AudioClip> action)
@@ -218,11 +197,10 @@ public class SongHime : MonoBehaviour
          }
          else
          {
-            //var data = www.downloadHandler.data;
-            //LoadAudioFromData(data);
+         
             AudioClip audioClip = null;
 
-            //audioClip = NAudioPlayer.FromMp3Data(www.downloadHandler.data);
+            
             audioClip = DownloadHandlerAudioClip.GetContent(www);
             action.Invoke(audioClip);
          }
