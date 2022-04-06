@@ -557,15 +557,15 @@ public class Planet : GameEntity
     {
         int techLevel = 1;
         var techPoint= planetResContainer.GetResNumByType(ResourceType.Tech);
-        if (techPoint > 100)
+        if (techPoint > 200)
         {
             techLevel = 2;
         }
         
-        if (techPoint > 500)
+        if (techPoint > 800)
             techLevel = 3;
         
-        if (techPoint > 2500)
+        if (techPoint > 3000)
             techLevel = 4;
         return techLevel;
     }

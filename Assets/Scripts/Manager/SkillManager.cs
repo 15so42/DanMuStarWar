@@ -50,13 +50,13 @@ public class SkillManager : MonoBehaviour
         allSkill = allSkill.Concat(specialSkill).ToList();
 
 
-        for (int i = 0; i < shopSkillPairs.Count; i++)
-        {
-            allSkill.Add(shopSkillPairs[i].lv1);
-            allSkill.Add(shopSkillPairs[i].lv2);
-            allSkill.Add(shopSkillPairs[i].lv3);
-            allSkill.Add(shopSkillPairs[i].lv4);
-        }
+        // for (int i = 0; i < shopSkillPairs.Count; i++)
+        // {
+        //     allSkill.Add(shopSkillPairs[i].lv1);
+        //     allSkill.Add(shopSkillPairs[i].lv2);
+        //     allSkill.Add(shopSkillPairs[i].lv3);
+        //     allSkill.Add(shopSkillPairs[i].lv4);
+        // }
     }
 
     // Start is called before the first frame update
