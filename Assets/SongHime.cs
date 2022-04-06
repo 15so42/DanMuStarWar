@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using LitJson;
+using NAudio;
+using NAudio.Wave;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityTimer;
@@ -78,13 +81,14 @@ public class SongHime : MonoBehaviour
       }
       else
       {
-         StartCoroutine(DownSong(requestSongPair.value, OnDownComplete));
+        TryDownload(requestSongPair.value);
       }
    }
 
    public void TryDownload(string id)
    {
       string url = $"http://music.163.com/song/media/outer/url?id={id}.mp3";
+      Debug.Log(url);
       StartCoroutine(DownSong(url, OnDownComplete));
    }
 
@@ -138,11 +142,32 @@ public class SongHime : MonoBehaviour
    }
 
 
+   private bool LoadAudioFromData(byte[] data)
+   {
+      try
+      {
+         MemoryStream tmpStr = new MemoryStream(data);
+         var mMainOutputStream = new Mp3FileReader(tmpStr);
+         WaveFileWriter.CreateWaveFile(Application.streamingAssetsPath, mMainOutputStream);
+          var mVolumeStream = new WaveChannel32(mMainOutputStream);
+
+         var mWaveOutDevice = new WaveOutEvent();
+         mWaveOutDevice.Init(mVolumeStream);
+         mWaveOutDevice.Play();
+         return true;
+      }
+      catch (System.Exception ex)
+      {
+         Debug.LogError("Error! " + ex.Message);
+      }
+
+      return false;
+   }
    
    
    IEnumerator DownSong(string url,Action<AudioClip> action)
    {
-      using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.WAV))
+      using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.MPEG))
       {
          yield return www.SendWebRequest();
          if (www.isNetworkError)
@@ -151,13 +176,15 @@ public class SongHime : MonoBehaviour
          }
          else
          {
-            AudioClip audioClip = null;
+            var data = www.downloadHandler.data;
+            LoadAudioFromData(data);
+            /*AudioClip audioClip = null;
 #if UNITY_EDITOR
-            //audioClip = NAudioPlayer.FromMp3Data(www.downloadHandler.data);
+            audioClip = LoadAudioFromData(www.downloadHandler.data);
 #else
 audioClip = DownloadHandlerAudioClip.GetContent(www);
 #endif
-            action.Invoke(audioClip);
+            action.Invoke(audioClip);*/
          }
       }
    }
