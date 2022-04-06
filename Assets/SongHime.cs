@@ -38,6 +38,19 @@ public class Song
    public int id;
    public string name;
 }
+//获取实际下载地址
+public class SongUrl
+{
+   public List<SongUrlData> data;
+   public int code;
+}
+
+public class SongUrlData
+{
+   public int id;
+   public string url;
+}
+
 
 public class SongHime : MonoBehaviour
 {
@@ -77,7 +90,11 @@ public class SongHime : MonoBehaviour
       
       if (requestSongPair.requestSongType == RequestSongType.Name)
       {
-         StartCoroutine(GetSongId(requestSongPair.value, TryDownload));//获取到歌单id后开始下载歌曲
+         StartCoroutine(GetSongId(requestSongPair.value, (id)=>
+         {
+            
+            StartCoroutine(GetSongUrlById(id,TryDownload));
+         }));//获取到歌单id再获取下载链接，获取到下载链接后再下载
       }
       else
       {
@@ -85,10 +102,10 @@ public class SongHime : MonoBehaviour
       }
    }
 
-   public void TryDownload(string id)
+   public void TryDownload(string url)
    {
-      string url = $"http://music.163.com/song/media/outer/url?id={id}.mp3";
-      Debug.Log(url);
+     
+      Debug.Log("歌曲下载链接:"+url);
       StartCoroutine(DownSong(url, OnDownComplete));
    }
 
@@ -106,7 +123,7 @@ public class SongHime : MonoBehaviour
       });
    }
    
-   IEnumerator GetSongId(string songName,Action<string> action)
+   IEnumerator GetSongId(string songName,Action<int> action)
    {
       var url =
          $"http://music.eleuu.com/search?keywords={songName}";
@@ -125,7 +142,31 @@ public class SongHime : MonoBehaviour
                
          SongJson ret = JsonMapper.ToObject<SongJson>(json);
          var id = ret.result.songs[0].id;
-         action.Invoke(id.ToString());
+         action.Invoke(id);
+      }
+
+   }
+   
+   IEnumerator GetSongUrlById(int id,Action<string> action)
+   {
+      var url =
+         $"http://music.eleuu.com/song/url?id={id}";
+      UnityWebRequest request = UnityWebRequest.Get(url);
+      request.SetRequestHeader("Content-Type", "application/json");
+      request.timeout = 15;
+      yield return request.SendWebRequest();
+            
+      if(request.isNetworkError || request.isHttpError) {
+         Debug.LogError(request.error);
+      }
+      else
+      {
+         var json = request.downloadHandler.text;
+         
+               
+         SongUrl ret = JsonMapper.ToObject<SongUrl>(json);
+         var songUrl = ret.data[0].url;
+         action.Invoke(songUrl);
       }
 
    }
@@ -166,7 +207,8 @@ public class SongHime : MonoBehaviour
    
    
    IEnumerator DownSong(string url,Action<AudioClip> action)
-   {
+   {//http://music.163.com/song/media/outer/url?id=1859245776.mp3
+      //http://translate.google.com/translate_tts?ie=UTF-8&total=1&idx=0&textlen=1024&client=tw-ob&q=+%22+%20%22Hello%20how%20are%20you%22%20+%20%22&tl=En-gb
       using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.MPEG))
       {
          yield return www.SendWebRequest();
@@ -176,15 +218,13 @@ public class SongHime : MonoBehaviour
          }
          else
          {
-            var data = www.downloadHandler.data;
-            LoadAudioFromData(data);
-            /*AudioClip audioClip = null;
-#if UNITY_EDITOR
-            audioClip = LoadAudioFromData(www.downloadHandler.data);
-#else
-audioClip = DownloadHandlerAudioClip.GetContent(www);
-#endif
-            action.Invoke(audioClip);*/
+            //var data = www.downloadHandler.data;
+            //LoadAudioFromData(data);
+            AudioClip audioClip = null;
+
+            //audioClip = NAudioPlayer.FromMp3Data(www.downloadHandler.data);
+            audioClip = DownloadHandlerAudioClip.GetContent(www);
+            action.Invoke(audioClip);
          }
       }
    }
