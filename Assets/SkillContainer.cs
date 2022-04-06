@@ -60,6 +60,11 @@ public class SkillContainer : MonoBehaviour
         var skillName = SkillManager.Instance.GetRandomSkillByTech(techLevel,skills).skillName;
         SkillManager.Instance.AddSkill(skillName,gameEntity);
     }
+
+    public void BuySkill(int index)
+    {
+        SkillManager.Instance.BuySkill(index,gameEntity, (gameEntity as Planet).GetTechLevelByRes());
+    }
     
     
 

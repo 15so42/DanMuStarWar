@@ -47,6 +47,8 @@ public class UIManager : MonoBehaviour
 
    public PlanetUI CreatePlanetUI(Planet planet)
    {
-      return hpCanvas.CreatePlanetUI(planet);
+      var planetUI=hpCanvas.CreatePlanetUI(planet);
+      planetUis.Add(planetUI);
+      return planetUI;
    }
 }

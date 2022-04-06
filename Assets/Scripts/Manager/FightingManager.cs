@@ -68,6 +68,7 @@ public class FightingManager : MonoBehaviour
         
        
         EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
+        EventCenter.AddListener<int,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
         
         EventCenter.AddListener(EnumEventType.OnPlanetsSpawned,SetOwners);
         
@@ -76,6 +77,7 @@ public class FightingManager : MonoBehaviour
         uiManager = gameManager.uiManager;
         
         saveDataManager.LoadByJson();//异步读档
+        
         
         StartWaitingJoin();
         Instance = this;
@@ -86,11 +88,11 @@ public class FightingManager : MonoBehaviour
     public void OnGiftReceived(int uid, string userName, int num,string giftName,int totalCoin)
     {
         AddPlayerDataValue(uid,"giftPoint", totalCoin / 100);
-        TipsDialog.ShowDialog(userName+"获得"+ totalCoin/100+ "个礼物点",null);
+        TipsDialog.ShowDialog("感谢支持QWQ!"+userName+"获得"+ totalCoin/100+ "个礼物点",null);
         var playerInGame = GetPlayerByUid(uid);
         if (playerInGame != null)
         {
-            uiManager.GetPlanetUiByPlayer(playerInGame).UpdatGiftPointUI(playerInGame);
+            uiManager.GetPlanetUiByPlayer(playerInGame).UpdatGiftPointUI();
         }
        
 
@@ -383,9 +385,32 @@ public class FightingManager : MonoBehaviour
 
     private void OnDanMuReceived(string userName,int uid,string time,string text )
     {
-        if (text.Split(' ')[0] == "点歌")
+        if (text.Split(' ')[0] == "点歌" && text.Split(' ').Length>1)
         {
-            SongHime.Instance.RequestSongByName(text.Split(' ')[1]);
+            if (playerDataTable.FindByUid(uid).giftPoint > 2)
+            {
+                SongHime.Instance.RequestSongByName(text.Substring(text.IndexOf(' ')));
+                TipsDialog.ShowDialog($"{userName}点歌成功，消耗两个礼物点",null);
+                AddPlayerDataValue(uid,"giftPoint",-2);
+                var playerInGame = GetPlayerByUid(uid);
+                if (playerInGame!=null)
+                {
+                    var planetUi=uiManager.GetPlanetUiByPlayer(playerInGame);
+                    if(planetUi)
+                        planetUi.UpdatGiftPointUI();
+                }
+                
+            }
+            else
+            {
+                TipsDialog.ShowDialog("礼物点不够",null);
+            }
+            
+        }
+
+        if (text=="切歌" && uid==23204263)
+        {
+            SongHime.Instance.NextSong();
         }
         
         if (text.Split(' ')[0] == "加入"||text.Split(' ')[0] == "加入游戏")

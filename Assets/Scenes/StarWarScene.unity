@@ -1192,6 +1192,85 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e1938836f6b24d4b9d1c0e391c0f257, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &492892464
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 492892465}
+  - component: {fileID: 492892467}
+  - component: {fileID: 492892466}
+  m_Layer: 5
+  m_Name: SongHimeText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &492892465
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492892464}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 817523028}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 274.9033, y: 126.9661}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &492892466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492892464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 20
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "\u70B9\u6B4C\u5217\u8868\n\u683C\u5F0F\uFF1A\u70B9\u6B4C \u6B4C\u540D"
+--- !u!222 &492892467
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492892464}
+  m_CullTransparentMesh: 1
 --- !u!1 &502668701
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,6 +1333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
   index: 0
+  songHimeText: {fileID: 492892466}
 --- !u!4 &541042760
 Transform:
   m_ObjectHideFlags: 0
@@ -2027,6 +2107,7 @@ GameObject:
   - component: {fileID: 817523026}
   - component: {fileID: 817523025}
   - component: {fileID: 817523029}
+  - component: {fileID: 817523030}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2110,6 +2191,7 @@ RectTransform:
   - {fileID: 998797648}
   - {fileID: 1728286738}
   - {fileID: 1554027517}
+  - {fileID: 492892465}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2131,6 +2213,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FpsText: {fileID: 1554027515}
+--- !u!114 &817523030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817523024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d25a41e465e50d4886e391b2924d0b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &826878689
 GameObject:
   m_ObjectHideFlags: 0
@@ -3364,19 +3458,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75a41ca65b57f1f4e84652c26165c7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopSkillPairs:
+  - skillId: 0
+    skillName: "\u63A2\u7D22\u8239"
+    lv1: {fileID: 11400000, guid: b00b5a252ff046e4f87d8b32bfdd39a1, type: 2}
+    lv2: {fileID: 11400000, guid: 2f28f0ba77297c142b3eceafd5287d20, type: 2}
+    lv3: {fileID: 11400000, guid: 2f28f0ba77297c142b3eceafd5287d20, type: 2}
+    lv4: {fileID: 11400000, guid: 2f28f0ba77297c142b3eceafd5287d20, type: 2}
+  - skillId: 1
+    skillName: "\u6218\u6597\u673A"
+    lv1: {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
+    lv2: {fileID: 11400000, guid: af6987b6e6b68c647901a316dc48a3f4, type: 2}
+    lv3: {fileID: 11400000, guid: e523c16a30e4cb84089d33631ae5cf6f, type: 2}
+    lv4: {fileID: 11400000, guid: 72eff1d4f6264c94eaf80a653da8f6f4, type: 2}
+  - skillId: 2
+    skillName: "\u62A4\u536B\u8230"
+    lv1: {fileID: 11400000, guid: 13a02a3dc4c25184b884e12ed46e3936, type: 2}
+    lv2: {fileID: 11400000, guid: 7552a09c5d31fcb4383318ea86eaedb5, type: 2}
+    lv3: {fileID: 11400000, guid: 89d64442a8548d94cafd550e7fcce0d3, type: 2}
+    lv4: {fileID: 11400000, guid: 89d64442a8548d94cafd550e7fcce0d3, type: 2}
   initSkill:
   - {fileID: 11400000, guid: b00b5a252ff046e4f87d8b32bfdd39a1, type: 2}
-  allSkill:
+  specialSkill:
   - {fileID: 11400000, guid: b90669981f6aac24da8769b64ce6d897, type: 2}
   - {fileID: 11400000, guid: 46beaf6eff6d20a41a2103bf51a498bb, type: 2}
+  allSkill: []
   allBuff: []
   lv1Skill:
-  - {fileID: 11400000, guid: b00b5a252ff046e4f87d8b32bfdd39a1, type: 2}
-  - {fileID: 11400000, guid: 13a02a3dc4c25184b884e12ed46e3936, type: 2}
-  - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
-  - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
-  - {fileID: 11400000, guid: 2ba0df3149c6a4e45b2f5601c84e9c89, type: 2}
-  - {fileID: 11400000, guid: b00b5a252ff046e4f87d8b32bfdd39a1, type: 2}
   - {fileID: 11400000, guid: 8750f43b7d46a3c4a828432e2786105c, type: 2}
   - {fileID: 11400000, guid: 3c8612a6bdae19c46bcd654238bd9d58, type: 2}
   - {fileID: 11400000, guid: b77557278d31ac141bfac5533694a321, type: 2}
@@ -3384,10 +3492,6 @@ MonoBehaviour:
   lv2Skill:
   - {fileID: 11400000, guid: 855f2f1aff4615f43ad8993cee9275be, type: 2}
   - {fileID: 11400000, guid: b0b6512f21cdbd242b84d7b233721e10, type: 2}
-  - {fileID: 11400000, guid: af6987b6e6b68c647901a316dc48a3f4, type: 2}
-  - {fileID: 11400000, guid: 7552a09c5d31fcb4383318ea86eaedb5, type: 2}
-  - {fileID: 11400000, guid: 2f28f0ba77297c142b3eceafd5287d20, type: 2}
-  - {fileID: 11400000, guid: af6987b6e6b68c647901a316dc48a3f4, type: 2}
   - {fileID: 11400000, guid: 9dc2df51cb228ff41badf1d88c42ec25, type: 2}
   - {fileID: 11400000, guid: 6c1299cb1ac233f4f82434d8a8a94ffe, type: 2}
   - {fileID: 11400000, guid: a19239f31f7d1934a8d28210d5996f84, type: 2}
@@ -3395,10 +3499,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94dd3133c3d07fe42ad5ea479c5bb17d, type: 2}
   lv3SKill:
   - {fileID: 11400000, guid: 7bbecb9bfff21b54abd52cc432a4ad25, type: 2}
-  - {fileID: 11400000, guid: e523c16a30e4cb84089d33631ae5cf6f, type: 2}
-  - {fileID: 11400000, guid: 89d64442a8548d94cafd550e7fcce0d3, type: 2}
   - {fileID: 11400000, guid: 714d6762bfa8efb44946d5cc30f9fea8, type: 2}
-  - {fileID: 11400000, guid: 72eff1d4f6264c94eaf80a653da8f6f4, type: 2}
   - {fileID: 11400000, guid: c6fde36a074dbe84080dc77d0c3bf2b1, type: 2}
   - {fileID: 11400000, guid: 33ab8a10bd4e1cf4f85015c4267268f7, type: 2}
   lv4Skill:

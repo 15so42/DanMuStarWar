@@ -14,7 +14,7 @@ public class SaveDataManager : MonoBehaviour
     public void SaveByJson()
     {
         PlayerDataTable playerData = GameManager.Instance.fightingManager.playerDataTable;
-        string filePath = Path.Combine(Application.streamingAssetsPath, "PlayerDataTable");
+        string filePath = Path.Combine(Application.streamingAssetsPath, "PlayerDataTable.json");
         //利用JsonMapper将save对象转换为Json格式的字符串
         string saveJsonStr = JsonMapper.ToJson(playerData);
         //将这个字符串写入到文件中
@@ -32,6 +32,8 @@ public class SaveDataManager : MonoBehaviour
         GetJsonText("PlayerDataTable", (s) =>
         {
             PlayerDataTable loadData = JsonMapper.ToObject<PlayerDataTable>(s);
+            if(loadData==null)
+                loadData=new PlayerDataTable();
             GameManager.Instance.fightingManager.playerDataTable = loadData;
         });
     }

@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using LitJson;
 
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 using UnityTimer;
 
 public enum RequestSongType
@@ -59,6 +61,8 @@ public class SongHime : MonoBehaviour
    public int index;//当前播放序号
    public Queue<RequestSongPair> requestSongPairs=new Queue<RequestSongPair>();
 
+   public Coroutine playCoroutine;
+   public Text songHimeText;
 
    private void Awake()
    {
@@ -69,10 +73,23 @@ public class SongHime : MonoBehaviour
    {
       audioSource = GetComponent<AudioSource>();
    }
+   
+   public void UpdateText()
+   {
+      var str = "";
+      for (int i = 0; i < requestSongPairs.Count; i++)
+      {
+         str += "["+i+"]"+requestSongPairs.ElementAt(i).value+"\n";
+      }
+
+      songHimeText.text = str;
+      songHimeText.text = songHimeText.text.Replace ("\\n", "\n");  
+   }
 
    public void AddSong(RequestSongPair requestSongPair)
    {
       requestSongPairs.Enqueue(requestSongPair);
+      UpdateText();
       if (requestSongPairs.Count == 1)
       {
        
@@ -83,13 +100,28 @@ public class SongHime : MonoBehaviour
       }
    }
 
+   public void NextSong()
+   {
+      
+      if (requestSongPairs.Count > 0)
+      {
+         StopCoroutine(playCoroutine);
+         requestSongPairs.Dequeue();
+         UpdateText();
+         PlayFirstSong();
+      }
+     
+   }
+
    public void PlayFirstSong()
    {
+      if(requestSongPairs.Count==0)
+         return;
       var requestSongPair = requestSongPairs.Peek();
       
       if (requestSongPair.requestSongType == RequestSongType.Name)
       {
-         StartCoroutine(GetSongId(requestSongPair.value, (id)=>
+         playCoroutine=StartCoroutine(GetSongId(requestSongPair.value, (id)=>
          {
             
             StartCoroutine(GetSongUrlById(id,TryDownload));
@@ -114,7 +146,12 @@ public class SongHime : MonoBehaviour
       audioSource.Play();
       Timer.Register(audioClip.length, () =>
       {
-         requestSongPairs.Dequeue();
+         if (requestSongPairs.Count > 0)
+         {
+             requestSongPairs.Dequeue();
+         }
+        
+         UpdateText();
          if (requestSongPairs.Count > 0)
          {
             PlayFirstSong();
@@ -140,6 +177,13 @@ public class SongHime : MonoBehaviour
          
                
          SongJson ret = JsonMapper.ToObject<SongJson>(json);
+         if (ret.result.songs == null)
+         {
+            TipsDialog.ShowDialog("找不到歌曲:"+songName,null);
+            NextSong();
+            yield break;
+         }
+            
          var id = ret.result.songs[0].id;
          action.Invoke(id);
       }

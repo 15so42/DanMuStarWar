@@ -135,7 +135,7 @@ public class BiliBiliLive : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             //"收到来自[23204263]云ぃ空的1个小花花"
-            giftMsgs.Add(new GiftMsg(){userId = 23204263,userName = "远空",num=1,giftName = "小花花"});
+            giftMsgs.Add(new GiftMsg(){userId = 23204263,userName = "远空",num=1,giftName = "小花花",totalCoin = 100});
         }
         var danMuMsgsCount = danMuMsgs.Count;//注意因为获取弹幕是异步的，所以这里需要一个确切的值
         if (danMuMsgsCount > lastDanMuCount)

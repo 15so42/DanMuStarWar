@@ -25,6 +25,8 @@ public class PlanetUI : MonoBehaviour
     [Header("骰子点数")]
     public TMP_Text dicePointText;
 
+    public TMP_Text giftPoint;
+
 
     public Transform skillGroupUI;
 
@@ -58,6 +60,7 @@ public class PlanetUI : MonoBehaviour
         //playerIcon.sprite=player.faceIcon;
         playerName.text = "["+planetIndex+"]"+player.userName;
         skillContainer.gameObject.SetActive(true);
+        UpdatGiftPointUI();
     }
 
     public void UpdateNameLabel(string s)
@@ -89,9 +92,13 @@ public class PlanetUI : MonoBehaviour
 
     
 
-    public void UpdatGiftPointUI(Player player)
+    public void UpdatGiftPointUI()
     {
-        Debug.Log("礼物UI尚未实现");
+        if(owner.owner==null)
+            return;
+        var data = FightingManager.Instance.playerDataTable.FindByUid(owner.owner.uid);
+        giftPoint.text = data.giftPoint.ToString();
+        //Debug.Log("礼物UI尚未实现");
     }
 
     void UpdateResUI()

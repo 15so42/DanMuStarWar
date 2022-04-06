@@ -170,6 +170,23 @@ public class RoundManager
         }
     }
     
+    void ParseBuySkill(int uid,string trim)//使用技能1或者u1或者U1
+    {
+        string pattern = @"^(买技能){1}(\d{1})$";
+        string letterPattern = @"^(m|M){1}(\d{1})$";
+        if (Regex.IsMatch(trim, pattern) ||Regex.IsMatch(trim, letterPattern))
+        {
+            Debug.Log("解析买技能命令:"+trim);
+            int index = Int32.Parse(trim.Substring(trim.Length-1,1));
+
+            var planet=GetPlantByPlayerUid(uid);
+            if(planet)
+                planet.BuySkill(index);
+            
+           
+        }
+    }
+    
     void ParseRemoveSkill(int uid,string trim)
     {
         string pattern = @"^(移除技能){1}(\d{1})$";
@@ -296,6 +313,11 @@ public class RoundManager
         if (text.StartsWith("使用技能")||text.StartsWith("s")||text.StartsWith("S"))
         {
             ParseUseSkill(uid, trim);
+        }
+        
+        if (text.StartsWith("买技能")||text.StartsWith("m")||text.StartsWith("M"))
+        {
+            ParseBuySkill(uid, trim);
         }
         
         if (text.StartsWith("换技能") || text.StartsWith("h") || text.StartsWith("H"))

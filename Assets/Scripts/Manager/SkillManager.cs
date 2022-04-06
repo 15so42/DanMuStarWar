@@ -6,12 +6,29 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
+[System.Serializable]
+public class ShopSkillPair
+{
+    public int skillId;
+    public string skillName;
+    public SkillBase lv1;
+    public SkillBase lv2;
+    public SkillBase lv3;
+    public SkillBase lv4;
+}
+
 //此类没有先后顺序影响，直接单例
 public class SkillManager : MonoBehaviour
 {
     public static SkillManager Instance;
+    [Header("可购买的技能")]
+    public List<ShopSkillPair> shopSkillPairs=new List<ShopSkillPair>();
+    
     [Header("出场自带技能")]
     public List<SkillBase> initSkill=new List<SkillBase>();
+    [Header("特殊技能（比如加速)")]
+    public List<SkillBase> specialSkill=new List<SkillBase>();
+    
     public List<SkillBase> allSkill=new List<SkillBase>();
     public List<BuffBase> allBuff=new List<BuffBase>();
     
@@ -29,6 +46,17 @@ public class SkillManager : MonoBehaviour
         lv4Skill = lv4Skill.Concat(lv3SKill).ToList();
 
         allSkill = allSkill.Concat(lv4Skill).ToList();
+
+        allSkill = allSkill.Concat(specialSkill).ToList();
+
+
+        for (int i = 0; i < shopSkillPairs.Count; i++)
+        {
+            allSkill.Add(shopSkillPairs[i].lv1);
+            allSkill.Add(shopSkillPairs[i].lv2);
+            allSkill.Add(shopSkillPairs[i].lv3);
+            allSkill.Add(shopSkillPairs[i].lv4);
+        }
     }
 
     // Start is called before the first frame update
@@ -40,6 +68,29 @@ public class SkillManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+    
+    
+
+    public void BuySkill(int index,GameEntity target,int techLevel)
+    {
+        if (index < 0 || index > shopSkillPairs.Count)//从1开始输到4
+        {
+            target.LogTip("序号错误");
+            return;
+        }
+        
+        var skillBase = shopSkillPairs[index].lv1;
+        if(techLevel==2)
+            skillBase = shopSkillPairs[index].lv2;
+        if(techLevel==3)
+            skillBase = shopSkillPairs[index].lv3;
+        if(techLevel==4)
+            skillBase = shopSkillPairs[index].lv4;
+
+        var skillName = skillBase.skillName;
+        AddSkill(skillName,target);
         
     }
 

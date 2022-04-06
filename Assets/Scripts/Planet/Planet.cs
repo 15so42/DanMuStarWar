@@ -643,6 +643,24 @@ public class Planet : GameEntity
         
     }
     
+    public void BuySkill(int index)
+    {
+        if (planetResContainer.GetResNumByType(ResourceType.DicePoint) < 1)
+        {
+            LogTip("买技能需要1个骰子");
+            return;
+        }
+        if (skillContainer.skills.Count >= maxSkillCount)
+        {
+            LogTip("技能栏位已满");
+            return;
+        }
+        
+        skillContainer.BuySkill(index-1); 
+        planetResContainer.ReduceRes(ResourceType.DicePoint,1);
+        
+    }
+    
     public void RemoveSkill(int index)
     {
         var skill = GetSkillByIndex(index);
