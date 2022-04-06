@@ -40,7 +40,7 @@ public class PlanetManager : MonoBehaviour
         
         //获得剩余玩家数
         var count = 0;
-        Planet lastAlivePlanet = null;//最后存活的星球
+        Planet lastAlivePlanet = null;//遍历中最后存活的星球
         
         for (int i = 0; i < allPlanets.Count; i++)
         {

@@ -56,6 +56,7 @@ public class Planet : GameEntity
     
     public List<Planet> enemyPlanets=new List<Planet>();
     public List<Planet> colonyPlanets = new List<Planet>();
+    public List<Planet> allyPlanets = new List<Planet>();
 
     [Header("PlanetUI")] public PlanetUI planetUi;
 

@@ -110,6 +110,10 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         if (enemyPlanets.Count <= 0)
             return null;
         var planet = enemyPlanets[Random.Range(0, enemyPlanets.Count)];
+        if (ownerPlanet.allyPlanets.Contains(planet))
+        {
+            return null;
+        }
         if(planet)
         {
             if (planet.die)
