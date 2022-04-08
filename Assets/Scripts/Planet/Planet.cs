@@ -151,7 +151,7 @@ public class Planet : GameEntity
         if (attacker == this && colonyPlanets.Contains(colony)==false)
         {
             LogTip("占领" + colony.planetIndex);
-            occupied = true;
+            colony.occupied = true;
             if(colony.hpUI)
                 colony.hpUI.SetColor(attacker.planetColor);
             colonyPlanets.Add(colony);
@@ -167,6 +167,7 @@ public class Planet : GameEntity
         {
             LogTip("星球"+colony.planetIndex+"失守");
             occupied = false;
+            colonyPlanets.Remove(colony);
             DestroyDefendLine(colony);
             
         }
@@ -454,7 +455,7 @@ public class Planet : GameEntity
     void DestroyDefendLine(Planet planet)
     {
         var colonyLinePair = colonyPlanetLines.Find(x => x.planet == planet);
-        if (colonyLinePair.line)
+        if (colonyLinePair!=null && colonyLinePair.line!=null )
         {
             colonyPlanetLines.Remove(colonyLinePair);
             Destroy(colonyLinePair.line.gameObject);
@@ -650,14 +651,15 @@ public class Planet : GameEntity
             LogTip("买技能需要1个骰子");
             return;
         }
-        if (skillContainer.skills.Count >= maxSkillCount)
+        if (skillContainer.skills.Count >= maxSkillCount+1)
         {
             LogTip("技能栏位已满");
             return;
         }
         
-        skillContainer.BuySkill(index-1); 
-        planetResContainer.ReduceRes(ResourceType.DicePoint,1);
+        var buySuccess=skillContainer.BuySkill(index-1); 
+        if(buySuccess)
+            planetResContainer.ReduceRes(ResourceType.DicePoint,1);
         
     }
     

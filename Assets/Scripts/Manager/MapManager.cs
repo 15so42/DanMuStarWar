@@ -43,6 +43,8 @@ public class MapManager : MonoBehaviour
     [Header("存放位置")] public Transform planetRoot;
     //public Transform battleUnitRoot;
    
+    //固定位置地图
+    public List<Vector2Int> fixedPos=new List<Vector2Int>();
     
     //分格子放星球
     
@@ -102,9 +104,12 @@ public class MapManager : MonoBehaviour
         for (int i = 0; i < planetNum; i++)
         {
             var pfb = planets[Random.Range(0, planets.Length)];
-            Vector2Int gridPos=new Vector2Int(Random.Range(0,zNum),Random.Range(0,xNum));
+            //Vector2Int gridPos=new Vector2Int(Random.Range(0,zNum),Random.Range(0,xNum));
+            Vector2Int gridPos = fixedPos[i];
+            if (resPlanet)
+                gridPos = fixedPos[playerPlanetNum + i];
             int retryCount = 10000;
-            while ((String.IsNullOrEmpty(grids[gridPos.x, gridPos.y]) == false || HasNearPlanet(gridPos.x,gridPos.y,safeRadius)) && retryCount>0)
+           /* while ((String.IsNullOrEmpty(grids[gridPos.x, gridPos.y]) == false || HasNearPlanet(gridPos.x,gridPos.y,safeRadius)) && retryCount>0)
             {
                 gridPos=new Vector2Int(Random.Range(0,zNum),Random.Range(0,xNum));
                 retryCount--;
@@ -114,7 +119,7 @@ public class MapManager : MonoBehaviour
             {
                 Debug.Log("没有足够空间:"+retryCount);
                 continue;
-            }
+            }*/
 
             var worldPos = GetWorldPosByGridPos(gridPos.x,gridPos.y);
             worldPos.y = Random.Range(-1 * heightRange, heightRange);

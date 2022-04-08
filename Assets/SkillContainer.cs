@@ -61,9 +61,9 @@ public class SkillContainer : MonoBehaviour
         SkillManager.Instance.AddSkill(skillName,gameEntity);
     }
 
-    public void BuySkill(int index)
+    public bool BuySkill(int index)
     {
-        SkillManager.Instance.BuySkill(index,gameEntity, (gameEntity as Planet).GetTechLevelByRes());
+        return SkillManager.Instance.BuySkill(index,gameEntity, (gameEntity as Planet).GetTechLevelByRes());
     }
     
     

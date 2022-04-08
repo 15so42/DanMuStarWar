@@ -105,6 +105,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         if (!onlyEnemyPlanet)
         {
             enemyPlanets = PlanetManager.Instance.allPlanets;//所有星球中寻找敌人
+            
         }
 
         if (enemyPlanets.Count <= 0)
@@ -134,7 +135,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
 
                 return null;
             }
-
+            
             foreach (var enemyUnit in planet.battleUnits)
             {
                 if (enemyUnit == null)
@@ -143,7 +144,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
                 }
                     
                 if ((inWar ||Vector3.Distance(enemyUnit.transform.position, transform.position) < findEnemyDistance) &&
-                    enemyUnit && enemyUnit.die == false && enemyUnit.GetVictimOwner() != GetAttackerOwner() )//随机从所有单位找一个，优先检测距离节省资源
+                    enemyUnit.die == false && enemyUnit.GetVictimOwner() != GetAttackerOwner() )//随机从所有单位找一个，优先检测距离节省资源
                 {
                     enemy = enemyUnit;
                     break;

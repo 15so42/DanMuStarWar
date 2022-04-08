@@ -1331,9 +1331,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e68c5e80c1f27b047bd4003f33d7c0a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultSongs:
+  - "\u8303\u8FDB\u4E2D\u4E3E"
+  - Heros come back
+  - "\u96EA\u4E4B\u6CEA \u96E8\u4E4B\u97F3"
+  - Memories
+  - "\u795E\u3005\u306E\u7948\u308A"
+  - Set Me Free
+  - "\u54C8\u5C3C\u5B9D\u8D1D"
+  - "\u8FD9\u4E00\u79D2\u53EA\u60F3\u5728\u7231\u91CC\u6C89\u6EBA\uFF08\u6CBB\u6108\u300A\u604B\u611B\u306E\u8CC7\u683C\u300B\u65E5\u8BED\u5FF5\u767D-\u6EAF
+    (Reverse).feat"
+  - Tear Rain
+  - Mine
+  - forget
   audioSource: {fileID: 0}
   index: 0
   songHimeText: {fileID: 492892466}
+  lastPlay: 0
 --- !u!4 &541042760
 Transform:
   m_ObjectHideFlags: 0
@@ -4067,8 +4081,8 @@ MonoBehaviour:
   end: {x: 150, y: 0, z: 180}
   xSize: 18
   zSize: 14
-  xNum: 18
-  zNum: 11
+  xNum: 20
+  zNum: 12
   heightRange: 20
   safeRadius: 2
   stoneCenter: {x: 0, y: 0, z: 110}
@@ -4093,9 +4107,25 @@ MonoBehaviour:
   - "\u865A\u6570\u4E4B\u661F"
   - "\u79D1\u6280\u4E4B\u661F"
   playerPlanetNum: 8
-  resPlanetNum: 5
+  resPlanetNum: 7
   colorTable: {fileID: 11400000, guid: 09969591bfaee2240b86f2535ee14349, type: 2}
   planetRoot: {fileID: 0}
+  fixedPos:
+  - {x: 1, y: 0}
+  - {x: 1, y: 8}
+  - {x: 1, y: 16}
+  - {x: 5, y: 4}
+  - {x: 5, y: 12}
+  - {x: 10, y: 0}
+  - {x: 10, y: 8}
+  - {x: 10, y: 16}
+  - {x: 1, y: 4}
+  - {x: 1, y: 12}
+  - {x: 5, y: 0}
+  - {x: 5, y: 8}
+  - {x: 5, y: 16}
+  - {x: 10, y: 4}
+  - {x: 10, y: 12}
 --- !u!1001 &1671430799
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -73,12 +73,12 @@ public class SkillManager : MonoBehaviour
     
     
 
-    public void BuySkill(int index,GameEntity target,int techLevel)
+    public bool BuySkill(int index,GameEntity target,int techLevel)
     {
-        if (index < 0 || index > shopSkillPairs.Count)//从1开始输到4
+        if (index < 0 || index >= shopSkillPairs.Count)//从1开始输到4
         {
             target.LogTip("序号错误");
-            return;
+            return false;
         }
         
         var skillBase = shopSkillPairs[index].lv1;
@@ -89,9 +89,23 @@ public class SkillManager : MonoBehaviour
         if(techLevel==4)
             skillBase = shopSkillPairs[index].lv4;
 
-        var skillName = skillBase.skillName;
-        AddSkill(skillName,target);
-        
+      
+        var planet = target as Planet;
+        if (planet)
+        {
+            if (planet.planetResContainer.GetResNumByType(ResourceType.DicePoint) < 1 + skillBase.usePoint)
+            {
+                target.LogTip("购买所需点数不够");
+                return false;
+            }
+            var skillName = skillBase.skillName;
+            AddSkill(skillName,target);
+            (target as Planet)?.UseSkill(target.skillContainer.skills.Count);
+            return true;
+        }
+
+        return false;
+
     }
 
     public void AddBuff(string buffName, GameEntity target)

@@ -92,7 +92,8 @@ public class FightingManager : MonoBehaviour
         var playerInGame = GetPlayerByUid(uid);
         if (playerInGame != null)
         {
-            uiManager.GetPlanetUiByPlayer(playerInGame).UpdatGiftPointUI();
+            
+            uiManager.GetPlanetUiByPlayer(playerInGame)?.UpdatGiftPointUI();
         }
        
 
@@ -403,7 +404,7 @@ public class FightingManager : MonoBehaviour
             }
             else
             {
-                TipsDialog.ShowDialog("礼物点不够",null);
+                TipsDialog.ShowDialog("点歌需要两个礼物点",null);
             }
             
         }

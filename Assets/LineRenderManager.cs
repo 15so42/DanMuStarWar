@@ -2,15 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using BattleScene.Scripts;
+using Ludiq;
 using UnityEngine;
 
 public class LineRenderManager : MonoBehaviour
 {
     public static LineRenderManager Instance;
 
+//public  List<GameObject> lineGos=new List<GameObject>();
     private void Awake()
     {
         Instance = this;
+        
     }
 
     public GameObject lineRenderPfb;
@@ -21,6 +24,16 @@ public class LineRenderManager : MonoBehaviour
     void Start()
     {
         parent=new GameObject("==========LineRenders========");
+        EventCenter.AddListener(EnumEventType.OnStartWaitingJoin,ClearAllLine);
+    }
+
+    void ClearAllLine()
+    {
+        var trans = parent.GetComponentsInChildren<Transform>();
+        for (int i = 1; i < trans.Length; i++)
+        {
+            Destroy(trans[i].gameObject);
+        }
     }
 
     // Update is called once per frame

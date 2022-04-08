@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityTimer;
+using Random = System.Random;
 
 public enum RequestSongType
 {
@@ -55,6 +56,8 @@ public class SongUrlData
 
 public class SongHime : MonoBehaviour
 {
+   
+   public List<string> defaultSongs=new List<string>();
    public static SongHime Instance;
    
    public AudioSource audioSource;
@@ -63,6 +66,9 @@ public class SongHime : MonoBehaviour
 
    public Coroutine playCoroutine;
    public Text songHimeText;
+   
+   //记录audioSource状态来判断是否播放完毕
+   public bool lastPlay = false;
 
    private void Awake()
    {
@@ -72,14 +78,25 @@ public class SongHime : MonoBehaviour
    private void Start()
    {
       audioSource = GetComponent<AudioSource>();
+      AddRandomSong();
+   }
+
+   void AddRandomSong()
+   {
+      AddSong(new RequestSongPair(){requestSongType = RequestSongType.Name,value =  defaultSongs[UnityEngine.Random.Range(0,defaultSongs.Count)]});
    }
    
-   public void UpdateText()
+   public void UpdateText(float progress=0)
    {
       var str = "";
       for (int i = 0; i < requestSongPairs.Count; i++)
       {
-         str += "["+i+"]"+requestSongPairs.ElementAt(i).value+"\n";
+         if (i == 0)
+         {
+            str += "["+i+"]"+requestSongPairs.ElementAt(i).value+"["+progress+"%]"+ "\n";
+         }else
+            str += "["+i+"]"+requestSongPairs.ElementAt(i).value+"\n";
+         
       }
 
       songHimeText.text = str;
@@ -100,16 +117,28 @@ public class SongHime : MonoBehaviour
       }
    }
 
+  
    public void NextSong()
    {
+      Debug.Log("下一曲。。。。。。");
+      StopAllCoroutines();
       
       if (requestSongPairs.Count > 0)
       {
-         StopCoroutine(playCoroutine);
+         
          requestSongPairs.Dequeue();
-         UpdateText();
-         PlayFirstSong();
+         if (requestSongPairs.Count > 0)
+         {
+            PlayFirstSong();
+            UpdateText();
+            return;
+         }
+            
+        
       }
+      AddRandomSong();
+      
+      UpdateText();
      
    }
 
@@ -140,23 +169,24 @@ public class SongHime : MonoBehaviour
       StartCoroutine(DownSong(url, OnDownComplete));
    }
 
+   private void Update()
+   {
+      if (audioSource.isPlaying != lastPlay)
+      {
+         if(!audioSource.isPlaying)
+            OnPlayComplete();
+         lastPlay = audioSource.isPlaying;
+      }
+   }
+
    public void OnDownComplete(AudioClip audioClip)
    {
+      UpdateText(100);
       audioSource.clip = audioClip;
       audioSource.Play();
-      Timer.Register(audioClip.length, () =>
-      {
-         if (requestSongPairs.Count > 0)
-         {
-             requestSongPairs.Dequeue();
-         }
-        
-         UpdateText();
-         if (requestSongPairs.Count > 0)
-         {
-            PlayFirstSong();
-         }
-      });
+      Debug.Log("开始播放，歌曲长度为："+audioClip.length);
+      
+      
    }
    
    IEnumerator GetSongId(string songName,Action<int> action)
@@ -170,6 +200,7 @@ public class SongHime : MonoBehaviour
             
       if(request.isNetworkError || request.isHttpError) {
          Debug.LogError(request.error);
+         NextSong();
       }
       else
       {
@@ -189,6 +220,13 @@ public class SongHime : MonoBehaviour
       }
 
    }
+
+   public void OnPlayComplete()
+   {
+      Debug.Log("播放完成，下一首");
+         
+      NextSong();
+   }
    
    IEnumerator GetSongUrlById(int id,Action<string> action)
    {
@@ -201,6 +239,7 @@ public class SongHime : MonoBehaviour
             
       if(request.isNetworkError || request.isHttpError) {
          Debug.LogError(request.error);
+         NextSong();
       }
       else
       {
@@ -234,10 +273,17 @@ public class SongHime : MonoBehaviour
       //http://translate.google.com/translate_tts?ie=UTF-8&total=1&idx=0&textlen=1024&client=tw-ob&q=+%22+%20%22Hello%20how%20are%20you%22%20+%20%22&tl=En-gb
       using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.MPEG))
       {
-         yield return www.SendWebRequest();
+         www.SendWebRequest();
+         while (!www.isDone)
+         {
+            UpdateText(www.downloadProgress*100);
+            yield return 1;
+         }
          if (www.isNetworkError)
          {
             Debug.Log(www.error);
+            Debug.Log("下载歌曲失败，下一首");
+            NextSong();
          }
          else
          {

@@ -288,7 +288,7 @@ public class RoundManager
         var user = GetPlayerByUid(uid);
         var validUser = user != null;
         var planet = GetPlantByPlayerUid(uid);
-        if (!validUser || user.die || planet.die)
+        if (!validUser || planet==null || user.die || planet.die)
         {
             //局外人或者已经淘汰
             return;
