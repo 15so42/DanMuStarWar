@@ -706,8 +706,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855df10198e6d344ca4723cbfdadc92c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 350
-  hp: 350
+  maxHp: 300
+  hp: 300
   pDef: 50
   mDef: 50
   gameEntity: {fileID: 0}
@@ -720,7 +720,7 @@ SphereCollider:
   m_GameObject: {fileID: 8963971200527278596}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 40
   m_Center: {x: 0.00000017881393, y: 0, z: -0.0884895}
@@ -750,7 +750,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   battleUnitManager: {fileID: 0}
   planetManager: {fileID: 0}
-  findEnemyDistance: 400
+  findEnemyDistance: 80
   canAttack: 0
   inWar: 0
   canDefendOtherPlanet: 0

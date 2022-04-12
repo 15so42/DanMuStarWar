@@ -35,7 +35,7 @@ public class SolarStorm : GameEnvEvent
             for (int i = 0; i < PlanetManager.Instance.allPlanets.Count; i++)
             {
                 var planet = PlanetManager.Instance.allPlanets[i];
-                planet.OnAttacked(new AttackInfo(null,AttackType.Magic,Random.Range(5,15)+level * 3));
+                planet.OnAttacked(new AttackInfo(null,AttackType.Magic,Random.Range(5,10)+level * 2));
                 GameObject fx = ResFactory.Instance.CreateFx(GameConst.FX_BULLET_HIT, planet.transform.position);
             }
             
