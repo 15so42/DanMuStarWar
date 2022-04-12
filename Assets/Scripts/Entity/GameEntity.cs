@@ -5,6 +5,12 @@ using Bolt;
 using GameCode.Tools;
 using UnityEngine;
 
+
+public enum GameEntityType
+{
+   BattleUnit,
+   Planet,
+}
 [RequireComponent(typeof(StateMachine))]
 [RequireComponent(typeof(BattleUnitProps))]
 [RequireComponent(typeof(SkillContainer))]
@@ -14,8 +20,10 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    
    public Action<int,int> onHpChanged;
 
-   public BattleUnitProps props;
-   public SkillContainer skillContainer;
+   [HideInInspector]public BattleUnitProps props;
+   [HideInInspector]public SkillContainer skillContainer;
+
+   public GameEntityType gameEntityType = GameEntityType.BattleUnit;
    [Header("手动设置半径")] public float radius=5;
    [Header("呼叫友军来支援的距离")] public float supportDistance=30;
 
@@ -74,6 +82,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
          lastAttacker = attackInfo.attacker;
          Die();
       }
+      
    }
    
    public void OnHpChanged(int hp,int maxHP)

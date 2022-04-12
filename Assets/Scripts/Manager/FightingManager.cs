@@ -341,7 +341,7 @@ public class FightingManager : MonoBehaviour
     public void StartNewBattle()
     {
         roundManager.Stop();
-        playerStatusTable.Clear();
+        
         
         gameStatus =  GameStatus.WaitingNewFighting;
         players.Clear();
@@ -349,7 +349,7 @@ public class FightingManager : MonoBehaviour
         roundManager = null;
         playerStatusTable.Clear();
         
-        mapManager.Init(this);
+        //mapManager.Init(this);
 
         // var planets = planetRoot.GetComponentsInChildren<Transform>();
         // for (int i = 0; i < planets.Length; i++)

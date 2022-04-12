@@ -761,5 +761,27 @@ public class Planet : GameEntity
         
         base.OnStartWaitingJoin();
     }
-    
+
+    public override void OnAttacked(AttackInfo attackInfo)
+    {
+        base.OnAttacked(attackInfo);
+        
+            if(Math.Abs(supportDistance) < 0.5f)
+                return;
+            if (attackInfo.attacker==null || attackInfo.attacker.GetAttackerOwner() == GetVictimOwner())//同一阵营
+            {
+                return;
+                
+            }
+         
+            for (int i = 0; i < battleUnits.Count; i++)
+            {
+                if (battleUnits[i]!=null &&  Vector3.Distance(battleUnits[i].transform.position, transform.position) < supportDistance)
+                {
+                    var supportAble = battleUnits[i].GetComponent<ISupportAble>();
+                    supportAble?.Support(attackInfo.attacker as BattleUnit);
+                }
+            }
+        
+    }
 }
