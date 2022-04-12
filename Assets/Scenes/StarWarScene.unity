@@ -3499,7 +3499,7 @@ MonoBehaviour:
     lv3: {fileID: 11400000, guid: 89d64442a8548d94cafd550e7fcce0d3, type: 2}
     lv4: {fileID: 11400000, guid: 89d64442a8548d94cafd550e7fcce0d3, type: 2}
   initSkill:
-  - {fileID: 11400000, guid: 0a715db2fe8080a47a487fc77331f095, type: 2}
+  - {fileID: 11400000, guid: 33ab8a10bd4e1cf4f85015c4267268f7, type: 2}
   specialSkill:
   - {fileID: 11400000, guid: b90669981f6aac24da8769b64ce6d897, type: 2}
   - {fileID: 11400000, guid: 46beaf6eff6d20a41a2103bf51a498bb, type: 2}
@@ -3717,6 +3717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   events:
   - {fileID: 11400000, guid: b9d6d5ce6feaf9343a8f79abe8618e17, type: 2}
+  level: 0
 --- !u!1 &1518290374
 GameObject:
   m_ObjectHideFlags: 0

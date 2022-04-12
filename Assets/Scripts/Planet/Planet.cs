@@ -189,12 +189,14 @@ public class Planet : GameEntity
     }
     
     /// <summary>
-    /// 被驻守
+    /// 被驻守,表示被colonist驻守
     /// </summary>
     /// <param name="colonist"></param>
     /// <param name="point"></param>
     public void Defend(Planet colonist,float point)
     {
+        if(colonist==this)
+            return;
         
         if(owner!=null && owner.die==false){//目标星球有玩家并且存活，无法占领
             colonist.Recall(this);//殖民者召回在本星球上的战舰

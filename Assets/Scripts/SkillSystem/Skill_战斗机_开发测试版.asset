@@ -21,10 +21,10 @@ MonoBehaviour:
   isBuff: 0
   cd: 2
   timer: 0
-  life: -1
+  life: 8
   autoLife: 1
   stackAbleCount: 1
-  passive: 1
+  passive: 0
   gameEntity: {fileID: 0}
   ready: 1
   finished: 0

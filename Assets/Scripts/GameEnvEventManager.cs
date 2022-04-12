@@ -13,9 +13,19 @@ public class GameEnvEventManager : MonoBehaviour
         Instance = this;
     }
 
+    public int level = 0;
+
+    public void Init()
+    {
+        level = 0;
+    }
+
     public void PlayRandomEvent()
     {
-        events[UnityEngine.Random.Range(0, events.Count)].Run();
+        events[UnityEngine.Random.Range(0, events.Count)].Run(level);
+        level++;
     }
+
+   
     
 }

@@ -96,7 +96,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     //守卫状态寻敌事件
     public void OnBattleUnitEnterPlanet(BattleUnit entrant, Planet planet)
     {
-        if (isDefending && defendingPlanet == planet)
+        if (isDefending && defendingPlanet == planet || ownerPlanet==planet)
         {
             if(entrant.die || GetAttackerOwner()==entrant.GetVictimOwner())
                 return;
@@ -292,8 +292,8 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     {
         this.ownerPlanet = planet;
         moveManager.Init(planet);
-        isDefending = true;
-        defendingPlanet = planet;
+        //isDefending = true;
+        //defendingPlanet = planet;
         
 
     }

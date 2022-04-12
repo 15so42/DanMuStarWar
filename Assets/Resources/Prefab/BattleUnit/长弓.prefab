@@ -929,6 +929,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   props: {fileID: 0}
   skillContainer: {fileID: 0}
+  gameEntityType: 0
   radius: 1
   supportDistance: 60
   die: 0
@@ -943,7 +944,7 @@ MonoBehaviour:
   findEnemyDistance: 300
   canAttack: 1
   inWar: 0
-  canDefendOtherPlanet: 0
+  canDefendOtherPlanet: 1
   defendingPlanet: {fileID: 0}
   isDefending: 0
   weapons:

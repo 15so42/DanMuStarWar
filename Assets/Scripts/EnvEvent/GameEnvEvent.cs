@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameEnvEvent : ScriptableObject
 {
     
-    public virtual void Run()
+    public virtual void Run(int level)
     {
         
     }

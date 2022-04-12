@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 public class Looters : GameEnvEvent
 {
    
-    public override void Run()
+    public override void Run(int level)
     {
         List<GameObject> looterList=new List<GameObject>();
         var camera = Camera.main.GetComponent<MultipleTargetCamera>();

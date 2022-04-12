@@ -341,8 +341,8 @@ public class FightingManager : MonoBehaviour
     public void StartNewBattle()
     {
         roundManager.Stop();
-        
-        
+
+        GameEnvEventManager.Instance.Init();
         gameStatus =  GameStatus.WaitingNewFighting;
         players.Clear();
         uiManager.ResetUi();
