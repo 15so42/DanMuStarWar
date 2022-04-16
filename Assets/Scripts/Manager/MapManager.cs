@@ -106,9 +106,10 @@ public class MapManager : MonoBehaviour
             var pfb = planets[Random.Range(0, planets.Length)];
             //Vector2Int gridPos=new Vector2Int(Random.Range(0,zNum),Random.Range(0,xNum));
             Vector2Int gridPos = fixedPos[i];
-            if (resPlanet)
-                gridPos = fixedPos[playerPlanetNum + i];
-            int retryCount = 10000;
+            // if (resPlanet)
+            //     gridPos = fixedPos[playerPlanetNum + i];
+            // int retryCount = 10000;
+            //随机
            /* while ((String.IsNullOrEmpty(grids[gridPos.x, gridPos.y]) == false || HasNearPlanet(gridPos.x,gridPos.y,safeRadius)) && retryCount>0)
             {
                 gridPos=new Vector2Int(Random.Range(0,zNum),Random.Range(0,xNum));
@@ -121,8 +122,27 @@ public class MapManager : MonoBehaviour
                 continue;
             }*/
 
-            var worldPos = GetWorldPosByGridPos(gridPos.x,gridPos.y);
-            worldPos.y = Random.Range(-1 * heightRange, heightRange);
+            var worldPos =Vector3.zero;
+
+            if (resPlanet)
+            {
+                if (i < 8)
+                {
+                    worldPos = Vector3.zero + Vector3.right * (Mathf.Sin(  0+Mathf.Deg2Rad*(i+1)*360/resPlanetNum) * 35) + Vector3.forward * (Mathf.Cos(0+Mathf.Deg2Rad*(i+1)*360/resPlanetNum) * 35);
+                }
+                else
+                {
+                    //worldPos = Vector3.zero + Vector3.right * (Mathf.Sin(  Mathf.Deg2Rad*(i+1)*90) * 120) + Vector3.forward * (Mathf.Cos(Mathf.Deg2Rad*(i+1)*90) * 120);
+                }
+                
+            }
+            else
+            {
+                worldPos = Vector3.zero + Vector3.right * (Mathf.Sin(Mathf.Deg2Rad*(i+1)*360/playerPlanetNum) * 80) + Vector3.forward * (Mathf.Cos(Mathf.Deg2Rad*(i+1)*360/playerPlanetNum) * 80);
+            }
+           
+            //worldPos.y = Random.Range(-1 * heightRange, heightRange);
+            
             
             var planetName = planetsName[Random.Range(0, planetsName.Length)];
             var go = GameObject.Instantiate(pfb, worldPos, Quaternion.identity, empty.transform);

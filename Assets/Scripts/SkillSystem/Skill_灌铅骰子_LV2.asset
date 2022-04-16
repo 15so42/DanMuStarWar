@@ -19,9 +19,9 @@ MonoBehaviour:
   skillName: "Skill_\u704C\u94C5\u9AB0\u5B50_LV1"
   icon: {fileID: 0}
   isBuff: 0
-  cd: 7
+  cd: 10
   timer: 0
-  life: 17
+  life: 15
   autoLife: 1
   stackAbleCount: 1
   passive: 1

@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac4e543d9fa1c6049a8ed5d5c74a36b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curSpeed: 2
+  curSpeed: 4
   maxSpeed: 10
   finalTarget: {x: 0, y: 0, z: 0}
   tmpTarget: {x: 0, y: 0, z: 0}
@@ -307,6 +307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skills: []
+  maxSkillCount: 3
   simpleSkillUI: 1
   gameEntity: {fileID: 0}
 --- !u!114 &5762954912096371508
@@ -340,6 +341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   props: {fileID: 0}
   skillContainer: {fileID: 0}
+  gameEntityType: 0
   radius: 1
   supportDistance: 30
   die: 0
@@ -351,7 +353,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   battleUnitManager: {fileID: 0}
   planetManager: {fileID: 0}
-  findEnemyDistance: 20
+  findEnemyDistance: 30
   canAttack: 1
   inWar: 0
   canDefendOtherPlanet: 1
@@ -506,7 +508,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   attackSpeed: 5
   scatteringAngel: 5
-  rayDistance: 60
+  rayDistance: 40
   attackType: 0
   attackValue: 1
   bulletName: Bullet

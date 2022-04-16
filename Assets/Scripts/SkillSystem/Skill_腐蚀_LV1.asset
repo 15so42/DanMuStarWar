@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usePoint: 0
   removePoint: 3
-  desc: "\u6BCF3\u79D2\u6263\u96645\u70B9HP,\u6301\u7EED60\u79D2"
+  desc: "\u6BCF3\u79D2\u6263\u96642\u70B9HP,\u6301\u7EED60\u79D2"
   skillItemUi: {fileID: 0}
   skillName: "Skill_\u8150\u8680_LV1"
   icon: {fileID: 21300000, guid: ba0998b69bda33642b0aeccfb88745ef, type: 3}

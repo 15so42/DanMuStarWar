@@ -216,13 +216,22 @@ public class FightingManager : MonoBehaviour
 
     //玩家占领星球
     void SetOwners()
-    {
+    { 
+        // for (int i = 0; i < 5; i++)
+        // {
+        //     var index = ((8 / 5) * i) % 8;
+        //     Debug.Log(""+index);
+        // }
+        
         UnityTimer.Timer.Register(1, () =>
         {
+            var planetNum = FightingManager.Instance.maxPlayerCount;
+            var playersCount = players.Count;
             //玩家依次占领星球
             for (int i = 0; i < players.Count; i++)
             {
-                PlanetManager.Instance.allPlanets[i].SetOwner(players[i]);
+                var index = ((planetNum / playersCount) * i) % planetNum;
+                PlanetManager.Instance.allPlanets[index].SetOwner(players[i]);
             }
         });
 

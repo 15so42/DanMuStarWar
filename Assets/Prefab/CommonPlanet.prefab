@@ -5700,6 +5700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   props: {fileID: 0}
   skillContainer: {fileID: 0}
+  gameEntityType: 0
   radius: 6.91
   supportDistance: 30
   die: 0
@@ -5723,7 +5724,7 @@ MonoBehaviour:
   occupied: 0
   spawnPoint: {fileID: 2248002857993935211}
   battleUnits: []
-  maxSkillCount: 3
+  maxSkillCount: 2
   autoRoll: 0
   urgentRepair: 0
 --- !u!114 &5468216365159158745
@@ -5800,6 +5801,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skills: []
+  maxSkillCount: 2
   simpleSkillUI: 0
   gameEntity: {fileID: 0}
 --- !u!54 &7785057999513872135

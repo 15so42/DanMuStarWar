@@ -17,7 +17,7 @@ public class SolarStorm : GameEnvEvent
         mainCamera.ShakeCamera();
         
         
-        ResFactory.Instance.CreateFx(GameConst.FX_SOLAR_STORM, Vector3.zero);
+        ResFactory.Instance.CreateFx(GameConst.FX_SOLAR_STORM, Vector3.zero-Vector3.forward*100);
       
         FightingManager.Instance.StartCoroutine(Storm(level));
     }
@@ -27,7 +27,7 @@ public class SolarStorm : GameEnvEvent
         var count = 0;
         while (true)
         {
-            if(count>15)
+            if(count>10)
                 yield break;
             count++;
             
@@ -35,7 +35,7 @@ public class SolarStorm : GameEnvEvent
             for (int i = 0; i < PlanetManager.Instance.allPlanets.Count; i++)
             {
                 var planet = PlanetManager.Instance.allPlanets[i];
-                planet.OnAttacked(new AttackInfo(null,AttackType.Magic,Random.Range(5,10)+level * 2));
+                planet.OnAttacked(new AttackInfo(null,AttackType.Magic,Random.Range(3,5)+level * 1));
                 GameObject fx = ResFactory.Instance.CreateFx(GameConst.FX_BULLET_HIT, planet.transform.position);
             }
             

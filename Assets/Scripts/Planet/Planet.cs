@@ -166,7 +166,7 @@ public class Planet : GameEntity
         if (owner==this && colonyPlanets.Contains(colony))
         {
             LogTip("星球"+colony.planetIndex+"失守");
-            occupied = false;
+            colony.occupied = false;
             colonyPlanets.Remove(colony);
             DestroyDefendLine(colony);
             
@@ -365,9 +365,13 @@ public class Planet : GameEntity
             TipsDialog.ShowDialog("无法对无人星球宣战",null);
             return;
         }
+
+        if (enemyPlanets.Contains(planet) == false)
+        {
+            enemyPlanets.Add(planet);
+            enemyPlayers.Add(planet.owner);
+        }
         
-        enemyPlanets.Add(planet);
-        enemyPlayers.Add(planet.owner);
 
         var enemyUnits = planet.battleUnits;
         
@@ -445,6 +449,14 @@ public class Planet : GameEntity
                 Destroy(t.line.gameObject);
             }
             
+            foreach (var p in colonyPlanetLines)
+            {
+                if(p==null || p.line==null || p.line.gameObject==null){continue;}
+                {
+                    Destroy(p.line.gameObject);
+                }
+            }
+            
             return;
         }
         //别人死了，把自己连别人的线删了
@@ -456,6 +468,7 @@ public class Planet : GameEntity
     
     void DestroyDefendLine(Planet planet)
     {
+        
         var colonyLinePair = colonyPlanetLines.Find(x => x.planet == planet);
         if (colonyLinePair!=null && colonyLinePair.line!=null )
         {

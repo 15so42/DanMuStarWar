@@ -242,7 +242,8 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
 
     public void ClaimWar()
     {
-        inWar = true;
+        if(canAttack)
+            inWar = true;
     }
 
     public Planet GetAroundPlanet()
