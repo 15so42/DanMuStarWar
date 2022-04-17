@@ -4,11 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[Serializable]
+public enum WarPlaneType
+{
+   None,//default选项
+   WarPlane,
+   GuardPlane,
+}
 public class WarPlane : BattleUnit,ISupportAble
 {
    public List<Weapon> weapons=new List<Weapon>();
 
-   
+   public WarPlaneType warPlaneType=WarPlaneType.None;
    protected void Start()
    {
       base.Start();

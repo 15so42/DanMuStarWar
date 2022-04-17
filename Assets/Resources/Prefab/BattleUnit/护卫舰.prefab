@@ -326,6 +326,7 @@ MonoBehaviour:
   isDefending: 0
   weapons:
   - {fileID: 0}
+  warPlaneType: 2
 --- !u!1 &2729318951462193991
 GameObject:
   m_ObjectHideFlags: 0

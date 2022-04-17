@@ -84,8 +84,13 @@ public class Planet : GameEntity
     
     public int maxSkillCount = 3;
     //自动抽卡，每隔三秒，卡槽没满就抽
-    public bool autoRoll = false;
+    public bool autoRoll = true;
     private float autoRollTimer = 0;
+    
+    //自动造兵，每隔三秒，发送一次命令
+    public bool autoCreateUnit = false;
+    private float autoCUTimer = 0;
+    public string unitRateStr = "132";
     
     //紧急维修
     public bool urgentRepair = false;
@@ -93,6 +98,7 @@ public class Planet : GameEntity
       
     void Awake()
     {
+        autoRoll = true;
         base.Awake();
         
         planetCommander = GetComponent<PlanetCommander>();
@@ -524,6 +530,7 @@ public class Planet : GameEntity
 
         gameObject.name = player.userName;
 
+        //autoCreateUnit = true;
     }
 
     private void OnDrawGizmos()
@@ -558,6 +565,47 @@ public class Planet : GameEntity
                 autoRollTimer = 0;
             }
         }
+
+        autoCUTimer += Time.deltaTime;
+        if (autoCUTimer > 6 && autoCreateUnit)
+        {
+            int sum = 0;
+            
+            for (int i = 0; i < unitRateStr.Length; i++)
+            {
+                int s = unitRateStr[i];
+                sum+=s;
+            }
+
+            if (sum == 0)
+            {
+                //DONothing
+            }
+            else
+            {
+                for (int i = 0; i < unitRateStr.Length; i++)
+                {
+                    int s = unitRateStr[i];
+                    int random = Random.Range(0, sum);
+                    if (random < s)
+                    {
+                        var str = "m" + (i + 1);
+                        SendDanMu(str);
+                        LogTip(str);
+                    }
+                }
+            }
+
+            autoCUTimer = 0;
+
+        }
+    }
+
+   
+
+    public void SendDanMu(string s)
+    {
+        EventCenter.Broadcast(EnumEventType.OnDanMuReceived,owner.userName,owner.uid,"0",s);
     }
 
     public override void LogTip(string tip)

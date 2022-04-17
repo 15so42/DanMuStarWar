@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee735830820d3e145935ee5099fc14fd, type: 3}
   m_Name: "Skill_\u6D41\u661F\u96E8_LV2"
   m_EditorClassIdentifier: 
-  usePoint: 40
+  usePoint: 50
   removePoint: 1
-  desc: "\u53EC\u55242\u7EA7\u6D41\u661F\u96E8"
+  desc: "\u53EC\u55244\u7EA7\u6D41\u661F\u96E8"
   skillItemUi: {fileID: 0}
   skillName: "Skill_\u6D41\u661F\u96E8_LV2"
   icon: {fileID: 0}
@@ -29,4 +29,4 @@ MonoBehaviour:
   ready: 1
   finished: 0
   targetEvt: {fileID: 11400000, guid: b9d6d5ce6feaf9343a8f79abe8618e17, type: 2}
-  level: 2
+  level: 4

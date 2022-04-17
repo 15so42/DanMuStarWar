@@ -5128,7 +5128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac4e543d9fa1c6049a8ed5d5c74a36b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curSpeed: 5
+  curSpeed: 6
   maxSpeed: 10
   finalTarget: {x: 0, y: 0, z: 0}
   tmpTarget: {x: 0, y: 0, z: 0}

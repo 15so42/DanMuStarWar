@@ -227,7 +227,7 @@ public class FightingManager : MonoBehaviour
         {
             var planetNum = FightingManager.Instance.maxPlayerCount;
             var playersCount = players.Count;
-            //玩家依次占领星球
+            //玩家依次占领星球P
             for (int i = 0; i < players.Count; i++)
             {
                 var index = ((planetNum / playersCount) * i) % planetNum;

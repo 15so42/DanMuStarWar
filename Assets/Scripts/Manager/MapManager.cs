@@ -128,7 +128,7 @@ public class MapManager : MonoBehaviour
             {
                 if (i < 8)
                 {
-                    worldPos = Vector3.zero + Vector3.right * (Mathf.Sin(  0+Mathf.Deg2Rad*(i+1)*360/resPlanetNum) * 35) + Vector3.forward * (Mathf.Cos(0+Mathf.Deg2Rad*(i+1)*360/resPlanetNum) * 35);
+                    worldPos = Vector3.zero + Vector3.right * (Mathf.Sin(  45+Mathf.Deg2Rad*(i+1)*360/resPlanetNum) * 35) + Vector3.forward * (Mathf.Cos(45+Mathf.Deg2Rad*(i+1)*360/resPlanetNum) * 35);
                 }
                 else
                 {

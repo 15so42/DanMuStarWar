@@ -1411,30 +1411,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultSongs:
-  - "\u8303\u8FDB\u4E2D\u4E3E"
-  - Heros come back
-  - "\u96EA\u4E4B\u6CEA \u96E8\u4E4B\u97F3"
-  - Memories
-  - "\u795E\u3005\u306E\u7948\u308A"
-  - Set Me Free
-  - "\u54C8\u5C3C\u5B9D\u8D1D"
-  - "\u8FD9\u4E00\u79D2\u53EA\u60F3\u5728\u7231\u91CC\u6C89\u6EBA\uFF08\u6CBB\u6108\u300A\u604B\u611B\u306E\u8CC7\u683C\u300B\u65E5\u8BED\u5FF5\u767D-\u6EAF
-    (Reverse).feat"
-  - Tear Rain
-  - Mine
-  - forget
-  - "\u79BB\u5C9B\u4E4B\u6B4C"
-  - Rush Over Me
-  - "\u5FC3\u751F\u4E03\u9762 \u5584\u6076\u96BE\u8FA8"
-  - S.T.A.Y. (Delta Heavy Tribute)
-  - Particle Arts
-  - "\u51AC\u4E4B\u82B1"
-  - Forest of Gold
-  - perfect slumbers
-  - "Void \u5C3E\u6FA4\u62D3\u5B9F"
-  - Dreams
-  - Pyres
-  - Wicked Game
+  - The Best Of Me
+  - Little By Little
+  - IPlayYouListen ODESZA
+  - Immersion Tony Anderson
+  - Atlas Lane 8
+  - nevermind riversilvers
+  - 'Are You Lost park bird '
+  - 'Leaving You Vacant - '
+  - Eschaton
+  - 'New Dawn '
+  - Blue Sky GYVUS
+  - 'before the storm '
+  - "\u96F2\u96C0 "
+  - If You Kim
   audioSource: {fileID: 0}
   index: 0
   songHimeText: {fileID: 492892466}
@@ -2062,7 +2052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc26ce551d1c27408643af3eacb2ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPlayerCount: 8
+  maxPlayerCount: 6
   gameStatus: 0
   gameManager: {fileID: 0}
   uiManager: {fileID: 0}
@@ -2337,7 +2327,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &798544999
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3002,7 +2992,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.5449003, g: 0.6243624, b: 0.745283, a: 0}
+  m_BackGroundColor: {r: 0.6320754, g: 0.5337521, b: 0.45616764, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -5247,21 +5237,22 @@ MonoBehaviour:
   lv1Skill:
   - {fileID: 11400000, guid: 8750f43b7d46a3c4a828432e2786105c, type: 2}
   - {fileID: 11400000, guid: 3c8612a6bdae19c46bcd654238bd9d58, type: 2}
-  - {fileID: 11400000, guid: b77557278d31ac141bfac5533694a321, type: 2}
   - {fileID: 11400000, guid: 280800b63e0c2c042824139fde46321e, type: 2}
+  - {fileID: 11400000, guid: 294674d3392d6734f9617721150988c6, type: 2}
   lv2Skill:
   - {fileID: 11400000, guid: 855f2f1aff4615f43ad8993cee9275be, type: 2}
   - {fileID: 11400000, guid: b0b6512f21cdbd242b84d7b233721e10, type: 2}
   - {fileID: 11400000, guid: 9dc2df51cb228ff41badf1d88c42ec25, type: 2}
   - {fileID: 11400000, guid: 6c1299cb1ac233f4f82434d8a8a94ffe, type: 2}
   - {fileID: 11400000, guid: a19239f31f7d1934a8d28210d5996f84, type: 2}
-  - {fileID: 11400000, guid: c6bfd7e73bcc4164680234b69c9d04cf, type: 2}
   - {fileID: 11400000, guid: 94dd3133c3d07fe42ad5ea479c5bb17d, type: 2}
+  - {fileID: 11400000, guid: 29e13dbcd2cb035468e240edcaf40518, type: 2}
   lv3SKill:
   - {fileID: 11400000, guid: 7bbecb9bfff21b54abd52cc432a4ad25, type: 2}
   - {fileID: 11400000, guid: 714d6762bfa8efb44946d5cc30f9fea8, type: 2}
   - {fileID: 11400000, guid: c6fde36a074dbe84080dc77d0c3bf2b1, type: 2}
   - {fileID: 11400000, guid: 33ab8a10bd4e1cf4f85015c4267268f7, type: 2}
+  - {fileID: 11400000, guid: c6fde36a074dbe84080dc77d0c3bf2b1, type: 2}
   lv4Skill:
   - {fileID: 11400000, guid: 33ab8a10bd4e1cf4f85015c4267268f7, type: 2}
   skillItemUiPfb: {fileID: 1383040578392754508, guid: a4c3206efad44f94cb52038eaf681ef1,
@@ -5395,6 +5386,102 @@ MonoBehaviour:
   ringUiParent: {fileID: 1530945923}
   skillUIPfb: {fileID: 0}
   skillUIParent: {fileID: 0}
+--- !u!1 &1450159039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1450159043}
+  - component: {fileID: 1450159042}
+  - component: {fileID: 1450159041}
+  - component: {fileID: 1450159040}
+  m_Layer: 0
+  m_Name: Plane (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!64 &1450159040
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450159039}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1450159041
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450159039}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 5860724692830048395, guid: b9a4d6ecf94af9e4e9bf7f0ece1c7b96, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1450159042
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450159039}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1450159043
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450159039}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -3.1, z: 119.8}
+  m_LocalScale: {x: 50, y: 1, z: 50}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 26
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1463795897 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4019182334487915976, guid: 07d71621ad57b2541824f2bcee64c7ed,
@@ -5694,7 +5781,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1554027515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5905,8 +5992,8 @@ MonoBehaviour:
   - "\u77FF\u661F"
   - "\u865A\u6570\u4E4B\u661F"
   - "\u79D1\u6280\u4E4B\u661F"
-  playerPlanetNum: 8
-  resPlanetNum: 5
+  playerPlanetNum: 6
+  resPlanetNum: 4
   colorTable: {fileID: 11400000, guid: 09969591bfaee2240b86f2535ee14349, type: 2}
   planetRoot: {fileID: 0}
   fixedPos:
@@ -6087,6 +6174,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1728286737}
   m_CullTransparentMesh: 0
+--- !u!1 &1759862814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1759862815}
+  - component: {fileID: 1759862816}
+  m_Layer: 0
+  m_Name: AttackManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1759862815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759862814}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1969265784}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1759862816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759862814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d69acf1668a6d0b438f5f177c0a5b730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1810657585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6295,6 +6425,7 @@ Transform:
   - {fileID: 690583539}
   - {fileID: 1475135730}
   - {fileID: 486641838}
+  - {fileID: 1759862815}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

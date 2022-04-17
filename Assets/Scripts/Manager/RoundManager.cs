@@ -83,7 +83,7 @@ public class RoundManager
                 return;
 
             attckerPlanet.ClaimWar(victimPlanet);
-            victimPlanet.ClaimWar(attckerPlanet);
+            //victimPlanet.ClaimWar(attckerPlanet);
         }
     }
     
@@ -134,6 +134,12 @@ public class RoundManager
             attckerPlanet.ClaimDefend(target);
             
         }
+    }
+
+    void ParseComplexCommand(int uid, string trim)
+    {
+        string pattern= @"((m|M){1}\d{1}|(s|S){1}\d{1}|(y|Y){1}\d{1}|(h|H){1}\d{1})+";
+        
     }
     
     void ParseChangeSkill(int uid,string trim)
@@ -309,6 +315,17 @@ public class RoundManager
         {
             ParseRecall(uid, trim);
         }
+        
+        // string spattern= @"((m|M){1}\d{1}|((s|S){1}\d{1})|((y|Y){1}\d{1})|((h|H){1}\d{1}))+";
+       
+        
+       // string sPattern= @"([mMsShHyY]{1}(\d){1})+";
+        // string sPattern= @"((m){1}(\d{1}))+";
+        //
+        // if (Regex.IsMatch(trim, sPattern))
+        // {
+        //     Debug.Log("IsMatch:"+trim);
+        // }
         
         if (text.StartsWith("使用技能")||text.StartsWith("s")||text.StartsWith("S"))
         {
