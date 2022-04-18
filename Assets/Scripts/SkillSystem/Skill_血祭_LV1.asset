@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usePoint: 0
   removePoint: 1
-  desc: "\u6D88\u8017150HP,\u83B7\u5F976\u9AB0\u5B50"
+  desc: "\u6D88\u8017150HP,\u83B7\u5F973\u9AB0\u5B50"
   skillItemUi: {fileID: 0}
   skillName: "Skill_\u8840\u796D_LV1"
   icon: {fileID: 0}
@@ -29,4 +29,4 @@ MonoBehaviour:
   ready: 1
   finished: 0
   reduceHp: 150
-  addDicePoint: 6
+  addDicePoint: 3

@@ -643,7 +643,7 @@ MonoBehaviour:
   maxSpeed: 10
   finalTarget: {x: 0, y: 0, z: 0}
   tmpTarget: {x: 0, y: 0, z: 0}
-  rotateSpeed: 0.5
+  rotateSpeed: 1
   planet: {fileID: 0}
   guardPos: {fileID: 0}
   guardHeight: 5
@@ -757,7 +757,7 @@ MonoBehaviour:
   canDefendOtherPlanet: 0
   defendingPlanet: {fileID: 0}
   isDefending: 0
-  eatDistance: 5
+  eatDistance: 15
 --- !u!54 &7905838483529104777
 Rigidbody:
   m_ObjectHideFlags: 0

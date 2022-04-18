@@ -5132,7 +5132,7 @@ MonoBehaviour:
   maxSpeed: 10
   finalTarget: {x: 0, y: 0, z: 0}
   tmpTarget: {x: 0, y: 0, z: 0}
-  rotateSpeed: 0.5
+  rotateSpeed: 1
   planet: {fileID: 0}
   guardPos: {fileID: 0}
   guardHeight: 5

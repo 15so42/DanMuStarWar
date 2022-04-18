@@ -258,7 +258,7 @@ MonoBehaviour:
   maxSpeed: 10
   finalTarget: {x: 0, y: 0, z: 0}
   tmpTarget: {x: 0, y: 0, z: 0}
-  rotateSpeed: 0.5
+  rotateSpeed: 1
   planet: {fileID: 0}
   guardPos: {fileID: 0}
   guardHeight: 5
@@ -361,6 +361,7 @@ MonoBehaviour:
   isDefending: 0
   weapons:
   - {fileID: 0}
+  warPlaneType: 0
 --- !u!1 &6698674750013834543
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usePoint: 0
   removePoint: 1
-  desc: "\u6D88\u8017500HP,\u83B7\u5F9725\u9AB0\u5B50"
+  desc: "\u6D88\u8017450HP,\u83B7\u5F9712\u9AB0\u5B50"
   skillItemUi: {fileID: 0}
   skillName: "Skill_\u8840\u796D_LV3"
   icon: {fileID: 0}
@@ -28,5 +28,5 @@ MonoBehaviour:
   gameEntity: {fileID: 0}
   ready: 1
   finished: 0
-  reduceHp: 500
-  addDicePoint: 25
+  reduceHp: 450
+  addDicePoint: 12

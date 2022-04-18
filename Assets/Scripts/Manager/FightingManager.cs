@@ -397,7 +397,7 @@ public class FightingManager : MonoBehaviour
     {
         if (text.Split(' ')[0] == "点歌" && text.Split(' ').Length>1)
         {
-            if (playerDataTable.FindByUid(uid).giftPoint > 2)
+            if (playerDataTable.FindByUid(uid).giftPoint >= 0)
             {
                 SongHime.Instance.RequestSongByName(text.Substring(text.IndexOf(' ')));
                 TipsDialog.ShowDialog($"{userName}点歌成功，消耗两个礼物点",null);
