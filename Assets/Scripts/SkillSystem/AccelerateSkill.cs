@@ -8,9 +8,9 @@ public class AccelerateSkill : BuffBase
     public float addMoveSpeed=4;
     public float duration = 3;
     private MoveManager moveManager;
-    public override void Init(GameEntity gameEntity)
+    public override void Init(GameEntity gameEntity,PlanetCommander planetCommander)
     {
-        base.Init(gameEntity);
+        base.Init(gameEntity,planetCommander);
         moveManager = gameEntity.GetComponent<MoveManager>();
         if (moveManager)
         {

@@ -8,9 +8,9 @@ public class BloodSacrificeSkill : SkillBase
     public int reduceHp=100;
     public int addDicePoint = 7;
     private PlanetResContainer resContainer;
-    public override void Init(GameEntity gameEntity)
+    public override void Init(GameEntity gameEntity,PlanetCommander planetCommander)
     {
-        base.Init(gameEntity);
+        base.Init(gameEntity,planetCommander);
         
         resContainer = gameEntity.GetComponent<PlanetResContainer>();
     }

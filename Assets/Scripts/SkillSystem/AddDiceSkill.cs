@@ -7,9 +7,9 @@ public class AddDiceSkill : SkillBase
 {
     public int addValue=1;
     private PlanetResContainer resContainer;
-    public override void Init(GameEntity gameEntity)
+    public override void Init(GameEntity gameEntity,PlanetCommander planetCommander)
     {
-        base.Init(gameEntity);
+        base.Init(gameEntity,planetCommander);
         resContainer =gameEntity.GetComponent<PlanetResContainer>();
     }
 

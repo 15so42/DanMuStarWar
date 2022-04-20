@@ -53,7 +53,18 @@ public class RoundManager
 
     Planet GetPlantByPlayerUid(int uid)
     {
-        return PlanetManager.Instance.allPlanets.Find(x => x.owner!=null && x.owner.uid == uid);
+        //return PlanetManager.Instance.allPlanets.Find(x => x.planetCommanders !=null && x.owner.uid == uid);
+        for (int i = 0; i < PlanetManager.Instance.allPlanets.Count; i++)
+        {
+            var planet = PlanetManager.Instance.allPlanets[i];
+            var commander = planet.planetCommanders.Find(x => x.uid == uid);
+            if (commander!=null)
+            {
+                return planet;
+            }
+        }
+
+        return null;
     }
 
     Planet GetPlanetByIndex(int index)
@@ -82,7 +93,7 @@ public class RoundManager
             if(victimPlanet==null)
                 return;
 
-            attckerPlanet.ClaimWar(victimPlanet);
+            attckerPlanet.ClaimWar(uid,victimPlanet);//
             //victimPlanet.ClaimWar(attckerPlanet);
         }
     }
@@ -106,7 +117,7 @@ public class RoundManager
                 return;
             var defendPlanet = GetPlanetByIndex(enemyIndex);
 
-            uidPlanet.Recall(defendPlanet);
+            uidPlanet.Recall(uid,defendPlanet);
             
         }
     }
@@ -131,7 +142,7 @@ public class RoundManager
             var target = GetPlanetByIndex(targetIndex);
 
             
-            attckerPlanet.ClaimDefend(target);
+            attckerPlanet.ClaimDefend(uid,target);
             
         }
     }
@@ -153,7 +164,7 @@ public class RoundManager
 
             var planet=GetPlantByPlayerUid(uid);
             if(planet)
-                planet.ChangeSkill(skillIndex);
+                planet.ChangeSkill(uid,skillIndex);
             
            
         }
@@ -170,7 +181,7 @@ public class RoundManager
 
             var planet=GetPlantByPlayerUid(uid);
             if(planet)
-                planet.UseSkill(skillIndex);
+                planet.UseSkill(uid,skillIndex);
             
            
         }
@@ -187,7 +198,7 @@ public class RoundManager
 
             var planet=GetPlantByPlayerUid(uid);
             if(planet)
-                planet.BuySkill(index);
+                planet.BuySkill(uid,index);
             
            
         }
@@ -204,7 +215,7 @@ public class RoundManager
 
             var planet=GetPlantByPlayerUid(uid);
             if(planet)
-                planet.RemoveSkill(skillIndex);
+                planet.RemoveSkill(uid,skillIndex);
             
            
         }
@@ -219,7 +230,7 @@ public class RoundManager
            
             var planet=GetPlantByPlayerUid(uid);
             if(planet)
-                planet.RollSkill();
+                planet.RollSkill(uid);
             
            
         }
@@ -248,7 +259,7 @@ public class RoundManager
            
             var planet=GetPlantByPlayerUid(uid);
             if(planet)
-                planet.UrgentRepair();
+                planet.UrgentRepair(uid);
         }
     }
     

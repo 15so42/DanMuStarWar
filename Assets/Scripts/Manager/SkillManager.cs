@@ -73,7 +73,7 @@ public class SkillManager : MonoBehaviour
     
     
 
-    public bool BuySkill(int index,GameEntity target,int techLevel)
+    public bool BuySkill(int index,GameEntity target,int techLevel,PlanetCommander planetCommander)
     {
         if (index < 0 || index >= shopSkillPairs.Count)//从1开始输到4
         {
@@ -99,8 +99,8 @@ public class SkillManager : MonoBehaviour
                 return false;
             }
             var skillName = skillBase.skillName;
-            AddSkill(skillName,target);
-            (target as Planet)?.UseSkill(target.skillContainer.skills.Count);
+            AddSkill(skillName,target,planetCommander);
+            (target as Planet)?.UseSkill(planetCommander.uid, target.skillContainer.skills.Count);
             return true;
         }
 
@@ -108,22 +108,22 @@ public class SkillManager : MonoBehaviour
 
     }
 
-    public void AddBuff(string buffName, GameEntity target)
-    {
-        var skill = GetBuffInstance(buffName);
-        skill.Init(target);
-        var skillItemUi = GameObject.Instantiate(skillItemUiPfb).GetComponent<SkillItemUI>();
-        skillItemUi.Init(skill);
-        target.AddSkill(skillItemUi);
-    }
-    public void AddSkill(string skillName, GameEntity target)
+    // public void AddBuff(string buffName, GameEntity target)
+    // {
+    //     var skill = GetBuffInstance(buffName);
+    //     skill.Init(target,);
+    //     var skillItemUi = GameObject.Instantiate(skillItemUiPfb).GetComponent<SkillItemUI>();
+    //     skillItemUi.Init(skill);
+    //     target.AddSkill(skillItemUi);
+    // }
+    public void AddSkill(string skillName, GameEntity target,PlanetCommander planetCommander)
     {
         if (target.AddSkillCheck(skillName)==false)//可以添加重复的
         {
             return;
         }
         var skill = GetSkillInstance(skillName);
-        skill.Init(target);
+        skill.Init(target,planetCommander);
         var skillItemUi = GameObject.Instantiate(skillItemUiPfb).GetComponent<SkillItemUI>();
         skillItemUi.Init(skill);
         target.AddSkill(skillItemUi);

@@ -11,6 +11,8 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
 {
    
     public Planet ownerPlanet;
+    //指挥官
+    public PlanetCommander planetCommander;
 
     private MoveManager moveManager;
 
@@ -266,7 +268,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     {
         if (isDefending && defendingPlanet)
         {
-            defendingPlanet.Defend(GetAttackerOwner() as Planet,Time.deltaTime);
+            defendingPlanet.Defend(GetAttackerOwner() as Planet,planetCommander.uid,Time.deltaTime);
         }
     }
 
@@ -289,10 +291,11 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         
     }
 
-    public void Init(Planet planet)
+    public void Init(Planet planet,PlanetCommander planetCommander)
     {
         this.ownerPlanet = planet;
         moveManager.Init(planet);
+        LogTip(planetCommander.uid+"");
         //isDefending = true;
         //defendingPlanet = planet;
         

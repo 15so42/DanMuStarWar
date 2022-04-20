@@ -22,7 +22,7 @@ public class SkillContainer : MonoBehaviour
         return true;
     }
 
-    public bool UseSkill(int index)
+    public bool UseSkill(int index,PlanetCommander planetCommander)
     {
         ErrorCode errCode = null;
         if(skills[index].passive==false)//主动技能
@@ -34,15 +34,21 @@ public class SkillContainer : MonoBehaviour
         
         if(errCode!=null && errCode.code!=ErrorType.Success)
             return false;
+
+        if (planetCommander != skills[index].planetCommander)
+        {
+            gameEntity.LogTip("只有购买者可以使用此卡牌");
+            return false;
+        }
         return true;
 
     }
 
-    public void ChangeSkill(int index)
+    public void ChangeSkill(int index,PlanetCommander planetCommander)
     {
         skills[index].Kill();
         int techLv = (gameEntity as Planet).GetTechLevelByRes();
-        AddRandomSkill(techLv);
+        AddRandomSkill(techLv,planetCommander);
         
     }
 
@@ -55,15 +61,15 @@ public class SkillContainer : MonoBehaviour
     }
   
 
-    public void AddRandomSkill(int techLevel)
+    public void AddRandomSkill(int techLevel,PlanetCommander planetCommander)
     {
         var skillName = SkillManager.Instance.GetRandomSkillByTech(techLevel,skills).skillName;
-        SkillManager.Instance.AddSkill(skillName,gameEntity);
+        SkillManager.Instance.AddSkill(skillName,gameEntity,planetCommander);
     }
 
-    public bool BuySkill(int index)
+    public bool BuySkill(int index,PlanetCommander planetCommander)
     {
-        return SkillManager.Instance.BuySkill(index,gameEntity, (gameEntity as Planet).GetTechLevelByRes());
+        return SkillManager.Instance.BuySkill(index,gameEntity, (gameEntity as Planet).GetTechLevelByRes(),planetCommander);
     }
     
     

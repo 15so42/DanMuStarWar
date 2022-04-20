@@ -13,6 +13,7 @@ public enum TaskType
 public struct TaskParams
 {
    public TaskType taskType;
+   
    public string value;
    public float duration;
    public Action onFinished;
@@ -20,6 +21,7 @@ public struct TaskParams
    public TaskParams(TaskType taskType, string value, float duration, Action onFinished = null)
    {
       this.taskType = taskType;
+      
       this.value = value;
       this.duration = duration;
       this.onFinished = onFinished;
@@ -28,14 +30,16 @@ public struct TaskParams
 public class PlanetTask 
 {
    private float timer = 0;
+   public PlanetCommander planetCommander;
    public bool isFininshed = false;
 
    public TaskParams taskParams;
    public Planet planet;
    
-   public PlanetTask(TaskParams taskParams)
+   public PlanetTask(TaskParams taskParams,PlanetCommander planetCommander)
    {
       this.taskParams = taskParams;
+      this.planetCommander = planetCommander;
       //init
       timer = taskParams.duration;
    }
@@ -53,9 +57,9 @@ public class PlanetTask
       }
    }
 
-   public void InitBattleUnit(BattleUnit battleUnit)
+   public void InitBattleUnit(BattleUnit battleUnit,PlanetCommander planetCommander)
    {
-      battleUnit.Init(planet);
+      battleUnit.Init(planet,planetCommander);
       
    }
 
@@ -77,7 +81,7 @@ public class PlanetTask
             {
                go=ResFactory.Instance.CreateBattleUnit(splitArr[1],planet.spawnPoint.transform.position);
                go.name = go.name + planet.name;
-               InitBattleUnit(go.GetComponent<BattleUnit>());
+               InitBattleUnit(go.GetComponent<BattleUnit>(),planetCommander);
             }
 
             if (type == "Bullet")
