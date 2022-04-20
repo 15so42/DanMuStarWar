@@ -15,10 +15,15 @@ public class DebugDialog : Dialog
     public Button downArrow;
     public Button leftArrow;
     public Button rightArrow;
+    public Text playerName;
 
     public string initName = "Player0";
     public int initUid = 336223980;
     public int playerIndex = 0;
+    
+
+    public static int count;
+    
     
     public static void ShowDialog()
     {
@@ -28,20 +33,26 @@ public class DebugDialog : Dialog
 
     public override void Show()
     {
-        var dialog = GetShowingDialog(nameof(DebugDialog)) as DebugDialog;
+        
         base.Show();
         
-        if (dialog != null)
+        if (count != 0)
         {
-            container.transform.localPosition=new Vector3(380,-206,0);
-            initName = "Player1";
-            initUid = 23204263;
-            playerIndex = 1;
+            container.transform.localPosition=new Vector3(380,206,0)-Vector3.up * (count * 100);
+            initName = "Player"+count;
+            initUid = count;
+            playerIndex = count;
+            
         }
         else
         {
             container.transform.localPosition=new Vector3(380,206,0);
+            playerIndex = 0;
         }
+        
+        playerName.text= "Player"+count;
+
+        count++;
         
         joinButton.gameObject.SetActive(true);
         submitButton.gameObject.SetActive(false);
@@ -78,5 +89,11 @@ public class DebugDialog : Dialog
         {
             container.transform.DOLocalJump(container.transform.localPosition - Vector3.right * 300, 2, 2, 2);
         });
+    }
+
+    public override void Close()
+    {
+        base.Close();
+        count--;
     }
 }

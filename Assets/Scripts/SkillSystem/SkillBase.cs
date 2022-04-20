@@ -6,6 +6,9 @@ using UnityEngine;
 public abstract class SkillBase : ScriptableObject
 {
 
+    
+    [HideInInspector]public PlanetCommander planetCommander;
+    
     [Header("点数")] public int usePoint=1;
     public int removePoint = 1;
     [Header("描述")]
@@ -37,10 +40,11 @@ public abstract class SkillBase : ScriptableObject
     //事件
     public Action onFinished;
     public Action<int> onLifeChangedAction;
-    public virtual void Init(GameEntity gameEntity)
+    public virtual void Init(GameEntity gameEntity,PlanetCommander planetCommander)
     {
         timer = cd;
         this.gameEntity = gameEntity;
+        this.planetCommander = planetCommander;
         onLifeChangedAction += OnLifeChanged;
     }
 

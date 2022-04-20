@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Bolt;
+using GameCode.Tools;
 using Ludiq;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -35,6 +36,9 @@ public class ColonyPair
 public class Planet : GameEntity
 {
 
+    private Transform commanderGoContainer;
+    public GameObject commanderPfb;
+   
     //星球序号，用于宣战结盟等操作
     public int planetIndex = 0;
     [Header("Models")] 
@@ -42,7 +46,9 @@ public class Planet : GameEntity
 
     public string planetType;
     
-    private PlanetCommander planetCommander;
+    public List<PlanetCommander> planetCommanders=new List<PlanetCommander>();
+    public List<GameObject> commanderGos=new List<GameObject>();
+    public List<CommanderUI> commanderUis=new List<CommanderUI>();
     [HideInInspector]
     public PlanetResContainer planetResContainer;
     private TaskCenter[] taskCenters;
@@ -90,7 +96,7 @@ public class Planet : GameEntity
     //自动造兵，每隔三秒，发送一次命令
     public bool autoCreateUnit = false;
     private float autoCUTimer = 0;
-    public string unitRateStr = "132";
+    public string unitRateStr = "132";//132表示概率
     
     //紧急维修
     public bool urgentRepair = false;
@@ -99,9 +105,12 @@ public class Planet : GameEntity
     void Awake()
     {
         autoRoll = true;
+
+        if (FightingManager.Instance.gameMode == GameMode.BattleGround)
+            autoRoll = false;
         base.Awake();
         
-        planetCommander = GetComponent<PlanetCommander>();
+        
         taskCenters = GetComponents<TaskCenter>();
         
         planetResContainer = GetComponent<PlanetResContainer>();
@@ -129,11 +138,12 @@ public class Planet : GameEntity
        
     }
 
-    public void UrgentRepair()
+    public void UrgentRepair(int uid)
     {
         if (!urgentRepair)
         {
-            SkillManager.Instance.AddSkill("Skill_紧急维修_LV1",this);
+            var planetCommander = GetCommanderByUid(uid);
+            SkillManager.Instance.AddSkill("Skill_紧急维修_LV1",this,planetCommander);
             urgentRepair = true;
         }
         else
@@ -181,7 +191,12 @@ public class Planet : GameEntity
 
 
 
-    public void Recall(Planet planet)
+    /// <summary>
+    /// uid表示指挥官id
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="planet"></param>
+    public void Recall(int uid,Planet planet)
     {
         for (int i = 0; i < battleUnits.Count; i++)
         {
@@ -199,13 +214,13 @@ public class Planet : GameEntity
     /// </summary>
     /// <param name="colonist"></param>
     /// <param name="point"></param>
-    public void Defend(Planet colonist,float point)
+    public void Defend(Planet colonist,int uid,float point)
     {
         if(colonist==this)
             return;
         
         if(owner!=null && owner.die==false){//目标星球有玩家并且存活，无法占领
-            colonist.Recall(this);//殖民者召回在本星球上的战舰
+            colonist.Recall(uid,this);//殖民者召回在本星球上的战舰
             SetRingPoint(0);
             return;
         }
@@ -340,8 +355,12 @@ public class Planet : GameEntity
         planetUi.Init(this);
         
         //添加技能测试
-        var initSkills = SkillManager.Instance.initSkill;
-        SkillManager.Instance.AddSkill(initSkills[Random.Range(0,initSkills.Count)].skillName, this);
+        if (FightingManager.Instance.gameMode == GameMode.Normal)
+        {
+            var initSkills = SkillManager.Instance.initSkill;
+            SkillManager.Instance.AddSkill(initSkills[Random.Range(0,initSkills.Count)].skillName, this,planetCommanders[0]);
+        }
+        
 
         foreach (var p in enemyPlanets)
         {
@@ -354,7 +373,7 @@ public class Planet : GameEntity
     /// 宣战
     /// </summary>
     /// <param name="planet"></param>
-    public void ClaimWar(Planet planet)
+    public void ClaimWar(int commanderUid,Planet planet)
     {
         if (planet == this)
         {
@@ -385,7 +404,7 @@ public class Planet : GameEntity
         for (int i = 0; i < battleUnits.Count; i++)
         {
             var chance = Random.Range(0, 10) < 10;//全部派出
-            if (chance && battleUnits[i] && !battleUnits[i].die && battleUnits[i].canAttack)
+            if (chance && battleUnits[i] && !battleUnits[i].die && battleUnits[i].canAttack && battleUnits[i].planetCommander.uid==commanderUid)
             {
                 GameEntity target = planet;
                 if (enemyUnits.Count > 0)
@@ -408,7 +427,7 @@ public class Planet : GameEntity
     }
 
    
-    public void ClaimDefend(Planet planet)
+    public void ClaimDefend(int uid,Planet planet)
     {
         if(planet==null)
             return;
@@ -520,6 +539,7 @@ public class Planet : GameEntity
     {
         this.owner = player;
         planetUi.SetOwner(player);
+        planetCommanders.Add(new PlanetCommander(player.uid,player));
         
         ringUi.gameObject.SetActive(false);
         //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_探索船",5)));
@@ -529,8 +549,41 @@ public class Planet : GameEntity
         //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_战斗机",5)));
 
         gameObject.name = player.userName;
-
+        
         //autoCreateUnit = true;
+    }
+
+    public void AddCommander(PlanetCommander planetCommander)
+    {
+        if (planetCommanders.Count == 0)
+        {
+            commanderGoContainer=new GameObject(planetCommander.player.userName).transform;
+            commanderGoContainer.transform.position = transform.position;
+            commanderGoContainer.AddComponent<RotateSelf>().rotateDir=Vector3.up;
+        }
+        
+        planetCommanders.Add(planetCommander);
+        var mark=GameObject.Instantiate(commanderPfb);
+        Vector3 worldPos = transform.position;
+        var curCommanderLength = planetCommanders.Count;
+        var transform1 = commanderGoContainer.transform;
+        if (curCommanderLength < 7)
+        {
+            
+            worldPos = transform1.position+ transform1.right * (Mathf.Sin(  45+Mathf.Deg2Rad*(curCommanderLength)*360/8) * 14) + transform1.forward * (Mathf.Cos(45+Mathf.Deg2Rad*(curCommanderLength)*360/8) * 14);
+        }
+        else
+        {
+            worldPos = transform1.position+ transform1.right * (Mathf.Sin(  45+Mathf.Deg2Rad*(curCommanderLength)*360/8) * 20) + transform1.forward * (Mathf.Cos(45+Mathf.Deg2Rad*(curCommanderLength)*360/8) * 20);
+        }
+
+        mark.transform.position = worldPos;
+        mark.transform.SetParent(commanderGoContainer);
+        var commanderUi = GameManager.Instance.uiManager.CreateCommanderUi(mark);
+        commanderUi.Init(mark,planetCommander);
+        commanderGos.Add(mark);
+        commanderUis.Add(commanderUi);
+
     }
 
     private void OnDrawGizmos()
@@ -561,7 +614,7 @@ public class Planet : GameEntity
         {
             if (skillContainer.skills.Count < maxSkillCount)
             {
-                RollSkill();
+                RollSkill(planetCommanders[0].uid);
                 autoRollTimer = 0;
             }
         }
@@ -615,6 +668,10 @@ public class Planet : GameEntity
     }
 
 
+    public PlanetCommander GetCommanderByUid(int uid)
+    {
+        return planetCommanders.Find(x => x.uid == uid);
+    }
    
     
     public int GetTechLevelByRes()
@@ -646,7 +703,7 @@ public class Planet : GameEntity
         return null;
     }
 
-    public void RollSkill()
+    public void RollSkill(int commanderUid)
     {
         if (planetResContainer.GetResNumByType(ResourceType.DicePoint) <= 0)
         {
@@ -658,12 +715,14 @@ public class Planet : GameEntity
             LogTip("技能栏位已满");
             return;
         }
-        skillContainer.AddRandomSkill(GetTechLevelByRes());
+
+        var commander = GetCommanderByUid(commanderUid);
+        skillContainer.AddRandomSkill(GetTechLevelByRes(),commander);
         planetResContainer.ReduceRes(ResourceType.DicePoint,1);
     }
     
     
-    public void UseSkill(int index)
+    public void UseSkill(int commanderUid,int index)
     {
         var skill = GetSkillByIndex(index);
         if (skill == null)
@@ -678,16 +737,17 @@ public class Planet : GameEntity
             return;
         }
 
-        
-        var useSuccess=skillContainer.UseSkill(index-1);
+        var commander = GetCommanderByUid(commanderUid);
+        var useSuccess=skillContainer.UseSkill(index-1,commander);
         if(useSuccess)
             planetResContainer.ReduceRes(ResourceType.DicePoint,skill.usePoint);
         
             
     }
     
-    public void ChangeSkill(int index)
+    public void ChangeSkill(int commanderUid,int index)
     {
+        
         var skill = GetSkillByIndex(index);
         if (skill == null)
         {
@@ -700,14 +760,14 @@ public class Planet : GameEntity
             LogTip("换技能骰子点数不足");
             return;
         }
-        
-        skillContainer.ChangeSkill(index-1); 
+        var commander = GetCommanderByUid(commanderUid);
+        skillContainer.ChangeSkill(index-1,commander); 
         planetResContainer.ReduceRes(ResourceType.DicePoint,skill.removePoint+1);
         
         
     }
     
-    public void BuySkill(int index)
+    public void BuySkill(int commanderUid,int index)
     {
         if (planetResContainer.GetResNumByType(ResourceType.DicePoint) < 1)
         {
@@ -719,14 +779,14 @@ public class Planet : GameEntity
             LogTip("技能栏位已满");
             return;
         }
-        
-        var buySuccess=skillContainer.BuySkill(index-1); 
+        var commander = GetCommanderByUid(commanderUid);
+        var buySuccess=skillContainer.BuySkill(index-1,commander); 
         if(buySuccess)
             planetResContainer.ReduceRes(ResourceType.DicePoint,1);
         
     }
     
-    public void RemoveSkill(int index)
+    public void RemoveSkill(int uid,int index)
     {
         var skill = GetSkillByIndex(index);
         if (skill == null)
@@ -758,6 +818,14 @@ public class Planet : GameEntity
             
         }
 
+        planetCommanders.Clear();
+        for (int i = 0; i < commanderGos.Count; i++)
+        {
+            Destroy(commanderGos[i]);
+            Destroy(commanderUis[i]);
+        }
+        
+
         try
         {
             EventCenter.Broadcast(EnumEventType.OnPlanetDie, this);
@@ -776,7 +844,7 @@ public class Planet : GameEntity
             
             if (attackerOwnerEntity && attackerOwnerEntity as Planet)
             {
-                SkillManager.Instance.AddSkill("Skill_紧急维修_LV1",attackerOwnerEntity);
+                SkillManager.Instance.AddSkill("Skill_紧急维修_LV1",attackerOwnerEntity,(attackerOwnerEntity as Planet).planetCommanders[0]);
                 var attackerOwnerPlanet = attackerOwnerEntity as Planet;
                 var tech=planetResContainer.GetResNumByType(ResourceType.Tech);
                 var dice = planetResContainer.GetResNumByType(ResourceType.DicePoint);

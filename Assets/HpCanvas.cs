@@ -11,6 +11,9 @@ public class HpCanvas : MonoBehaviour
     public GameObject planetUiPfb;
     public Transform planetUiParent;
 
+    [Header("CommanderUI")] public GameObject commanderUiPfb;
+    public Transform commanderUiParent;
+    
     public GameObject ringUiPfb;
     public Transform ringUiParent;
 
@@ -31,6 +34,12 @@ public class HpCanvas : MonoBehaviour
     public PlanetUI CreatePlanetUI(Planet planet)
     {
         return  GameObject.Instantiate(planetUiPfb, planetUiParent).GetComponent<PlanetUI>();
+        
+    }
+    
+    public CommanderUI CreateCommanderUi(GameObject gameObject)
+    {
+        return  GameObject.Instantiate(commanderUiPfb, commanderUiParent).GetComponent<CommanderUI>();
         
     }
     

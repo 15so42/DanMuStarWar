@@ -22,11 +22,19 @@ public enum GameStatus
     WaitingNewFighting,//对局结束，有玩家胜利，开始倒计时，倒计时结束后进入WaitingJoin状态
 }
 
+
+
 public class PlayerStatus
 {
     public float lastActiveTime = 0;
     public bool requestDraw = false;//申请平局
    
+}
+
+public enum GameMode
+{
+    Normal,
+    BattleGround
 }
 
 public class FightingManager : MonoBehaviour
@@ -38,8 +46,9 @@ public class FightingManager : MonoBehaviour
     
     //对局状态
     public GameStatus gameStatus = GameStatus.Init;
-    
-    
+
+    [Header("游戏模式")]
+    public GameMode gameMode;
     //UIManager
     public GameManager gameManager;
     public UIManager uiManager;
@@ -61,6 +70,8 @@ public class FightingManager : MonoBehaviour
     //存档读档
     public SaveDataManager saveDataManager;
     public PlayerDataTable playerDataTable;
+    
+    
     public void Init(GameManager gameManager)
     {
         
@@ -225,13 +236,46 @@ public class FightingManager : MonoBehaviour
         
         UnityTimer.Timer.Register(1, () =>
         {
-            var planetNum = FightingManager.Instance.maxPlayerCount;
-            var playersCount = players.Count;
-            //玩家依次占领星球P
-            for (int i = 0; i < players.Count; i++)
+           
+
+            if (gameMode == GameMode.BattleGround)
             {
-                var index = ((planetNum / playersCount) * i) % planetNum;
-                PlanetManager.Instance.allPlanets[index].SetOwner(players[i]);
+                
+                for (int i = 0; i < players.Count; i++)
+                {
+                    //var index = ((planetNum / playersCount) * i) % planetNum;
+                    if (i % 2 == 0)
+                    {
+                        PlanetManager.Instance.allPlanets[0].AddCommander(new PlanetCommander(players[i].uid,players[i])); 
+                    }
+                    else
+                    {
+                        PlanetManager.Instance.allPlanets[PlanetManager.Instance.allPlanets.Count-1].AddCommander(new PlanetCommander(players[i].uid,players[i])); 
+                    }
+
+                    if (i == 0)
+                    {
+                        PlanetManager.Instance.allPlanets[0].SetOwner(players[i]);
+                    }
+
+                    if (i == players.Count - 1)
+                    {
+                        PlanetManager.Instance.allPlanets[PlanetManager.Instance.allPlanets.Count-1 ].SetOwner(players[i]);
+                    }
+                        
+                    
+                }
+            }
+            else
+            {
+                var planetNum = FightingManager.Instance.maxPlayerCount;
+                var playersCount = players.Count;
+                //玩家依次占领星球P
+                for (int i = 0; i < players.Count; i++)
+                {
+                    var index = ((planetNum / playersCount) * i) % planetNum;
+                    PlanetManager.Instance.allPlanets[index].SetOwner(players[i]);
+                }
             }
         });
 

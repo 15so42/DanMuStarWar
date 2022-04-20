@@ -1,18 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlanetCommander : MonoBehaviour
+public class PlanetCommander 
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public int uid;
+    public Player player;
+
+    public PlanetCommander (int uid, Player player)
     {
-        
+        this.uid = uid;
+        this.player = player;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Action<int> onPointChanged;
 }

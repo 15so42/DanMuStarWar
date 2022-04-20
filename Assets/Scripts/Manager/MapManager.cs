@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Ludiq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -44,14 +46,15 @@ public class MapManager : MonoBehaviour
     //public Transform battleUnitRoot;
    
     //固定位置地图
-    public List<Vector2Int> fixedPos=new List<Vector2Int>();
+    public List<MapPosData> mapPoses=new List<MapPosData>();
     
     //分格子放星球
     
     public void Init(FightingManager fightingManager)
     {
+        
         this.fightingManager = fightingManager;
-       
+        
         
         grids=new string[zNum,xNum];
         SpawnStones();
@@ -92,22 +95,64 @@ public class MapManager : MonoBehaviour
 
     void SpawnAllPlanets()
     {
-        SpawnPlanets(playerPlanets,playerPlanetNum,false);
-        SpawnPlanets(resPlanets,resPlanetNum,true);
+        if (fightingManager.gameMode == GameMode.Normal)
+        {
+            SpawnPlanets(playerPlanets,playerPlanetNum,false,fightingManager.gameMode);
+            SpawnPlanets(resPlanets,resPlanetNum,true,fightingManager.gameMode);
+        }
+        else
+        {
+            SpawnBattleGroundPlantes();
+        }
+        
         EventCenter.Broadcast(EnumEventType.OnPlanetsSpawned);
     }
 
-    void SpawnPlanets(string[] planetsName,int planetNum,bool resPlanet)
+    void SpawnBattleGroundPlantes()
     {
         var empty=new GameObject("planets");
         empty.transform.SetParent(planetRoot);
+        //empty.transform.position=new Vector3(0,48.86f,-2.55f);
+
+        var planetNum = mapPoses[0].posData.Count;
+        var pfb = planets[Random.Range(0, planets.Length)];
+        
+        for (int i = 0; i < planetNum; i++)
+        {
+            var worldPos = mapPoses[0].posData[i];
+            worldPos+=new Vector3(0,48.86f,-2.55f);
+            
+            var planetsName = playerPlanets.Concat(resPlanets).ToList();
+        
+        
+            var planetName = planetsName[Random.Range(0, planetsName.Count)];
+            if (i == 0 || i == planetNum - 1)
+            {
+                planetName = playerPlanets[Random.Range(0, playerPlanets.Length)];
+            }
+            var go = GameObject.Instantiate(pfb, worldPos, Quaternion.identity, empty.transform);
+            
+            var color = i > 14 ? Color.cyan : Color.yellow;
+                go.GetComponent<Planet>().SetUpPlanet(planetName,color);
+        }
+
+        
+        
+    }
+
+    void SpawnPlanets(string[] planetsName,int planetNum,bool resPlanet,GameMode gameMode)
+    {
+        var empty=new GameObject("planets");
+        empty.transform.SetParent(planetRoot);
+
+        
+        
+      
         for (int i = 0; i < planetNum; i++)
         {
             var pfb = planets[Random.Range(0, planets.Length)];
             //Vector2Int gridPos=new Vector2Int(Random.Range(0,zNum),Random.Range(0,xNum));
-            Vector2Int gridPos = fixedPos[i];
-            // if (resPlanet)
-            //     gridPos = fixedPos[playerPlanetNum + i];
+            Vector2Int gridPos=Vector2Int.zero;
             // int retryCount = 10000;
             //随机
            /* while ((String.IsNullOrEmpty(grids[gridPos.x, gridPos.y]) == false || HasNearPlanet(gridPos.x,gridPos.y,safeRadius)) && retryCount>0)
@@ -121,30 +166,31 @@ public class MapManager : MonoBehaviour
                 Debug.Log("没有足够空间:"+retryCount);
                 continue;
             }*/
-
-            var worldPos =Vector3.zero;
-
-            if (resPlanet)
-            {
-                if (i < 8)
-                {
-                    worldPos = Vector3.zero + Vector3.right * (Mathf.Sin(  45+Mathf.Deg2Rad*(i+1)*360/resPlanetNum) * 35) + Vector3.forward * (Mathf.Cos(45+Mathf.Deg2Rad*(i+1)*360/resPlanetNum) * 35);
-                }
-                else
-                {
-                    //worldPos = Vector3.zero + Vector3.right * (Mathf.Sin(  Mathf.Deg2Rad*(i+1)*90) * 120) + Vector3.forward * (Mathf.Cos(Mathf.Deg2Rad*(i+1)*90) * 120);
-                }
-                
-            }
-            else
-            {
-                worldPos = Vector3.zero + Vector3.right * (Mathf.Sin(Mathf.Deg2Rad*(i+1)*360/playerPlanetNum) * 80) + Vector3.forward * (Mathf.Cos(Mathf.Deg2Rad*(i+1)*360/playerPlanetNum) * 80);
-            }
            
-            //worldPos.y = Random.Range(-1 * heightRange, heightRange);
-            
-            
-            var planetName = planetsName[Random.Range(0, planetsName.Length)];
+           var worldPos =Vector3.zero;
+
+          
+               //圆形地图
+               if (resPlanet)
+               {
+                   if (i < 8)
+                   {
+                       worldPos = Vector3.zero + Vector3.right * (Mathf.Sin(  45+Mathf.Deg2Rad*(i+1)*360/resPlanetNum) * 35) + Vector3.forward * (Mathf.Cos(45+Mathf.Deg2Rad*(i+1)*360/resPlanetNum) * 35);
+                   }
+                   else
+                   {
+                       //worldPos = Vector3.zero + Vector3.right * (Mathf.Sin(  Mathf.Deg2Rad*(i+1)*90) * 120) + Vector3.forward * (Mathf.Cos(Mathf.Deg2Rad*(i+1)*90) * 120);
+                   }
+                
+               }
+               else
+               {
+                   worldPos = Vector3.zero + Vector3.right * (Mathf.Sin(Mathf.Deg2Rad*(i+1)*360/playerPlanetNum) * 80) + Vector3.forward * (Mathf.Cos(Mathf.Deg2Rad*(i+1)*360/playerPlanetNum) * 80);
+               }
+           
+
+
+           var planetName = planetsName[Random.Range(0, planetsName.Length)];
             var go = GameObject.Instantiate(pfb, worldPos, Quaternion.identity, empty.transform);
             go.GetComponent<Planet>().SetUpPlanet(planetName,colorTable.colors[resPlanet?playerPlanetNum+i:i]);
             grids[gridPos.x, gridPos.y] = planetName;

@@ -7,9 +7,9 @@ public class HealSkill : SkillBase
 {
     public int healValue=1;
     private BattleUnitProps prop;
-    public override void Init(GameEntity gameEntity)
+    public override void Init(GameEntity gameEntity,PlanetCommander planetCommander)
     {
-        base.Init(gameEntity);
+        base.Init(gameEntity,planetCommander);
         prop=gameEntity.GetComponent<BattleUnitProps>();
     }
 

@@ -36,13 +36,16 @@ public class PlayerIconUi : MonoBehaviour
             
             player.onGetUrl += () =>
             {
-                FightingManager.Instance.StartCoroutine(DownSprite(player.faceUrl, faceImg));
+                FightingManager.Instance.StartCoroutine(DownSprite(player.faceUrl, faceImg, (sprite) =>
+                {
+                    player.faceSprite = sprite;
+                }));
                 //StartCoroutine(DownSprite(player.top_photo, topBg));
             };
        
     }
     
-    IEnumerator DownSprite(string url,Image image)
+    IEnumerator DownSprite(string url,Image image,Action<Sprite> action)
     {
         UnityWebRequest wr = new UnityWebRequest(url);
         DownloadHandlerTexture texD1 = new DownloadHandlerTexture(true);
@@ -60,7 +63,7 @@ public class PlayerIconUi : MonoBehaviour
              
             Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
             image.sprite = sprite;
-            
+            action.Invoke(sprite);
         }
     }
 
