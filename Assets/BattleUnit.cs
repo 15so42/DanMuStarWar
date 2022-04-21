@@ -76,6 +76,8 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
            {
                hpUI.SetColor(Color.white);
            }
+           if(planetCommander!=null)
+             hpUI.SetColor(planetCommander.color);
        }
        
        
@@ -296,9 +298,11 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         this.ownerPlanet = planet;
         moveManager.Init(planet);
         LogTip(planetCommander.uid+"");
+        this.planetCommander = planetCommander;
+       
         //isDefending = true;
         //defendingPlanet = planet;
-        
+
 
     }
 

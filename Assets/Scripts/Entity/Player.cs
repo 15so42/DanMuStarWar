@@ -15,7 +15,7 @@ public class Player
    
     public Action onGetUrl;
     public Sprite faceSprite;
-    public Action OnSpriteDownload;
+    public Action onSpriteDownload;
   
     
     public Player(int uid, string userName, string faceUrl,string top_photo)

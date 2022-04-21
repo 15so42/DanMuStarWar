@@ -70,6 +70,8 @@ public class FightingManager : MonoBehaviour
     //存档读档
     public SaveDataManager saveDataManager;
     public PlayerDataTable playerDataTable;
+
+    public ColorTable colorTable;
     
     
     public void Init(GameManager gameManager)
@@ -246,11 +248,11 @@ public class FightingManager : MonoBehaviour
                     //var index = ((planetNum / playersCount) * i) % planetNum;
                     if (i % 2 == 0)
                     {
-                        PlanetManager.Instance.allPlanets[0].AddCommander(new PlanetCommander(players[i].uid,players[i])); 
+                        PlanetManager.Instance.allPlanets[0].AddCommander(new PlanetCommander(players[i].uid,players[i],colorTable.colors[i])); 
                     }
                     else
                     {
-                        PlanetManager.Instance.allPlanets[PlanetManager.Instance.allPlanets.Count-1].AddCommander(new PlanetCommander(players[i].uid,players[i])); 
+                        PlanetManager.Instance.allPlanets[PlanetManager.Instance.allPlanets.Count-1].AddCommander(new PlanetCommander(players[i].uid,players[i],colorTable.colors[i])); 
                     }
 
                     if (i == 0)
@@ -441,7 +443,7 @@ public class FightingManager : MonoBehaviour
     {
         if (text.Split(' ')[0] == "点歌" && text.Split(' ').Length>1)
         {
-            if (playerDataTable.FindByUid(uid).giftPoint >= 0)
+            if (true||playerDataTable.FindByUid(uid).giftPoint >= 0)
             {
                 SongHime.Instance.RequestSongByName(text.Substring(text.IndexOf(' ')));
                 TipsDialog.ShowDialog($"{userName}点歌成功，消耗两个礼物点",null);
@@ -483,18 +485,39 @@ public class FightingManager : MonoBehaviour
                     
                     if (gameStatus == GameStatus.Playing)//游戏运行中的话额外给玩家找到能占领的星球
                     {
-                        for (int i = 0; i < PlanetManager.Instance.allPlanets.Count; i++)
+                       
+
+                        if (gameMode == GameMode.Normal)
                         {
-                            var planet = PlanetManager.Instance.allPlanets[i];
-                            if (planet.owner == null && Math.Abs(planet.colonyPoint) < 1 && planet.occupied==false && planet.die==false)//没有玩家且没有被占领
+                            for (int i = 0; i < PlanetManager.Instance.allPlanets.Count; i++)
                             {
-                                var newPlayer = new Player(uid, userName,  "", "");
-                                JoinGame(newPlayer);
-                                BiliUserInfoQuerier.Instance.Query(uid,newPlayer);
-                                planet.SetOwner(newPlayer);
-                                
-                               
-                                break;
+                                var planet = PlanetManager.Instance.allPlanets[i];
+                                if (planet.owner == null && Math.Abs(planet.colonyPoint) < 1 &&
+                                    planet.occupied == false && planet.die == false) //没有玩家且没有被占领
+                                {
+                                    var newPlayer = new Player(uid, userName, "", "");
+                                    JoinGame(newPlayer);
+                                    BiliUserInfoQuerier.Instance.Query(uid, newPlayer);
+                                    planet.SetOwner(newPlayer);
+
+
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            
+                            var newPlayer1 = new Player(uid, userName,  "", "");
+                            JoinGame(newPlayer1);
+                            BiliUserInfoQuerier.Instance.Query(uid,newPlayer1);
+                            if (players.Count % 2 == 0)
+                            {
+                                PlanetManager.Instance.allPlanets[0].AddCommander(new PlanetCommander(newPlayer1.uid,newPlayer1,colorTable.colors[players.Count]));
+                            }
+                            else
+                            {
+                                PlanetManager.Instance.allPlanets[PlanetManager.Instance.allPlanets.Count-1].AddCommander(new PlanetCommander(newPlayer1.uid,newPlayer1,colorTable.colors[players.Count]));
                             }
                         }
                     }

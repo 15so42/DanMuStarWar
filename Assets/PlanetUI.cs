@@ -27,6 +27,9 @@ public class PlanetUI : MonoBehaviour
 
     public TMP_Text giftPoint;
 
+    //战场模式
+    public Image battleGroundModeBg;
+    public GameObject giftArea;
 
     public Transform skillGroupUI;
 
@@ -43,6 +46,9 @@ public class PlanetUI : MonoBehaviour
     public int planetIndex;
 
     public string nameLabel;
+    
+    //游戏模式
+    private GameMode gameMode;
     public void SetIndex(int index)
     {
         this.planetIndex = index;
@@ -53,7 +59,7 @@ public class PlanetUI : MonoBehaviour
         mainCamera=Camera.main;
     }
 
-    public void SetOwner(Player player)
+    public void SetOwner(Player player,GameMode gameMode=GameMode.Normal)
     {
         this.player = player;
         playerArea.gameObject.SetActive(true);
@@ -61,6 +67,15 @@ public class PlanetUI : MonoBehaviour
         playerName.text = "["+planetIndex+"]"+player.userName;
         skillContainer.gameObject.SetActive(true);
         UpdatGiftPointUI();
+
+        this.gameMode = gameMode;
+        battleGroundModeBg.gameObject.SetActive(false);
+        giftArea.gameObject.SetActive(true);
+        if (gameMode == GameMode.BattleGround)
+        {
+            battleGroundModeBg.gameObject.SetActive(true);
+            giftArea.gameObject.SetActive(false);
+        }
     }
 
     public void UpdateNameLabel(string s)
@@ -74,13 +89,22 @@ public class PlanetUI : MonoBehaviour
         
         if (owner.planetResContainer.GetResNumByType(ResourceType.Population) == 0)
         {
-            playerName.text = "["+planetIndex+"]无人星球(不可加入)";
+            
+            playerName.text = "["+planetIndex+"]无人星球";
             skillContainer.gameObject.SetActive(false);
         }
 
         else
         {
-            playerName.text = "[" + planetIndex + "]" + "(可加入)";
+            if (gameMode == GameMode.BattleGround)
+            {
+                playerName.text = "[" + planetIndex + "]无人星球" ;
+            }
+            else
+            {
+                playerName.text = "[" + planetIndex + "]" + "(可加入)";
+            }
+            
         }
         //skillContainer.gameObject.SetActive(false);
     }
@@ -152,8 +176,9 @@ public class PlanetUI : MonoBehaviour
         UpDatePos();
     }
 
-    public void Init(Planet planet)
+    public void Init(Planet planet,GameMode gameMode)
     {
+        this.gameMode = gameMode;
         this.owner = planet;
         planet.planetResContainer.AddResChangeListener(onResChanged);
         UpdateResUI();

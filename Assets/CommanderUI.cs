@@ -15,7 +15,9 @@ public class CommanderUI : MonoBehaviour
     //组件拖拽
     public Image face;
     public Text pointText;
-
+    [Header("LogTip")] public Image msgBg;
+    public Text msgText;
+    
     [Header("配置")] public Vector3 offset;
     
     //UI动销
@@ -53,7 +55,7 @@ public class CommanderUI : MonoBehaviour
         var player = this.planetCommander.player;
         if (this.planetCommander.player.faceSprite == null)
         {
-            player.OnSpriteDownload += OnSpriteDownload;
+            player.onSpriteDownload += OnSpriteDownload;
             return;
         }
         
@@ -77,22 +79,22 @@ public class CommanderUI : MonoBehaviour
 
     }
 
-    // public void LogTip(string msg)
-    // {
-    //     timer?.Cancel();
-    //     
-    //     msgBg.transform.localScale=Vector3.zero;
-    //     msgBg.gameObject.SetActive(true);
-    //     msgText.text = msg;
-    //     
-    //     sequence?.Kill();
-    //
-    //     sequence = DOTween.Sequence();
-    //     sequence?.Append(msgBg.transform.DOScale(Vector3.one, 1));
-    //     timer=UnityTimer.Timer.Register(2, () =>
-    //     {
-    //         msgBg.gameObject.SetActive(false);
-    //     });
-    //
-    // }
+    public void LogTip(string msg)
+    {
+        timer?.Cancel();
+        
+        msgBg.transform.localScale=Vector3.zero;
+        msgBg.gameObject.SetActive(true);
+        msgText.text = msg;
+        
+        sequence?.Kill();
+    
+        sequence = DOTween.Sequence();
+        sequence?.Append(msgBg.transform.DOScale(Vector3.one, 1));
+        timer=UnityTimer.Timer.Register(3, () =>
+        {
+            msgBg.gameObject.SetActive(false);
+        });
+    
+    }
 }

@@ -132,7 +132,7 @@ public class MapManager : MonoBehaviour
             }
             var go = GameObject.Instantiate(pfb, worldPos, Quaternion.identity, empty.transform);
             
-            var color = i > 14 ? Color.cyan : Color.yellow;
+            var color = i > 12 ? Color.cyan : Color.yellow;
                 go.GetComponent<Planet>().SetUpPlanet(planetName,color);
         }
 

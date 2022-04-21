@@ -38,6 +38,8 @@ public class SkillManager : MonoBehaviour
     public List<SkillBase> lv4Skill = new List<SkillBase>();
 
     public GameObject skillItemUiPfb;
+
+    public FightingManager fightingManager;
     private void Awake()
     {
         Instance = this;
@@ -62,7 +64,7 @@ public class SkillManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        fightingManager = GameManager.Instance.fightingManager;
     }
 
     // Update is called once per frame
@@ -93,14 +95,35 @@ public class SkillManager : MonoBehaviour
         var planet = target as Planet;
         if (planet)
         {
-            if (planet.planetResContainer.GetResNumByType(ResourceType.DicePoint) < 1 + skillBase.usePoint)
+            if (fightingManager.gameMode == GameMode.Normal)
             {
-                target.LogTip("购买所需点数不够");
-                return false;
+                if (planet.planetResContainer.GetResNumByType(ResourceType.DicePoint) < 1 + skillBase.usePoint)
+                {
+                    target.LogTip("购买所需点数不够");
+                    return false;
+                }
             }
+            else
+            {
+                if (planetCommander.point < 1 + skillBase.usePoint)
+                {
+                    planetCommander.commanderUi.LogTip("需要点数："+(1+skillBase.usePoint));
+                    return false;
+                }
+            }
+           
             var skillName = skillBase.skillName;
             AddSkill(skillName,target,planetCommander);
-            (target as Planet)?.UseSkill(planetCommander.uid, target.skillContainer.skills.Count);
+            if (fightingManager.gameMode == GameMode.BattleGround)
+            {
+                (target as Planet)?.UseSkillBG(planetCommander.uid, target.skillContainer.skills.Count);
+            }
+            else
+            {
+                (target as Planet)?.UseSkill(planetCommander.uid, target.skillContainer.skills.Count);
+            }
+            
+            
             return true;
         }
 

@@ -5710,9 +5710,12 @@ MonoBehaviour:
   hpUIScale: {x: 2.4, y: 2.4, z: 1}
   commanderPfb: {fileID: 7861269777895578270, guid: 3553470e66d7f54438a129abd700fbca,
     type: 3}
+  colorTable: {fileID: 0}
   planetIndex: 0
   planetConfigs: []
   planetType: 
+  commanderGos: []
+  commanderUis: []
   planetResContainer: {fileID: 0}
   canBeOwner: 0
   enemyPlanets: []
@@ -5730,6 +5733,8 @@ MonoBehaviour:
   autoRoll: 0
   autoCreateUnit: 0
   unitRateStr: 132
+  commanderPointTimer: 0
+  commanderPointCd: 20
   urgentRepair: 0
 --- !u!114 &5468216365159158745
 MonoBehaviour:

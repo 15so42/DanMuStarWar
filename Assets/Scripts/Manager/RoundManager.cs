@@ -14,13 +14,17 @@ public class RoundManager
     private float timer = 0;
     
     private GameManager gameManager;
+    private FightingManager fightingManager;
     private List<Player> players=new List<Player>();
     public void Init(GameManager gameManager, List<Player> players)
     {
         this.gameManager = gameManager;
+        this.fightingManager = gameManager.fightingManager;
         this.players = players;
         EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
     }
+
+    
 
     public void Update()
     {
@@ -197,10 +201,14 @@ public class RoundManager
             int index = Int32.Parse(trim.Substring(trim.Length-1,1));
 
             var planet=GetPlantByPlayerUid(uid);
-            if(planet)
-                planet.BuySkill(uid,index);
-            
-           
+            if (planet)
+            {
+                if (fightingManager.gameMode == GameMode.BattleGround)
+                    planet.BuySkillBG(uid, index);
+                else 
+                    planet.BuySkill(uid,index);
+            }
+         
         }
     }
     
@@ -383,10 +391,11 @@ public class RoundManager
             ParseShowSkillDesc(uid, trim);
         }
 
+        /*
         if (text == "投降")
         {
             ParseSurrender(uid, trim);
-        }
+        }*/
         
         
     }

@@ -39,6 +39,7 @@ public class PlayerIconUi : MonoBehaviour
                 FightingManager.Instance.StartCoroutine(DownSprite(player.faceUrl, faceImg, (sprite) =>
                 {
                     player.faceSprite = sprite;
+                    player.onSpriteDownload?.Invoke();
                 }));
                 //StartCoroutine(DownSprite(player.top_photo, topBg));
             };
