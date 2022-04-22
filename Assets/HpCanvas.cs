@@ -13,6 +13,7 @@ public class HpCanvas : MonoBehaviour
 
     [Header("CommanderUI")] public GameObject commanderUiPfb;
     public Transform commanderUiParent;
+    public Transform commanderUiParent1;
     
     public GameObject ringUiPfb;
     public Transform ringUiParent;
@@ -37,9 +38,15 @@ public class HpCanvas : MonoBehaviour
         
     }
     
-    public CommanderUI CreateCommanderUi(GameObject gameObject)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="gameObject"></param>
+    /// <param name="area">0左1右</param>
+    /// <returns></returns>
+    public CommanderUI CreateCommanderUi(GameObject gameObject,int area=0)
     {
-        return  GameObject.Instantiate(commanderUiPfb, commanderUiParent).GetComponent<CommanderUI>();
+        return  GameObject.Instantiate(commanderUiPfb,area==0?commanderUiParent:commanderUiParent1).GetComponent<CommanderUI>();
         
     }
     

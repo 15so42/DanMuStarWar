@@ -248,11 +248,11 @@ public class FightingManager : MonoBehaviour
                     //var index = ((planetNum / playersCount) * i) % planetNum;
                     if (i % 2 == 0)
                     {
-                        PlanetManager.Instance.allPlanets[0].AddCommander(new PlanetCommander(players[i].uid,players[i],colorTable.colors[i])); 
+                        PlanetManager.Instance.allPlanets[0].AddCommander(new PlanetCommander(players[i].uid,players[i],colorTable.colors[i]),0); 
                     }
                     else
                     {
-                        PlanetManager.Instance.allPlanets[PlanetManager.Instance.allPlanets.Count-1].AddCommander(new PlanetCommander(players[i].uid,players[i],colorTable.colors[i])); 
+                        PlanetManager.Instance.allPlanets[PlanetManager.Instance.allPlanets.Count-1].AddCommander(new PlanetCommander(players[i].uid,players[i],colorTable.colors[i]),1); 
                     }
 
                     if (i == 0)
@@ -513,11 +513,11 @@ public class FightingManager : MonoBehaviour
                             BiliUserInfoQuerier.Instance.Query(uid,newPlayer1);
                             if (players.Count % 2 == 0)
                             {
-                                PlanetManager.Instance.allPlanets[0].AddCommander(new PlanetCommander(newPlayer1.uid,newPlayer1,colorTable.colors[players.Count]));
+                                PlanetManager.Instance.allPlanets[0].AddCommander(new PlanetCommander(newPlayer1.uid,newPlayer1,colorTable.colors[players.Count]),0);
                             }
                             else
                             {
-                                PlanetManager.Instance.allPlanets[PlanetManager.Instance.allPlanets.Count-1].AddCommander(new PlanetCommander(newPlayer1.uid,newPlayer1,colorTable.colors[players.Count]));
+                                PlanetManager.Instance.allPlanets[PlanetManager.Instance.allPlanets.Count-1].AddCommander(new PlanetCommander(newPlayer1.uid,newPlayer1,colorTable.colors[players.Count]),1);
                             }
                         }
                     }

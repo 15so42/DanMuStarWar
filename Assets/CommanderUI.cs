@@ -17,6 +17,7 @@ public class CommanderUI : MonoBehaviour
     public Text pointText;
     [Header("LogTip")] public Image msgBg;
     public Text msgText;
+    [Header("颜色区域")] public Image frame;
     
     [Header("配置")] public Vector3 offset;
     
@@ -26,7 +27,7 @@ public class CommanderUI : MonoBehaviour
     private UnityTimer.Timer timer; 
     private void Awake()
     {
-        mainCamera=Camera.main;
+        //mainCamera=Camera.main;
     }
     
 
@@ -37,7 +38,12 @@ public class CommanderUI : MonoBehaviour
 
     private void LateUpdate()
     {
-        UpDatePos();
+        //UpDatePos();
+    }
+
+    public void SetColor(Color color)
+    {
+        frame.color = color;
     }
 
     public void Init(GameObject commanderGo,PlanetCommander planetCommander)
@@ -46,6 +52,7 @@ public class CommanderUI : MonoBehaviour
         this.planetCommander = planetCommander;
         planetCommander.onPointChanged+=OnPointChanged;
         UpdateUI(planetCommander);
+        UpdateText(this.planetCommander.point);
     }
 
     void UpdateUI(PlanetCommander planetCommander)
@@ -58,6 +65,7 @@ public class CommanderUI : MonoBehaviour
             player.onSpriteDownload += OnSpriteDownload;
             return;
         }
+        
         
         face.sprite = planetCommander.player.faceSprite;
        

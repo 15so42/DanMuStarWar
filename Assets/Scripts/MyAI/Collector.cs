@@ -24,10 +24,10 @@ public class Collector : BattleUnit
    {
       Planet ret = null;
       
-      var planets=GameManager.Instance.planetManager.allPlanets;
+      var planets=ownerPlanet.colonyPlanets;
 
       if (planets.Count == 0)
-         return null;//游戏已经结束
+         return null;//没有殖民地
       var planet = planets[UnityEngine.Random.Range(0, planets.Count)];
       
       for (int i = 0; i < ownerPlanet.allyPlanets.Count; i++)
@@ -90,6 +90,8 @@ public class Collector : BattleUnit
             tipStr+="科技 +"+resourceTable.resourceNum+"  ";
          
          resourceTable.resourceNum=0;
+         
+         planetCommander.AddPoint(1);
          
       }
       ownerPlanet.LogTip(tipStr);

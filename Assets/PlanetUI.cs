@@ -65,6 +65,10 @@ public class PlanetUI : MonoBehaviour
         playerArea.gameObject.SetActive(true);
         //playerIcon.sprite=player.faceIcon;
         playerName.text = "["+planetIndex+"]"+player.userName;
+        if (GameManager.Instance.fightingManager.gameMode == GameMode.BattleGround)
+        {
+            playerName.text = "["+planetIndex+"]"+"主星";
+        }
         skillContainer.gameObject.SetActive(true);
         UpdatGiftPointUI();
 

@@ -5729,7 +5729,7 @@ MonoBehaviour:
   occupied: 0
   spawnPoint: {fileID: 2248002857993935211}
   battleUnits: []
-  maxSkillCount: 2
+  maxSkillCount: 4
   autoRoll: 0
   autoCreateUnit: 0
   unitRateStr: 132
@@ -5810,7 +5810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skills: []
-  maxSkillCount: 2
+  maxSkillCount: 4
   simpleSkillUI: 0
   gameEntity: {fileID: 0}
 --- !u!54 &7785057999513872135

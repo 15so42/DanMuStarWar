@@ -308,7 +308,11 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
 
     public override void LogTip(string tip)
     {
-        Debug.Log(tip);
+        if (hpUI)
+        {
+            hpUI.LogTip(tip);
+        }
+        //Debug.Log(tip);
     }
 
     public override void Die()

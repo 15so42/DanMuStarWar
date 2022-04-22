@@ -24,11 +24,11 @@ public class SkillContainer : MonoBehaviour
 
     public bool UseSkill(int index,PlanetCommander planetCommander)
     {
-        if (planetCommander != skills[index].planetCommander)
-        {
-            gameEntity.LogTip("只有购买者可以使用此卡牌");
-            return false;
-        }
+        // if (planetCommander != skills[index].planetCommander)
+        // {
+        //     gameEntity.LogTip("只有购买者可以使用此卡牌");
+        //     return false;
+        // }
         ErrorCode errCode = null;
         if(skills[index].passive==false)//主动技能
             errCode=skills[index].PlayCheck();

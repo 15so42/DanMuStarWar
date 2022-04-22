@@ -13,6 +13,10 @@ public class PlanetResContainer : MonoBehaviour
     private void Start()
     {
         timer = tickTime;
+        if (FightingManager.Instance.gameMode == GameMode.BattleGround)
+        {
+            tickTime = 30;
+        }
     }
 
     //Action
@@ -75,6 +79,8 @@ public class PlanetResContainer : MonoBehaviour
         {
             timer = tickTime;
             var techRes = allRes.Find(x => x.resourceType == ResourceType.Tech);
+            
+            
             techRes.resourceNum = (int)(techRes.resourceNum + 15);
             //techRes.resourceNum = (int)(techRes.resourceNum * 1.1);
             UpdateRes(techRes.resourceType,techRes.resourceNum);

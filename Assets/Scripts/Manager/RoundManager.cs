@@ -237,8 +237,18 @@ public class RoundManager
             Debug.Log("解析抽取技能命令:"+trim);
            
             var planet=GetPlantByPlayerUid(uid);
-            if(planet)
-                planet.RollSkill(uid);
+            if (planet)
+            {
+                if (fightingManager.gameMode == GameMode.BattleGround)
+                {
+                    planet.RollSkillBG(uid);
+                }
+                else
+                { 
+                    planet.RollSkill(uid);
+                }
+            }
+                
             
            
         }
@@ -305,6 +315,13 @@ public class RoundManager
             if (planet)
                 planet.Die();
         }
+    }
+
+    void ParseShowWhere(int uid)
+    {
+        var planet=GetPlantByPlayerUid(uid);
+        if (planet)
+            planet.ShowCommanderPosition(uid); 
     }
     
     //解析命令
@@ -389,6 +406,11 @@ public class RoundManager
         if (text.StartsWith("技能说明"))
         {
             ParseShowSkillDesc(uid, trim);
+        }
+        
+        if (text.Equals("我在哪"))
+        {
+            ParseShowWhere(uid);
         }
 
         /*

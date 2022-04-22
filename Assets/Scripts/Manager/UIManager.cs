@@ -39,10 +39,10 @@ public class UIManager : MonoBehaviour
    {
       return hpCanvas.CreateHpBar(gameEntity);
    }
-   
-   public CommanderUI CreateCommanderUi(GameObject go)
+
+   public CommanderUI CreateCommanderUi(GameObject go, int area)
    {
-      return hpCanvas.CreateCommanderUi(go);
+      return hpCanvas.CreateCommanderUi(go,area);
    }
 
    public ColonyRingUi CreateRingUi(Planet planet)

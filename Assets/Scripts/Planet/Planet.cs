@@ -567,7 +567,7 @@ public class Planet : GameEntity
         //autoCreateUnit = true;
     }
 
-    public void AddCommander(PlanetCommander planetCommander)
+    public void AddCommander(PlanetCommander planetCommander,int uiArea)
     {
         if (planetCommanders.Count == 0)
         {
@@ -593,8 +593,9 @@ public class Planet : GameEntity
 
         mark.transform.position = worldPos;
         mark.transform.SetParent(commanderGoContainer);
-        var commanderUi = GameManager.Instance.uiManager.CreateCommanderUi(mark);
+        var commanderUi = GameManager.Instance.uiManager.CreateCommanderUi(mark,uiArea);
         commanderUi.Init(mark,planetCommander);
+        commanderUi.SetColor(planetCommander.color);
         planetCommander.commanderUi = commanderUi;
         commanderGos.Add(mark);
         commanderUis.Add(commanderUi);
@@ -731,6 +732,21 @@ public class Planet : GameEntity
         }
 
         return null;
+    }
+
+    public void RollSkillBG(int commanderUid)
+    {
+        var commander = GetCommanderByUid(commanderUid);
+        if (commander!=null)
+        {
+            if (commander.point < 5)
+            {
+                commander.commanderUi.LogTip("需要点数:5");
+                return;
+            }
+            skillContainer.AddRandomSkill(GetTechLevelByRes(),commander);
+            commander.AddPoint(-5);
+        }
     }
 
     public void RollSkill(int commanderUid)
@@ -902,7 +918,7 @@ public class Planet : GameEntity
         }
         //Destroy(gameObject);
 
-        if (lastAttacker != null)//死亡时把一般资源给击杀者
+        if (lastAttacker != null && fightingManager.gameMode==GameMode.Normal)//死亡时把一般资源给击杀者
         {
 
             var attackerOwnerEntity = lastAttacker.GetAttackerOwner();
@@ -938,7 +954,22 @@ public class Planet : GameEntity
             owner.die = true;
 
     }
-    
+
+    public void ShowCommanderPosition(int uid)
+    {
+        var commander = GetCommanderByUid(uid);
+        if (commander != null)
+        {
+            for (int i = 0; i < battleUnits.Count; i++)
+            {
+                if (battleUnits[i] != null && battleUnits[i].die == false &&
+                    battleUnits[i].planetCommander == commander)
+                {
+                    battleUnits[i].LogTip(commander.player.userName);
+                }
+            }
+        }
+    }
     
 
     public override GameEntity GetAttackerOwner()

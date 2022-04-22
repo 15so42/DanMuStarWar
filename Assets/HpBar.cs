@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.Win32;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityTimer;
 
 public class HpBar : MonoBehaviour
 {
@@ -14,10 +15,14 @@ public class HpBar : MonoBehaviour
     public Transform skillUiGroup;
     private GameEntity owner;
 
+    public Text tipText;
+
+    public UnityTimer.Timer logTimer;
     private Camera mainCamera;
     private void Awake()
     {
         mainCamera=Camera.main;
+        tipText.gameObject.SetActive(false);
     }
 
     public void OnHpChanged(int hp,int maxHP)
@@ -72,6 +77,17 @@ public class HpBar : MonoBehaviour
     public void OnAddSkill(SkillBase skillBase)
     {
         
+    }
+
+    public void LogTip(string msg)
+    {
+        tipText.gameObject.SetActive(true);
+        tipText.text = msg;
+        logTimer?.Cancel();
+        logTimer = UnityTimer.Timer.Register(3, () =>
+        {
+            tipText.gameObject.SetActive(false);
+        });
     }
     
     
