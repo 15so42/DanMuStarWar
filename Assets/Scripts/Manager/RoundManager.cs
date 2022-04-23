@@ -22,6 +22,7 @@ public class RoundManager
         this.fightingManager = gameManager.fightingManager;
         this.players = players;
         EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
+        //EventCenter.AddListener<string,int,string,string>(EnumEventType.OnGiftReceived,OnGiftReceived);
     }
 
     
@@ -362,45 +363,50 @@ public class RoundManager
         // {
         //     Debug.Log("IsMatch:"+trim);
         // }
-        
-        if (text.StartsWith("使用技能")||text.StartsWith("s")||text.StartsWith("S"))
+
+        if (true||fightingManager.gameMode == GameMode.Normal)
         {
-            ParseUseSkill(uid, trim);
+            if (text.StartsWith("使用技能")||text.StartsWith("s")||text.StartsWith("S"))
+            {
+                ParseUseSkill(uid, trim);
+            }
+        
+            if (text.StartsWith("买技能")||text.StartsWith("m")||text.StartsWith("M"))
+            {
+                ParseBuySkill(uid, trim);
+            }
+        
+            if (text.StartsWith("换技能") || text.StartsWith("h") || text.StartsWith("H"))
+            {
+                ParseChangeSkill(uid, trim);
+            }
+        
+            if (text.StartsWith("移除技能") || text.StartsWith("y") || text.StartsWith("Y"))
+            {
+                ParseRemoveSkill(uid, trim);
+            }
+        
+            if (text.StartsWith("抽取技能") || text=="c" || text=="C")
+            {
+                ParseRollSkill(uid, trim);
+            }
+            if (text == "关闭自动抽卡")
+            {
+                ParseCloseAutoRoll(uid,trim);
+            }
+            if (text == "开启自动抽卡")
+            {
+                ParseOpenAutoRoll(uid,trim);
+            }
         }
         
-        if (text.StartsWith("买技能")||text.StartsWith("m")||text.StartsWith("M"))
-        {
-            ParseBuySkill(uid, trim);
-        }
-        
-        if (text.StartsWith("换技能") || text.StartsWith("h") || text.StartsWith("H"))
-        {
-            ParseChangeSkill(uid, trim);
-        }
-        
-        if (text.StartsWith("移除技能") || text.StartsWith("y") || text.StartsWith("Y"))
-        {
-            ParseRemoveSkill(uid, trim);
-        }
-        
-        if (text.StartsWith("抽取技能") || text=="c" || text=="C")
-        {
-            ParseRollSkill(uid, trim);
-        }
 
         if (text == "紧急维修")
         {
             ParseUrgentRepair(uid,trim);
         }
         
-        if (text == "关闭自动抽卡")
-        {
-            ParseCloseAutoRoll(uid,trim);
-        }
-        if (text == "开启自动抽卡")
-        {
-            ParseOpenAutoRoll(uid,trim);
-        }
+      
         
         
         if (text.StartsWith("技能说明"))
