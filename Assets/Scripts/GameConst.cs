@@ -15,12 +15,12 @@ public  class GameConst
    public const string BIOLOGY_PLANET = "生物之星";
    
    //单位预制体名称
-   public const string BattleUnit_COLLECTOR = "探索船";
-   public const string BattleUnit_WARPLANE = "战斗机";
+   public const string BattleUnit_COLLECTOR = "BattleUnit_探索船";
+   public const string BattleUnit_WARPLANE = "BattleUnit_战斗机";
 
-   public const string BattleUnit_GUARDPLANE = "护卫舰";
-   public const string BattleUnit_LONGBOW = "长弓";
-   public const string BattleUnit_PACMAN = "吃豆人";
+   public const string BattleUnit_GUARDPLANE = "BattleUnit_护卫舰";
+   public const string BattleUnit_LONGBOW = "BattleUnit_长弓";
+   public const string BattleUnit_PACMAN = "BattleUnit_吃豆人";
    //public const string BattleUnit_
    
    //子弹

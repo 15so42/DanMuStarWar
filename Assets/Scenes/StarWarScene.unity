@@ -11589,7 +11589,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &541042759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15612,7 +15612,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   uiManager: {fileID: 0}
   mapManager: {fileID: 1581382676}
-  waitingJoinSecond: 10
+  waitingJoinSecond: 90
   kickOutTime: 120
   maxWaitingPlayerTime: 240
   planetRoot: {fileID: 0}

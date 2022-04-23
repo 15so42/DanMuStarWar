@@ -468,7 +468,7 @@ public class RoundManager
                 if (planetCommander != null)
                 {
                     planet.AddTask(new PlanetTask(new TaskParams(TaskType.Create,unitName,1),planetCommander));
-                    planetCommander.commanderUi.LogTip("礼物造兵:"+unitName);
+                    planetCommander.commanderUi.LogTip("礼物造兵:"+unitName.Split('_')[1]);
                 }
                 
             }
