@@ -202,7 +202,8 @@ public class PlanetUI : MonoBehaviour
         sequence?.Append(msgBg.transform.DOScale(Vector3.one, 1));
         timer=UnityTimer.Timer.Register(2, () =>
         {
-            msgBg.gameObject.SetActive(false);
+            if(gameObject)
+                msgBg.gameObject.SetActive(false);
         });
 
     }

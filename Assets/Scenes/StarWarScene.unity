@@ -11589,7 +11589,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &541042759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15612,7 +15612,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   uiManager: {fileID: 0}
   mapManager: {fileID: 1581382676}
-  waitingJoinSecond: 10
+  waitingJoinSecond: 90
   kickOutTime: 120
   maxWaitingPlayerTime: 240
   planetRoot: {fileID: 0}
@@ -32636,7 +32636,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 25.1996, y: 37.1606}
+  m_AnchoredPosition: {x: 25.199707, y: 37.160645}
   m_SizeDelta: {x: 404.3314, y: 269.2964}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1450751514

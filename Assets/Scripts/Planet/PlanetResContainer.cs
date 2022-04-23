@@ -15,7 +15,7 @@ public class PlanetResContainer : MonoBehaviour
         timer = tickTime;
         if (FightingManager.Instance.gameMode == GameMode.BattleGround)
         {
-            tickTime = 30;
+            tickTime = 120;
         }
     }
 

@@ -81,11 +81,15 @@ public class HpBar : MonoBehaviour
 
     public void LogTip(string msg)
     {
+        if(gameObject==null)
+            return;
         tipText.gameObject.SetActive(true);
         tipText.text = msg;
         logTimer?.Cancel();
         logTimer = UnityTimer.Timer.Register(3, () =>
         {
+            if(tipText==null)
+                return;
             tipText.gameObject.SetActive(false);
         });
     }

@@ -5734,7 +5734,7 @@ MonoBehaviour:
   autoCreateUnit: 0
   unitRateStr: 132
   commanderPointTimer: 0
-  commanderPointCd: 20
+  commanderPointCd: 60
   urgentRepair: 0
 --- !u!114 &5468216365159158745
 MonoBehaviour:
