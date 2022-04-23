@@ -7,7 +7,7 @@ public class SkillContainer : MonoBehaviour
 {
     public List<SkillBase> skills=new List<SkillBase>();
 
-    public int maxSkillCount = 3;
+    
     public bool simpleSkillUI = false;
     
     public GameEntity gameEntity;

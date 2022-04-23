@@ -734,18 +734,26 @@ public class Planet : GameEntity
         return null;
     }
 
-    public void RollSkillBG(int commanderUid)
+    public void RollSkillBG(int commanderUid,bool byGift)
     {
         var commander = GetCommanderByUid(commanderUid);
         if (commander!=null)
         {
-            if (commander.point < 5)
+            if (commander.point < 3 && !byGift)
             {
-                commander.commanderUi.LogTip("需要点数:5");
+                commander.commanderUi.LogTip("需要点数:3");
                 return;
             }
+            
+            if (skillContainer.skills.Count >= maxSkillCount)
+            {
+                LogTip("技能栏位已满");
+                return;
+            }
+            
             skillContainer.AddRandomSkill(GetTechLevelByRes(),commander);
-            commander.AddPoint(-5);
+            if(!byGift)
+                commander.AddPoint(-3);
         }
     }
 
@@ -810,6 +818,30 @@ public class Planet : GameEntity
             planetResContainer.ReduceRes(ResourceType.DicePoint,skill.usePoint);
         
             
+    }
+
+    public void ChangeSkillBG(int commanderUid, int index)
+    {
+        var commander = GetCommanderByUid(commanderUid);
+        
+        
+        if (commander!=null)
+        {
+            var skill = GetSkillByIndex(index);
+            if (skill == null)
+            {
+                commander.commanderUi.LogTip("序号错误");
+                return;
+            }
+            
+            if (commander.point < skill.removePoint+1)
+            {
+                commander.commanderUi.LogTip("需要点数:"+skill.removePoint+1);
+                return;
+            }
+            skillContainer.ChangeSkill(index-1,commander);
+            commander.AddPoint(-1*(skill.removePoint+1));
+        }
     }
     
     public void ChangeSkill(int commanderUid,int index)

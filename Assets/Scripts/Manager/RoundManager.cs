@@ -22,7 +22,7 @@ public class RoundManager
         this.fightingManager = gameManager.fightingManager;
         this.players = players;
         EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
-        //EventCenter.AddListener<string,int,string,string>(EnumEventType.OnGiftReceived,OnGiftReceived);
+        EventCenter.AddListener<int,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
     }
 
     
@@ -167,10 +167,20 @@ public class RoundManager
             Debug.Log("解析换技能命令:"+trim);
             int skillIndex = Int32.Parse(trim.Substring(trim.Length-1,1));
 
-            var planet=GetPlantByPlayerUid(uid);
-            if(planet)
-                planet.ChangeSkill(uid,skillIndex);
+          
             
+            var planet=GetPlantByPlayerUid(uid);
+            if (planet)
+            {
+                if (fightingManager.gameMode == GameMode.BattleGround)
+                {
+                    planet.ChangeSkillBG(uid,skillIndex);
+                }
+                else
+                { 
+                    planet.ChangeSkill(uid,skillIndex);
+                }
+            }
            
         }
     }
@@ -230,7 +240,7 @@ public class RoundManager
         }
     }
     
-    void ParseRollSkill(int uid,string trim)
+    void ParseRollSkill(int uid,string trim,bool byGift)
     {
         string pattern = @"^(抽取技能)$";
         if (Regex.IsMatch(trim, pattern) || trim=="c" || trim=="C")
@@ -242,7 +252,7 @@ public class RoundManager
             {
                 if (fightingManager.gameMode == GameMode.BattleGround)
                 {
-                    planet.RollSkillBG(uid);
+                    planet.RollSkillBG(uid,byGift);
                 }
                 else
                 { 
@@ -326,7 +336,7 @@ public class RoundManager
     }
     
     //解析命令
-    private void ParseCommand(int uid, string text)
+    private void ParseCommand(int uid, string text,bool byGift=false)
     {
         var user = GetPlayerByUid(uid);
         var validUser = user != null;
@@ -336,6 +346,8 @@ public class RoundManager
             //局外人或者已经淘汰
             return;
         }
+        
+        
         var trim=Regex.Replace(text.Trim(), "\\s+", "");//去除所有空格
         
         if (text.StartsWith("宣战"))
@@ -388,7 +400,7 @@ public class RoundManager
         
             if (text.StartsWith("抽取技能") || text=="c" || text=="C")
             {
-                ParseRollSkill(uid, trim);
+                ParseRollSkill(uid, trim,byGift);
             }
             if (text == "关闭自动抽卡")
             {
@@ -426,6 +438,15 @@ public class RoundManager
         }*/
         
         
+    }
+
+    public void OnGiftReceived(int uid, string userName, int num, string giftName, int totalCoin)
+    {
+        if (giftName == "小花花")
+        {
+            
+            ParseCommand(uid, "c",true);
+        }
     }
 
     
