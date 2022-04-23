@@ -253,6 +253,7 @@ public class RoundManager
                 if (fightingManager.gameMode == GameMode.BattleGround)
                 {
                     planet.RollSkillBG(uid,byGift);
+                    planet.LogTip("礼物抽卡");
                 }
                 else
                 { 
@@ -444,9 +445,36 @@ public class RoundManager
     {
         if (giftName == "小花花")
         {
-            
             ParseCommand(uid, "c",true);
         }
+        if (giftName == "打call")
+        {
+            var planet = GetPlantByPlayerUid(uid);
+            if (planet)
+            {
+                var unitName = GameConst.BattleUnit_COLLECTOR;
+                var range = UnityEngine.Random.Range(0, 100);
+                if (range < 50 && range > 25)
+                    unitName = GameConst.BattleUnit_WARPLANE;
+                if (range < 75 && range > 50)
+                    unitName = GameConst.BattleUnit_GUARDPLANE;
+                if (range < 90 && range > 75)
+                    unitName = GameConst.BattleUnit_LONGBOW;
+                if (range < 100 && range > 90)
+                    unitName = GameConst.BattleUnit_PACMAN;
+                
+
+                var planetCommander = planet.GetCommanderByUid(uid);
+                if (planetCommander != null)
+                {
+                    planet.AddTask(new PlanetTask(new TaskParams(TaskType.Create,unitName,1),planetCommander));
+                    planetCommander.commanderUi.LogTip("礼物造兵:"+unitName);
+                }
+                
+            }
+           
+        }
+        
     }
 
     
