@@ -16,14 +16,14 @@ public class PlanetCommander
     {
         this.uid = uid;
         this.player = player;
-        point = 4;
+        point = 8;
     }
     
     public PlanetCommander (int uid, Player player,Color color)
     {
         this.uid = uid;
         this.player = player;
-        point = 4;
+        point = 8;
         this.color = color;
     }
 

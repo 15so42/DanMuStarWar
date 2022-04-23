@@ -17,7 +17,8 @@ public class CreateBattleUnitSkill : SkillBase
         {
             for (int i = 0; i < num; i++)
             {
-                planet.AddTask(new PlanetTask(new TaskParams(TaskType.Create,unitName,5),planetCommander));
+                
+                planet.AddTask(new PlanetTask(new TaskParams(TaskType.Create,unitName,1),planetCommander));
             }
             
             

@@ -18,6 +18,7 @@ public class CommanderUI : MonoBehaviour
     [Header("LogTip")] public Image msgBg;
     public Text msgText;
     [Header("颜色区域")] public Image frame;
+    public Text nameText;
     
     [Header("配置")] public Vector3 offset;
     
@@ -53,12 +54,13 @@ public class CommanderUI : MonoBehaviour
         planetCommander.onPointChanged+=OnPointChanged;
         UpdateUI(planetCommander);
         UpdateText(this.planetCommander.point);
+        nameText.text = planetCommander.player.userName;
     }
 
     void UpdateUI(PlanetCommander planetCommander)
     {
-        if(commanderGo==null)//因为是延迟设置commander
-            return;
+        // if(commanderGo==null)//因为是延迟设置commander
+        //     return;
         var player = this.planetCommander.player;
         if (this.planetCommander.player.faceSprite == null)
         {
@@ -69,6 +71,14 @@ public class CommanderUI : MonoBehaviour
         
         face.sprite = planetCommander.player.faceSprite;
        
+    }
+
+    /// <summary>
+    /// 显示胜者面板时使用
+    /// </summary>
+    public void HidePointUi()
+    {
+        frame.transform.parent.gameObject.SetActive(false);
     }
 
     void OnSpriteDownload()

@@ -91,9 +91,8 @@ public class Collector : BattleUnit
          
          resourceTable.resourceNum=0;
          
-         planetCommander.AddPoint(1);
-         
       }
+      planetCommander.AddPoint(1);
       ownerPlanet.LogTip(tipStr);
       
    }

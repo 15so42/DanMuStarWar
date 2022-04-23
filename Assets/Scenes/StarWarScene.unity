@@ -11589,7 +11589,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &541042759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15612,7 +15612,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   uiManager: {fileID: 0}
   mapManager: {fileID: 1581382676}
-  waitingJoinSecond: 90
+  waitingJoinSecond: 10
   kickOutTime: 120
   maxWaitingPlayerTime: 240
   planetRoot: {fileID: 0}
@@ -25324,7 +25324,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: -32, y: -28.59}
+  m_Spacing: {x: -32, y: -11.8}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &1121755100
@@ -32660,7 +32660,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: -32, y: -28.59}
+  m_Spacing: {x: -32, y: -11.8}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &1458141613

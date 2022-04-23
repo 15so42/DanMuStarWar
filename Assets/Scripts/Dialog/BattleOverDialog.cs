@@ -9,13 +9,16 @@ public class BattleOverDialogContext : DialogContext
 {
     public int duration;
     public Player player;
+    public GameMode gameMode;
+    public List<PlanetCommander> planetCommanders;
+    
     
 
-    public BattleOverDialogContext(int duration, Player player) 
+    public BattleOverDialogContext(int duration, Player player,List<PlanetCommander> planetCommanders) 
     {
         this.duration = duration;
         this.player = player;
-        
+        this.planetCommanders = planetCommanders;
     }
 }
 public class BattleOverDialog : Dialog<BattleOverDialogContext>
@@ -28,9 +31,12 @@ public class BattleOverDialog : Dialog<BattleOverDialogContext>
     public TMP_Text countDownText;
     [Header("和棋Text")]
     public TMP_Text drawText;
+
+    public Transform gridLayout;
+    public GameObject commanderUiPfb;
     
     
-    public static void ShowDialog(int duration,Player player, Action onClose)
+    public static void ShowDialog(int duration,Player player,List<PlanetCommander> planetCommanders, Action onClose)
     {
         var dialog = GetShowingDialog(nameof(BattleOverDialog)) as BattleOverDialog;
         if (dialog != null)
@@ -39,7 +45,7 @@ public class BattleOverDialog : Dialog<BattleOverDialogContext>
         }
 
 
-        DialogUtil.ShowDialogWithContext(nameof(BattleOverDialog), new BattleOverDialogContext(duration, player),null,onClose);
+        DialogUtil.ShowDialogWithContext(nameof(BattleOverDialog), new BattleOverDialogContext(duration, player,planetCommanders),null,onClose);
     }
 
     public override void Show()
@@ -47,21 +53,29 @@ public class BattleOverDialog : Dialog<BattleOverDialogContext>
         base.Show();
 
         StartCoroutine(CountDown(dialogContext.duration));
-        if(dialogContext.player!=null){
-            drawText.gameObject.SetActive(false);
-          
-            winnerText.text = "胜者: " + dialogContext.player.userName;
-            face.sprite = FightingManager.Instance.uiManager.waitingJoinUi.GetPlayerIconUiByUid(dialogContext.player.uid).faceImg.sprite;
-        }
-        else
+        // if(dialogContext.player!=null){
+        //     drawText.gameObject.SetActive(false);
+        //   
+        //     winnerText.text = "胜者: " + dialogContext.player.userName;
+        //     face.sprite = FightingManager.Instance.uiManager.waitingJoinUi.GetPlayerIconUiByUid(dialogContext.player.uid).faceImg.sprite;
+        // }
+        // else
+        // {
+        //     faceBorder.gameObject.SetActive(false);
+        //     faceContainer.gameObject.SetActive(false);
+        //     winnerText.gameObject.SetActive(false);
+        //     face.gameObject.SetActive(false);
+        //     drawText.gameObject.SetActive(true);
+        //     
+        // }
+        for (int i = 0; i < dialogContext.planetCommanders.Count; i++)
         {
-            faceBorder.gameObject.SetActive(false);
-            faceContainer.gameObject.SetActive(false);
-            winnerText.gameObject.SetActive(false);
-            face.gameObject.SetActive(false);
-            drawText.gameObject.SetActive(true);
-            
+            var planetCommander = dialogContext.planetCommanders[i];
+            var commanderUi = GameObject.Instantiate(commanderUiPfb, gridLayout).GetComponent<CommanderUI>();
+            commanderUi.Init(null,planetCommander);
+            commanderUi.HidePointUi();
         }
+        
     }
     
    

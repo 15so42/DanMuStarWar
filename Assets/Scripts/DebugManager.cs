@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 public class DebugManager : MonoBehaviour
 {
@@ -34,13 +35,13 @@ public class DebugManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            DanMuReciver.Instance.SendFakeDanMu("第三者",3,"加入游戏");
+            DanMuReciver.Instance.SendFakeDanMu("第三者",UnityEngine.Random.Range(100,200),"加入游戏");
         }
         
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            BattleOverDialog.ShowDialog(15,new Player(1,"云上空","s","s"),null );
-        }
+        // if (Input.GetKeyDown(KeyCode.G))
+        // {
+        //     BattleOverDialog.ShowDialog(15,new Player(1,"云上空","s","s"),null );
+        // }
 
         if (Input.GetKeyDown(KeyCode.K))
         {

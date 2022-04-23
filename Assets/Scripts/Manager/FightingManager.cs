@@ -253,20 +253,15 @@ public class FightingManager : MonoBehaviour
                     else
                     {
                         PlanetManager.Instance.allPlanets[PlanetManager.Instance.allPlanets.Count-1].AddCommander(new PlanetCommander(players[i].uid,players[i],colorTable.colors[i]),1); 
+                        
                     }
 
-                    if (i == 0)
-                    {
-                        PlanetManager.Instance.allPlanets[0].SetOwner(players[i]);
-                    }
-
-                    if (i == players.Count - 1)
-                    {
-                        PlanetManager.Instance.allPlanets[PlanetManager.Instance.allPlanets.Count-1 ].SetOwner(players[i]);
-                    }
+                    
                         
                     
                 }
+                PlanetManager.Instance.allPlanets[0].SetOwner(new Player(23477,"混沌","",""));
+                PlanetManager.Instance.allPlanets[PlanetManager.Instance.allPlanets.Count-1 ].SetOwner(new Player(765642,"秩序","",""));
             }
             else
             {
@@ -303,95 +298,10 @@ public class FightingManager : MonoBehaviour
         {
             roundManager.Update();
         }
-
-        var draw=true;//和棋
-
-        return;
-        //Debug.Log(gameStatus);
-        if (gameStatus == GameStatus.WaitingJoin)
-        {
-            //Debug.Log((players.Count == 1) + "," + firstPlayerJoinTime+","+maxWaitingPlayerTime);
-            if(players.Count==1 && Time.time > firstPlayerJoinTime+maxWaitingPlayerTime)
-            {
-                TipsDialog.ShowDialog(players[0].userName + "等待状态失效，请重新加入", () => {
-                    players.Clear();
-                    uiManager.ResetUi();
-                });
-            }
-        }
-
-
-        if (gameStatus == GameStatus.Playing)
-        {
-
-            for (int i = 0; i < playerStatusTable.Count; i++)
-            {
-                var kv = playerStatusTable.ElementAt(i);
-                if (Time.time - kv.Value.lastActiveTime > kickOutTime)
-                {
-                    var player = GetPlayerByUid(kv.Key);
-                    if (player != null)
-                    {
-                        Debug.Log(player.userName + "长时间未操作，踢出");
-                        playerStatusTable.Clear();
-                        TipsDialog.ShowDialog(player.userName + "长时间未操作，踢出", () =>
-                          {
-                              //var winner = FindAnotherPlayer(player.playerTeam);
-
-                              //BattleOver(winner);
-                          });
-                        return;
-
-                    }
-
-                }
-
-                //和棋判定
-                if (kv.Value.requestDraw == false)
-                {
-                    draw = false;
-                    continue;
-                }
-            }
-
-            if (draw && playerStatusTable.Count>0)
-            {
-                BattleDraw();//和棋
-            }
-        }
-    }
-
-    
-    /// <summary>
-    /// 对局结束
-    /// </summary>
-    /// <param name="winner"></param>
-    public void BattleOver(Player winner)
-    {
-        roundManager.Stop();
-        playerStatusTable.Clear();
         
-        gameStatus =  GameStatus.WaitingNewFighting;
+    }
 
-        BattleOverDialog.ShowDialog(15,winner, () =>
-        {
-            //SceneManager.LoadScene( SceneManager.GetActiveScene().buildIndex );
-            StartNewBattle();
-        });
-    }
-    
-    //和棋
-    public void BattleDraw()
-    {
-        roundManager.Stop();
-        playerStatusTable.Clear();
-        
-        gameStatus =  GameStatus.WaitingNewFighting;
-        BattleOverDialog.ShowDialog(15,null, () =>//赢家为空时即是和棋
-        {
-            StartNewBattle();
-        });
-    }
+ 
 
     public void StartNewBattle()
     {
@@ -536,7 +446,8 @@ public class FightingManager : MonoBehaviour
 
     public void GameOver(Planet planet)
     {
-        BattleOverDialog.ShowDialog(15,planet.owner,StartNewBattle);
+        gameStatus = GameStatus.WaitingNewFighting;
+        BattleOverDialog.ShowDialog(15,planet.owner,planet.planetCommanders,StartNewBattle);
     }
 }
 

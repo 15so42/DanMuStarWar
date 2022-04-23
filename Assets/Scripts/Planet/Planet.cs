@@ -40,7 +40,7 @@ public class Planet : GameEntity
     private Transform commanderGoContainer;
     [Header("指挥官配置")]
     public GameObject commanderPfb;
-    public ColorTable colorTable;
+   
    
     //星球序号，用于宣战结盟等操作
     public int planetIndex = 0;
@@ -583,7 +583,7 @@ public class Planet : GameEntity
         var transform1 = commanderGoContainer.transform;
         if (curCommanderLength < 7)
         {
-            Debug.Log(gameObject.name+ curCommanderLength);
+            //Debug.Log(gameObject.name+ curCommanderLength);
             worldPos = transform1.position+ transform1.right * (Mathf.Sin(  45+Mathf.Deg2Rad*(curCommanderLength)*360/8) * 8) + transform1.forward * (Mathf.Cos(45+Mathf.Deg2Rad*(curCommanderLength)*360/8) * 8);
         }
         else
@@ -840,7 +840,7 @@ public class Planet : GameEntity
         var commander = GetCommanderByUid(commanderUid);
         if (commander.point > 1)
         {
-            var buySuccess=skillContainer.BuySkill(index-1,commander);
+            var buySuccess=skillContainer.BuySkill(index-1,fightingManager.gameMode,commander);
             if (buySuccess)
             {
                 commander.AddPoint(-1);
@@ -862,7 +862,7 @@ public class Planet : GameEntity
             return;
         }
         var commander = GetCommanderByUid(commanderUid);
-        var buySuccess=skillContainer.BuySkill(index-1,commander); 
+        var buySuccess=skillContainer.BuySkill(index-1,fightingManager.gameMode,commander); 
         if(buySuccess)
             planetResContainer.ReduceRes(ResourceType.DicePoint,1);
         
