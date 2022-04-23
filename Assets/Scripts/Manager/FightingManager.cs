@@ -421,12 +421,14 @@ public class FightingManager : MonoBehaviour
                             var newPlayer1 = new Player(uid, userName,  "", "");
                             JoinGame(newPlayer1);
                             BiliUserInfoQuerier.Instance.Query(uid,newPlayer1);
-                            if (players.Count % 2 == 0)
+                            if (players.Count % 2 == 1)
                             {
+                                //Debug.Log("加入后玩家数："+players.Count+"去0星球");
                                 PlanetManager.Instance.allPlanets[0].AddCommander(new PlanetCommander(newPlayer1.uid,newPlayer1,colorTable.colors[players.Count]),0);
                             }
                             else
                             {
+                                //Debug.Log("加入后玩家数："+players.Count+"去最后星球");
                                 PlanetManager.Instance.allPlanets[PlanetManager.Instance.allPlanets.Count-1].AddCommander(new PlanetCommander(newPlayer1.uid,newPlayer1,colorTable.colors[players.Count]),1);
                             }
                         }

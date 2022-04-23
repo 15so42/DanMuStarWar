@@ -707,19 +707,40 @@ public class Planet : GameEntity
     
     public int GetTechLevelByRes()
     {
+        
+        
         int techLevel = 1;
         var techPoint= planetResContainer.GetResNumByType(ResourceType.Tech);
-        if (techPoint > 200)
+
+        if (fightingManager.gameMode == GameMode.Normal)
         {
-            techLevel = 2;
+            if (techPoint > 200)
+            {
+                techLevel = 2;
+            }
+        
+            if (techPoint > 800)
+                techLevel = 3;
+        
+            if (techPoint > 3000)
+                techLevel = 4;
+            return techLevel;
         }
+        else
+        {
+            if (techPoint > 150)
+            {
+                techLevel = 2;
+            }
         
-        if (techPoint > 800)
-            techLevel = 3;
+            if (techPoint > 400)
+                techLevel = 3;
         
-        if (techPoint > 3000)
-            techLevel = 4;
-        return techLevel;
+            if (techPoint > 800)
+                techLevel = 4;
+            return techLevel;
+        }
+      
     }
 
     #region MyRegion
@@ -936,9 +957,14 @@ public class Planet : GameEntity
         for (int i = 0; i < commanderGos.Count; i++)
         {
             Destroy(commanderGos[i]);
-            Destroy(commanderUis[i]);
+           
         }
-        
+
+        for (int i = 0; i < commanderUis.Count; i++)
+        {
+            Destroy(commanderUis[i].gameObject);
+        }
+
 
         try
         {
