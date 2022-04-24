@@ -30,6 +30,7 @@ public class SkillContainer : MonoBehaviour
         //     return false;
         // }
         ErrorCode errCode = null;
+        skills[index].useCommander = planetCommander;//技能以使用者为主人
         if(skills[index].passive==false)//主动技能
             errCode=skills[index].PlayCheck();
         else//被动技能

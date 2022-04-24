@@ -7,7 +7,8 @@ public abstract class SkillBase : ScriptableObject
 {
 
     
-    [HideInInspector]public PlanetCommander planetCommander;
+    [HideInInspector]public PlanetCommander createCommander;
+    [HideInInspector]public PlanetCommander useCommander;
     
     [Header("点数")] public int usePoint=1;
     public int removePoint = 1;
@@ -44,7 +45,7 @@ public abstract class SkillBase : ScriptableObject
     {
         timer = cd;
         this.gameEntity = gameEntity;
-        this.planetCommander = planetCommander;
+        this.createCommander = planetCommander;
         onLifeChangedAction += OnLifeChanged;
     }
 

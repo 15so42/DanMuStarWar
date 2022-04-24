@@ -199,7 +199,7 @@ public class FightingManager : MonoBehaviour
         }
         
         
-        gameStatus = GameStatus.Playing;
+        //gameStatus = GameStatus.Playing;为星球分配主人后再进入游戏开始阶段
         mapManager.PlaceAll();//生成场景
         
         //生成星球和石头完成后，将相机父物体移动到所有星球中心，同时相机的lookAt目标更改为相机父物体
@@ -273,7 +273,10 @@ public class FightingManager : MonoBehaviour
                     var index = ((planetNum / playersCount) * i) % planetNum;
                     PlanetManager.Instance.allPlanets[index].SetOwner(players[i]);
                 }
+
+               
             }
+            gameStatus = GameStatus.Playing;
         });
 
     }
@@ -353,6 +356,7 @@ public class FightingManager : MonoBehaviour
     {
         if (text.Split(' ')[0] == "点歌" && text.Split(' ').Length>1)
         {
+            return;
             if (true||playerDataTable.FindByUid(uid).giftPoint >= 0)
             {
                 SongHime.Instance.RequestSongByName(text.Substring(text.IndexOf(' ')));

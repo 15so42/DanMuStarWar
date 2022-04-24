@@ -56,4 +56,11 @@ public class UIManager : MonoBehaviour
       planetUis.Add(planetUI);
       return planetUI;
    }
+   
+   public GatherUI CreateGatherUi(Planet planet,Planet sponsor,PlanetCommander planetCommander)
+   {
+      var gatherUi=hpCanvas.CreateGatherUi();
+      gatherUi.Init(planet,sponsor,planetCommander);
+      return gatherUi;
+   }
 }

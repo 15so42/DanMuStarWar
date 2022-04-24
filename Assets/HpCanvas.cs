@@ -18,6 +18,9 @@ public class HpCanvas : MonoBehaviour
     public GameObject ringUiPfb;
     public Transform ringUiParent;
 
+    [Header("集结UI")] public GameObject gatherUiPfb;
+    public Transform gatherUiParent;
+
     [Header("SkillUI")] public GameObject skillUIPfb;
     public Transform skillUIParent;
     public HpBar CreateHpBar(GameEntity gameEntity)
@@ -50,5 +53,16 @@ public class HpCanvas : MonoBehaviour
         
     }
     
+    // public  CreateCommanderUi(GameObject gameObject,int area=0)
+    // {
+    //     return  GameObject.Instantiate(commanderUiPfb,area==0?commanderUiParent:commanderUiParent1).GetComponent<CommanderUI>();
+    //     
+    // }
+    
+    public GatherUI CreateGatherUi()
+    {
+        return  GameObject.Instantiate(gatherUiPfb,gatherUiParent).GetComponent<GatherUI>();
+        
+    }
     
 }

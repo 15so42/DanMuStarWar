@@ -23,6 +23,7 @@ public class RoundManager
         this.players = players;
         EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
         EventCenter.AddListener<int,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
+        fightingManager.StartCoroutine(ParseGiftList());
     }
 
     
@@ -43,6 +44,8 @@ public class RoundManager
     public void Stop()
     {
         EventCenter.RemoveListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
+        // 清除所有协程StopAllCoru();
+        fightingManager.StopAllCoroutines();
     }
 
     private void OnDanMuReceived(string userName,int uid,string time,string text)
@@ -123,6 +126,32 @@ public class RoundManager
             var defendPlanet = GetPlanetByIndex(enemyIndex);
 
             uidPlanet.Recall(uid,defendPlanet);
+            
+        }
+    }
+    
+    void ParseGather(int uid,string trim)
+    {
+        string pattern = @"^(集结){1}(\d{1,2})$";
+        
+        if (Regex.IsMatch(trim, pattern))
+        {
+           
+            var subStringCount = 1;
+            if(Regex.IsMatch(trim, @"\d{2}$"))
+            {
+                subStringCount = 2;
+            }
+            int targetIndex = Int32.Parse(trim.Substring(trim.Length-subStringCount,subStringCount));
+            Debug.Log("解析集结命令:"+targetIndex);
+            var uidPlanet = GetPlantByPlayerUid(uid);
+            if(uidPlanet==null)
+                return;
+            
+            
+            var targetPlanet = GetPlanetByIndex(targetIndex);
+
+            uidPlanet.Gather(uid,targetPlanet);
             
         }
     }
@@ -240,7 +269,7 @@ public class RoundManager
         }
     }
     
-    void ParseRollSkill(int uid,string trim,bool byGift)
+    void ParseRollSkill(int uid,string trim)
     {
         string pattern = @"^(抽取技能)$";
         if (Regex.IsMatch(trim, pattern) || trim=="c" || trim=="C")
@@ -250,15 +279,9 @@ public class RoundManager
             var planet=GetPlantByPlayerUid(uid);
             if (planet)
             {
-                if (fightingManager.gameMode == GameMode.BattleGround)
-                {
-                    planet.RollSkillBG(uid,byGift);
-                    planet.LogTip("礼物抽卡");
-                }
-                else
-                { 
-                    planet.RollSkill(uid);
-                }
+                
+                planet.RollSkill(uid);
+                
             }
                 
             
@@ -337,7 +360,7 @@ public class RoundManager
     }
     
     //解析命令
-    private void ParseCommand(int uid, string text,bool byGift=false)
+    private void ParseCommand(int uid, string text,bool multipleCmd=true)
     {
         var user = GetPlayerByUid(uid);
         var validUser = user != null;
@@ -366,16 +389,31 @@ public class RoundManager
             ParseRecall(uid, trim);
         }
         
-        // string spattern= @"((m|M){1}\d{1}|((s|S){1}\d{1})|((y|Y){1}\d{1})|((h|H){1}\d{1}))+";
+        if (text.StartsWith("集结") )
+        {
+            ParseGather(uid, trim);
+        }
+        
+        //string spattern= @"((m|M){1}\d{1}|((s|S){1}\d{1})|((y|Y){1}\d{1})|((h|H){1}\d{1}))+";
        
         
-       // string sPattern= @"([mMsShHyY]{1}(\d){1})+";
-        // string sPattern= @"((m){1}(\d{1}))+";
-        //
-        // if (Regex.IsMatch(trim, sPattern))
-        // {
-        //     Debug.Log("IsMatch:"+trim);
-        // }
+        //string sPattern= @"([mMsShHyY]{1}(\d){1})+";
+        string sPattern= @"^((m|M){1}(\d{1}))+$";
+        
+        if (multipleCmd && Regex.IsMatch(trim, sPattern))
+        {
+            Debug.Log("复合命令:"+trim);
+            if (trim.Length % 2 == 0)
+            {
+                for (int i = 0; i < trim.Length; i += 2)
+                {
+                    ParseCommand(uid,trim.Substring(i,2),false);
+                }
+            }
+            
+            return;
+            
+        }
 
         if (true||fightingManager.gameMode == GameMode.Normal)
         {
@@ -401,7 +439,7 @@ public class RoundManager
         
             if (text.StartsWith("抽取技能") || text=="c" || text=="C")
             {
-                ParseRollSkill(uid, trim,byGift);
+                ParseRollSkill(uid, trim);
             }
             if (text == "关闭自动抽卡")
             {
@@ -441,7 +479,34 @@ public class RoundManager
         
     }
 
+    public struct GiftMSg
+    {
+        public int uid;
+        public string giftName;
+
+        public GiftMSg(int uid, string giftName)
+        {
+            this.uid = uid;
+            this.giftName = giftName;
+        }
+    }
+    
+    public Queue<GiftMSg> giftQueue=new Queue<GiftMSg>();
+    
+    //送礼区域变量*****************
+    
+    
     public void OnGiftReceived(int uid, string userName, int num, string giftName, int totalCoin)
+    {
+
+        for (int i = 0; i < num; i++)
+        {
+            giftQueue.Enqueue(new GiftMSg(uid,giftName));
+        }
+        
+    }
+
+    void ParseGift(int uid,string giftName)
     {
         if (giftName == "小花花")
         {
@@ -474,7 +539,20 @@ public class RoundManager
             }
            
         }
-        
+    }
+
+    IEnumerator ParseGiftList()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(10);
+            if (giftQueue.Count > 0)
+            {
+                var giftMsg = giftQueue.Peek();
+                ParseGift(giftMsg.uid,giftMsg.giftName);
+                giftQueue.Dequeue();
+            }
+        }
     }
 
     

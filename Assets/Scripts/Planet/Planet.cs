@@ -113,9 +113,7 @@ public class Planet : GameEntity
     void Awake()
     {
         autoRoll = true;
-
-        if (FightingManager.Instance.gameMode == GameMode.BattleGround)
-            autoRoll = false;
+        
         base.Awake();
         
         
@@ -197,6 +195,11 @@ public class Planet : GameEntity
         }
     }
 
+    public void Gather(int uid,Planet targetPlanet)
+    {
+        var planetCommander = GetCommanderByUid(uid);
+        var gatherUi=GameManager.Instance.uiManager.CreateGatherUi(targetPlanet,this,planetCommander);
+    }
 
 
     /// <summary>
@@ -363,12 +366,7 @@ public class Planet : GameEntity
         planetUi = GameManager.Instance.uiManager.CreatePlanetUI(this);
         planetUi.Init(this,fightingManager.gameMode);
         
-        //添加技能测试
-        if (FightingManager.Instance.gameMode == GameMode.Normal)
-        {
-            var initSkills = SkillManager.Instance.initSkill;
-            SkillManager.Instance.AddSkill(initSkills[Random.Range(0,initSkills.Count)].skillName, this,planetCommanders[0]);
-        }
+        
         
 
         foreach (var p in enemyPlanets)
@@ -565,6 +563,16 @@ public class Planet : GameEntity
         gameObject.name = player.userName;
         
         //autoCreateUnit = true;
+        
+        //添加技能测试
+        if (FightingManager.Instance.gameMode == GameMode.Normal)
+        {
+            var initSkills = SkillManager.Instance.initSkill;
+            SkillManager.Instance.AddSkill(initSkills[Random.Range(0,initSkills.Count)].skillName, this,planetCommanders[0]);
+        }
+
+      
+        
     }
 
     public void AddCommander(PlanetCommander planetCommander,int uiArea)
@@ -599,6 +607,7 @@ public class Planet : GameEntity
         planetCommander.commanderUi = commanderUi;
         commanderGos.Add(mark);
         commanderUis.Add(commanderUi);
+        AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_WARPLANE,1),planetCommander));
 
     }
 
@@ -626,7 +635,7 @@ public class Planet : GameEntity
         }
 
         autoRollTimer += Time.deltaTime;
-        if (autoRollTimer > 6 && autoRoll)
+        if (autoRollTimer > 6 && autoRoll && owner!=null)
         {
             if (skillContainer.skills.Count < maxSkillCount)
             {
