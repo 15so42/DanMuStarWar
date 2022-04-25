@@ -307,7 +307,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skills: []
-  maxSkillCount: 3
   simpleSkillUI: 1
   gameEntity: {fileID: 0}
 --- !u!114 &5762954912096371508
@@ -324,6 +323,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 100
   hp: 100
+  maxShield: 100
+  shield: 0
   pDef: 50
   mDef: 50
   gameEntity: {fileID: 0}

@@ -40,7 +40,8 @@ public class Planet : GameEntity
     private Transform commanderGoContainer;
     [Header("指挥官配置")]
     public GameObject commanderPfb;
-   
+
+    public PlanetTerritory planetTerritory;
    
     //星球序号，用于宣战结盟等操作
     public int planetIndex = 0;
@@ -56,8 +57,7 @@ public class Planet : GameEntity
     public PlanetResContainer planetResContainer;
     private TaskCenter[] taskCenters;
 
-    [Header("可否被占领")]
-    public bool canBeOwner = false;
+    
     public Player owner = null;
     
     public List<Player> enemyPlayers=new List<Player>();
@@ -70,8 +70,11 @@ public class Planet : GameEntity
     [Header("PlanetUI")] public PlanetUI planetUi;
 
     public Color planetColor;
+    [Header("驻守模块")]
     //ringUI
     private ColonyRingUi ringUi;
+    public float needRingPoint = 100;
+    
     public Action<float, float> onColonyPointChanged;
     public Vector3 ringOffset;
     public Vector3 ringUiScale;
@@ -162,9 +165,9 @@ public class Planet : GameEntity
     public void SetRingPoint(float point)
     {
         colonyPoint = point;
-        colonyPoint = Mathf.Clamp(colonyPoint, 0, 100);
+        colonyPoint = Mathf.Clamp(colonyPoint, 0, needRingPoint);
         
-        onColonyPointChanged?.Invoke(colonyPoint,100);
+        onColonyPointChanged?.Invoke(colonyPoint,needRingPoint);
     }
 
 
@@ -268,7 +271,7 @@ public class Planet : GameEntity
             }
         }
 
-        if (removedOther == false && colonyPoint<100)
+        if (removedOther == false && colonyPoint<needRingPoint)
         {
             pair.point += point;
             ringUi.SetColor(pair.owner.planetColor);
@@ -282,7 +285,7 @@ public class Planet : GameEntity
             var p = colonyPairs[i];
            
                 sumPoint += p.point;//削除其余势力的点数
-                if (sumPoint >= 100)
+                if (sumPoint >= needRingPoint)
                 {
                     EventCenter.Broadcast(EnumEventType.OnPlanetOccupied,p.owner,this);
                     break;
@@ -346,10 +349,7 @@ public class Planet : GameEntity
                 GetComponent<CloudSpawner>().Close();
             }
 
-            if (planetConfig.canBeOwner == false)
-            {
-                canBeOwner = false;
-            }
+           
 
             planetResContainer.allRes = planetConfig.allRes;
 
@@ -365,9 +365,9 @@ public class Planet : GameEntity
         EventCenter.Broadcast(EnumEventType.OnPlanetCreated,this);
         planetUi = GameManager.Instance.uiManager.CreatePlanetUI(this);
         planetUi.Init(this,fightingManager.gameMode);
-        
-        
-        
+
+
+        planetTerritory = GetComponent<PlanetTerritory>();
 
         foreach (var p in enemyPlanets)
         {
@@ -629,6 +629,8 @@ public class Planet : GameEntity
     // Update is called once per frame
     void Update()
     {
+        if(die || !gameObject)
+            return;
         foreach (var taskCenter in taskCenters)
         {
             taskCenter.Run();
@@ -704,6 +706,9 @@ public class Planet : GameEntity
     public override void LogTip(string tip)
     {
         //Debug.Log(tip);
+        if(die || !planetUi)
+            return;
+        
         planetUi.LogTip(tip);
     }
 

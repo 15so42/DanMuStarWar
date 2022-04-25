@@ -5710,7 +5710,7 @@ MonoBehaviour:
   hpUIScale: {x: 2.4, y: 2.4, z: 1}
   commanderPfb: {fileID: 7861269777895578270, guid: 3553470e66d7f54438a129abd700fbca,
     type: 3}
-  colorTable: {fileID: 0}
+  planetTerritory: {fileID: 0}
   planetIndex: 0
   planetConfigs: []
   planetType: 
@@ -5794,6 +5794,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 1000
   hp: 1000
+  maxShield: 1000
+  shield: 0
   pDef: 50
   mDef: 50
   gameEntity: {fileID: 0}
@@ -5810,7 +5812,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skills: []
-  maxSkillCount: 3
   simpleSkillUI: 0
   gameEntity: {fileID: 0}
 --- !u!54 &7785057999513872135

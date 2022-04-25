@@ -72,6 +72,10 @@ public class FightingManager : MonoBehaviour
     public PlayerDataTable playerDataTable;
 
     public ColorTable colorTable;
+
+    [Header("初始化星球配置")] public int firstPlanetIndex = 0;
+    public int lastPlanetIndex = 11;
+    public SkillBase shieldSkillBase;
     
     
     public void Init(GameManager gameManager)
@@ -183,11 +187,11 @@ public class FightingManager : MonoBehaviour
             EventCenter.Broadcast(EnumEventType.OnPlayerJoined,player);
         }
 
-        if (gameStatus==GameStatus.WaitingJoin && players.Count == maxPlayerCount)
-        {
-            waitingJoinTimer.Cancel();
-            StartBattle();
-        }
+        // if (gameStatus==GameStatus.WaitingJoin && players.Count == maxPlayerCount)
+        // {
+        //     waitingJoinTimer.Cancel();
+        //     StartBattle();
+        // }
     }
 
     void StartBattle()
@@ -236,7 +240,7 @@ public class FightingManager : MonoBehaviour
         //     Debug.Log(""+index);
         // }
         
-        UnityTimer.Timer.Register(1, () =>
+        UnityTimer.Timer.Register(0, () =>
         {
            
 
@@ -248,11 +252,12 @@ public class FightingManager : MonoBehaviour
                     //var index = ((planetNum / playersCount) * i) % planetNum;
                     if (i % 2 == 0)
                     {
-                        PlanetManager.Instance.allPlanets[0].AddCommander(new PlanetCommander(players[i].uid,players[i],colorTable.colors[i]),0); 
+                       
+                        PlanetManager.Instance.allPlanets[firstPlanetIndex].AddCommander(new PlanetCommander(players[i].uid,players[i],colorTable.colors[i]),0); 
                     }
                     else
                     {
-                        PlanetManager.Instance.allPlanets[PlanetManager.Instance.allPlanets.Count-1].AddCommander(new PlanetCommander(players[i].uid,players[i],colorTable.colors[i]),1); 
+                        PlanetManager.Instance.allPlanets[lastPlanetIndex].AddCommander(new PlanetCommander(players[i].uid,players[i],colorTable.colors[i]),1); 
                         
                     }
 
@@ -260,8 +265,14 @@ public class FightingManager : MonoBehaviour
                         
                     
                 }
-                PlanetManager.Instance.allPlanets[0].SetOwner(new Player(23477,"混沌","",""));
-                PlanetManager.Instance.allPlanets[PlanetManager.Instance.allPlanets.Count-1 ].SetOwner(new Player(765642,"秩序","",""));
+                PlanetManager.Instance.allPlanets[firstPlanetIndex].SetOwner(new Player(23477,"混沌","",""));
+                PlanetManager.Instance.allPlanets[lastPlanetIndex].SetOwner(new Player(765642,"秩序","",""));
+                
+                //设置护盾星球
+                SkillManager.Instance.AddSkill(shieldSkillBase.skillName,PlanetManager.Instance.allPlanets[12],null);
+                PlanetManager.Instance.allPlanets[12].needRingPoint = 300;
+                SkillManager.Instance.AddSkill(shieldSkillBase.skillName,PlanetManager.Instance.allPlanets[13],null);
+                PlanetManager.Instance.allPlanets[13].needRingPoint = 300;
             }
             else
             {
@@ -428,12 +439,12 @@ public class FightingManager : MonoBehaviour
                             if (players.Count % 2 == 1)
                             {
                                 //Debug.Log("加入后玩家数："+players.Count+"去0星球");
-                                PlanetManager.Instance.allPlanets[0].AddCommander(new PlanetCommander(newPlayer1.uid,newPlayer1,colorTable.colors[players.Count]),0);
+                                PlanetManager.Instance.allPlanets[firstPlanetIndex].AddCommander(new PlanetCommander(newPlayer1.uid,newPlayer1,colorTable.colors[players.Count]),0);
                             }
                             else
                             {
                                 //Debug.Log("加入后玩家数："+players.Count+"去最后星球");
-                                PlanetManager.Instance.allPlanets[PlanetManager.Instance.allPlanets.Count-1].AddCommander(new PlanetCommander(newPlayer1.uid,newPlayer1,colorTable.colors[players.Count]),1);
+                                PlanetManager.Instance.allPlanets[lastPlanetIndex].AddCommander(new PlanetCommander(newPlayer1.uid,newPlayer1,colorTable.colors[players.Count]),1);
                             }
                         }
                     }

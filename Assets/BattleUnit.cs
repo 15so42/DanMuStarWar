@@ -337,6 +337,8 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         
     }
     
+    
+    
     public override void OnAttacked(AttackInfo attackInfo)
     {
         base.OnAttacked(attackInfo);

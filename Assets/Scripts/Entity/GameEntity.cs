@@ -18,7 +18,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
 {
    protected StateMachine stateMachine;
    
-   public Action<int,int> onHpChanged;
+   public Action<int,int,int,int> onHpChanged;
 
    [HideInInspector]public BattleUnitProps props;
    [HideInInspector]public SkillContainer skillContainer;
@@ -70,14 +70,22 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    
 
    public abstract void LogTip(string tip);
+
+   public virtual void AddShield(int value)
+   {
+      props.shield += value;
+      if (props.shield > props.maxShield)
+         props.shield = props.maxShield;
+      onHpChanged.Invoke(props.hp,props.maxHp,props.shield,props.maxShield);
+   }
    
    public virtual void OnAttacked(AttackInfo attackInfo)
    {
-      var hpValue = props.OnAttacked(attackInfo);
-      OnHpChanged(hpValue,props.maxHp);
+      var hpAndShield = props.OnAttacked(attackInfo);
+      OnHpChanged(hpAndShield.hpValue,props.maxHp,hpAndShield.shieldValue,props.maxShield);
       
 
-      if (hpValue <= 0 && !die)
+      if (hpAndShield.hpValue <= 0 && !die)
       {
          lastAttacker = attackInfo.attacker;
          Die();
@@ -85,9 +93,9 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
       
    }
    
-   public void OnHpChanged(int hp,int maxHP)
+   public void OnHpChanged(int hp,int maxHP,int shield,int maxShield)
    {
-      onHpChanged?.Invoke(hp,maxHP);
+      onHpChanged?.Invoke(hp,maxHP,shield,maxShield);
    }
 
    public virtual void AddSkill(SkillItemUI skillItemUi)

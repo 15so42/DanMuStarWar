@@ -151,7 +151,8 @@ public class RoundManager
             
             var targetPlanet = GetPlanetByIndex(targetIndex);
 
-            uidPlanet.Gather(uid,targetPlanet);
+            if(targetPlanet)
+                uidPlanet.Gather(uid,targetPlanet);
             
         }
     }

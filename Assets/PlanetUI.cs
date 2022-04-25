@@ -95,7 +95,7 @@ public class PlanetUI : MonoBehaviour
         {
             
             playerName.text = "["+planetIndex+"]无人星球";
-            skillContainer.gameObject.SetActive(false);
+            //skillContainer.gameObject.SetActive(false);
         }
 
         else

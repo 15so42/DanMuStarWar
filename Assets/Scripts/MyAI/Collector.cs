@@ -74,7 +74,13 @@ public class Collector : BattleUnit
       
      
    }
-   
+
+   public override void Die()
+   {
+      base.Die();
+      StopAllCoroutines();
+   }
+
    public void Deliver()
    {
       var tipStr = "";
@@ -83,17 +89,25 @@ public class Collector : BattleUnit
       {
          var resourceTable = t;
          ownerPlanet.planetResContainer.AddRes(resourceTable.resourceType,resourceTable.resourceNum);
-         
-         if(resourceTable.resourceType==ResourceType.DicePoint)
+
+         if (resourceTable.resourceType == ResourceType.DicePoint)
+         {
+            
             tipStr+="骰子 +"+resourceTable.resourceNum+"  ";
+            if (resourceTable.resourceNum > 0)
+            {
+               planetCommander.AddPoint(1);
+            }
+         }
          if(resourceTable.resourceType==ResourceType.Tech)
             tipStr+="科技 +"+resourceTable.resourceNum+"  ";
          
          resourceTable.resourceNum=0;
          
       }
-      planetCommander.AddPoint(1);
-      ownerPlanet.LogTip(tipStr);
+      
+      if(ownerPlanet)
+         ownerPlanet.LogTip(tipStr);
       
    }
    

@@ -10,6 +10,7 @@ public class HpBar : MonoBehaviour
 {
     public Image hpBg;
     public Image hpFill;
+    public Image shieldFill;
     public Vector3 offset=Vector3.up;
 
     public Transform skillUiGroup;
@@ -25,9 +26,9 @@ public class HpBar : MonoBehaviour
         tipText.gameObject.SetActive(false);
     }
 
-    public void OnHpChanged(int hp,int maxHP)
+    public void OnHpChanged(int hp,int maxHP,int shield,int maxShield)
     {
-       UpdateHp(hp,maxHP);
+       UpdateHp(hp,maxHP,shield,maxShield);
     }
 
     private void OnDestroy()
@@ -36,10 +37,21 @@ public class HpBar : MonoBehaviour
         
     }
 
-    void UpdateHp(int hp,int maxHP)
+    void UpdateHp(int hp,int maxHP,int shield,int maxShield)
     {
-        hpFill.fillAmount = (float)hp / maxHP;
+        if (hp + shield < maxHP)
+        {
+            hpFill.fillAmount = (float)hp / maxHP;
+            shieldFill.fillAmount = (float) (hp + shield) / maxHP;
+        }
+        else
+        {
+            hpFill.fillAmount = (float)hp / (maxHP+shield);
+            shieldFill.fillAmount = 1;
+        }
         
+
+
     }
 
     void UpDatePos()
@@ -51,6 +63,7 @@ public class HpBar : MonoBehaviour
     public void SetColor(Color color)
     {
         hpFill.color = color;
+        shieldFill.color=new Color(1-color.r,1-color.g,1-color.b);
     }
 
     private void LateUpdate()
