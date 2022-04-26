@@ -162,7 +162,7 @@ public class PlanetUI : MonoBehaviour
     {
         nameLabel="["+planetIndex+"][荒废]"+(player==null?"无人星球":player.userName+"");
         UpdateNameLabel(nameLabel);
-        skillContainer.gameObject.SetActive(false);
+        //skillContainer.gameObject.SetActive(false);
     }
     
     

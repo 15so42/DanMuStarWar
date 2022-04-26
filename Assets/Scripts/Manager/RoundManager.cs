@@ -202,14 +202,9 @@ public class RoundManager
             var planet=GetPlantByPlayerUid(uid);
             if (planet)
             {
-                if (fightingManager.gameMode == GameMode.BattleGround)
-                {
-                    planet.ChangeSkillBG(uid,skillIndex);
-                }
-                else
-                { 
+                
                     planet.ChangeSkill(uid,skillIndex);
-                }
+                
             }
            
         }

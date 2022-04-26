@@ -99,7 +99,7 @@ public class HpBar : MonoBehaviour
         tipText.gameObject.SetActive(true);
         tipText.text = msg;
         logTimer?.Cancel();
-        logTimer = UnityTimer.Timer.Register(3, () =>
+        logTimer = UnityTimer.Timer.Register(6, () =>
         {
             if(tipText==null)
                 return;

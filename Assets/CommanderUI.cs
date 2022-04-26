@@ -97,8 +97,14 @@ public class CommanderUI : MonoBehaviour
 
     }
 
+    private void OnDisable()//移除事件
+    {
+        planetCommander.onPointChanged=null;
+    }
+
     public void LogTip(string msg)
     {
+       
         timer?.Cancel();
         
         msgBg.transform.localScale=Vector3.zero;
@@ -111,7 +117,11 @@ public class CommanderUI : MonoBehaviour
         sequence?.Append(msgBg.transform.DOScale(Vector3.one, 1));
         timer=UnityTimer.Timer.Register(3, () =>
         {
-            msgBg.gameObject.SetActive(false);
+            if (msgBg && msgBg.gameObject)
+            {
+                msgBg.gameObject.SetActive(false);
+            }
+            
         });
     
     }
