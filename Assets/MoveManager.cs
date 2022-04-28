@@ -32,20 +32,21 @@ public class MoveManager : MonoBehaviour
 
    
 
-    public void SetTmpTarget(Vector3 tmpTarget)
+    public virtual void SetTmpTarget(Vector3 tmpTarget)
     {
         this.tmpTarget = tmpTarget;
     }
 
-    public void SetFinalTarget(Vector3 finalTarget,bool syncTmpTarget)
+    public virtual void SetFinalTarget(Vector3 finalTarget,bool syncTmpTarget)
     {
         this.finalTarget = finalTarget;
             if(syncTmpTarget)
                 this.tmpTarget = finalTarget;
+            
         //Debug.Log("SetFinalTarget:"+finalTarget);
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         transform.Translate(Vector3.forward * (curSpeed * Time.deltaTime),Space.Self);
         if (autoRotate)//巡航时不启用方向控制

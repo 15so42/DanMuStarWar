@@ -21,6 +21,8 @@ public  class GameConst
    public const string BattleUnit_GUARDPLANE = "BattleUnit_护卫舰";
    public const string BattleUnit_LONGBOW = "BattleUnit_长弓";
    public const string BattleUnit_PACMAN = "BattleUnit_吃豆人";
+   //MC
+   public const string BattleUnit_STEVE = "BattleUnit_STEVE";
    //public const string BattleUnit_
    
    //子弹

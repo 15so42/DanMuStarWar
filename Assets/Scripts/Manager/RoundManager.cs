@@ -355,6 +355,31 @@ public class RoundManager
             planet.ShowCommanderPosition(uid); 
     }
     
+    void ParseGoWhere(int uid,string trim)
+    {
+        
+        string pattern = @"^(去){1}(\d{1,2})$";
+        
+        if (Regex.IsMatch(trim, pattern))
+        {
+           
+            var subStringCount = 1;
+            if(Regex.IsMatch(trim, @"\d{2}$"))
+            {
+                subStringCount = 2;
+            }
+            int targetIndex = Int32.Parse(trim.Substring(trim.Length-subStringCount,subStringCount));
+            Debug.Log("解析去命令:"+targetIndex);
+            var uidPlanet = GetPlantByPlayerUid(uid);
+            if(uidPlanet==null)
+                return;
+            
+            
+            uidPlanet.GoWhere(uid,targetIndex);
+            
+        }
+    }
+    
     //解析命令
     private void ParseCommand(int uid, string text,bool multipleCmd=true)
     {
@@ -411,7 +436,7 @@ public class RoundManager
             
         }
 
-        if (true||fightingManager.gameMode == GameMode.Normal)
+        if (fightingManager.gameMode == GameMode.Normal || fightingManager.gameMode==GameMode.BattleGround)
         {
             if (text.StartsWith("使用技能")||text.StartsWith("s")||text.StartsWith("S"))
             {
@@ -452,7 +477,14 @@ public class RoundManager
         {
             ParseUrgentRepair(uid,trim);
         }
-        
+
+        if (fightingManager.gameMode == GameMode.MCWar)
+        {
+            if (trim.StartsWith("去"))
+            {
+                ParseGoWhere(uid, trim);
+            }
+        }
       
         
         

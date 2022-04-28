@@ -16,7 +16,7 @@ public class WarPlane : BattleUnit,ISupportAble
    public List<Weapon> weapons=new List<Weapon>();
 
    public WarPlaneType warPlaneType=WarPlaneType.None;
-   protected void Start()
+   protected virtual void Start()
    {
       base.Start();
       weapons = GetComponentsInChildren<Weapon>().ToList();

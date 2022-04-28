@@ -608,6 +608,7 @@ public class Planet : GameEntity
         commanderGos.Add(mark);
         commanderUis.Add(commanderUi);
         AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_WARPLANE,1),planetCommander));
+        AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_STEVE,1),planetCommander));
 
     }
 
@@ -1038,6 +1039,33 @@ public class Planet : GameEntity
                     battleUnits[i].planetCommander == commander)
                 {
                     battleUnits[i].LogTip(commander.player.userName);
+                }
+            }
+        }
+    }
+    
+    public void GoWhere(int uid,int index)
+    {
+        var commander = GetCommanderByUid(uid);
+        if (commander != null)
+        {
+            
+            
+            if (index < 0 || index >= fightingManager.mcPosManager.positions.Count)
+            {
+                commander.commanderUi.LogTip("序号错误");
+            }
+            var pos = fightingManager.mcPosManager.GetPosByIndex(index);
+            for (int i = 0; i < battleUnits.Count; i++)
+            {
+                if (battleUnits[i] != null && battleUnits[i].die == false &&
+                    battleUnits[i].planetCommander == commander)
+                {
+
+                    battleUnits[i].SetPos(pos);
+
+                    //var targetPos = fightingManager.mcPosManager.GetPosByIndex(targetIndex);
+                    //battleUnits[i].LogTip(commander.player.userName);
                 }
             }
         }

@@ -34,7 +34,8 @@ public class PlayerStatus
 public enum GameMode
 {
     Normal,
-    BattleGround
+    BattleGround,
+    MCWar
 }
 
 public class FightingManager : MonoBehaviour
@@ -76,6 +77,8 @@ public class FightingManager : MonoBehaviour
     [Header("初始化星球配置")] public int firstPlanetIndex = 0;
     public int lastPlanetIndex = 11;
     public SkillBase shieldSkillBase;
+
+    public MCPosManager mcPosManager;
     
     
     public void Init(GameManager gameManager)
@@ -240,11 +243,11 @@ public class FightingManager : MonoBehaviour
         //     Debug.Log(""+index);
         // }
         
-        UnityTimer.Timer.Register(0, () =>
+        UnityTimer.Timer.Register(1, () =>
         {
            
 
-            if (gameMode == GameMode.BattleGround)
+            if (gameMode == GameMode.BattleGround || gameMode==GameMode.MCWar)
             {
                 
                 for (int i = 0; i < players.Count; i++)
@@ -269,10 +272,14 @@ public class FightingManager : MonoBehaviour
                 PlanetManager.Instance.allPlanets[lastPlanetIndex].SetOwner(new Player(765642,"秩序","",""));
                 
                 //设置护盾星球
-                SkillManager.Instance.AddSkill(shieldSkillBase.skillName,PlanetManager.Instance.allPlanets[12],null);
-                PlanetManager.Instance.allPlanets[12].needRingPoint = 300;
-                SkillManager.Instance.AddSkill(shieldSkillBase.skillName,PlanetManager.Instance.allPlanets[13],null);
-                PlanetManager.Instance.allPlanets[13].needRingPoint = 300;
+                if (PlanetManager.Instance.allPlanets.Count>10)
+                {
+                    SkillManager.Instance.AddSkill(shieldSkillBase.skillName,PlanetManager.Instance.allPlanets[12],null);
+                    PlanetManager.Instance.allPlanets[12].needRingPoint = 300;
+                    SkillManager.Instance.AddSkill(shieldSkillBase.skillName,PlanetManager.Instance.allPlanets[13],null);
+                    PlanetManager.Instance.allPlanets[13].needRingPoint = 300;
+                }
+                
             }
             else
             {

@@ -14,7 +14,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     //指挥官
     public PlanetCommander planetCommander;
 
-    private MoveManager moveManager;
+    protected MoveManager moveManager;
 
     public GameManager gameManager;
     
@@ -58,10 +58,22 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     public bool IsInFindRange()
     {
         var target = chaseTarget?.GetVictimEntity();
-        return target != null  && Vector3.Distance(target.transform.position,transform.position)<findEnemyDistance;
+        return target != null  && !target.die && Vector3.Distance(target.transform.position,transform.position)<findEnemyDistance;
     }
 
- 
+    
+    /// <summary>
+    /// MC模式表示前往某地
+    /// </summary>
+    public virtual void SetPos(Vector3 pos)
+    {
+        
+    }
+
+    public virtual IVictimAble EnemyCheck(Collider collider)
+    {
+        return null;
+    }
 
     protected void Start()
     {

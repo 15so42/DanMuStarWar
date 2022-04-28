@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed651a1bd63c1ea47926defc7659bac7, type: 3}
+  m_Name: MCWar Map Pos Data
+  m_EditorClassIdentifier: 
+  posData:
+  - {x: -110, y: 0, z: 0}
+  - {x: 110, y: 0, z: 0}
