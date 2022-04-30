@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Bolt;
@@ -11,7 +12,8 @@ public class Steve : WarPlane
     public Vector3 targetMcPos = Vector3.zero;
 
     private FightingManager fightingManager;
-    
+
+    public SkinnedMeshRenderer[] meshRenderers;
 
     protected override void Start()
     {
@@ -19,7 +21,7 @@ public class Steve : WarPlane
        
         fightingManager = GameManager.Instance.fightingManager;
         moveManager = GetComponent<MoveManager>();
-
+        meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
 
     public Vector3 GetPos(int index)
@@ -65,5 +67,44 @@ public class Steve : WarPlane
         return null;
 
 
+    }
+    
+    private void Update()
+    {
+        //throw new NotImplementedException();
+    }
+    
+
+    /// <summary>
+    /// 受击特效
+    /// </summary>
+    /// <param name="attackInfo"></param>
+    public override void OnAttacked(AttackInfo attackInfo)
+    {
+        base.OnAttacked(attackInfo);
+        StopAllCoroutines();
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(VictimFx());
+        }
+        
+
+    }
+
+   
+
+    IEnumerator VictimFx()
+    {
+        
+        for (int i = 0; i < meshRenderers.Length; i++)
+        {
+            meshRenderers[i].material.EnableKeyword("_EMISSION");
+            meshRenderers[i].material.SetColor("_EmissionColor",new Color(1,0,0));
+        }
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < meshRenderers.Length; i++)
+        {
+            meshRenderers[i].material.SetColor("_EmissionColor",new Color(0,0,0));
+        }
     }
 }

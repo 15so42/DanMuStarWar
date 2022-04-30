@@ -1057,6 +1057,7 @@ public class Planet : GameEntity
             if (index < 0 || index >= fightingManager.mcPosManager.positions.Count)
             {
                 commander.commanderUi.LogTip("序号错误");
+                return;
             }
             var pos = fightingManager.mcPosManager.GetPosByIndex(index);
             for (int i = 0; i < battleUnits.Count; i++)

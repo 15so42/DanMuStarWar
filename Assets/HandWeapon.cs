@@ -7,7 +7,11 @@ using UnityEngine;
 public class HandWeapon : Weapon
 {
     private Transform root;
-    [Header("手动配置Animator")] public Animator animator;
+    [HideInInspector] public Animator animator;
+    
+    [Header("击飞高度和力度")]
+    public int pushBackHeight=4;
+    public int pushBackStrength=1;
     private void Start()
     {
         root = transform.root;
@@ -31,6 +35,11 @@ public class HandWeapon : Weapon
     public override void Fire()
     {
         animator.SetTrigger("Attack");
-        owner.chaseTarget.GetVictimEntity().OnAttacked(new AttackInfo(this.owner,AttackType.Physics,1));
+        var victim = owner.chaseTarget.GetVictimEntity();
+        victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,1));
+        var navMeshMoveManager = victim.GetComponent<NavMeshMoveManager>();
+        navMeshMoveManager.PushBack(victim.transform.position-transform.position+Vector3.up*pushBackHeight,pushBackStrength);
     }
+
+    
 }

@@ -79,7 +79,13 @@ public class PlanetTask
 
             if (type == "BattleUnit")
             {
-               go=ResFactory.Instance.CreateBattleUnit(splitArr[1],planet.spawnPoint.transform.position);
+
+               var pos = planet.spawnPoint.transform.position;
+               if (FightingManager.Instance.gameMode == GameMode.MCWar)
+                  pos = planet.transform.position;
+               Debug.Log(pos);
+               go=ResFactory.Instance.CreateBattleUnit(splitArr[1],pos);
+               
                go.name = go.name + planet.name;
                InitBattleUnit(go.GetComponent<BattleUnit>(),planetCommander);
             }
