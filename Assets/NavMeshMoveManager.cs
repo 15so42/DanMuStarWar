@@ -16,11 +16,7 @@ public class NavMeshMoveManager : MoveManager
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
-    public override void SetFinalTarget(Vector3 finalTarget, bool syncTmpTarget)
-    {
-        base.SetFinalTarget(finalTarget, syncTmpTarget);
-        CustomEvent.Trigger(gameObject, "OnDestinationSet");
-    }
+  
 
     public override void SetTmpTarget(Vector3 tmpTarget)
     {

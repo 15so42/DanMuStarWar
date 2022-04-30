@@ -40,8 +40,12 @@ public class MoveManager : MonoBehaviour
     public virtual void SetFinalTarget(Vector3 finalTarget,bool syncTmpTarget)
     {
         this.finalTarget = finalTarget;
-            if(syncTmpTarget)
-                this.tmpTarget = finalTarget;
+        if (syncTmpTarget)
+        {
+            this.tmpTarget = finalTarget;
+            SetTmpTarget(finalTarget);
+        }
+                
             
         //Debug.Log("SetFinalTarget:"+finalTarget);
     }

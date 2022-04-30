@@ -641,7 +641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data:
-    _json: '{"declarations":{"collection":{"$content":[],"$version":"A"},"$version":"A"}}'
+    _json: '{"declarations":{"collection":{"$content":[{"name":"MCPos","value":{"x":0.0,"y":0.0,"z":0.0,"$type":"UnityEngine.Vector3"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
     _objectReferences: []
 --- !u!114 &6049223277468553489
 MonoBehaviour:
@@ -686,8 +686,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855df10198e6d344ca4723cbfdadc92c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 200
-  hp: 200
+  maxHp: 10
+  hp: 10
   maxShield: 200
   shield: 0
   pDef: 50
@@ -727,7 +727,7 @@ MonoBehaviour:
   showHpUI: 1
   hpUI: {fileID: 0}
   hpUIOffse: {x: 0, y: 0, z: 0}
-  hpUIScale: {x: 0, y: 0, z: 0}
+  hpUIScale: {x: 1, y: 1, z: 1}
   ownerPlanet: {fileID: 0}
   gameManager: {fileID: 0}
   battleUnitManager: {fileID: 0}

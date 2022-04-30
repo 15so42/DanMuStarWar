@@ -35,7 +35,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
 
    
    [Header("hpUIOffse")] public Vector3 hpUIOffse;
-   [Header("HPUIScale")] public Vector3 hpUIScale;
+   [Header("HPUIScale")] public Vector3 hpUIScale=Vector3.one;
    
    //击杀管理
    protected IAttackAble lastAttacker;//最后一击

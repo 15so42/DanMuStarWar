@@ -1065,7 +1065,7 @@ public class Planet : GameEntity
                     battleUnits[i].planetCommander == commander)
                 {
 
-                    battleUnits[i].SetPos(pos);
+                    battleUnits[i].GoMCPos(pos);
 
                     //var targetPos = fightingManager.mcPosManager.GetPosByIndex(targetIndex);
                     //battleUnits[i].LogTip(commander.player.userName);

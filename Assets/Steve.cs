@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Bolt;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 public class Steve : WarPlane
 {
     public int ownerPosIndex;
-    
+
+    public Vector3 targetMcPos = Vector3.zero;
 
     private FightingManager fightingManager;
     
@@ -23,6 +25,14 @@ public class Steve : WarPlane
     public Vector3 GetPos(int index)
     {
         return fightingManager.mcPosManager.GetPosByIndex(index);
+    }
+
+    public override void GoMCPos(Vector3 pos)
+    {
+        base.GoMCPos(pos);
+
+        targetMcPos = pos;
+        CustomEvent.Trigger(gameObject, "OnDestinationSet");
     }
 
     public bool NearTargetPos()

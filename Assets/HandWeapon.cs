@@ -31,5 +31,6 @@ public class HandWeapon : Weapon
     public override void Fire()
     {
         animator.SetTrigger("Attack");
+        owner.chaseTarget.GetVictimEntity().OnAttacked(new AttackInfo(this.owner,AttackType.Physics,1));
     }
 }
