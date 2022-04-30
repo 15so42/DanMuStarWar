@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 public class Steve : WarPlane
 {
     public int ownerPosIndex;
-    public Animator animator;
+    
 
     private FightingManager fightingManager;
     
@@ -14,7 +14,7 @@ public class Steve : WarPlane
     protected override void Start()
     {
         base.Start();
-        animator = GetComponent<Animator>();
+       
         fightingManager = GameManager.Instance.fightingManager;
         moveManager = GetComponent<MoveManager>();
 

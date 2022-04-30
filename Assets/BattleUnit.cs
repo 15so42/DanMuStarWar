@@ -36,6 +36,9 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
 
     public bool isDefending;
     
+    //动画
+    [HideInInspector]public Animator animator;
+    
     protected void Awake()
     {
         base.Awake();
@@ -46,7 +49,8 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         gameManager=GameManager.Instance;
         planetManager = gameManager.planetManager;
         battleUnitManager = gameManager.battleUnitManager;
-       
+        animator = GetComponentInChildren<Animator>();
+        
     }
 
     public bool IsTargetAlive()
@@ -93,7 +97,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
        }
        
        
-      
+       
        
        EventCenter.Broadcast(EnumEventType.OnBattleUnitCreated,this);
         //SkillManager.Instance.AddSkill("Skill_腐蚀_LV1",this);

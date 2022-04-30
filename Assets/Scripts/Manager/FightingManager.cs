@@ -268,6 +268,10 @@ public class FightingManager : MonoBehaviour
                         
                     
                 }
+
+                var leftPlanet = PlanetManager.Instance.allPlanets[firstPlanetIndex];
+                var rightPlanet = PlanetManager.Instance.allPlanets[lastPlanetIndex];
+                
                 PlanetManager.Instance.allPlanets[firstPlanetIndex].SetOwner(new Player(23477,"混沌","",""));
                 PlanetManager.Instance.allPlanets[lastPlanetIndex].SetOwner(new Player(765642,"秩序","",""));
                 
@@ -278,6 +282,12 @@ public class FightingManager : MonoBehaviour
                     PlanetManager.Instance.allPlanets[12].needRingPoint = 300;
                     SkillManager.Instance.AddSkill(shieldSkillBase.skillName,PlanetManager.Instance.allPlanets[13],null);
                     PlanetManager.Instance.allPlanets[13].needRingPoint = 300;
+                }
+
+                if (gameMode == GameMode.MCWar)
+                {
+                    leftPlanet.enemyPlanets.Add(rightPlanet);
+                    rightPlanet.enemyPlanets.Add(leftPlanet);
                 }
                 
             }

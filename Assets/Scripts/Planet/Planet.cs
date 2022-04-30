@@ -607,8 +607,11 @@ public class Planet : GameEntity
         planetCommander.commanderUi = commanderUi;
         commanderGos.Add(mark);
         commanderUis.Add(commanderUi);
-        AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_WARPLANE,1),planetCommander));
-        AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_STEVE,1),planetCommander));
+        
+        if(fightingManager.gameMode==GameMode.BattleGround)
+            AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_WARPLANE,1),planetCommander));
+        if(fightingManager.gameMode==GameMode.MCWar)
+            AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_STEVE,1),planetCommander));
 
     }
 

@@ -47,12 +47,16 @@ public class Weapon : MonoBehaviour
     {
         if (ready)
         {
-            Fire();
-            ready = false;
-            timer=1 / attackSpeed;
+            if (FireCheck())
+            {
+                Fire();
+                ready = false;
+                timer=1 / attackSpeed;
+            }
+            
         }
     }
-    public void Fire()
+    public virtual void Fire()
     {
         if(owner.chaseTarget.GetVictimEntity().die)
             return;
@@ -80,17 +84,20 @@ public class Weapon : MonoBehaviour
                 {
                     prop.gameEntity.OnAttacked(new AttackInfo(owner,attackType,attackValue));
                 }
-                //lineRenderer.SetPositions(new Vector3[]{transform.position,hitInfo.point});
-                //LineRenderManager.Instance.SetLineRender(transform.position, hitInfo.point, lineRendererPfb);
+               
                 FireFx(transform.position,hitInfo);
             }
             else
             {
-                //LineRenderManager.Instance.SetLineRender(transform.position, transform.position+dir*rayDistance, lineRendererPfb);
-                //lineRenderer.SetPositions(new Vector3[]{transform.position,transform.position+dir*rayDistance});
+                
                 FireFx(transform.position,transform.position+dir*rayDistance);
             }
         }
+    }
+
+    public virtual bool FireCheck()
+    {
+        return true;
     }
 
     public virtual void FireFx(Vector3 startPos,RaycastHit hitInfo)
