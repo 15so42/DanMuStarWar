@@ -52,6 +52,7 @@ public class RoundManager
     {
         ParseCommand(uid,text);
             
+        
     }
 
     Player GetPlayerByUid(int uid)
@@ -390,6 +391,16 @@ public class RoundManager
         {
             //局外人或者已经淘汰
             return;
+        }
+        
+        //重置玩家的上次发弹幕时间
+        if (fightingManager.gameMode == GameMode.BattleGround)
+        {
+            PlanetCommander planetCommander = null;
+            if(planet)
+                planetCommander= planet.GetCommanderByUid(uid);
+
+            planetCommander?.UpdateLastMsgTime(Time.time);
         }
         
         

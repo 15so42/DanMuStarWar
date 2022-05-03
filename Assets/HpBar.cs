@@ -39,17 +39,19 @@ public class HpBar : MonoBehaviour
 
     void UpdateHp(int hp,int maxHP,int shield,int maxShield)
     {
-        if (hp + shield < maxHP)
-        {
-            hpFill.fillAmount = (float)hp / maxHP;
-            shieldFill.fillAmount = (float) (hp + shield) / maxHP;
-        }
-        else
-        {
-            hpFill.fillAmount = (float)hp / (maxHP+shield);
-            shieldFill.fillAmount = 1;
-        }
+        // if (hp + shield < maxHP)
+        // {
+        //     hpFill.fillAmount = (float)hp / maxHP;
+        //     shieldFill.fillAmount = (float) (hp + shield) / maxHP;
+        // }
+        // else
+        // {
+        //     hpFill.fillAmount = (float)hp / (maxHP+shield);
+        //     shieldFill.fillAmount = 1;
+        // }
         
+        hpFill.fillAmount=hpFill.fillAmount = (float)hp / maxHP;
+        shieldFill.fillAmount = (float) shield / maxHP;
 
 
     }
@@ -63,7 +65,7 @@ public class HpBar : MonoBehaviour
     public void SetColor(Color color)
     {
         hpFill.color = color;
-        shieldFill.color=new Color(1-color.r,1-color.g,1-color.b);
+        //shieldFill.color=new Color(1-color.r,1-color.g,1-color.b);
     }
 
     private void LateUpdate()

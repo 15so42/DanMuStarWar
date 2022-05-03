@@ -605,11 +605,16 @@ public class Planet : GameEntity
         commanderUi.Init(mark,planetCommander);
         commanderUi.SetColor(planetCommander.color);
         planetCommander.commanderUi = commanderUi;
+        planetCommander.UpdateLastMsgTime(Time.time);
         commanderGos.Add(mark);
         commanderUis.Add(commanderUi);
-        
-        if(fightingManager.gameMode==GameMode.BattleGround)
+
+        if (fightingManager.gameMode == GameMode.BattleGround)
+        {
             AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_WARPLANE,1),planetCommander));
+            
+            
+        }
         if(fightingManager.gameMode==GameMode.MCWar)
             AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_STEVE,1),planetCommander));
 
@@ -650,15 +655,39 @@ public class Planet : GameEntity
             }
         }
 
+        ///分配玩家点数
         commanderPointTimer += Time.deltaTime;
         if (fightingManager.gameMode == GameMode.BattleGround)
         {
             if (commanderPointTimer > commanderPointCd)
             {
+                var playerCount = fightingManager.players.Count;
+                float teamPoint = playerCount / 2f;
+                int hangUpPlayerCount = 0;
+                var totalPoint = teamPoint;
+            
+                //挂机处理
+                for (int i = 0; i < planetCommanders.Count; i++)
+                {
+                    var planetCommander = planetCommanders[i];
+                    planetCommander.HangUpCheck();
+                    if (planetCommander.hangUp)
+                    {
+                        totalPoint += planetCommander.point*1.2f;
+                        planetCommander.AddPoint(planetCommander.point*-1);//清空挂机者点数
+                        hangUpPlayerCount++;
+                    }
+                    
+                }
+
+                var commanderCount = planetCommanders.Count;
+
+                var point = totalPoint / (commanderCount - hangUpPlayerCount);
                 for (int i = 0; i < planetCommanders.Count; i++)
                 {
                     var commander = planetCommanders[i];
-                    commander.AddPoint(1);
+                    if(commander.hangUp==false)
+                        commander.AddPoint(point);
                 }
 
                 commanderPointTimer = 0;

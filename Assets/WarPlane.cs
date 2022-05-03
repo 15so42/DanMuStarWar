@@ -10,12 +10,14 @@ public enum WarPlaneType
    None,//default选项
    WarPlane,
    GuardPlane,
+   LongBow
 }
 public class WarPlane : BattleUnit,ISupportAble
 {
    public List<Weapon> weapons=new List<Weapon>();
 
    public WarPlaneType warPlaneType=WarPlaneType.None;
+   [Header("被攻击时设置攻击者为新敌人")] public bool setAttackerTarget = true;
    protected virtual void Start()
    {
       base.Start();
@@ -42,7 +44,7 @@ public class WarPlane : BattleUnit,ISupportAble
       base.OnAttacked(attackInfo);
       //if(!chaseTarget)
       var attacker = attackInfo.attacker;
-      if(attacker==null)//attacker为null表示是系统，或者事件导致的扣血
+      if(attacker==null || setAttackerTarget==false)//attacker为null表示是系统，或者事件导致的扣血
          return;
       var attackerOwner = attacker.GetAttackerOwner();
       var victimOwner = GetVictimOwner();
@@ -52,6 +54,7 @@ public class WarPlane : BattleUnit,ISupportAble
       {
          var victim = attacker.GetAttackEntity();
          SetChaseTarget(victim);
+        
       }
          
    }

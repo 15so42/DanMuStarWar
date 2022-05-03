@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class UIManager : MonoBehaviour
    public WaitingJoinUI waitingJoinUi;
    
    public List<PlanetUI> planetUis=new List<PlanetUI>();
+
+   [Header("计时面板")]
+   public Transform gameTimerTextBg;
+   public Text gameTimerText;
    
    public void Init(GameManager gameManager)
    {
@@ -20,6 +25,8 @@ public class UIManager : MonoBehaviour
    {
       waitingJoinUi.gameObject.SetActive(true);
       waitingJoinUi.ResetUi();
+      gameTimerTextBg.gameObject.SetActive(false);
+      StopAllCoroutines();
       Debug.Log("ResetUI待实现");
    }
 
@@ -62,5 +69,24 @@ public class UIManager : MonoBehaviour
       var gatherUi=hpCanvas.CreateGatherUi();
       gatherUi.Init(planet,sponsor,planetCommander);
       return gatherUi;
+   }
+
+   public void OpenTimer()
+   {
+      gameTimerTextBg.gameObject.SetActive(true);
+      StartCoroutine(UpdateTimerText());
+   }
+
+   IEnumerator UpdateTimerText()
+   {
+      int time = 0;
+      while (true)
+      {
+         yield return new WaitForSeconds(1);
+         time++;
+         int minute = (int) time / 60;
+         int second = (int) time % 60;
+         gameTimerText.text = minute + ":" + second;
+      }
    }
 }

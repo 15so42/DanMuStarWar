@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(LineRenderer))]
+
 public class Weapon : MonoBehaviour
 {
     public float attackDistance;

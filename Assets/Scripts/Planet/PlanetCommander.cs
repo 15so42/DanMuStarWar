@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityTimer;
 
 public class PlanetCommander 
 {
 
     public int uid;
     public Player player;
-    public int point;
+    public float point;
     public CommanderUI commanderUi;
     public Color color;
 
@@ -27,11 +28,34 @@ public class PlanetCommander
         this.color = color;
     }
 
-    public Action<int> onPointChanged;
+    public Action<float> onPointChanged;
+    
+    
+    //挂机判定
+    public float lastUpdateMsgTime;
+    public bool hangUp;
 
-    public void AddPoint(int value)
+    public void UpdateLastMsgTime(float time)
+    {
+        lastUpdateMsgTime = time;
+    }
+
+    public void AddPoint(float value)
     {
         point+=value;
         onPointChanged?.Invoke(point);
+    }
+
+    /// <summary>
+    /// 挂机判定
+    /// </summary>
+    public void HangUpCheck()
+    {
+        if (Time.time > FightingManager.Instance.kickOutTime + lastUpdateMsgTime)
+        {
+            commanderUi.LogTip("触发挂机判定");
+            //分发点数
+            hangUp = true;
+        }
     }
 }

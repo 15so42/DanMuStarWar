@@ -86,12 +86,12 @@ public class CommanderUI : MonoBehaviour
         UpdateUI(planetCommander);
     }
 
-    void UpdateText(int point)
+    void UpdateText(float point)
     {
-        pointText.text = point + "";
+        pointText.text = $"{point:N1}";
     }
 
-    void OnPointChanged(int point)
+    void OnPointChanged(float point)
     {
         UpdateText(point);
 

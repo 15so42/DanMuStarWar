@@ -247,9 +247,9 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
                  }
              }
 
-             if (planet.battleUnits.Count == 1 && minIndex == 0)
-                 return null;
-            enemy = planet.battleUnits[minIndex];
+             //if (planet.battleUnits.Count == 1 && minIndex == 0)
+             //    return null;
+             enemy = planet.battleUnits[minIndex];
             
 
         }
