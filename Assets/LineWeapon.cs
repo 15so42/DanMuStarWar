@@ -11,13 +11,20 @@ public class LineWeapon : Weapon
     public override bool FireCheck()
     {
         if (owner.chaseTarget != null && !owner.chaseTarget.GetVictimEntity().die)
-            return true;
+        {
+            float distance =
+                Vector3.Distance(owner.chaseTarget.GetVictimEntity().transform.position, transform.position);
+            if(distance<attackDistance)
+                return true;
+        }
+            
         return false;
     }
 
     public override void Fire()
     {
         var victim = owner.chaseTarget.GetVictimEntity();
+        
         victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,attackValue));
         
         

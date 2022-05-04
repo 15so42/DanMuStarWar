@@ -51,6 +51,12 @@ public class PlanetCommander
     /// </summary>
     public void HangUpCheck()
     {
+        if (Time.time < FightingManager.Instance.kickOutTime + lastUpdateMsgTime &&
+            Time.time > FightingManager.Instance.kickOutTime * 0.66f + lastUpdateMsgTime)
+        {
+            commanderUi.LogTip("挂机警告");
+        }
+        
         if (Time.time > FightingManager.Instance.kickOutTime + lastUpdateMsgTime)
         {
             commanderUi.LogTip("触发挂机判定");

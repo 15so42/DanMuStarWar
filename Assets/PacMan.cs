@@ -24,7 +24,7 @@ public class PacMan : BattleUnit
 
         if (Vector3.Distance(transform.position, chaseTarget.GetVictimEntity().transform.position) < eatDistance)
         {
-            Explosion();
+            //Explosion();
             
             Die();
         }
@@ -46,5 +46,6 @@ public class PacMan : BattleUnit
         var attackInfo = new AttackInfo(this, AttackType.Physics, 20);
         var position = transform.position;
         AttackManager.Instance.Explosion(attackInfo, position, 30);
+        //Debug.Log(gameObject.name+"Explosion一次");
     }
 }

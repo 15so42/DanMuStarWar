@@ -130,6 +130,14 @@ public class RoundManager
             
         }
     }
+
+    void ParseRecallAll(int uid)
+    {
+        var uidPlanet = GetPlantByPlayerUid(uid);
+        if(uidPlanet==null)
+            return;
+        uidPlanet.RecallAll(uid);
+    }
     
     void ParseGather(int uid,string trim)
     {
@@ -416,6 +424,11 @@ public class RoundManager
             ParseDefend(uid, trim);
         }
         
+        if (text == "召回全部")
+        {
+            ParseRecallAll(uid);
+        }
+        
         if (text.StartsWith("召回") )
         {
             ParseRecall(uid, trim);
@@ -481,6 +494,8 @@ public class RoundManager
             {
                 ParseOpenAutoRoll(uid,trim);
             }
+
+           
         }
         
 

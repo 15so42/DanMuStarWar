@@ -223,6 +223,20 @@ public class Planet : GameEntity
             }
         }
     }
+
+    public void RecallAll(int uid)
+    {
+        var planetCommander = GetCommanderByUid(uid);
+        for (int i = 0; i < battleUnits.Count; i++)
+        {
+            if (battleUnits[i] && battleUnits[i].isDefending && battleUnits[i].planetCommander==planetCommander)
+            {
+                battleUnits[i].isDefending = false;
+                battleUnits[i].defendingPlanet = null;
+                battleUnits[i].Recall();
+            }
+        }
+    }
     
     /// <summary>
     /// 被驻守,表示被colonist驻守
@@ -611,7 +625,10 @@ public class Planet : GameEntity
 
         if (fightingManager.gameMode == GameMode.BattleGround)
         {
-            AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_WARPLANE,1),planetCommander));
+            //AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_WARPLANE,1),planetCommander));
+            AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_LONGBOW,1),planetCommander));
+            AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_GUARDPLANE,1),planetCommander));
+            AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_PACMAN,1),planetCommander));
             
             
         }

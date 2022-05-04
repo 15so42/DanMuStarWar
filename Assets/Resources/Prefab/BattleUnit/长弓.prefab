@@ -310,13 +310,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42170aad832df8e47a7ec764b4b82adb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDistance: 300
+  attackDistance: 150
   owner: {fileID: 0}
   attackSpeed: 0.2
   scatteringAngel: 5
   rayDistance: 150
   attackType: 0
-  attackValue: 5
+  attackValue: 3
   lineRendererPfb: {fileID: 4131285914401426736, guid: 1c2a5547e7bc55b469cc81aadbb85e2a,
     type: 3}
 --- !u!1 &4337681313811257463
@@ -824,7 +824,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   battleUnitManager: {fileID: 0}
   planetManager: {fileID: 0}
-  findEnemyDistance: 300
+  findEnemyDistance: 130
   canAttack: 1
   inWar: 0
   canDefendOtherPlanet: 1
@@ -834,7 +834,7 @@ MonoBehaviour:
   weapons:
   - {fileID: 0}
   warPlaneType: 3
-  setAttackerTarget: 0
+  setAttackerTarget: 1
 --- !u!1 &6143260178253523829
 GameObject:
   m_ObjectHideFlags: 0

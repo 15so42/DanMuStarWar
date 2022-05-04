@@ -692,7 +692,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skills: []
-  maxSkillCount: 3
   simpleSkillUI: 1
   gameEntity: {fileID: 0}
 --- !u!114 &1085540136277988930
@@ -709,6 +708,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 200
   hp: 200
+  maxShield: 100
+  shield: 0
   pDef: 50
   mDef: 50
   gameEntity: {fileID: 0}
@@ -751,12 +752,13 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   battleUnitManager: {fileID: 0}
   planetManager: {fileID: 0}
-  findEnemyDistance: 600
+  findEnemyDistance: 300
   canAttack: 0
   inWar: 0
   canDefendOtherPlanet: 0
   defendingPlanet: {fileID: 0}
   isDefending: 0
+  animator: {fileID: 0}
   eatDistance: 15
 --- !u!54 &7905838483529104777
 Rigidbody:
