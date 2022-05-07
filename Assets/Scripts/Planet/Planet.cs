@@ -563,7 +563,12 @@ public class Planet : GameEntity
         planetUi.SetOwner(player,fightingManager.gameMode);
         if (planetCommanders.Find(x => x.uid == player.uid) == null)
         {
-            planetCommanders.Add(new PlanetCommander(player.uid,player));
+            //planetCommanders.Add();
+            AddCommander(new PlanetCommander(player.uid,player,planetColor),1);
+        }
+        else
+        {
+            return;
         }
         
         
@@ -625,10 +630,10 @@ public class Planet : GameEntity
 
         if (fightingManager.gameMode == GameMode.BattleGround)
         {
-            //AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_WARPLANE,1),planetCommander));
-            AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_LONGBOW,1),planetCommander));
-            AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_GUARDPLANE,1),planetCommander));
-            AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_PACMAN,1),planetCommander));
+            AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_WARPLANE,1),planetCommander));
+            //AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_LONGBOW,1),planetCommander));
+            //AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_GUARDPLANE,1),planetCommander));
+            //AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_PACMAN,1),planetCommander));
             
             
         }
@@ -674,12 +679,12 @@ public class Planet : GameEntity
 
         ///分配玩家点数
         commanderPointTimer += Time.deltaTime;
-        if (fightingManager.gameMode == GameMode.BattleGround)
+        if (fightingManager.gameMode == GameMode.BattleGround || fightingManager.gameMode==GameMode.Normal)
         {
             if (commanderPointTimer > commanderPointCd)
             {
                 var playerCount = fightingManager.players.Count;
-                float teamPoint = playerCount / 2f;
+                float teamPoint = playerCount / (fightingManager.gameMode==GameMode.Normal?playerCount:2f);//混战模式每次拿一点
                 int hangUpPlayerCount = 0;
                 var totalPoint = teamPoint;
             
@@ -690,7 +695,7 @@ public class Planet : GameEntity
                     planetCommander.HangUpCheck();
                     if (planetCommander.hangUp)
                     {
-                        totalPoint += planetCommander.point*1.2f;
+                        totalPoint += planetCommander.point*1.1f;
                         planetCommander.AddPoint(planetCommander.point*-1);//清空挂机者点数
                         hangUpPlayerCount++;
                     }

@@ -95,33 +95,33 @@ public class SkillManager : MonoBehaviour
         var planet = target as Planet;
         if (planet)
         {
-            if (fightingManager.gameMode == GameMode.Normal)
-            {
-                if (planet.planetResContainer.GetResNumByType(ResourceType.DicePoint) < 1 + skillBase.usePoint)
-                {
-                    target.LogTip("购买所需点数不够");
-                    return false;
-                }
-            }
-            else
-            {
+            // if (fightingManager.gameMode == GameMode.Normal)
+            // {
+            //     if (planet.planetResContainer.GetResNumByType(ResourceType.DicePoint) < 1 + skillBase.usePoint)
+            //     {
+            //         target.LogTip("购买所需点数不够");
+            //         return false;
+            //     }
+            // }
+            // else
+            // {
                 if (planetCommander.point < 1 + skillBase.usePoint)
                 {
                     planetCommander.commanderUi.LogTip("需要点数："+(1+skillBase.usePoint));
                     return false;
                 }
-            }
+            //}
            
             var skillName = skillBase.skillName;
             AddSkill(skillName,target,planetCommander);
-            if (fightingManager.gameMode == GameMode.BattleGround)
-            {
+            //if (fightingManager.gameMode == GameMode.BattleGround)
+            //{
                 (target as Planet)?.UseSkillBG(planetCommander.uid, target.skillContainer.skills.Count);
-            }
-            else
-            {
-                (target as Planet)?.UseSkill(planetCommander.uid, target.skillContainer.skills.Count);
-            }
+            // }
+            // else
+            // {
+            //     (target as Planet)?.UseSkill(planetCommander.uid, target.skillContainer.skills.Count);
+            // }
             
             
             return true;

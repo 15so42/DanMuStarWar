@@ -83,14 +83,20 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    {
       var hpAndShield = props.OnAttacked(attackInfo);
       OnHpChanged(hpAndShield.hpValue,props.maxHp,hpAndShield.shieldValue,props.maxShield);
-      
-
+      if (attackInfo.attackType != AttackType.Heal)
+      {
+         attackInfo.attacker?.OnAttackOther(this, attackInfo);
+      }
+     
       if (hpAndShield.hpValue <= 0 && !die)
       {
          lastAttacker = attackInfo.attacker;
          Die();
       }
-      
+
+     
+
+
    }
    
    public void OnHpChanged(int hp,int maxHP,int shield,int maxShield)
@@ -158,8 +164,12 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    {
      //Do nothing
    }
-   
-   
+
+   public virtual void OnAttackOther(IVictimAble victimAble, AttackInfo attackInfo)
+   {
+      //throw new NotImplementedException();
+   }
+
 
    public virtual GameEntity GetVictimOwner()
    {

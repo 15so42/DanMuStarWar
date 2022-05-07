@@ -16,6 +16,12 @@ public class RoundManager
     private GameManager gameManager;
     private FightingManager fightingManager;
     private List<Player> players=new List<Player>();
+
+    public GameMode desireMode;//下一句玩什么模式
+    //模式投票技术
+    private int normalModeCounter = 0;
+    private int battleGroundModeCounter = 0;
+    public List<int> voted=new List<int>();//只能投票一次
     public void Init(GameManager gameManager, List<Player> players)
     {
         this.gameManager = gameManager;
@@ -248,10 +254,10 @@ public class RoundManager
             var planet=GetPlantByPlayerUid(uid);
             if (planet)
             {
-                if (fightingManager.gameMode == GameMode.BattleGround)
+                //if (fightingManager.gameMode == GameMode.BattleGround)
                     planet.BuySkillBG(uid, index);
-                else 
-                    planet.BuySkill(uid,index);
+                // else 
+                //     planet.BuySkill(uid,index);
             }
          
         }
@@ -388,6 +394,25 @@ public class RoundManager
             
         }
     }
+
+    void MapVote(int uid,GameMode gameMode)
+    {
+        if(voted.Contains(uid))
+            return;
+        if (gameMode == GameMode.Normal)
+            normalModeCounter++;
+        if (gameMode == GameMode.BattleGround)
+            battleGroundModeCounter++;
+        if (normalModeCounter > battleGroundModeCounter)
+            desireMode = GameMode.Normal;
+        else
+        {
+            desireMode = GameMode.BattleGround;
+        }
+        voted.Add(uid);
+
+        gameManager.uiManager.UpdateMapVoteUi(normalModeCounter,battleGroundModeCounter);
+    }
     
     //解析命令
     private void ParseCommand(int uid, string text,bool multipleCmd=true)
@@ -522,6 +547,21 @@ public class RoundManager
         if (text.Equals("我在哪"))
         {
             ParseShowWhere(uid);
+        }
+        
+        if (text.Equals("我在哪"))
+        {
+            ParseShowWhere(uid);
+        }
+
+        if (text.Equals("投票混战模式"))
+        {
+            MapVote(uid,GameMode.Normal);
+        }
+        
+        if (text.Equals("投票团战模式"))
+        {
+            MapVote(uid,GameMode.BattleGround);
         }
 
         /*

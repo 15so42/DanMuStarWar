@@ -9,23 +9,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5a736f6a88b5cb49b0a0ac29069b83c, type: 3}
-  m_Name: "Skill_\u62A4\u76FE\u53D1\u751F\u5668_LV1"
+  m_Script: {fileID: 11500000, guid: aa6bf9168f594a047b2cdc72986a41b8, type: 3}
+  m_Name: "Skill_\u5438\u8840\u59EC_LV1"
   m_EditorClassIdentifier: 
-  usePoint: 0
-  removePoint: 0
-  desc: "\u5B9A\u65F6\u4E3A\u9644\u8FD1\u5355\u4F4D\u589E\u52A0\u62A4\u76FE"
+  usePoint: 6
+  removePoint: 1
+  desc: "\u751F\u4EA7\u4E00\u8258\u5438\u8840\u59EC"
   skillItemUi: {fileID: 0}
-  skillName: "Skill_\u62A4\u76FE\u53D1\u751F\u5668_LV1"
-  icon: {fileID: 0}
+  skillName: "Skill_\u5438\u8840\u59EC_LV1"
+  icon: {fileID: 21300000, guid: 23434dda1b009534c9816c9ccd998cdd, type: 3}
   isBuff: 0
   cd: 5
   timer: 0
-  life: -1
+  life: 1
   autoLife: 1
   stackAbleCount: 1
-  passive: 1
+  passive: 0
   gameEntity: {fileID: 0}
   ready: 1
   finished: 0
-  value: 2
+  unitName: "BattleUnit_\u5438\u8840\u59EC"
+  duration: 6
+  num: 1

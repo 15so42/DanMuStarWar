@@ -72,8 +72,6 @@ public class SkillContainer : MonoBehaviour
     public bool BuySkill(int index,GameMode gameMode,PlanetCommander planetCommander)
     {
         var techLevel = 1;
-        if (gameMode == GameMode.Normal)
-            techLevel = (gameEntity as Planet).GetTechLevelByRes();
         //程序index
         return SkillManager.Instance.BuySkill(index,gameEntity,techLevel ,planetCommander);
     }

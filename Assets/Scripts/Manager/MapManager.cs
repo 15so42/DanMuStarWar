@@ -46,7 +46,10 @@ public class MapManager : MonoBehaviour
     //public Transform battleUnitRoot;
    
     //固定位置地图
+    [Header("团战模式地图")]
     public List<MapPosData> mapPoses=new List<MapPosData>();
+    [Header("混战模式地图")]
+    public List<MapPosData> normalMapPoses=new List<MapPosData>();
     
     //分格子放星球
     
@@ -97,44 +100,70 @@ public class MapManager : MonoBehaviour
     {
         if (fightingManager.gameMode == GameMode.Normal)
         {
-            SpawnPlanets(playerPlanets,playerPlanetNum,false,fightingManager.gameMode);
-            SpawnPlanets(resPlanets,resPlanetNum,true,fightingManager.gameMode);
+            //SpawnPlanets(playerPlanets,playerPlanetNum,false,fightingManager.gameMode);
+            //SpawnPlanets(resPlanets,resPlanetNum,true,fightingManager.gameMode);
+            SpawnPlantesByMapPos(GameMode.Normal);
         }
         else
         {
-            SpawnBattleGroundPlantes();
+            SpawnPlantesByMapPos(GameMode.BattleGround);
         }
         
         EventCenter.Broadcast(EnumEventType.OnPlanetsSpawned);
     }
 
-    void SpawnBattleGroundPlantes()
+    void SpawnPlantesByMapPos(GameMode gameMode)
     {
         var empty=new GameObject("planets");
         empty.transform.SetParent(planetRoot);
         //empty.transform.position=new Vector3(0,48.86f,-2.55f);
 
-        var planetNum = mapPoses[0].posData.Count;
+        var realMapFile = this.mapPoses;
+        if (gameMode == GameMode.Normal)
+            realMapFile = this.normalMapPoses;
+            
+        var planetNum = realMapFile[0].posData.Count;
         var pfb = planets[Random.Range(0, planets.Length)];
         
         for (int i = 0; i < planetNum; i++)
         {
-            var worldPos = mapPoses[0].posData[i];
-            worldPos+=new Vector3(0,48.86f,-2.55f);
+            var worldPos = realMapFile[0].posData[i];
+            if (gameMode == GameMode.BattleGround || gameMode==GameMode.Normal)
+            {
+                worldPos+=new Vector3(0,48.86f,-2.55f);//团战模式相机会近一些
+            }
+            
             
             var planetsName = playerPlanets.Concat(resPlanets).ToList();
         
         
             var planetName = planetsName[Random.Range(0, planetsName.Count)];
-            if (i == 0 || i == planetNum - 1)
+            //特定位置使用玩家星球
+            if (i == 0 || i == planetNum - 1 && gameMode==GameMode.BattleGround)
             {
                 planetName = playerPlanets[Random.Range(0, playerPlanets.Length)];
             }
-            var go = GameObject.Instantiate(pfb, worldPos, Quaternion.identity, empty.transform);
+
+            if (i < fightingManager.maxPlayerCount && gameMode == GameMode.Normal)
+            {
+                planetName = playerPlanets[Random.Range(0, playerPlanets.Length)];
+            }
             
-            var color = i > 5 ?  i>11 ?Color.red : Color.cyan  : Color.yellow;
+            
+            var go = GameObject.Instantiate(pfb, worldPos, Quaternion.identity, empty.transform);
+
+            if (gameMode == GameMode.BattleGround)
+            {
+                var color = i > 5 ?  i>11 ?Color.red : Color.cyan  : Color.yellow;
             
                 go.GetComponent<Planet>().SetUpPlanet(planetName,color);
+            }
+            else
+            {
+                go.GetComponent<Planet>().SetUpPlanet(planetName,colorTable.colors[i]);
+            }
+           
+                
         }
 
         
@@ -176,7 +205,7 @@ public class MapManager : MonoBehaviour
                {
                    if (i < 8)
                    {
-                       worldPos = Vector3.zero + Vector3.right * (Mathf.Sin(  45+Mathf.Deg2Rad*(i+1)*360/resPlanetNum) * 35) + Vector3.forward * (Mathf.Cos(45+Mathf.Deg2Rad*(i+1)*360/resPlanetNum) * 35);
+                       worldPos = Vector3.zero + Vector3.right * (1.3f * (Mathf.Sin(  45+Mathf.Deg2Rad*(i+1)*360/resPlanetNum) * 45)) + Vector3.forward *  1.4f*(Mathf.Cos(45+Mathf.Deg2Rad*(i+1)*360/resPlanetNum) * 35);
                    }
                    else
                    {
@@ -186,12 +215,12 @@ public class MapManager : MonoBehaviour
                }
                else
                {
-                   worldPos = Vector3.zero + Vector3.right * (Mathf.Sin(Mathf.Deg2Rad*(i+1)*360/playerPlanetNum) * 80) + Vector3.forward * (Mathf.Cos(Mathf.Deg2Rad*(i+1)*360/playerPlanetNum) * 80);
+                   worldPos = Vector3.zero + Vector3.right * (Mathf.Sin(Mathf.Deg2Rad*(i+1)*360/playerPlanetNum) * 80)*1.4f + Vector3.forward * (Mathf.Cos(Mathf.Deg2Rad*(i+1)*360/playerPlanetNum) * 80);
                }
            
 
 
-           var planetName = planetsName[Random.Range(0, planetsName.Length)];
+            var planetName = planetsName[Random.Range(0, planetsName.Length)];
             var go = GameObject.Instantiate(pfb, worldPos, Quaternion.identity, empty.transform);
             go.GetComponent<Planet>().SetUpPlanet(planetName,colorTable.colors[resPlanet?playerPlanetNum+i:i]);
             grids[gridPos.x, gridPos.y] = planetName;

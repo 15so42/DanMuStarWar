@@ -7,4 +7,6 @@ public interface IAttackAble
     GameEntity GetAttackerOwner();
     GameEntity GetAttackEntity();
     void Attack();
+
+    void OnAttackOther(IVictimAble victimAble,AttackInfo attackInfo);
 }

@@ -1,0 +1,130 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7387882430443332633
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2849703058323183271, guid: 07d71621ad57b2541824f2bcee64c7ed,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2b4a616a3500f6847a57a6efb0664308, type: 2}
+    - target: {fileID: 4019182334487915976, guid: 07d71621ad57b2541824f2bcee64c7ed,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019182334487915976, guid: 07d71621ad57b2541824f2bcee64c7ed,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019182334487915976, guid: 07d71621ad57b2541824f2bcee64c7ed,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019182334487915976, guid: 07d71621ad57b2541824f2bcee64c7ed,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019182334487915976, guid: 07d71621ad57b2541824f2bcee64c7ed,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019182334487915976, guid: 07d71621ad57b2541824f2bcee64c7ed,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019182334487915976, guid: 07d71621ad57b2541824f2bcee64c7ed,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019182334487915976, guid: 07d71621ad57b2541824f2bcee64c7ed,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019182334487915976, guid: 07d71621ad57b2541824f2bcee64c7ed,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019182334487915976, guid: 07d71621ad57b2541824f2bcee64c7ed,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019182334487915976, guid: 07d71621ad57b2541824f2bcee64c7ed,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363092647697266546, guid: 07d71621ad57b2541824f2bcee64c7ed,
+        type: 3}
+      propertyPath: m_Name
+      value: "\u5438\u8840\u59EC"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808133950948101870, guid: 07d71621ad57b2541824f2bcee64c7ed,
+        type: 3}
+      propertyPath: attackSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808133950948101870, guid: 07d71621ad57b2541824f2bcee64c7ed,
+        type: 3}
+      propertyPath: attackValue
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3941425582784561556, guid: 07d71621ad57b2541824f2bcee64c7ed, type: 3}
+    - {fileID: 5832457024517463052, guid: 07d71621ad57b2541824f2bcee64c7ed, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 07d71621ad57b2541824f2bcee64c7ed, type: 3}
+--- !u!1 &6488515297059902315 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4363092647697266546, guid: 07d71621ad57b2541824f2bcee64c7ed,
+    type: 3}
+  m_PrefabInstance: {fileID: 7387882430443332633}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5779743687301817741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6488515297059902315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a3c3005a8a5500429b18ebb03e3405b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  props: {fileID: 0}
+  skillContainer: {fileID: 0}
+  gameEntityType: 0
+  radius: 1
+  supportDistance: 30
+  die: 0
+  showHpUI: 1
+  hpUI: {fileID: 0}
+  hpUIOffse: {x: 0, y: 7, z: 0}
+  hpUIScale: {x: 1, y: 1.5, z: 1}
+  ownerPlanet: {fileID: 0}
+  gameManager: {fileID: 0}
+  battleUnitManager: {fileID: 0}
+  planetManager: {fileID: 0}
+  findEnemyDistance: 30
+  canAttack: 1
+  inWar: 0
+  canDefendOtherPlanet: 1
+  defendingPlanet: {fileID: 0}
+  isDefending: 0
+  animator: {fileID: 0}
+  weapons: []
+  warPlaneType: 1
+  setAttackerTarget: 1

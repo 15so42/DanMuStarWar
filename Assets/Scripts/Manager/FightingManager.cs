@@ -302,7 +302,11 @@ public class FightingManager : MonoBehaviour
                 {
                     var index = ((planetNum / playersCount) * i) % planetNum;
                     PlanetManager.Instance.allPlanets[index].SetOwner(players[i]);
+                    PlanetManager.Instance.allPlanets[index].maxSkillCount = 2;
                 }
+                //设置护盾星球
+                SkillManager.Instance.AddSkill(shieldSkillBase.skillName,PlanetManager.Instance.allPlanets[12],null);
+                PlanetManager.Instance.allPlanets[12].needRingPoint = 300;
 
                
             }
@@ -433,6 +437,8 @@ public class FightingManager : MonoBehaviour
 
                         if (gameMode == GameMode.Normal)
                         {
+                            if (players.Find(x => x.uid == uid) != null)
+                                return;
                             for (int i = 0; i < PlanetManager.Instance.allPlanets.Count; i++)
                             {
                                 var planet = PlanetManager.Instance.allPlanets[i];
@@ -484,10 +490,19 @@ public class FightingManager : MonoBehaviour
         
     }
 
-    public void GameOver(Planet planet)
+    public void GameOver(Planet planet,GameMode newMode)
     {
         gameStatus = GameStatus.WaitingNewFighting;
-        BattleOverDialog.ShowDialog(15,planet.owner,planet.planetCommanders,StartNewBattle);
+        BattleOverDialog.ShowDialog(15,planet.owner,planet.planetCommanders,
+            ()=>
+            {
+                gameMode = newMode;
+                if (newMode == GameMode.BattleGround)
+                    maxPlayerCount = 24;
+                if (newMode == GameMode.Normal)
+                    maxPlayerCount = 6;
+                StartNewBattle();
+            });
     }
 }
 

@@ -522,7 +522,7 @@ GameObject:
   - component: {fileID: 6906968150599067337}
   - component: {fileID: 5017596302472760080}
   - component: {fileID: 2336772757228629959}
-  - component: {fileID: 6423543930791800167}
+  - component: {fileID: 6426670813268083192}
   m_Layer: 0
   m_Name: "\u957F\u5F13"
   m_TagString: Untagged
@@ -798,7 +798,7 @@ MonoBehaviour:
   pDef: 50
   mDef: 50
   gameEntity: {fileID: 0}
---- !u!114 &6423543930791800167
+--- !u!114 &6426670813268083192
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -807,7 +807,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5988401165588093825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a3c3005a8a5500429b18ebb03e3405b, type: 3}
+  m_Script: {fileID: 11500000, guid: d6d342bf737609c42b5b262486db9c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   props: {fileID: 0}
@@ -819,7 +819,7 @@ MonoBehaviour:
   showHpUI: 1
   hpUI: {fileID: 0}
   hpUIOffse: {x: 0, y: 10, z: 0}
-  hpUIScale: {x: 0.75, y: 1.25, z: 0}
+  hpUIScale: {x: 0.75, y: 1.25, z: 1}
   ownerPlanet: {fileID: 0}
   gameManager: {fileID: 0}
   battleUnitManager: {fileID: 0}
@@ -831,8 +831,7 @@ MonoBehaviour:
   defendingPlanet: {fileID: 0}
   isDefending: 0
   animator: {fileID: 0}
-  weapons:
-  - {fileID: 0}
+  weapons: []
   warPlaneType: 3
   setAttackerTarget: 1
 --- !u!1 &6143260178253523829

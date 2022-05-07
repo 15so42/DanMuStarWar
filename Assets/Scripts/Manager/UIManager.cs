@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
    [Header("计时面板")]
    public Transform gameTimerTextBg;
    public Text gameTimerText;
+
+   public Text mapVoteText;
    
    public void Init(GameManager gameManager)
    {
@@ -28,6 +30,8 @@ public class UIManager : MonoBehaviour
       gameTimerTextBg.gameObject.SetActive(false);
       StopAllCoroutines();
       Debug.Log("ResetUI待实现");
+      //隐藏投票UI
+      mapVoteText.text = "";
    }
 
    public void UpdateWaitingJoinUI(float time)
@@ -35,6 +39,10 @@ public class UIManager : MonoBehaviour
       waitingJoinUi.UpdateUI(time);
    }
 
+   public void UpdateMapVoteUi(int normalCounter,int bgCounter)
+   {
+      mapVoteText.text = "模式投票-混战/团战:" + normalCounter + "/" + bgCounter;
+   }
    
 
    public PlanetUI GetPlanetUiByPlayer(Player player)
