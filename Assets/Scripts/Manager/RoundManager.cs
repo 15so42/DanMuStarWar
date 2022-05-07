@@ -420,6 +420,18 @@ public class RoundManager
         var user = GetPlayerByUid(uid);
         var validUser = user != null;
         var planet = GetPlantByPlayerUid(uid);
+        
+        if (text.Equals("投票混战模式"))
+        {
+            MapVote(uid,GameMode.Normal);
+        }
+        
+        if (text.Equals("投票团战模式"))
+        {
+            MapVote(uid,GameMode.BattleGround);
+        }
+
+        
         if (!validUser || planet==null || user.die || planet.die)
         {
             //局外人或者已经淘汰
@@ -427,7 +439,7 @@ public class RoundManager
         }
         
         //重置玩家的上次发弹幕时间
-        if (fightingManager.gameMode == GameMode.BattleGround)
+        if (fightingManager.gameMode == GameMode.BattleGround || fightingManager.gameMode == GameMode.Normal)
         {
             PlanetCommander planetCommander = null;
             if(planet)
@@ -554,21 +566,12 @@ public class RoundManager
             ParseShowWhere(uid);
         }
 
-        if (text.Equals("投票混战模式"))
-        {
-            MapVote(uid,GameMode.Normal);
-        }
+       
         
-        if (text.Equals("投票团战模式"))
-        {
-            MapVote(uid,GameMode.BattleGround);
-        }
-
-        /*
-        if (text == "投降")
+        if (fightingManager.gameMode == GameMode.Normal && text == "投降")
         {
             ParseSurrender(uid, trim);
-        }*/
+        }
         
         
     }

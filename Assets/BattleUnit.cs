@@ -130,21 +130,22 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     public virtual GameEntity OverLapEnemy(bool onlyEnemyPlanet=true)
     {
         var colliders = Physics.OverlapSphere(transform.position, findEnemyDistance);
-        foreach (var collider in colliders)
-        {
-            var gameEntity = collider.GetComponent<GameEntity>();
+        //for (int i=0; i < colliders.Length;i++)
+        //{
+            var collider1 = colliders[Random.Range(0,colliders.Length)];
+            var gameEntity = collider1.GetComponent<GameEntity>();
             if (!gameEntity)//不是单位
-                continue;
+                return null;
 
             var gameEntityOwner = gameEntity.GetVictimOwner();
             if (gameEntity==null || gameEntityOwner == GetAttackerOwner()) //同星球
-                continue;
+                return null;
             if (gameEntity.die)//已经死亡
-                continue;
+                return null;
 
             var targetPlanet = gameEntityOwner as Planet;
             if(targetPlanet==null )//如果只对敌对星球寻敌，而敌对星球不存在，或找到的单位不属于，不算作敌人
-                continue;
+                return null;
             
             if (onlyEnemyPlanet && ownerPlanet.enemyPlanets.Contains(targetPlanet))
             {
@@ -159,7 +160,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
 
             
 
-        }
+        //}
 
         return null;
     }

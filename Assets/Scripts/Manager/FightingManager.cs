@@ -449,6 +449,7 @@ public class FightingManager : MonoBehaviour
                                     JoinGame(newPlayer);
                                     BiliUserInfoQuerier.Instance.Query(uid, newPlayer);
                                     planet.SetOwner(newPlayer);
+                                    planet.maxSkillCount = 2;
 
 
                                     break;
