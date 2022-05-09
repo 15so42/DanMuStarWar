@@ -21,6 +21,9 @@ public class HpCanvas : MonoBehaviour
     [Header("集结UI")] public GameObject gatherUiPfb;
     public Transform gatherUiParent;
 
+    [Header("McMarkUi")] public McPosMarkUi mcMarkUiPfb;
+    public Transform mcMarkUiParent;
+
     [Header("SkillUI")] public GameObject skillUIPfb;
     public Transform skillUIParent;
     public HpBar CreateHpBar(GameEntity gameEntity)
@@ -63,6 +66,11 @@ public class HpCanvas : MonoBehaviour
     {
         return  GameObject.Instantiate(gatherUiPfb,gatherUiParent).GetComponent<GatherUI>();
         
+    }
+
+    public McPosMarkUi CreateMcMarkUi()
+    {
+        return GameObject.Instantiate(mcMarkUiPfb,mcMarkUiParent).GetComponent<McPosMarkUi>();
     }
     
 }

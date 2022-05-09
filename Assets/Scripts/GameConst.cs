@@ -37,4 +37,5 @@ public  class GameConst
    public const string FX_BULLET_HIT = "BulletHitFx";
    public const string FX_SOLAR_STORM = "SolarStormFx";
    public const string FX_PACMAN_EXPLOSION = "ExplosionFx";
+   public const string FX_HEAL_TERRIORITORY = "HealTerritoryFx";
 }

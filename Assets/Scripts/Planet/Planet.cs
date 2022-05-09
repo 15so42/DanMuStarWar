@@ -380,6 +380,11 @@ public class Planet : GameEntity
         planetUi = GameManager.Instance.uiManager.CreatePlanetUI(this);
         planetUi.Init(this,fightingManager.gameMode);
 
+        if (fightingManager.gameMode == GameMode.MCWar)
+        {
+            transform.localScale=Vector3.one*0.5f;
+            planetUi.gameObject.SetActive(false);
+        }
 
         planetTerritory = GetComponent<PlanetTerritory>();
 

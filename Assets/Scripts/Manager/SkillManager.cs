@@ -153,6 +153,14 @@ public class SkillManager : MonoBehaviour
         
     }
 
+    public void AddSkillToObj(string skillName, SkillContainer container)
+    {
+        var skill = GetSkillInstance(skillName);
+        skill.Init(container);
+        
+        container.skills.Add(skill);
+    }
+
     public SkillBase GetSkillInstance(string skillName)
     {
         var skill = allSkill.Find(x => x.name == skillName);

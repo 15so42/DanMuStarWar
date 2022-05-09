@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cabc5af8e30494419d1d9f709a85dd3, type: 3}
+  m_Name: "Skill_\u6CBB\u7597\u9886\u57DF_LV1"
+  m_EditorClassIdentifier: 
+  usePoint: 0
+  removePoint: 1
+  desc: "\u6CBB\u7597\u5468\u56F4\u5355\u4F4D"
+  skillItemUi: {fileID: 0}
+  skillName: "Skill_\u6CBB\u7597\u9886\u57DF_LV1"
+  icon: {fileID: 0}
+  isBuff: 0
+  cd: 5
+  timer: 0
+  life: -1
+  autoLife: 1
+  stackAbleCount: 1
+  passive: 1
+  gameEntity: {fileID: 0}
+  ready: 1
+  finished: 0
+  skillContainer: {fileID: 0}
+  value: 1

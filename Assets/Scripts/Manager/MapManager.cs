@@ -106,7 +106,12 @@ public class MapManager : MonoBehaviour
         }
         else
         {
-            SpawnPlantesByMapPos(GameMode.BattleGround);
+            if(fightingManager.gameMode == GameMode.BattleGround)
+                SpawnPlantesByMapPos(GameMode.BattleGround);
+            else
+            {
+                SpawnPlantesByMapPos(GameMode.MCWar);
+            }
         }
         
         EventCenter.Broadcast(EnumEventType.OnPlanetsSpawned);

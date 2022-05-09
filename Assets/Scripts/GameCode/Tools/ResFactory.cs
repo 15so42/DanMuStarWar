@@ -1,5 +1,6 @@
 ﻿using BattleScene.Scripts;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace GameCode.Tools
 {
@@ -26,6 +27,9 @@ namespace GameCode.Tools
         public GameObject CreateBattleUnit(string name,Vector3 pos)
         {
             GameObject go = InsByResLoad(battleUnitPath, name);
+            var navMesh = go.GetComponent<NavMeshAgent>();
+            if (navMesh)
+                navMesh.enabled = false;
             go.transform.position = pos;
             return go;
         }

@@ -9,6 +9,7 @@ public class SkillContainer : MonoBehaviour
 
     
     public bool simpleSkillUI = false;
+    [Header("是否需要更新技能UI")] public bool noSkillUi = false;
     
     public GameEntity gameEntity;
     public void Init(GameEntity gameEntity)
@@ -115,7 +116,8 @@ public class SkillContainer : MonoBehaviour
                 else
                 {
                     skills[i].Update();
-                    skills[i].SetItemIndex(i);
+                    if(!noSkillUi)
+                        skills[i].SetItemIndex(i);
                 }
             }
             //删除无用技能，对技能重新排序

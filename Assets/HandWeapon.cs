@@ -38,7 +38,8 @@ public class HandWeapon : Weapon
         var victim = owner.chaseTarget.GetVictimEntity();
         victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,1));
         var navMeshMoveManager = victim.GetComponent<NavMeshMoveManager>();
-        navMeshMoveManager.PushBack(victim.transform.position-transform.position+Vector3.up*pushBackHeight,pushBackStrength);
+        if(navMeshMoveManager)
+            navMeshMoveManager.PushBack(victim.transform.position-transform.position+Vector3.up*pushBackHeight,pushBackStrength);
     }
 
     

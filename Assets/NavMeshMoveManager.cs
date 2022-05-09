@@ -17,6 +17,7 @@ public class NavMeshMoveManager : MoveManager
     private void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.enabled = true;
         rigidbody = GetComponent<Rigidbody>();
     }
 

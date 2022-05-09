@@ -79,6 +79,12 @@ public class UIManager : MonoBehaviour
       return gatherUi;
    }
 
+   public McPosMarkUi CreateMcPosMarkUi()
+   {
+      var ui = hpCanvas.CreateMcMarkUi();
+      return ui;
+   }
+
    public void OpenTimer()
    {
       gameTimerTextBg.gameObject.SetActive(true);

@@ -23,7 +23,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    [HideInInspector]public BattleUnitProps props;
    [HideInInspector]public SkillContainer skillContainer;
 
-   public GameEntityType gameEntityType = GameEntityType.BattleUnit;
+   //public GameEntityType gameEntityType = GameEntityType.BattleUnit;
    [Header("手动设置半径")] public float radius=5;
    [Header("呼叫友军来支援的距离")] public float supportDistance=30;
 

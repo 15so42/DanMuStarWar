@@ -451,30 +451,7 @@ public class RoundManager
         
         var trim=Regex.Replace(text.Trim(), "\\s+", "");//去除所有空格
         
-        if (text.StartsWith("宣战"))
-        {
-            ParseClaimWar(uid, trim);
-        }
-        
-        if (text.StartsWith("驻守"))
-        {
-            ParseDefend(uid, trim);
-        }
-        
-        if (text == "召回全部")
-        {
-            ParseRecallAll(uid);
-        }
-        
-        if (text.StartsWith("召回") )
-        {
-            ParseRecall(uid, trim);
-        }
-        
-        if (text.StartsWith("集结") )
-        {
-            ParseGather(uid, trim);
-        }
+       
         
         //string spattern= @"((m|M){1}\d{1}|((s|S){1}\d{1})|((y|Y){1}\d{1})|((h|H){1}\d{1}))+";
        
@@ -499,6 +476,32 @@ public class RoundManager
 
         if (fightingManager.gameMode == GameMode.Normal || fightingManager.gameMode==GameMode.BattleGround)
         {
+            
+            if (text.StartsWith("宣战"))
+            {
+                ParseClaimWar(uid, trim);
+            }
+        
+            if (text.StartsWith("驻守"))
+            {
+                ParseDefend(uid, trim);
+            }
+        
+            if (text == "召回全部")
+            {
+                ParseRecallAll(uid);
+            }
+        
+            if (text.StartsWith("召回") )
+            {
+                ParseRecall(uid, trim);
+            }
+        
+            if (text.StartsWith("集结") )
+            {
+                ParseGather(uid, trim);
+            }
+            
             if (text.StartsWith("使用技能")||text.StartsWith("s")||text.StartsWith("S"))
             {
                 ParseUseSkill(uid, trim);

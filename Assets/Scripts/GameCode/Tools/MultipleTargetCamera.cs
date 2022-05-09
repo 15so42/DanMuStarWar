@@ -33,7 +33,7 @@ public class MultipleTargetCamera : MonoBehaviour
 
     public void BeginAnim()
     {
-        transform.transform.DOMove(center+offset,3f).SetEase(Ease.OutQuart);
+        transform.DOMove(center+offset,3f).SetEase(Ease.OutQuart);
     }
 
     void OnPlanetCreated(Planet planet)

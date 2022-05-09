@@ -37,7 +37,9 @@ public abstract class SkillBase : ScriptableObject
     [HideInInspector]public GameEntity gameEntity;
     [HideInInspector]public bool ready = true;//主动节能是否准备完成
     [HideInInspector]public bool finished = false;//技能是否完成,SkillContainer自动清除已经完成的技能和buff
-    
+
+    [Header("亦可以把技能加给单独的物体")] public SkillContainer skillContainer;
+        
     //事件
     public Action onFinished;
     public Action<int> onLifeChangedAction;
@@ -46,6 +48,13 @@ public abstract class SkillBase : ScriptableObject
         timer = cd;
         this.gameEntity = gameEntity;
         this.createCommander = planetCommander;
+        onLifeChangedAction += OnLifeChanged;
+    }
+
+    public virtual void Init(SkillContainer skillContainer)
+    {
+        timer = cd;
+        this.skillContainer = skillContainer;
         onLifeChangedAction += OnLifeChanged;
     }
 

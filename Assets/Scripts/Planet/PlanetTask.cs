@@ -88,6 +88,7 @@ public class PlanetTask
                
                go.name = go.name + planet.name;
                InitBattleUnit(go.GetComponent<BattleUnit>(),planetCommander);
+               
             }
 
             if (type == "Bullet")
