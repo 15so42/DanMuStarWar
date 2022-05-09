@@ -23,6 +23,8 @@ public class Weapon : MonoBehaviour
     [Header("伤害配置")] public AttackType attackType;
     
     public int attackValue = 1;
+
+    [Header("可通过防御点增加攻击距离")] public bool addAtkDistanceByDP=false;
    
     public void Init(BattleUnit owner)
     {

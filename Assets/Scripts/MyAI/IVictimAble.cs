@@ -10,6 +10,8 @@ public interface IVictimAble
     GameEntity GetVictimOwner();
     GameEntity GetVictimEntity();
 
+    GameObject GetGameObject();
+
     void OnAttacked(AttackInfo attackInfo);
 
 }

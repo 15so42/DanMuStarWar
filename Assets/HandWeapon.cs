@@ -2,23 +2,32 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [Serializable]
 public class HandWeapon : Weapon
 {
     private Transform root;
     [HideInInspector] public Animator animator;
+
+    //public int stoppingDistance=5;
+
     
+
     [Header("击飞高度和力度")]
     public int pushBackHeight=4;
     public int pushBackStrength=1;
-    private void Start()
+    public virtual void Start()
     {
         root = transform.root;
         animator = root.GetComponent<BattleUnit>().animator;
         if(animator==null)
             Debug.Log(name+"需要手动配置");
+        (owner as Steve).SetAttackDistance(attackDistance);
+        //root.GetComponent<NavMeshAgent>().stoppingDistance = stoppingDistance;
     }
+    
+    
 
     public override bool FireCheck()
     {

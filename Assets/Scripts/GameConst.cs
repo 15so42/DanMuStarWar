@@ -28,6 +28,7 @@ public  class GameConst
    //子弹
    public const string BULLET_NORMAL = "Bullet";
    public const string BULLET_SOLAR_STORM = "SolarStormBullet";
+   public const string BULLET_ARROW = "ArrowBullet";
    
    //BattleUnit
    public const string BATTLE_UNIT_LOOTER = "劫掠者";

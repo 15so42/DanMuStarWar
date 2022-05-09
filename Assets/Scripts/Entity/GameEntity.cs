@@ -78,7 +78,12 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
          props.shield = props.maxShield;
       onHpChanged.Invoke(props.hp,props.maxHp,props.shield,props.maxShield);
    }
-   
+
+   public GameObject GetGameObject()
+   {
+      return gameObject;
+   }
+
    public virtual void OnAttacked(AttackInfo attackInfo)
    {
       var hpAndShield = props.OnAttacked(attackInfo);

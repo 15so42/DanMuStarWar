@@ -7,6 +7,8 @@ using UnityEngine.Rendering;
 
 public class Steve : WarPlane
 {
+    public float attackDistance;
+    
     public int ownerPosIndex;
 
     public Vector3 targetMcPos = Vector3.zero;
@@ -37,10 +39,38 @@ public class Steve : WarPlane
         CustomEvent.Trigger(gameObject, "OnDestinationSet");
     }
 
+   
     public bool NearTargetPos()
     {
         float distance = Vector3.Distance(transform.position, moveManager.tmpTarget);
         return distance < 1f;
+    }
+
+    ///
+    /// 朝向敌人
+    ///
+    public void RotateToChaseTarget()
+    {
+        var targetDir = chaseTarget.GetVictimEntity().transform.position - transform.position;
+        targetDir.y = 0;
+        transform.forward=Vector3.Lerp(transform.forward,targetDir,2 * Time.deltaTime);
+    }
+    
+    
+    /// <summary>
+    /// 装备武器或者更换武器时调用,仅用于设置状态机相关判定数值，
+    /// </summary>
+    public void SetAttackDistance(float value)
+    {
+        this.attackDistance = value;
+    }
+
+    public bool IsInAttackRange()
+    {
+        float distance = Vector3.Distance(chaseTarget.GetVictimEntity().transform.position, transform.position);
+        if (distance < attackDistance)
+            return true;
+        return false;
     }
 
     public override IVictimAble EnemyCheck(Collider collider)
@@ -72,6 +102,39 @@ public class Steve : WarPlane
     private void Update()
     {
         //throw new NotImplementedException();
+    }
+
+    //进入防御点位后，武器的攻击距离增加
+    public void EnterDefendState(int value)
+    {
+        float minDistance = 10000;
+        foreach (var w in weapons)
+        {
+            if (w.addAtkDistanceByDP)
+            {
+                w.attackDistance += value;
+            }
+            if (w.attackDistance < minDistance)
+                minDistance = w.attackDistance;
+            
+        }
+        SetAttackDistance(minDistance);
+    }
+
+    public void ExitDefendState(int value)
+    {
+        float minDistance = 10000;
+        foreach (var w in weapons)
+        {
+            if (w.addAtkDistanceByDP)
+            {
+                w.attackDistance -= value;
+            }
+            if (w.attackDistance < minDistance)
+                minDistance = w.attackDistance;
+                
+            SetAttackDistance(minDistance);
+        }
     }
     
 
