@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: MCWar Map Pos Data
   m_EditorClassIdentifier: 
   posData:
-  - {x: -115.05, y: 32, z: 6.23}
-  - {x: 116.02, y: 32, z: -3.21}
+  - {x: -92, y: 32, z: 6.23}
+  - {x: 61, y: 32, z: -3.21}

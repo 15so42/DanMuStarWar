@@ -17,8 +17,8 @@ public class DebugDialog : Dialog
     public Button rightArrow;
     public Text playerName;
 
-    public string initName = "Player0";
-    public int initUid = 336223980;
+    public string initName = "云空";
+    public int initUid = 23204263;
     public int playerIndex = 0;
     
 

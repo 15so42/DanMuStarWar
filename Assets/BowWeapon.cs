@@ -7,8 +7,12 @@ using UnityEngine.AI;
 public class BowWeapon : HandWeapon
 {
     public Transform shootPoint;
+    [Header("弓箭附魔力量等级")]
     public int bowStrength;
-    
+
+    [Header("弓箭向上随机提前量")]
+    public int minUpRate;
+    public int maxUpRate;
     
     public override void Fire()
     {
@@ -22,7 +26,17 @@ public class BowWeapon : HandWeapon
         GameObject arrowBullet =
             ResFactory.Instance.CreateBullet(GameConst.BULLET_ARROW, shootPoint.transform.position);
         var arrowComp = arrowBullet.GetComponent<ArrowBullet>();
-        arrowComp.Init(owner,owner.chaseTarget.GetVictimEntity().transform.position-transform.position ,1);
+        var dir = Vector3.forward;
+
+        var targetPos = owner.chaseTarget.GetVictimEntity().transform.position +
+                        Vector3.up * UnityEngine.Random.Range(0, 10);
+
+        dir = targetPos - transform.position;
+        
+        Debug.DrawRay(transform.position,dir);
+        arrowComp.Init(owner, dir,1);
     }
+    
+    
 
 }

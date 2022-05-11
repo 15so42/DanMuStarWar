@@ -22,6 +22,9 @@ public class RoundManager
     private int normalModeCounter = 0;
     private int battleGroundModeCounter = 0;
     public List<int> voted=new List<int>();//只能投票一次
+    
+    //游戏时间
+    public float elapsedTime=0;
     public void Init(GameManager gameManager, List<Player> players)
     {
         this.gameManager = gameManager;
@@ -37,6 +40,7 @@ public class RoundManager
     public void Update()
     {
         timer += Time.deltaTime;
+        elapsedTime += Time.deltaTime;
         if (timer >180)
         {
             GameEnvEventManager.Instance.PlayRandomEvent();
@@ -564,10 +568,7 @@ public class RoundManager
             ParseShowWhere(uid);
         }
         
-        if (text.Equals("我在哪"))
-        {
-            ParseShowWhere(uid);
-        }
+       
 
        
         
@@ -610,7 +611,30 @@ public class RoundManager
     {
         if (giftName == "小花花")
         {
-            ParseCommand(uid, "c",true);
+            if (fightingManager.gameMode == GameMode.MCWar)
+            {
+                var planet = GetPlantByPlayerUid(uid);
+                if(planet==null)
+                    return;
+                var commander = planet.GetCommanderByUid(uid);
+                if(commander==null)
+                    return;
+                
+                var battleUnits = BattleUnitManager.Instance.allBattleUnits;
+                for (int i = 0; i < battleUnits.Count; i++)
+                {
+                    if (battleUnits[i].planetCommander == commander)
+                    {
+                        Camera.main.GetComponent<MCCamera>().SetTarget(battleUnits[i]);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                ParseCommand(uid, "c",true);
+            }
+            
         }
         if (giftName == "打call")
         {
@@ -645,7 +669,15 @@ public class RoundManager
     {
         while (true)
         {
-            yield return new WaitForSeconds(10);
+            if (fightingManager.gameMode == GameMode.MCWar)
+            {
+                yield return null;
+            }
+            else
+            {
+                yield return new WaitForSeconds(10);
+            }
+            
             if (giftQueue.Count > 0)
             {
                 var giftMsg = giftQueue.Peek();

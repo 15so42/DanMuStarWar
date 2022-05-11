@@ -26,7 +26,7 @@ public class Weapon : MonoBehaviour
 
     [Header("可通过防御点增加攻击距离")] public bool addAtkDistanceByDP=false;
    
-    public void Init(BattleUnit owner)
+    public virtual void Init(BattleUnit owner)
     {
         this.owner = owner;
 
@@ -47,7 +47,7 @@ public class Weapon : MonoBehaviour
 
     public void Attack()
     {
-        if (ready)
+        if (ready && gameObject.activeSelf)
         {
             if (FireCheck())
             {
@@ -57,6 +57,11 @@ public class Weapon : MonoBehaviour
             }
             
         }
+    }
+
+    public  virtual Vector3 GetScatterDir(Vector3 dir)
+    {
+        return Quaternion.Euler(Random.Range(-scatteringAngel,scatteringAngel),Random.Range(-scatteringAngel,scatteringAngel),0)*dir;
     }
     public virtual void Fire()
     {

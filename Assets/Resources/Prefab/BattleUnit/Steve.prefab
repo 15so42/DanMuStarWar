@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 826501388}
   m_LocalRotation: {x: 0.6938787, y: -0.13613357, z: 0.13613357, w: -0.6938787}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.066, y: 0.038, z: -0.003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 543450651606029566}
@@ -46,7 +46,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1012542142
 Transform:
   m_ObjectHideFlags: 0
@@ -76,8 +76,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDistance: 25
   owner: {fileID: 0}
-  attackSpeed: 1
-  scatteringAngel: 5
+  attackSpeed: 0.5
+  scatteringAngel: 0
   rayDistance: 20
   attackType: 0
   attackValue: 1
@@ -87,6 +87,8 @@ MonoBehaviour:
   pushBackStrength: 1
   shootPoint: {fileID: 826501389}
   bowStrength: 1
+  minUpRate: -20
+  maxUpRate: -60
 --- !u!1 &1589681203
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,6 +839,14 @@ MonoBehaviour:
   ownerPosIndex: 0
   targetMcPos: {x: 0, y: 0, z: 0}
   meshRenderers: []
+  mcWeapons:
+  - {fileID: 964339143915854603}
+  - {fileID: 6415016213855261052}
+  - {fileID: 4909028053281643057}
+  - {fileID: 1722862563987161886}
+  - {fileID: 4779852535478908255}
+  - {fileID: 1012542141}
+  - {fileID: 6804188985614052832}
 --- !u!195 &1629974822948850975
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1048,8 +1058,8 @@ MonoBehaviour:
   attackValue: 1
   addAtkDistanceByDP: 0
   animator: {fileID: 0}
-  pushBackHeight: 8
-  pushBackStrength: 3
+  pushBackHeight: 5
+  pushBackStrength: 1
 --- !u!1 &6859617013637145693
 GameObject:
   m_ObjectHideFlags: 0
@@ -1200,10 +1210,39 @@ PrefabInstance:
     - target: {fileID: 4779852535033138951, guid: 1a24b379b182228468c93691d3f971d5,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a24b379b182228468c93691d3f971d5, type: 3}
+--- !u!1 &4779852535478908255 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4779852535033138951, guid: 1a24b379b182228468c93691d3f971d5,
+    type: 3}
+  m_PrefabInstance: {fileID: 715061848}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5795266756217310001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4779852535478908255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fbae9b11d3bbfe4f9a96df83fd57a5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDistance: 3
+  owner: {fileID: 0}
+  attackSpeed: 1
+  scatteringAngel: 5
+  rayDistance: 20
+  attackType: 0
+  attackValue: 4
+  addAtkDistanceByDP: 0
+  animator: {fileID: 0}
+  pushBackHeight: 5
+  pushBackStrength: 1
 --- !u!1001 &909279941
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1219,7 +1258,7 @@ PrefabInstance:
     - target: {fileID: 1722862563218457051, guid: e3ec49287c34d1942a00ced06986536a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2075384895173951786, guid: e3ec49287c34d1942a00ced06986536a,
         type: 3}
@@ -1293,6 +1332,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3ec49287c34d1942a00ced06986536a, type: 3}
+--- !u!1 &1722862563987161886 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1722862563218457051, guid: e3ec49287c34d1942a00ced06986536a,
+    type: 3}
+  m_PrefabInstance: {fileID: 909279941}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5936022132820127826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722862563987161886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fbae9b11d3bbfe4f9a96df83fd57a5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDistance: 3
+  owner: {fileID: 0}
+  attackSpeed: 1
+  scatteringAngel: 5
+  rayDistance: 20
+  attackType: 0
+  attackValue: 4
+  addAtkDistanceByDP: 0
+  animator: {fileID: 0}
+  pushBackHeight: 5
+  pushBackStrength: 1
 --- !u!1001 &1378386973
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1308,7 +1376,7 @@ PrefabInstance:
     - target: {fileID: 964339144756256534, guid: c6978f8e98652244a8eae29e7509e959,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3999573799677141985, guid: c6978f8e98652244a8eae29e7509e959,
         type: 3}
@@ -1382,6 +1450,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6978f8e98652244a8eae29e7509e959, type: 3}
+--- !u!1 &964339143915854603 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 964339144756256534, guid: c6978f8e98652244a8eae29e7509e959,
+    type: 3}
+  m_PrefabInstance: {fileID: 1378386973}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5196666267320263148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964339143915854603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fbae9b11d3bbfe4f9a96df83fd57a5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDistance: 3
+  owner: {fileID: 0}
+  attackSpeed: 1
+  scatteringAngel: 5
+  rayDistance: 20
+  attackType: 0
+  attackValue: 7
+  addAtkDistanceByDP: 0
+  animator: {fileID: 0}
+  pushBackHeight: 5
+  pushBackStrength: 1
 --- !u!1001 &1692572460
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1467,10 +1564,39 @@ PrefabInstance:
     - target: {fileID: 4909028052683784477, guid: 28b31ed3a0b88924197c9869a98a098e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28b31ed3a0b88924197c9869a98a098e, type: 3}
+--- !u!1 &4909028053281643057 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4909028052683784477, guid: 28b31ed3a0b88924197c9869a98a098e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1692572460}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4143462294295683485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4909028053281643057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fbae9b11d3bbfe4f9a96df83fd57a5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDistance: 3
+  owner: {fileID: 0}
+  attackSpeed: 1
+  scatteringAngel: 5
+  rayDistance: 20
+  attackType: 0
+  attackValue: 5
+  addAtkDistanceByDP: 0
+  animator: {fileID: 0}
+  pushBackHeight: 5
+  pushBackStrength: 1
 --- !u!1001 &1710311627
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1556,10 +1682,39 @@ PrefabInstance:
     - target: {fileID: 6415016215391476151, guid: 9951c0e55057aca47a1a39b8bad5e3cf,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9951c0e55057aca47a1a39b8bad5e3cf, type: 3}
+--- !u!1 &6415016213855261052 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6415016215391476151, guid: 9951c0e55057aca47a1a39b8bad5e3cf,
+    type: 3}
+  m_PrefabInstance: {fileID: 1710311627}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7803108549210900515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6415016213855261052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fbae9b11d3bbfe4f9a96df83fd57a5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDistance: 3
+  owner: {fileID: 0}
+  attackSpeed: 1
+  scatteringAngel: 5
+  rayDistance: 20
+  attackType: 0
+  attackValue: 6
+  addAtkDistanceByDP: 0
+  animator: {fileID: 0}
+  pushBackHeight: 5
+  pushBackStrength: 1
 --- !u!1001 &1916061556
 PrefabInstance:
   m_ObjectHideFlags: 0

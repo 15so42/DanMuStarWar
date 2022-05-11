@@ -16,7 +16,10 @@ public class Steve : WarPlane
     private FightingManager fightingManager;
 
     public SkinnedMeshRenderer[] meshRenderers;
-
+    
+    [Header("随机武器列表检测")]
+    public List<GameObject> mcWeapons=new List<GameObject>();
+    
     protected override void Start()
     {
         base.Start();
@@ -24,8 +27,23 @@ public class Steve : WarPlane
         fightingManager = GameManager.Instance.fightingManager;
         moveManager = GetComponent<MoveManager>();
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+        RandomWeapon();
+        hpUI.SetNameText(planetCommander.player.userName);
     }
 
+    public void RandomWeapon()
+    {
+       
+        foreach (var weapon in weapons)
+        {
+            weapon.gameObject.SetActive(false);
+        }
+        var liveWeapon=weapons[UnityEngine.Random.Range(0,weapons.Count)];
+        
+        liveWeapon.gameObject.SetActive(true);
+        liveWeapon.Init(this);
+    }
+    
     public Vector3 GetPos(int index)
     {
         return fightingManager.mcPosManager.GetPosByIndex(index);
@@ -110,6 +128,8 @@ public class Steve : WarPlane
         float minDistance = 10000;
         foreach (var w in weapons)
         {
+            if(w.gameObject.activeSelf==false)
+                continue;
             if (w.addAtkDistanceByDP)
             {
                 w.attackDistance += value;
@@ -126,6 +146,8 @@ public class Steve : WarPlane
         float minDistance = 10000;
         foreach (var w in weapons)
         {
+            if(w.gameObject.activeSelf==false)
+                continue;
             if (w.addAtkDistanceByDP)
             {
                 w.attackDistance -= value;
@@ -145,6 +167,10 @@ public class Steve : WarPlane
     public override void OnAttacked(AttackInfo attackInfo)
     {
         base.OnAttacked(attackInfo);
+        
+        if(attackInfo.attackType==AttackType.Heal)
+            return;
+        
         StopAllCoroutines();
         if (gameObject.activeSelf)
         {
@@ -169,5 +195,11 @@ public class Steve : WarPlane
         {
             meshRenderers[i].material.SetColor("_EmissionColor",new Color(0,0,0));
         }
+    }
+
+    public override void Die()
+    {
+        EventCenter.Broadcast(EnumEventType.OnSteveDied,this);
+        base.Die();
     }
 }

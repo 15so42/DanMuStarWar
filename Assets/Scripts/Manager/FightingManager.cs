@@ -252,16 +252,26 @@ public class FightingManager : MonoBehaviour
                 
                 for (int i = 0; i < players.Count; i++)
                 {
+                    PlanetCommander commander = null;
+                    if (gameMode == GameMode.MCWar)
+                    {
+                        commander=new SteveCommander(players[i].uid,players[i],colorTable.colors[i]);
+                    }
+                    else
+                    {
+                        commander=new PlanetCommander(players[i].uid,players[i],colorTable.colors[i]);
+                    }
+                    
                     //var index = ((planetNum / playersCount) * i) % planetNum;
                     if (i % 2 == 0)
                     {
-                        PlanetManager.Instance.allPlanets[firstPlanetIndex].AddCommander(new PlanetCommander(players[i].uid,players[i],colorTable.colors[i]),0);
+                        PlanetManager.Instance.allPlanets[firstPlanetIndex].AddCommander(commander,0);
                         if (i == 0)
                             PlanetManager.Instance.allPlanets[firstPlanetIndex].SetOwner(players[i]);
                     }
                     else
                     {
-                        PlanetManager.Instance.allPlanets[lastPlanetIndex].AddCommander(new PlanetCommander(players[i].uid,players[i],colorTable.colors[i]),1); 
+                        PlanetManager.Instance.allPlanets[lastPlanetIndex].AddCommander(commander,1); 
                         if(i==1)
                             PlanetManager.Instance.allPlanets[lastPlanetIndex].SetOwner(players[i]);
                     }
@@ -464,15 +474,25 @@ public class FightingManager : MonoBehaviour
                             {
                                 JoinGame(newPlayer1);
                                 BiliUserInfoQuerier.Instance.Query(uid,newPlayer1);
+                                PlanetCommander commander = null;
+                                if (gameMode == GameMode.MCWar)
+                                {
+                                    commander=new SteveCommander(newPlayer1.uid,newPlayer1,colorTable.colors[players.Count]);
+                                }
+                                else
+                                {
+                                    commander = new PlanetCommander(newPlayer1.uid, newPlayer1,
+                                        colorTable.colors[players.Count]);
+                                }
                                 if (players.Count % 2 == 1)
                                 {
                                     //Debug.Log("加入后玩家数："+players.Count+"去0星球");
-                                    PlanetManager.Instance.allPlanets[firstPlanetIndex].AddCommander(new PlanetCommander(newPlayer1.uid,newPlayer1,colorTable.colors[players.Count]),0);
+                                    PlanetManager.Instance.allPlanets[firstPlanetIndex].AddCommander(commander,0);
                                 }
                                 else
                                 {
                                     //Debug.Log("加入后玩家数："+players.Count+"去最后星球");
-                                    PlanetManager.Instance.allPlanets[lastPlanetIndex].AddCommander(new PlanetCommander(newPlayer1.uid,newPlayer1,colorTable.colors[players.Count]),1);
+                                    PlanetManager.Instance.allPlanets[lastPlanetIndex].AddCommander(commander,1);
                                 }
                             }
                             

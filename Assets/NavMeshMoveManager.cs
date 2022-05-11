@@ -44,16 +44,29 @@ public class NavMeshMoveManager : MoveManager
         
     }
 
+    //存储上一次的重力大小，如果当前velocity.y
+    private float lastVelocityY;
     IEnumerator PushBackC(Vector3 dir, float value)
     {
         rigidbody.velocity=dir * value;
+        lastVelocityY = rigidbody.velocity.y;
         navMeshAgent.updatePosition = false;
         rigidbody.isKinematic = false;
 
         while (true)
         {
             yield return new WaitForFixedUpdate();
-            if (rigidbody.velocity.y < onGroundThreshold)
+            // RaycastHit raycastHit=new RaycastHit();
+            // if (Physics.Raycast(transform.position, -1 * Vector3.up, out raycastHit, 0.2f))
+            // {
+            //     navMeshAgent.nextPosition = transform.position;
+            //     navMeshAgent.updatePosition = true;
+            //     rigidbody.isKinematic = true;
+            //     Debug.Log("落地");
+            //     yield break;
+            // }
+            
+            if (lastVelocityY<0 && Mathf.Abs(rigidbody.velocity.y) < onGroundThreshold)
             {
                 navMeshAgent.nextPosition = transform.position;
                 navMeshAgent.updatePosition = true;
@@ -61,6 +74,8 @@ public class NavMeshMoveManager : MoveManager
                 Debug.Log("落地");
                 yield break;
             }
+
+            lastVelocityY = rigidbody.velocity.y;
         }
         
         

@@ -13,11 +13,14 @@ public class PlanetCommander
     public CommanderUI commanderUi;
     public Color color;
 
+    [Header("所属星球")] public Planet ownerPlanet;
+
     public PlanetCommander (int uid, Player player)
     {
         this.uid = uid;
         this.player = player;
         point = 8;
+        
     }
     
     public PlanetCommander (int uid, Player player,Color color)
@@ -26,6 +29,12 @@ public class PlanetCommander
         this.player = player;
         point = 8;
         this.color = color;
+        
+    }
+
+    public virtual void Init(Planet ownerPlanet)
+    {
+        this.ownerPlanet = ownerPlanet;
     }
 
     public Action<float> onPointChanged;

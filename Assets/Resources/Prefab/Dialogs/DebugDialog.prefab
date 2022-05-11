@@ -420,7 +420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -923,8 +923,8 @@ MonoBehaviour:
   leftArrow: {fileID: 2434964826823831993}
   rightArrow: {fileID: 4784464874964068851}
   playerName: {fileID: 3586896096876616571}
-  initName: Player0
-  initUid: 336223980
+  initName: "\u4E91\u7A7A"
+  initUid: 23204263
   playerIndex: 0
 --- !u!1 &4426920682529650593
 GameObject:

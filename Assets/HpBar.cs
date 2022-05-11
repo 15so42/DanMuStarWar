@@ -18,6 +18,7 @@ public class HpBar : MonoBehaviour
 
     public Text tipText;
 
+    [Header("显示名字（Mc模式)")] public Text nameText;
     public UnityTimer.Timer logTimer;
     private Camera mainCamera;
     private void Awake()
@@ -35,6 +36,11 @@ public class HpBar : MonoBehaviour
     {
         owner.onHpChanged =null;
         
+    }
+
+    public void SetNameText(string name)
+    {
+        nameText.text = name + "";
     }
 
     void UpdateHp(int hp,int maxHP,int shield,int maxShield)

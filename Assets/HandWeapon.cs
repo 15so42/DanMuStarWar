@@ -17,17 +17,18 @@ public class HandWeapon : Weapon
     [Header("击飞高度和力度")]
     public int pushBackHeight=4;
     public int pushBackStrength=1;
-    public virtual void Start()
+    
+
+    public override void Init(BattleUnit owner)
     {
+        base.Init(owner);
         root = transform.root;
         animator = root.GetComponent<BattleUnit>().animator;
         if(animator==null)
             Debug.Log(name+"需要手动配置");
         (owner as Steve).SetAttackDistance(attackDistance);
-        //root.GetComponent<NavMeshAgent>().stoppingDistance = stoppingDistance;
     }
-    
-    
+
 
     public override bool FireCheck()
     {
@@ -44,11 +45,17 @@ public class HandWeapon : Weapon
     public override void Fire()
     {
         animator.SetTrigger("Attack");
+        Invoke(nameof(Damage),0.3f);
+    }
+
+    public void Damage()
+    {
         var victim = owner.chaseTarget.GetVictimEntity();
-        victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,1));
+        victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,attackValue));
         var navMeshMoveManager = victim.GetComponent<NavMeshMoveManager>();
         if(navMeshMoveManager)
             navMeshMoveManager.PushBack(victim.transform.position-transform.position+Vector3.up*pushBackHeight,pushBackStrength);
+
     }
 
     

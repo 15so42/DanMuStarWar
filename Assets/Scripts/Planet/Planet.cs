@@ -569,7 +569,15 @@ public class Planet : GameEntity
         if (planetCommanders.Find(x => x.uid == player.uid) == null)
         {
             //planetCommanders.Add();
-            AddCommander(new PlanetCommander(player.uid,player,planetColor),1);
+            if (fightingManager.gameMode == GameMode.MCWar)
+            {
+                AddCommander(new SteveCommander(player.uid,player,planetColor),1);
+            }
+            else
+            {
+                AddCommander(new PlanetCommander(player.uid,player,planetColor),1);
+            }
+            
         }
         else
         {
@@ -608,6 +616,7 @@ public class Planet : GameEntity
             commanderGoContainer.AddComponent<RotateSelf>().rotateDir=Vector3.up;
         }
         
+        planetCommander.Init(this);
         planetCommanders.Add(planetCommander);
         var mark=GameObject.Instantiate(commanderPfb);
         Vector3 worldPos = transform.position;
@@ -625,7 +634,16 @@ public class Planet : GameEntity
 
         mark.transform.position = worldPos;
         mark.transform.SetParent(commanderGoContainer);
-        var commanderUi = GameManager.Instance.uiManager.CreateCommanderUi(mark,uiArea);
+        CommanderUI commanderUi = null;
+        if (fightingManager.gameMode == GameMode.MCWar)
+        {
+            commanderUi=GameManager.Instance.uiManager.CreateSteveCommanderUi(mark,uiArea);
+        }
+        else
+        {
+            commanderUi=GameManager.Instance.uiManager.CreateCommanderUi(mark,uiArea);
+        }
+        
         commanderUi.Init(mark,planetCommander);
         commanderUi.SetColor(planetCommander.color);
         planetCommander.commanderUi = commanderUi;
@@ -642,9 +660,12 @@ public class Planet : GameEntity
             
             
         }
-        if(fightingManager.gameMode==GameMode.MCWar)
-            AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_STEVE,1),planetCommander));
 
+        if (fightingManager.gameMode == GameMode.MCWar)
+        {
+            (planetCommander as SteveCommander).CreateSteve();
+        }
+            
     }
 
     private void OnDrawGizmos()
@@ -684,7 +705,7 @@ public class Planet : GameEntity
 
         ///分配玩家点数
         commanderPointTimer += Time.deltaTime;
-        if (fightingManager.gameMode == GameMode.BattleGround || fightingManager.gameMode==GameMode.Normal)
+        if (true)
         {
             if (commanderPointTimer > commanderPointCd)
             {

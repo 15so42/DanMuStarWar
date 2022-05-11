@@ -22,6 +22,8 @@ public class GameEnvEventManager : MonoBehaviour
 
     public void PlayRandomEvent()
     {
+        if(events.Count==0)
+            return;
         events[UnityEngine.Random.Range(0, events.Count)].Run(level);
         level++;
     }

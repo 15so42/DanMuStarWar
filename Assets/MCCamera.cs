@@ -14,9 +14,8 @@ public class MCCamera : MonoBehaviour
     private GameEntity target;
     
     public Vector3 offset;
-    public float speed=1;
-    
-    List<BattleUnit> battleUnits=new List<BattleUnit>();
+
+    public Vector3 initPos;
 
     [Header("更换目标时间")] public int minChangeCd=3;
     public int maxChangeCd=7;
@@ -28,48 +27,36 @@ public class MCCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //camera = GetComponent<Camera>();
-        battleUnits = BattleUnitManager.Instance.allBattleUnits;
-
+        initPos = transform.position;
+        timer = 0;
         tmpCd = UnityEngine.Random.Range(minChangeCd, maxChangeCd);
+    }
+
+    public void SetTarget(GameEntity gameEntity)
+    {
+        timer = 0;
+        target = gameEntity;
     }
 
     Vector3 curVelocity;
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer > tmpCd || target && target.die)
+        Vector3 targetPos=initPos;
+        if (target)
         {
-            if(battleUnits.Count==0)
-                return;
-            target = battleUnits[UnityEngine.Random.Range(0, battleUnits.Count)];
-            
-            // if(target==null || target.die)
-            //     return;
-            // Vector3 targetPos=target.transform.position + offset;
-            //
-            //
-            // moveSequence?.Kill();
-            // moveSequence = transform.DOMove(targetPos, 2f).SetEase(Ease.InOutCubic);
-            
-            timer = 0;
-            tmpCd = UnityEngine.Random.Range(minChangeCd, maxChangeCd);
+            timer += Time.deltaTime;
+            targetPos=target.transform.position + offset;
+            if (timer > tmpCd)
+            {
+                timer = 0;
+                tmpCd = UnityEngine.Random.Range(minChangeCd, maxChangeCd);
+                target = null;
+                return;//进入下一帧
+            }
         }
 
-        if(target==null || target.die)
-            return;
-        Vector3 targetPos=target.transform.position + offset;
-        var distance = targetPos.magnitude;
-        Vector3 dir = (targetPos - transform.position).normalized;
-        if (distance > 0)
-        {
-            //transform.Translate(dir * (speed * Time.deltaTime));
-            
-            transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref curVelocity, 3);
-        }
-        
-        //transform.position = transform.position + dir * (speed * Time.deltaTime); 
+        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref curVelocity, 3);
         
     }
 }
