@@ -12,6 +12,11 @@ public class HpBar : MonoBehaviour
     public Image hpFill;
     public Image shieldFill;
     public Vector3 offset=Vector3.up;
+    //血条刻度线
+    [Header("血条刻度线")]
+    public Transform hpTile;
+
+    public Transform tileLine;
 
     public Transform skillUiGroup;
     private GameEntity owner;
@@ -25,6 +30,7 @@ public class HpBar : MonoBehaviour
     {
         mainCamera=Camera.main;
         tipText.gameObject.SetActive(false);
+        hpTile.gameObject.SetActive(false);
     }
 
     public void OnHpChanged(int hp,int maxHP,int shield,int maxShield)
@@ -38,6 +44,11 @@ public class HpBar : MonoBehaviour
         
     }
 
+    public void OpenHPTile()
+    {
+        hpTile.gameObject.SetActive(true);
+        UpdateHp(owner.props.hp,owner.props.maxHp,owner.props.shield,owner.props.maxShield);
+    }
     public void SetNameText(string name)
     {
         nameText.text = name + "";
@@ -59,7 +70,17 @@ public class HpBar : MonoBehaviour
         hpFill.fillAmount=hpFill.fillAmount = (float)hp / maxHP;
         shieldFill.fillAmount = (float) shield / maxHP;
 
-
+        //hpTile.pixelsPerUnitMultiplier =maxHP/160f;
+        var targetCount = maxHP / 5;
+        var childCount = hpTile.childCount;
+        var sub = targetCount - childCount;
+        if (sub > 0)
+        {
+            for (int i = 0; i < sub; i++)
+            {
+                GameObject.Instantiate(tileLine, hpTile);
+            }
+        }
     }
 
     void UpDatePos()

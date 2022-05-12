@@ -33,6 +33,13 @@ public class BattleUnitProps : MonoBehaviour
 
         
     }
+
+    public void AddMaxHp(int value)
+    {
+        maxHp += value;
+        hp += value;
+    }
+    
     public HpAndShield OnAttacked(AttackInfo attackInfo)
     {
         var damage = 1;

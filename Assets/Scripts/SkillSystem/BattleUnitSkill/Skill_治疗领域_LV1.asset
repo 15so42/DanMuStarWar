@@ -29,4 +29,4 @@ MonoBehaviour:
   ready: 1
   finished: 0
   skillContainer: {fileID: 0}
-  value: 1
+  value: 3

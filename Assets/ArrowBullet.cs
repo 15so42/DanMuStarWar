@@ -31,7 +31,7 @@ public class ArrowBullet : MonoBehaviour
         victim =victim.GetVictimEntity();
         if(victim==this.owner || attacked.Contains(victim))
             return;
-        victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,1*strength));
+        victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,2*strength));
         var navMeshMoveManager = victim.GetGameObject().GetComponent<NavMeshMoveManager>();
         if(navMeshMoveManager)
             navMeshMoveManager.PushBack(victim.GetGameObject().transform.position-transform.position+Vector3.up*strength*4,strength);

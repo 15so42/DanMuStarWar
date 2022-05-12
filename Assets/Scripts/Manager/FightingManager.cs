@@ -108,7 +108,8 @@ public class FightingManager : MonoBehaviour
     public void OnGiftReceived(int uid, string userName, int num,string giftName,int totalCoin)
     {
         AddPlayerDataValue(uid,"giftPoint", totalCoin / 100);
-        TipsDialog.ShowDialog("感谢支持QWQ!"+userName+"获得"+ totalCoin/100+ "个礼物点",null);
+        //TipsDialog.ShowDialog("感谢支持QWQ!"+userName+"获得"+ totalCoin/100+ "个礼物点",null);
+        TipsDialog.ShowDialog("感谢"+userName+"的支持QWQ!",null);
         var playerInGame = GetPlayerByUid(uid);
         if (playerInGame != null)
         {

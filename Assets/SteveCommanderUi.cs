@@ -16,6 +16,13 @@ public class SteveCommanderUi : CommanderUI
         countDownText.text = "";
     }
 
+    public void BreakCountDown()
+    {
+        StopAllCoroutines();
+        fill.gameObject.SetActive(false);
+        countDownText.text = "";
+    }
+
     public void StartCountDown(int time)
     {
         StopAllCoroutines();

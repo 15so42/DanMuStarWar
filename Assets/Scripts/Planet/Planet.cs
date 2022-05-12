@@ -331,7 +331,13 @@ public class Planet : GameEntity
         SetRingPoint(0);
         //if(colonyPoint==0)
         //    ringUi.gameObject.SetActive(false);
-        
+
+        if (fightingManager.gameMode == GameMode.MCWar)
+        {
+            props.maxHp = 200;
+            props.hp = 200;
+        }
+            
 
         
         foreach (var t in taskCenters)

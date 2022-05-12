@@ -343,7 +343,8 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         {
             ownerPlanet.battleUnits.Remove(this);
         }
-        
+
+        lastAttacker.GetAttackEntity().OnSlainOther();
         DieFx();
         //Destroy(gameObject);
 
@@ -356,7 +357,12 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         gameObject.SetActive(false);
         
     }
-    
+
+    public virtual void AddMaxHp(int value)
+    {
+        props.AddMaxHp(value);
+        onHpChanged.Invoke(props.hp,props.maxHp,props.shield,props.maxShield);
+    }
     
     
     public override void OnAttacked(AttackInfo attackInfo)
@@ -396,5 +402,9 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         return ownerPlanet;
     }
 
+    public override void OnSlainOther()
+    {
+        
+    }
    
 }

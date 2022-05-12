@@ -170,6 +170,11 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
      //Do nothing
    }
 
+   public virtual void OnSlainOther()
+   {
+      //throw new NotImplementedException();
+   }
+
    public virtual void OnAttackOther(IVictimAble victimAble, AttackInfo attackInfo)
    {
       //throw new NotImplementedException();

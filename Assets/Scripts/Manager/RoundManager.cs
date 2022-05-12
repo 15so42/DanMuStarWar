@@ -539,46 +539,131 @@ public class RoundManager
                 ParseOpenAutoRoll(uid,trim);
             }
 
-           
+            if (text == "紧急维修")
+            {
+                ParseUrgentRepair(uid,trim);
+            }
+            
+            if (text.StartsWith("技能说明"))
+            {
+                ParseShowSkillDesc(uid, trim);
+            }
+        
+            if (text.Equals("我在哪"))
+            {
+                ParseShowWhere(uid);
+            }
+            
+            if (fightingManager.gameMode == GameMode.Normal && text == "投降")
+            {
+                ParseSurrender(uid, trim);
+            }
         }
         
 
-        if (text == "紧急维修")
-        {
-            ParseUrgentRepair(uid,trim);
-        }
+        
 
         if (fightingManager.gameMode == GameMode.MCWar)
         {
+            
+           
+            var steveCommander = planet.GetCommanderByUid(uid) as SteveCommander;
+            if (steveCommander == null)
+                return;
+            
             if (trim.StartsWith("去"))
             {
                 ParseGoWhere(uid, trim);
             }
-        }
-      
-        
-        
-        if (text.StartsWith("技能说明"))
-        {
-            ParseShowSkillDesc(uid, trim);
-        }
-        
-        if (text.Equals("我在哪"))
-        {
-            ParseShowWhere(uid);
-        }
-        
-       
 
-       
-        
-        if (fightingManager.gameMode == GameMode.Normal && text == "投降")
+            if (trim == "复活")
+            {
+                ParseRespawn(uid,false);
+            }
+            
+            if (trim == "抽取武器")
+            {
+                ParseRandomWeapon(steveCommander);
+            }
+        }
+
+    }
+
+    void ParseCameraFocus(int uid)
+    {
+        var planet = GetPlantByPlayerUid(uid);
+        if(planet==null)
+            return;
+        var commander = planet.GetCommanderByUid(uid);
+        if(commander==null)
+            return;
+                
+        var battleUnits = BattleUnitManager.Instance.allBattleUnits;
+        for (int i = 0; i < battleUnits.Count; i++)
         {
-            ParseSurrender(uid, trim);
+            if (battleUnits[i].planetCommander == commander)
+            {
+                Camera.main.GetComponent<MCCamera>().SetTarget(battleUnits[i]);
+                break;
+            }
+        }
+    }
+
+    void ParseRespawn(int uid,bool byGift)
+    {
+        var planet = GetPlantByPlayerUid(uid);
+        if(planet==null)
+            return;
+        var steveCommander = planet.GetCommanderByUid(uid) as SteveCommander;
+        if(steveCommander==null)
+            return;
+        
+        if (!byGift)
+        {
+            if (steveCommander.point < 10)
+            {
+                steveCommander.commanderUi.LogTip("需要点数:10");
+                return;
+            }
+        }
+        if (steveCommander.die == false)
+        {
+            steveCommander.commanderUi.LogTip("未死亡");
+            return;
         }
         
-        
+            
+        steveCommander.RespawnImmediately();
+        steveCommander.AddPoint(-10);
+
     }
+
+    void ParseRandomWeapon(SteveCommander steveCommander)
+    {
+        
+        var validSteve = steveCommander.FindFirstValidSteve();
+        if (!validSteve)
+            return;
+        
+        if (steveCommander.point < 6)
+        {
+            steveCommander.commanderUi.LogTip("需要点数:6");
+            return;
+        }
+        validSteve.RandomWeapon();
+        steveCommander.AddPoint(-6);
+    }
+    
+    void ParseAddMaxHp(SteveCommander steveCommander)
+    {
+        
+        var validSteve = steveCommander.FindFirstValidSteve();
+        if (!validSteve)
+            return;
+        
+        validSteve.AddMaxHp(1);
+    }
+    
 
     public struct GiftMSg
     {
@@ -607,34 +692,35 @@ public class RoundManager
         
     }
 
+    void ParseGiftInMcWar(int uid, string giftName)
+    {
+        var planet = GetPlantByPlayerUid(uid);
+        if(planet==null)
+            return;
+        var steveCommander = planet.GetCommanderByUid(uid) as SteveCommander;
+        if(steveCommander==null)
+            return;
+        
+        if (giftName == "小花花")
+        {
+            ParseCameraFocus(uid);
+        }
+
+        if (giftName == "打call")
+        {
+            ParseRespawn(uid,true);
+        }
+
+        if (giftName == "牛哇牛哇")
+        {
+            ParseAddMaxHp(steveCommander);
+        }
+    }
+
     void ParseGift(int uid,string giftName)
     {
         if (giftName == "小花花")
         {
-            if (fightingManager.gameMode == GameMode.MCWar)
-            {
-                var planet = GetPlantByPlayerUid(uid);
-                if(planet==null)
-                    return;
-                var commander = planet.GetCommanderByUid(uid);
-                if(commander==null)
-                    return;
-                
-                var battleUnits = BattleUnitManager.Instance.allBattleUnits;
-                for (int i = 0; i < battleUnits.Count; i++)
-                {
-                    if (battleUnits[i].planetCommander == commander)
-                    {
-                        Camera.main.GetComponent<MCCamera>().SetTarget(battleUnits[i]);
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                ParseCommand(uid, "c",true);
-            }
-            
         }
         if (giftName == "打call")
         {
@@ -681,7 +767,17 @@ public class RoundManager
             if (giftQueue.Count > 0)
             {
                 var giftMsg = giftQueue.Peek();
-                ParseGift(giftMsg.uid,giftMsg.giftName);
+                
+                if (fightingManager.gameMode == GameMode.MCWar)
+                {
+                    ParseGiftInMcWar(giftMsg.uid,giftMsg.giftName);
+                }
+                else
+                {
+                    ParseGift(giftMsg.uid,giftMsg.giftName);
+                }
+                
+                
                 giftQueue.Dequeue();
             }
         }

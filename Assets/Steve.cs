@@ -17,8 +17,7 @@ public class Steve : WarPlane
 
     public SkinnedMeshRenderer[] meshRenderers;
     
-    [Header("随机武器列表检测")]
-    public List<GameObject> mcWeapons=new List<GameObject>();
+   
     
     protected override void Start()
     {
@@ -27,8 +26,33 @@ public class Steve : WarPlane
         fightingManager = GameManager.Instance.fightingManager;
         moveManager = GetComponent<MoveManager>();
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
-        RandomWeapon();
+        //RandomWeapon();
         hpUI.SetNameText(planetCommander.player.userName);
+        hpUI.OpenHPTile();
+        
+        ChangeWeapon(0);//空手
+
+        if (planetCommander is SteveCommander commander)
+        {
+            commander.battleUnits.Add(this);
+            if (commander.desireMaxHp != 0)
+            {
+                AddMaxHp(commander.desireMaxHp - props.maxHp);
+            }
+        }
+    }
+
+    public void ChangeWeapon(int weaponId)
+    {
+        foreach (var weapon in weapons)
+        {
+            weapon.gameObject.SetActive(false);
+        }
+
+        var liveWeapon = weapons.Find(x => (x as HandWeapon).mcWeaponId == weaponId);
+        
+        liveWeapon.gameObject.SetActive(true);
+        liveWeapon.Init(this);
     }
 
     public void RandomWeapon()
@@ -81,6 +105,12 @@ public class Steve : WarPlane
     public void SetAttackDistance(float value)
     {
         this.attackDistance = value;
+    }
+
+    public override void AddMaxHp(int value)
+    {
+        base.AddMaxHp(value);
+        (planetCommander as SteveCommander).desireMaxHp = props.maxHp;
     }
 
     public bool IsInAttackRange()
@@ -199,7 +229,15 @@ public class Steve : WarPlane
 
     public override void Die()
     {
+        planetCommander.AddPoint(1);
+        (planetCommander as SteveCommander).battleUnits.Remove(this);
         EventCenter.Broadcast(EnumEventType.OnSteveDied,this);
         base.Die();
+        
+    }
+    
+    public override void OnSlainOther()
+    {
+        planetCommander.AddPoint(2);
     }
 }

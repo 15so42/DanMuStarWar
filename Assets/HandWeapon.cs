@@ -7,6 +7,8 @@ using UnityEngine.AI;
 [Serializable]
 public class HandWeapon : Weapon
 {
+    [Header("武器id")] public int mcWeaponId;
+    
     private Transform root;
     [HideInInspector] public Animator animator;
 
