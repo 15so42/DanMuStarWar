@@ -62,11 +62,20 @@ public class SteveCommander : PlanetCommander
         if (steve.planetCommander == this)
         {
             die = true;
+            if(FightingManager.Instance==null || FightingManager.Instance.roundManager==null)
+                return;
             var time = FightingManager.Instance.roundManager.elapsedTime/10;
+            time *= 0.6f;
             (commanderUi as SteveCommanderUi)?.StartCountDown((int)time);
             unityTimer?.Cancel();
             unityTimer=Timer.Register(time, () => { CreateSteve(); });
         }
+        
+    }
+
+    public override void OnHangUp()
+    {
+        base.OnHangUp();
         
     }
 }

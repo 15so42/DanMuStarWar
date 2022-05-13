@@ -39,6 +39,11 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    
    //击杀管理
    protected IAttackAble lastAttacker;//最后一击
+   
+   //击杀相关事件
+   public Action<IVictimAble,int> onAttackOther;
+   public Action<int> onAttacked;
+   public Action onSlainOther;
 
    public void Awake()
    {
@@ -86,12 +91,15 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
 
    public virtual void OnAttacked(AttackInfo attackInfo)
    {
+      
       var hpAndShield = props.OnAttacked(attackInfo);
       OnHpChanged(hpAndShield.hpValue,props.maxHp,hpAndShield.shieldValue,props.maxShield);
       if (attackInfo.attackType != AttackType.Heal)
       {
          attackInfo.attacker?.OnAttackOther(this, attackInfo);
       }
+
+      onAttacked?.Invoke(attackInfo.value);
      
       if (hpAndShield.hpValue <= 0 && !die)
       {
@@ -173,11 +181,13 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    public virtual void OnSlainOther()
    {
       //throw new NotImplementedException();
+      onSlainOther?.Invoke();
    }
 
    public virtual void OnAttackOther(IVictimAble victimAble, AttackInfo attackInfo)
    {
       //throw new NotImplementedException();
+      onAttackOther?.Invoke(victimAble,attackInfo.value);
    }
 
 

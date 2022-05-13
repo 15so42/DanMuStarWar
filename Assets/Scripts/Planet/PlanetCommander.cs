@@ -66,11 +66,16 @@ public class PlanetCommander
             commanderUi.LogTip("挂机警告");
         }
         
-        if (Time.time > FightingManager.Instance.kickOutTime + lastUpdateMsgTime)
+        if (hangUp==false && Time.time > FightingManager.Instance.kickOutTime + lastUpdateMsgTime)
         {
-            commanderUi.LogTip("触发挂机判定");
-            //分发点数
-            hangUp = true;
+           OnHangUp();
         }
+    }
+
+    public virtual void OnHangUp()
+    {
+        commanderUi.LogTip("触发挂机判定");
+        //分发点数
+        hangUp = true;
     }
 }

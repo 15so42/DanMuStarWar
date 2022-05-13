@@ -344,7 +344,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
             ownerPlanet.battleUnits.Remove(this);
         }
 
-        lastAttacker.GetAttackEntity().OnSlainOther();
+        lastAttacker?.GetAttackEntity().OnSlainOther();
         DieFx();
         //Destroy(gameObject);
 

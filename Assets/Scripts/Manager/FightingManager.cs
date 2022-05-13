@@ -164,6 +164,7 @@ public class FightingManager : MonoBehaviour
     void StartWaitingJoin()
     {
         gameStatus = GameStatus.WaitingJoin;
+        Debug.Log("开启timer");
         //开始倒计时
         waitingJoinTimer=UnityTimer.Timer.Register(waitingJoinSecond, StartBattle, (time) =>
         {
@@ -233,6 +234,7 @@ public class FightingManager : MonoBehaviour
         EventCenter.Broadcast(EnumEventType.OnBattleStart);
         
         uiManager.OpenTimer();
+        MessageBox._instance.Show();
     }
 
     //玩家占领星球
@@ -515,6 +517,7 @@ public class FightingManager : MonoBehaviour
     public void GameOver(Planet planet,GameMode newMode)
     {
         gameStatus = GameStatus.WaitingNewFighting;
+        
         BattleOverDialog.ShowDialog(15,planet.owner,planet.planetCommanders,
             ()=>
             {

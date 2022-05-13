@@ -25,6 +25,11 @@ public class Bullet : RecycleAbleObject
         }
     }
 
+    public void Init()
+    {
+        
+    }
+
     private bool started = false;
 
     private void Awake()

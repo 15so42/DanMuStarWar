@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using Random = System.Random;
 
@@ -61,7 +62,7 @@ public class RoundManager
     private void OnDanMuReceived(string userName,int uid,string time,string text)
     {
         ParseCommand(uid,text);
-            
+        
         
     }
 
@@ -443,7 +444,7 @@ public class RoundManager
         }
         
         //重置玩家的上次发弹幕时间
-        if (fightingManager.gameMode == GameMode.BattleGround || fightingManager.gameMode == GameMode.Normal)
+        if (true)
         {
             PlanetCommander planetCommander = null;
             if(planet)
@@ -576,15 +577,22 @@ public class RoundManager
                 ParseGoWhere(uid, trim);
             }
 
-            if (trim == "复活")
-            {
-                ParseRespawn(uid,false);
-            }
+            // if (trim == "复活")
+            // {
+            //     ParseRespawn(uid,false);
+            // }
             
             if (trim == "抽取武器")
             {
                 ParseRandomWeapon(steveCommander);
             }
+
+            if (trim == "附魔")
+            {
+                ParseRandomSpell(steveCommander);
+            }
+            
+            MessageBox._instance.AddMessage("["+user.userName+"]:"+trim);
         }
 
     }
@@ -598,10 +606,12 @@ public class RoundManager
         if(commander==null)
             return;
                 
-        var battleUnits = BattleUnitManager.Instance.allBattleUnits;
+        var battleUnits = (commander as SteveCommander)?.battleUnits;
+        if(battleUnits==null)
+            return;
         for (int i = 0; i < battleUnits.Count; i++)
         {
-            if (battleUnits[i].planetCommander == commander)
+            if (battleUnits[i] && battleUnits[i].die==false)
             {
                 Camera.main.GetComponent<MCCamera>().SetTarget(battleUnits[i]);
                 break;
@@ -654,6 +664,22 @@ public class RoundManager
         steveCommander.AddPoint(-6);
     }
     
+    void ParseRandomSpell(SteveCommander steveCommander)
+    {
+        
+        var validSteve = steveCommander.FindFirstValidSteve();
+        if (!validSteve)
+            return;
+        
+        if (steveCommander.point < 8)
+        {
+            steveCommander.commanderUi.LogTip("需要点数:8");
+            return;
+        }
+        validSteve.RandomSpell();
+        steveCommander.AddPoint(-8);
+    }
+    
     void ParseAddMaxHp(SteveCommander steveCommander)
     {
         
@@ -661,7 +687,22 @@ public class RoundManager
         if (!validSteve)
             return;
         
-        validSteve.AddMaxHp(1);
+        validSteve.AddMaxHp(5);
+    }
+    
+    void ParseRareWeapon(SteveCommander steveCommander)
+    {
+        
+        var validSteve = steveCommander.FindFirstValidSteve();
+        if (!validSteve)
+            return;
+        
+        validSteve.RandomRareWeapon();
+    }
+    
+    void ParseAddPoint(SteveCommander steveCommander)
+    {
+        steveCommander.AddPoint(1);
     }
     
 
@@ -691,6 +732,7 @@ public class RoundManager
         }
         
     }
+    
 
     void ParseGiftInMcWar(int uid, string giftName)
     {
@@ -701,19 +743,32 @@ public class RoundManager
         if(steveCommander==null)
             return;
         
-        if (giftName == "小花花")
+        if (giftName == "小花花" || giftName=="辣条")
         {
             ParseCameraFocus(uid);
         }
 
         if (giftName == "打call")
         {
+            //ParseRespawn(uid,true);
+            ParseAddMaxHp(steveCommander);
+        }
+
+        if (giftName == "这个好诶")
+        {
             ParseRespawn(uid,true);
+            //ParseAddMaxHp(steveCommander);
+        }
+        
+        if (giftName == "风吟")
+        {
+            //特殊武器
+            ParseRareWeapon(steveCommander);
         }
 
         if (giftName == "牛哇牛哇")
         {
-            ParseAddMaxHp(steveCommander);
+            ParseAddPoint(steveCommander);
         }
     }
 

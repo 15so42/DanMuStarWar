@@ -54,7 +54,15 @@ public class PlanetManager : MonoBehaviour
        
         if (count == 1)//如果存活的星球只剩最后一个
         {
-            FightingManager.Instance.GameOver(lastAlivePlanet,FightingManager.Instance.roundManager.desireMode);
+            if (FightingManager.Instance.gameMode==GameMode.MCWar)
+            {
+                FightingManager.Instance.GameOver(lastAlivePlanet,GameMode.MCWar);
+            }
+            else
+            {
+                FightingManager.Instance.GameOver(lastAlivePlanet,FightingManager.Instance.roundManager.desireMode);
+            }
+            
             //清除剩下所有的星球
             
             for (int i = 0; i < allPlanets.Count; i++)

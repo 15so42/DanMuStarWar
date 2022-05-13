@@ -139,6 +139,9 @@ public class SkillManager : MonoBehaviour
     //     skillItemUi.Init(skill);
     //     target.AddSkill(skillItemUi);
     // }
+    
+    
+    
     public void AddSkill(string skillName, GameEntity target,PlanetCommander planetCommander)
     {
         if (target.AddSkillCheck(skillName)==false)//可以添加重复的

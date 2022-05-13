@@ -16,6 +16,8 @@ public class Steve : WarPlane
     private FightingManager fightingManager;
 
     public SkinnedMeshRenderer[] meshRenderers;
+
+    [Header("火焰特效")] public Transform fireFx;
     
    
     
@@ -30,6 +32,8 @@ public class Steve : WarPlane
         hpUI.SetNameText(planetCommander.player.userName);
         hpUI.OpenHPTile();
         
+        
+        hpUI.SetWeaponText("空手");
         ChangeWeapon(0);//空手
 
         if (planetCommander is SteveCommander commander)
@@ -39,6 +43,17 @@ public class Steve : WarPlane
             {
                 AddMaxHp(commander.desireMaxHp - props.maxHp);
             }
+        }
+
+        var steveCommander = (planetCommander as SteveCommander);
+        if (steveCommander!=null && steveCommander.point > 6)
+        {
+            RandomWeapon();
+            steveCommander.AddPoint(-6);
+        }
+        else
+        {
+            MessageBox._instance.AddMessage("[系统]"+steveCommander.player.userName+"自动抽取失败，点数不足");
         }
     }
 
@@ -55,6 +70,11 @@ public class Steve : WarPlane
         liveWeapon.Init(this);
     }
 
+    public void RandomRareWeapon()
+    {
+        ChangeWeapon(7);
+    }
+
     public void RandomWeapon()
     {
        
@@ -62,10 +82,18 @@ public class Steve : WarPlane
         {
             weapon.gameObject.SetActive(false);
         }
-        var liveWeapon=weapons[UnityEngine.Random.Range(0,weapons.Count)];
+        var liveWeapon=weapons[UnityEngine.Random.Range(1,weapons.Count-1)];
         
         liveWeapon.gameObject.SetActive(true);
+        MessageBox._instance.AddMessage("[系统]"+planetCommander.player.userName+"抽取武器:"+liveWeapon.weaponName);
+        hpUI.SetWeaponText(liveWeapon.weaponName);
         liveWeapon.Init(this);
+    }
+
+    public void RandomSpell()
+    {
+        var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
+        (liveWeapon as HandWeapon).RandomSpell();
     }
     
     public Vector3 GetPos(int index)
@@ -239,5 +267,16 @@ public class Steve : WarPlane
     public override void OnSlainOther()
     {
         planetCommander.AddPoint(2);
+    }
+    
+    //
+    public void OpenFireFx()
+    {
+        fireFx.gameObject.SetActive(true);
+    }
+
+    public void CloseFireFx()
+    {
+        fireFx.gameObject.SetActive(false);
     }
 }

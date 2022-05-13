@@ -8,7 +8,8 @@ public class Weapon : MonoBehaviour
 {
     public float attackDistance;
     public BattleUnit owner;
-    
+
+    public string weaponName;
     
     //武器攻速计时
     public float attackSpeed = 1;

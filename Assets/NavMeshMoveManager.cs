@@ -39,7 +39,7 @@ public class NavMeshMoveManager : MoveManager
         StopAllCoroutines();
         if (gameObject.activeSelf)
         {
-            StartCoroutine(PushBackC(dir, value = 3));
+            StartCoroutine(PushBackC(dir, value));
         }
         
     }

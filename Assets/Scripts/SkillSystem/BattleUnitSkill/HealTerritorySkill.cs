@@ -31,7 +31,7 @@ public class HealTerritorySkill : SkillBase
             if (!b.die)
             {
                 //Debug.Log("给"+b.name+"添加护盾");
-                b.OnAttacked(new AttackInfo(gameEntity,AttackType.Heal,1));
+                b.OnAttacked(new AttackInfo(gameEntity,AttackType.Heal,value));
             }
                 
         }

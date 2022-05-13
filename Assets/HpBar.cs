@@ -16,6 +16,8 @@ public class HpBar : MonoBehaviour
     [Header("血条刻度线")]
     public Transform hpTile;
 
+    
+
     public Transform tileLine;
 
     public Transform skillUiGroup;
@@ -24,6 +26,7 @@ public class HpBar : MonoBehaviour
     public Text tipText;
 
     [Header("显示名字（Mc模式)")] public Text nameText;
+    [Header("武器名称")] public Text weaponNameText;
     public UnityTimer.Timer logTimer;
     private Camera mainCamera;
     private void Awake()
@@ -31,6 +34,7 @@ public class HpBar : MonoBehaviour
         mainCamera=Camera.main;
         tipText.gameObject.SetActive(false);
         hpTile.gameObject.SetActive(false);
+        weaponNameText.gameObject.SetActive(false);
     }
 
     public void OnHpChanged(int hp,int maxHP,int shield,int maxShield)
@@ -52,6 +56,12 @@ public class HpBar : MonoBehaviour
     public void SetNameText(string name)
     {
         nameText.text = name + "";
+    }
+
+    public void SetWeaponText(string weaponName)
+    {
+        weaponNameText.gameObject.SetActive(true);
+        weaponNameText.text = "[" + weaponName + "]";
     }
 
     void UpdateHp(int hp,int maxHP,int shield,int maxShield)

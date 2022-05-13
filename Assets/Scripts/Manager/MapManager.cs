@@ -60,7 +60,8 @@ public class MapManager : MonoBehaviour
         
         
         grids=new string[zNum,xNum];
-        SpawnStones();
+        if(fightingManager.gameMode!=GameMode.MCWar)
+            SpawnStones();
     }
 
     public void PlaceAll()

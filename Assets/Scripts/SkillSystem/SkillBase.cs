@@ -28,6 +28,8 @@ public abstract class SkillBase : ScriptableObject
     [Header("可使用次数,-1表示无限次")]
     public int life=-1;
 
+    private int maxLife;
+
     public bool autoLife=true;
 
     [Header("可堆叠层数")] public int stackAbleCount = 1;
@@ -45,17 +47,24 @@ public abstract class SkillBase : ScriptableObject
     public Action<int> onLifeChangedAction;
     public virtual void Init(GameEntity gameEntity,PlanetCommander planetCommander)
     {
-        timer = cd;
+        BaseInit();
         this.gameEntity = gameEntity;
         this.createCommander = planetCommander;
-        onLifeChangedAction += OnLifeChanged;
+
     }
 
     public virtual void Init(SkillContainer skillContainer)
     {
-        timer = cd;
+       BaseInit();
         this.skillContainer = skillContainer;
+        
+    }
+
+    void BaseInit()
+    {
+        timer = cd;
         onLifeChangedAction += OnLifeChanged;
+        maxLife = life;
     }
 
     public void ResetTimer()
@@ -79,7 +88,7 @@ public abstract class SkillBase : ScriptableObject
     public void ChangeLife(int newLife)
     {
         life = newLife;
-        onLifeChangedAction.Invoke(newLife);
+        onLifeChangedAction?.Invoke(newLife);
     }
     public virtual ErrorCode PlayCheck()
     {
@@ -147,6 +156,13 @@ public abstract class SkillBase : ScriptableObject
     {
         skillItemUi.Kill();
         Destroy(this);
+    }
+
+    public virtual void Refresh()
+    {
+        //刷新
+        timer = cd;
+        life = maxLife;
     }
 
 }

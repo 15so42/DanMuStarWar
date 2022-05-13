@@ -13,7 +13,7 @@ public class AttackManager : MonoBehaviour
         Instance = this;
     }
 
-    public void Explosion(AttackInfo attackInfo,Vector3 center,float radius)
+    public void Explosion(AttackInfo attackInfo,Vector3 center,float radius,string fxName="")
     {
         var attacker = attackInfo.attacker;
         var colliders = Physics.OverlapSphere(center, radius);
@@ -31,8 +31,18 @@ public class AttackManager : MonoBehaviour
             
             gameEntity.OnAttacked(attackInfo);
             
+            //steve
+            var navMove = gameEntity.GetComponent<NavMeshMoveManager>();
+            if (navMove)
+            {
+                navMove.PushBack((gameEntity.transform.position-transform.position).normalized);
+            }
+            
         }
-        ResFactory.Instance.CreateFx(GameConst.FX_PACMAN_EXPLOSION, center);
+
+        if (fxName == "")
+            fxName = GameConst.FX_PACMAN_EXPLOSION;
+        ResFactory.Instance.CreateFx(fxName, center);
 
        
     }
