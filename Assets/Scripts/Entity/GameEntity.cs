@@ -99,7 +99,8 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
          attackInfo.attacker?.OnAttackOther(this, attackInfo);
       }
 
-      onAttacked?.Invoke(attackInfo.value);
+      if(attackInfo.attackType!=AttackType.Heal)
+         onAttacked?.Invoke(attackInfo.value);
      
       if (hpAndShield.hpValue <= 0 && !die)
       {
@@ -187,7 +188,8 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    public virtual void OnAttackOther(IVictimAble victimAble, AttackInfo attackInfo)
    {
       //throw new NotImplementedException();
-      onAttackOther?.Invoke(victimAble,attackInfo.value);
+      if(attackInfo.attackType!=AttackType.Heal)
+         onAttackOther?.Invoke(victimAble,attackInfo.value);
    }
 
 
