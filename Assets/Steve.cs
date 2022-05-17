@@ -75,6 +75,11 @@ public class Steve : WarPlane
         }
     }
     
+    public void FixWeapon(int value)
+    {
+        var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
+        (liveWeapon as HandWeapon).AddEndurance(value);
+    }
 
     public Weapon ChangeWeapon(int weaponId)
     {
@@ -87,6 +92,7 @@ public class Steve : WarPlane
         
         liveWeapon.gameObject.SetActive(true);
         liveWeapon.Init(this);
+        
         return liveWeapon;
     }
 
@@ -170,6 +176,8 @@ public class Steve : WarPlane
 
     public bool IsInAttackRange()
     {
+        if (chaseTarget == null)
+            return false;
         float distance = Vector3.Distance(chaseTarget.GetVictimEntity().transform.position, transform.position);
         if (distance < attackDistance)
             return true;

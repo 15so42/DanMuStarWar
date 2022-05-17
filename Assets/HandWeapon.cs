@@ -43,7 +43,14 @@ public class HandWeapon : Weapon
         (owner as Steve).SetAttackDistance(attackDistance);
         
         endurance = maxEndurance;
+        OnEnduranceChange(endurance,maxEndurance);
 
+    }
+
+    public void AddEndurance(int value)
+    {
+        endurance += value;
+        OnEnduranceChange(endurance,maxEndurance);
     }
 
     public virtual void Load(int endurance,int vampire,int fire,int parry)

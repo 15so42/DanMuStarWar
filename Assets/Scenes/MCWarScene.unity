@@ -10839,7 +10839,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   uiManager: {fileID: 0}
   mapManager: {fileID: 1581382676}
-  waitingJoinSecond: 10
+  waitingJoinSecond: 25
   kickOutTime: 220
   maxWaitingPlayerTime: 300
   planetRoot: {fileID: 0}

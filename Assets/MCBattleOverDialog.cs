@@ -53,7 +53,8 @@ public class MCBattleOverDialog : Dialog<McBattleOverDialogContext>
 
         StartCoroutine(CountDown(dialogContext.duration));
        
-        
+        dialogContext.winnerPlanetCommanders.Sort((x,y)=>x.attackedDamage>y.attackedDamage?-1:1);
+        dialogContext.lostPlanetCommanders.Sort((x,y)=>x.attackedDamage>y.attackedDamage?-1:1);
         
         for (int i = 0; i < ((dialogContext.winnerPlanetCommanders.Count>5) ? 5 :dialogContext.winnerPlanetCommanders.Count); i++)
         {

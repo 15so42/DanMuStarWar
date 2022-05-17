@@ -651,6 +651,10 @@ public class Planet : GameEntity
         }
         
         commanderUi.Init(mark,planetCommander);
+        if (fightingManager.gameMode == GameMode.MCWar)
+        {
+            planetCommander.color = planetColor;
+        }
         commanderUi.SetColor(planetCommander.color);
         planetCommander.commanderUi = commanderUi;
         planetCommander.UpdateLastMsgTime(Time.time);

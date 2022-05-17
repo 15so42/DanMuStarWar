@@ -268,12 +268,14 @@ public class FightingManager : MonoBehaviour
                     //var index = ((planetNum / playersCount) * i) % planetNum;
                     if (i % 2 == 0)
                     {
+                       
                         PlanetManager.Instance.allPlanets[firstPlanetIndex].AddCommander(commander,0);
                         if (i == 0)
                             PlanetManager.Instance.allPlanets[firstPlanetIndex].SetOwner(players[i]);
                     }
                     else
                     {
+                        
                         PlanetManager.Instance.allPlanets[lastPlanetIndex].AddCommander(commander,1); 
                         if(i==1)
                             PlanetManager.Instance.allPlanets[lastPlanetIndex].SetOwner(players[i]);

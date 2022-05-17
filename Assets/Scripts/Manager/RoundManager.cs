@@ -591,6 +591,16 @@ public class RoundManager
             {
                 ParseRandomSpell(steveCommander);
             }
+
+            if (trim == "维修")
+            {
+                ParseFixWeapon(steveCommander);
+            }
+
+            if (trim == "兑换生命")
+            {
+                ParseAddMaxHp(steveCommander,false);
+            }
             
             MessageBox._instance.AddMessage("["+user.userName+"]:"+trim);
         }
@@ -675,14 +685,43 @@ public class RoundManager
         steveCommander.AddPoint(-8);
     }
     
-    void ParseAddMaxHp(SteveCommander steveCommander)
+    void ParseAddMaxHp(SteveCommander steveCommander,bool byGift)
     {
         
         var validSteve = steveCommander.FindFirstValidSteve();
         if (!validSteve)
             return;
+        if(byGift)
+            validSteve.AddMaxHp(5);
+        else
+        {
+            if (steveCommander.point < 25)
+            {
+                steveCommander.commanderUi.LogTip("需要点数:25");
+                return;
+            }
+            validSteve.AddMaxHp(5);
+            steveCommander.AddPoint(-25);
+        }
+    }
+    
+    void ParseFixWeapon(SteveCommander steveCommander)
+    {
         
-        validSteve.AddMaxHp(5);
+        var validSteve = steveCommander.FindFirstValidSteve();
+        if (!validSteve)
+            return;
+
+
+        if (steveCommander.point < 5)
+        {
+            steveCommander.commanderUi.LogTip("需要点数:5");
+            return;
+        }
+
+        validSteve.FixWeapon(10);
+        steveCommander.AddPoint(-5);
+        
     }
     
     void ParseRareWeapon(SteveCommander steveCommander)
@@ -746,7 +785,7 @@ public class RoundManager
         if (giftName == "打call")
         {
             //ParseRespawn(uid,true);
-            ParseAddMaxHp(steveCommander);
+            ParseAddMaxHp(steveCommander,true);
         }
 
         if (giftName == "这个好诶")
