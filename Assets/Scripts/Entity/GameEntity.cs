@@ -41,6 +41,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    protected IAttackAble lastAttacker;//最后一击
    
    //击杀相关事件
+   public Func<AttackInfo,AttackInfo> onBeforeAttacked;
    public Action<IVictimAble,int> onAttackOther;
    public Action<int> onAttacked;
    public Action onSlainOther;
@@ -89,9 +90,19 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
       return gameObject;
    }
 
+   public virtual AttackInfo OnBeforeAttacked(AttackInfo attackInfo)
+   {
+      if (onBeforeAttacked != null)
+      {
+         attackInfo=onBeforeAttacked?.Invoke(attackInfo);
+      }
+      
+      return attackInfo;
+   }
+
    public virtual void OnAttacked(AttackInfo attackInfo)
    {
-      
+      attackInfo=OnBeforeAttacked(attackInfo);
       var hpAndShield = props.OnAttacked(attackInfo);
       OnHpChanged(hpAndShield.hpValue,props.maxHp,hpAndShield.shieldValue,props.maxShield);
       if (attackInfo.attackType != AttackType.Heal)
@@ -188,9 +199,14 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    public virtual void OnAttackOther(IVictimAble victimAble, AttackInfo attackInfo)
    {
       //throw new NotImplementedException();
-      if(attackInfo.attackType!=AttackType.Heal)
+      if (attackInfo.attackType != AttackType.Heal)
+      {
          onAttackOther?.Invoke(victimAble,attackInfo.value);
+      }
+        
    }
+
+   
 
 
    public virtual GameEntity GetVictimOwner()

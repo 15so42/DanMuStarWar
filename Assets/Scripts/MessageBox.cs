@@ -72,6 +72,11 @@ public class MessageBox : MonoBehaviour
         text.text = t;
     }
 
+    public void AddMessage(string writer, string msg)
+    {
+        AddMessage($"[{writer}]:{msg}");
+    }
+
     public void Hide()
     {
         isShowing = false;

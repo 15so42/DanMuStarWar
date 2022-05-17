@@ -19,6 +19,8 @@ public class BowWeapon : HandWeapon
     {
         animator.SetTrigger(animTriggerName);
         Invoke(nameof(ShootArrow),invokeDelay);
+        endurance--;
+        OnEnduranceChange(endurance,maxEndurance);
         
     }
 

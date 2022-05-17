@@ -11,6 +11,14 @@ public class SteveCommander : PlanetCommander
     
     //记录自己控制的单位
     public List<Steve> battleUnits=new List<Steve>();
+
+    //武器耐久
+    public bool weaponSaved;
+    public int desireWeaponId;
+    public int endurance;//武器耐久值
+    public int vampire = 0;
+    public int fire = 0;
+    public int parry = 0;
     
     
     //复活timer
@@ -30,6 +38,9 @@ public class SteveCommander : PlanetCommander
         EventCenter.AddListener<Steve>(EnumEventType.OnSteveDied,OnSteveDie);
         point = 0;
         AddPoint(0);
+        
+        //绑定事件检测自己的单位得产生
+        //EventCenter.AddListener(EnumEventType.OnBattleUnitCreated,OnSteveCreated);
     }
 
     public void CreateSteve()
@@ -71,6 +82,14 @@ public class SteveCommander : PlanetCommander
             unityTimer=Timer.Register(time, () => { CreateSteve(); });
         }
         
+    }
+    
+    void OnSteveCreated(BattleUnit battleUnit)
+    {
+        // if (battleUnit.planetCommander == this)
+        // {
+        //     (battleUnit as Steve).LoadWeaponParams();
+        // }
     }
 
     public override void OnHangUp()

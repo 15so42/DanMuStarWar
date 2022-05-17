@@ -654,14 +654,9 @@ public class RoundManager
         var validSteve = steveCommander.FindFirstValidSteve();
         if (!validSteve)
             return;
-        
-        if (steveCommander.point < 6)
-        {
-            steveCommander.commanderUi.LogTip("需要点数:6");
-            return;
-        }
+
         validSteve.RandomWeapon();
-        steveCommander.AddPoint(-6);
+        
     }
     
     void ParseRandomSpell(SteveCommander steveCommander)

@@ -1045,6 +1045,17 @@ public class Planet : GameEntity
     public override void Die()
     {
         base.Die();
+
+        // try
+        // {
+        EventCenter.Broadcast(EnumEventType.OnPlanetDie, this);
+        // }
+        // catch (Exception e)
+        // {
+        //     Debug.LogError("死亡事件异常："+e);
+        // }
+        
+        
         for (int i = 0; i < battleUnits.Count; i++)
         {
             if (battleUnits[i])
@@ -1067,15 +1078,8 @@ public class Planet : GameEntity
         }
 
 
-        try
-        {
-            EventCenter.Broadcast(EnumEventType.OnPlanetDie, this);
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("死亡事件异常："+e);
-        }
-        //Destroy(gameObject);
+        
+       
 
         if (lastAttacker != null && fightingManager.gameMode==GameMode.Normal)//死亡时把一般资源给击杀者
         {

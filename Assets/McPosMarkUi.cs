@@ -15,20 +15,40 @@ public class McPosMarkUi : MonoBehaviour
     private int index;
     // Start is called before the first frame update
 
+    private FightingManager fightingManager;
+
     public void Init(GameObject obj, int index)
     {
         this.obj = obj;
         this.index = index;
+        EventCenter.AddListener(EnumEventType.OnPlanetsSpawned,Show);
+        EventCenter.AddListener(EnumEventType.OnStartWaitingJoin,Hide);
+        gameObject.SetActive(false);
+        
     }
     void Start()
     {
         mainCamera=Camera.main;
         this.text.text = "> " + index + " <";
+        fightingManager = GameManager.Instance.fightingManager;
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         transform.position = mainCamera.WorldToScreenPoint(obj.transform.position) + offset;
+        
+        
+    }
+
+    void Show()
+    {
+        gameObject.SetActive(true);
+    }
+
+    void Hide()
+    {
+        
     }
 }

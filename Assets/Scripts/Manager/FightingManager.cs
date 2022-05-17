@@ -517,6 +517,7 @@ public class FightingManager : MonoBehaviour
     public void GameOver(Planet planet,GameMode newMode)
     {
         gameStatus = GameStatus.WaitingNewFighting;
+        MessageBox._instance.Hide();
         
         BattleOverDialog.ShowDialog(15,planet.owner,planet.planetCommanders,
             ()=>
@@ -526,6 +527,17 @@ public class FightingManager : MonoBehaviour
                     maxPlayerCount = 24;
                 if (newMode == GameMode.Normal)
                     maxPlayerCount = 6;
+                StartNewBattle();
+            });
+    }
+
+    public void GameOverByMc(List<PlanetCommander> winners,List<PlanetCommander> losers)
+    {
+        gameStatus = GameStatus.WaitingNewFighting;
+        MessageBox._instance.Hide();
+        MCBattleOverDialog.ShowDialog(15,GameMode.MCWar,winners,losers,
+            ()=>
+            {
                 StartNewBattle();
             });
     }

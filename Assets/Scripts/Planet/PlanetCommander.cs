@@ -15,6 +15,16 @@ public class PlanetCommander
 
     [Header("所属星球")] public Planet ownerPlanet;
 
+    //************死亡统计**********
+    public int attackOtherDamage = 0;
+    public int attackedDamage = 0;
+    public int healSelfValue = 0;
+    public int healOtherValue = 0;
+    public int slainCount = 0;
+    public int dieCount = 0;
+    
+    
+    
     public PlanetCommander (int uid, Player player)
     {
         this.uid = uid;

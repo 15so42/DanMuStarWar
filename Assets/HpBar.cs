@@ -27,6 +27,8 @@ public class HpBar : MonoBehaviour
 
     [Header("显示名字（Mc模式)")] public Text nameText;
     [Header("武器名称")] public Text weaponNameText;
+    public Image weaponEnduranceBg;
+    public Image weaponEnduranceFill;
     public UnityTimer.Timer logTimer;
     private Camera mainCamera;
     private void Awake()
@@ -35,11 +37,18 @@ public class HpBar : MonoBehaviour
         tipText.gameObject.SetActive(false);
         hpTile.gameObject.SetActive(false);
         weaponNameText.gameObject.SetActive(false);
+        weaponEnduranceBg.gameObject.SetActive(false);
     }
 
     public void OnHpChanged(int hp,int maxHP,int shield,int maxShield)
     {
        UpdateHp(hp,maxHP,shield,maxShield);
+    }
+
+    public void UpdateWeaponEndurance(int endurance, int maxEndurance)
+    {
+        weaponEnduranceBg.gameObject.SetActive(true);
+        weaponEnduranceFill.fillAmount = (float) endurance / (float)maxEndurance;
     }
 
     private void OnDestroy()

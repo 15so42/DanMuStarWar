@@ -54,9 +54,24 @@ public class PlanetManager : MonoBehaviour
        
         if (count == 1)//如果存活的星球只剩最后一个
         {
+            
             if (FightingManager.Instance.gameMode==GameMode.MCWar)
             {
-                FightingManager.Instance.GameOver(lastAlivePlanet,GameMode.MCWar);
+                List<PlanetCommander> losers = null;
+                List<PlanetCommander> winners = null;
+                
+                for (int i = 0; i < allPlanets.Count; i++)
+                {
+                    if (allPlanets[i].die)
+                    {
+                        losers = allPlanets[i].planetCommanders;
+                    }
+                    else
+                    {
+                        winners = allPlanets[i].planetCommanders;
+                    }
+                }
+                FightingManager.Instance.GameOverByMc(winners,losers);
             }
             else
             {
@@ -91,8 +106,12 @@ public class PlanetManager : MonoBehaviour
     {
         for (int i = 0; i < allPlanets.Count ; i++)
         {
-            allPlanets[i].OnAttacked(new AttackInfo(null,AttackType.Real,5000));
-            i--;
+            if (!allPlanets[i].die)
+            {
+                allPlanets[i].OnAttacked(new AttackInfo(null,AttackType.Real,5000));
+                i--;
+            }
+            
         }
     }
 }
