@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Timers;
 using Ludiq;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -81,9 +82,13 @@ public class FightingManager : MonoBehaviour
     public MCPosManager mcPosManager;
     
     
-    public void Init(GameManager gameManager)
+    //游戏是否联网
+    public PlayMode photonPlayMode;
+    public List<Player> photonPlayers=new List<Player>();
+    
+    public void Init(GameManager gameManager,PlayMode playMode)
     {
-        
+        this.photonPlayMode = playMode;
         mapManager.Init(this);
         
        
@@ -201,7 +206,7 @@ public class FightingManager : MonoBehaviour
 
     void StartBattle()
     {
-        if (players.Count < 2)
+        if (players.Count < 2 && photonPlayMode==PlayMode.Live)
         {
             StartWaitingJoin();
             return;//重新等待
@@ -513,6 +518,15 @@ public class FightingManager : MonoBehaviour
         }
         
         
+        
+    }
+
+    [PunRPC]
+    public void OnPlayerLoadedScene()
+    {
+        var player=new Player(photonPlayers.Count,PhotonNetwork.NickName,"","");
+        photonPlayers.Add(player);
+        JoinGame(player);
         
     }
 

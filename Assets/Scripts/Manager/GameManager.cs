@@ -22,9 +22,13 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        UnityEngine.Random.InitState(0);
+        
+        
         uiManager.Init(this);
         
-        fightingManager.Init(this);
+        fightingManager.Init(this,PhotonLauncher.playMode);
         
         //moveChessManager由GridManager初始化
         //moveChessManager.Init();
