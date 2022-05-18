@@ -42,7 +42,7 @@ public class BowWeapon : HandWeapon
         if (owner.chaseTarget != null)
         {
             targetPos = owner.chaseTarget.GetVictimEntity().transform.position +
-                        Vector3.up * UnityEngine.Random.Range(0, 7);
+                        Vector3.up * UnityEngine.Random.Range(3, 7);
         }
         // targetPos = owner.chaseTarget.GetVictimEntity().transform.position +
         //                 Vector3.up * UnityEngine.Random.Range(0, 7);

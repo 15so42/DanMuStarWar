@@ -55,6 +55,8 @@ namespace Photon.Pun.Demo.Asteroids
 
         #endregion
 
+        [Header("目标场景")] public string targetSceneName = "DemoAsteroids-GameScene";
+
         #region PUN CALLBACKS
 
         public override void OnConnectedToMaster()
@@ -244,6 +246,7 @@ namespace Photon.Pun.Demo.Asteroids
                 PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = "24f39900-ac5c-47ae-a0a8-2793d780b265";
                 PhotonNetwork.PhotonServerSettings.AppSettings.Server = "ns.photonengine.cn";
                 PhotonNetwork.ConnectUsingSettings();
+                
             }
             else
             {
@@ -266,7 +269,7 @@ namespace Photon.Pun.Demo.Asteroids
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            PhotonNetwork.LoadLevel("DemoAsteroids-GameScene");
+            PhotonNetwork.LoadLevel(targetSceneName);
         }
 
         #endregion

@@ -38,6 +38,13 @@ public class BiliBiliLive : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
+        if (PhotonLauncher.playMode == PlayMode.Photon)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+           
+        
         TcpDanmakuClientV2 client=new TcpDanmakuClientV2();
         await client.ConnectAsync(roomId);
         client.HeartbeatInterval = TimeSpan.FromSeconds(25);

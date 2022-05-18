@@ -12,6 +12,7 @@ using UnityEngine.Events;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Timer = System.Timers.Timer;
 
 public enum GameStatus
@@ -39,7 +40,7 @@ public enum GameMode
     MCWar
 }
 
-public class FightingManager : MonoBehaviour
+public class FightingManager : MonoBehaviourPunCallbacks
 {
     public static FightingManager Instance;
 
@@ -107,7 +108,11 @@ public class FightingManager : MonoBehaviour
         StartWaitingJoin();
         Instance = this;
 
+        OnPlayerLoadedScene();
+        
     }
+    
+    
 
     
     public void OnGiftReceived(int uid, string userName, int num,string giftName,int totalCoin)
@@ -166,10 +171,22 @@ public class FightingManager : MonoBehaviour
 
     #endregion
 
+
+    public void SyncWatingStartByRPC()
+    {
+        photonView.RPC(nameof(SyncWaitingStart),RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void SyncWaitingStart()
+    {
+        waitingJoinTimer.Cancel();
+        StartWaitingJoin();
+    }
     void StartWaitingJoin()
     {
         gameStatus = GameStatus.WaitingJoin;
-        Debug.Log("开启timer");
+       
         //开始倒计时
         waitingJoinTimer=UnityTimer.Timer.Register(waitingJoinSecond, StartBattle, (time) =>
         {
@@ -204,7 +221,25 @@ public class FightingManager : MonoBehaviour
         // }
     }
 
-    void StartBattle()
+    public void StartBattleByPhoton()
+    {
+        photonView.RPC(nameof(JoinAllPlayer),RpcTarget.All);
+        //photonView.RPC(nameof(StartBattle),RpcTarget.All);
+        
+    }
+
+    [PunRPC]
+    void JoinAllPlayer()
+    {
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+        {
+            var player=new Player(PhotonNetwork.PlayerList[i].ActorNumber,PhotonNetwork.PlayerList[i].NickName,"","");
+            JoinGame(player);
+        }
+    }
+    
+    [PunRPC]
+    public void StartBattle()
     {
         if (players.Count < 2 && photonPlayMode==PlayMode.Live)
         {
@@ -224,7 +259,7 @@ public class FightingManager : MonoBehaviour
 
         
         
-        roundManager=new RoundManager();
+        //roundManager=new RoundManager();
         roundManager.Init(gameManager,players);
                         
         //两个玩家更新活跃表
@@ -351,10 +386,10 @@ public class FightingManager : MonoBehaviour
 
     private void Update()
     {
-        if (roundManager!=null)
-        {
-            roundManager.Update();
-        }
+        // if (roundManager!=null)
+        // {
+        //     roundManager.Update();
+        // }
         
     }
 
@@ -368,7 +403,7 @@ public class FightingManager : MonoBehaviour
         gameStatus =  GameStatus.WaitingNewFighting;
         players.Clear();
         uiManager.ResetUi();
-        roundManager = null;
+        
         playerStatusTable.Clear();
         
         //mapManager.Init(this);
@@ -521,14 +556,16 @@ public class FightingManager : MonoBehaviour
         
     }
 
-    [PunRPC]
+    
     public void OnPlayerLoadedScene()
     {
-        var player=new Player(photonPlayers.Count,PhotonNetwork.NickName,"","");
-        photonPlayers.Add(player);
-        JoinGame(player);
-        
+        // var player=new Player(photonPlayers.Count,PhotonNetwork.NickName,"","");
+        // photonPlayers.Add(player);
+        // JoinGame(player);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable {{"battleSceneLoaded",true} });
     }
+
+    
 
     public void GameOver(Planet planet,GameMode newMode)
     {

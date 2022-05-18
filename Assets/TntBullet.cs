@@ -8,14 +8,14 @@ public class TntBullet : ArrowBullet
 {
     private Material material;
 
-    public RecycleAbleObject recycleAbleObject;
+   
     // Start is called before the first frame update
     void Start()
     {
         material = GetComponent<MeshRenderer>().material;
         material.EnableKeyword("_EMISSION");
         
-        recycleAbleObject = GetComponent<RecycleAbleObject>();
+        
     }
 
     private void OnEnable()

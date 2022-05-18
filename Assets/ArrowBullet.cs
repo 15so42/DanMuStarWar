@@ -14,13 +14,26 @@ public class ArrowBullet : MonoBehaviour
     private Rigidbody rigidbody;
 
     List<IVictimAble> attacked=new List<IVictimAble>();//储存伤害过单位列表，不能多次伤害同一单位
+
+    protected RecycleAbleObject recycleAbleObject;
+
+
+    private void Awake()
+    {
+        recycleAbleObject = GetComponent<RecycleAbleObject>();
+    }
+
     public void Init(IAttackAble owner,Vector3 dir,int strength)
     {
         this.owner = owner;
         transform.forward = dir;
         rigidbody= GetComponent<Rigidbody>();
+        
+        
         rigidbody.AddForce(dir.normalized*speed);
         this.strength = strength;
+        
+
     }
     //strength决定伤害和击退距离
     private void OnCollisionEnter(Collision other)
@@ -47,10 +60,12 @@ public class ArrowBullet : MonoBehaviour
         if(navMeshMoveManager)
             navMeshMoveManager.PushBack(victim.GetGameObject().transform.position-transform.position+Vector3.up*strength*4,strength);
         attacked.Add(victim);
+        recycleAbleObject.Recycle();
     }
 
     private void OnDisable()
     {
+        rigidbody.velocity=Vector3.zero;
         attacked.Clear();
     }
 }

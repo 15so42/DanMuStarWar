@@ -2,14 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using UnityEditor.VersionControl;
+using Photon.Pun;
 using UnityEngine;
 using Random = System.Random;
 
 /// <summary>
 /// 局内处理
 /// </summary>
-public class RoundManager
+public class RoundManager : MonoBehaviour
 {
     
     private float timer = 0;
@@ -34,6 +34,7 @@ public class RoundManager
         EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
         EventCenter.AddListener<int,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
         fightingManager.StartCoroutine(ParseGiftList());
+        elapsedTime = 0;
     }
 
     
@@ -55,12 +56,23 @@ public class RoundManager
     public void Stop()
     {
         EventCenter.RemoveListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
+        EventCenter.RemoveListener<int,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
         // 清除所有协程StopAllCoru();
         fightingManager.StopAllCoroutines();
+        elapsedTime = 0;
+        voted.Clear();
+        players.Clear();
     }
 
     private void OnDanMuReceived(string userName,int uid,string time,string text)
     {
+        if (PhotonLauncher.playMode == PlayMode.Photon)
+        {
+            var photonView = GetComponent<PhotonView>();
+            photonView.RPC(nameof(ParseCommand),RpcTarget.All, uid,text);
+        }
+       
+        
         ParseCommand(uid,text);
         
         
@@ -419,8 +431,9 @@ public class RoundManager
         gameManager.uiManager.UpdateMapVoteUi(normalModeCounter,battleGroundModeCounter);
     }
     
+    [PunRPC]
     //解析命令
-    private void ParseCommand(int uid, string text,bool multipleCmd=true)
+    private void ParseCommand(int uid, string text)
     {
         var user = GetPlayerByUid(uid);
         var validUser = user != null;
@@ -464,20 +477,20 @@ public class RoundManager
         //string sPattern= @"([mMsShHyY]{1}(\d){1})+";
         string sPattern= @"^((m|M){1}(\d{1}))+$";
         
-        if (multipleCmd && Regex.IsMatch(trim, sPattern))
-        {
-            Debug.Log("复合命令:"+trim);
-            if (trim.Length % 2 == 0)
-            {
-                for (int i = 0; i < trim.Length; i += 2)
-                {
-                    ParseCommand(uid,trim.Substring(i,2),false);
-                }
-            }
-            
-            return;
-            
-        }
+        // if (multipleCmd && Regex.IsMatch(trim, sPattern))
+        // {
+        //     Debug.Log("复合命令:"+trim);
+        //     if (trim.Length % 2 == 0)
+        //     {
+        //         for (int i = 0; i < trim.Length; i += 2)
+        //         {
+        //             ParseCommand(uid,trim.Substring(i,2),false);
+        //         }
+        //     }
+        //     
+        //     return;
+        //     
+        // }
 
         if (fightingManager.gameMode == GameMode.Normal || fightingManager.gameMode==GameMode.BattleGround)
         {

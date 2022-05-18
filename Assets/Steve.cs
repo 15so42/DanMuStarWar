@@ -118,7 +118,7 @@ public class Steve : WarPlane
         else
         {
             MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"自动抽取失败，点数不足");
-            var liveWeapon = ChangeWeapon(0);
+            var liveWeapon = ChangeWeapon(7);
             hpUI.SetWeaponText(liveWeapon.weaponName);
         }
     }
@@ -295,11 +295,14 @@ public class Steve : WarPlane
         planetCommander.AddPoint(1);
         (planetCommander as SteveCommander).battleUnits.Remove(this);
         EventCenter.Broadcast(EnumEventType.OnSteveDied,this);
-        base.Die();
         
         //保存武器
         var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
         (liveWeapon as HandWeapon).SaveToCommander();
+        
+        base.Die();
+        
+       
     }
     
     public override void OnSlainOther()

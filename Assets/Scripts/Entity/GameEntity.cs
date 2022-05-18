@@ -199,7 +199,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    public virtual void OnAttackOther(IVictimAble victimAble, AttackInfo attackInfo)
    {
       //throw new NotImplementedException();
-      if (attackInfo.attackType != AttackType.Heal && (GameEntity) attackInfo.attacker!=this)
+      if (attackInfo.attackType != AttackType.Heal && (GameEntity) victimAble!=this)
       {
          onAttackOther?.Invoke(victimAble,attackInfo.value);
       }
