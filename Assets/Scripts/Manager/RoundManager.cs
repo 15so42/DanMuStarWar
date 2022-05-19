@@ -607,10 +607,10 @@ public class RoundManager : MonoBehaviour
                 ParseRandomSpell(steveCommander,false,false);
             }
 
-            // if (trim == "维修")
-            // {
-            //     ParseFixWeapon(steveCommander);
-            // }
+            if (trim == "维修")
+            {
+                ParseFixWeapon(steveCommander);
+            }
 
             if (trim == "兑换生命")
             {
@@ -839,7 +839,7 @@ public class RoundManager : MonoBehaviour
             
         }
         
-        if (giftName == "风吟")
+        if (giftName == "白银宝箱")
         {
             //特殊武器
             ParseRareWeapon(steveCommander);
