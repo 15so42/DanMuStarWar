@@ -4881,7 +4881,7 @@ MonoBehaviour:
   attackDistance: 25
   owner: {fileID: 0}
   weaponName: "\u5F13"
-  attackSpeed: 0.5
+  attackSpeed: 0.3
   scatteringAngel: 0
   rayDistance: 20
   attackType: 0
@@ -4901,8 +4901,8 @@ MonoBehaviour:
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
   rareRandomStrs: []
-  maxEndurance: 35
-  endurance: 35
+  maxEndurance: 45
+  endurance: 45
   pushBackHeight: 4
   pushBackStrength: 1
   shootPoint: {fileID: 826501389}
@@ -6088,8 +6088,8 @@ MonoBehaviour:
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
   rareRandomStrs: []
-  maxEndurance: 20
-  endurance: 20
+  maxEndurance: 30
+  endurance: 30
   pushBackHeight: 5
   pushBackStrength: 1
 --- !u!1001 &909279941
@@ -6222,8 +6222,8 @@ MonoBehaviour:
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
   rareRandomStrs: []
-  maxEndurance: 20
-  endurance: 20
+  maxEndurance: 30
+  endurance: 30
   pushBackHeight: 5
   pushBackStrength: 1
 --- !u!1001 &1378386973
@@ -6356,8 +6356,8 @@ MonoBehaviour:
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
   rareRandomStrs: []
-  maxEndurance: 50
-  endurance: 50
+  maxEndurance: 60
+  endurance: 60
   pushBackHeight: 5
   pushBackStrength: 1
 --- !u!1001 &1692572460
@@ -6490,8 +6490,8 @@ MonoBehaviour:
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
   rareRandomStrs: []
-  maxEndurance: 30
-  endurance: 30
+  maxEndurance: 40
+  endurance: 40
   pushBackHeight: 5
   pushBackStrength: 1
 --- !u!1001 &1710311627
@@ -6624,8 +6624,8 @@ MonoBehaviour:
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
   rareRandomStrs: []
-  maxEndurance: 40
-  endurance: 40
+  maxEndurance: 50
+  endurance: 50
   pushBackHeight: 5
   pushBackStrength: 1
 --- !u!1001 &1916061556
@@ -7227,13 +7227,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 295026220649352987, guid: 4e7d335b0b435f7449978791ed7c9eec,
         type: 3}
+      propertyPath: endurance
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 295026220649352987, guid: 4e7d335b0b435f7449978791ed7c9eec,
+        type: 3}
+      propertyPath: attackSpeed
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 295026220649352987, guid: 4e7d335b0b435f7449978791ed7c9eec,
+        type: 3}
       propertyPath: invokeDelay
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 295026220649352987, guid: 4e7d335b0b435f7449978791ed7c9eec,
         type: 3}
       propertyPath: maxEndurance
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 295026220649352987, guid: 4e7d335b0b435f7449978791ed7c9eec,
         type: 3}

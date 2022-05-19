@@ -726,7 +726,11 @@ public class RoundManager : MonoBehaviour
     
     void ParseAddMaxHp(SteveCommander steveCommander,bool byGift)
     {
-        
+        if (byGift)
+        {
+            steveCommander.desireMaxHp ++ ;
+        }
+       
         var validSteve = steveCommander.FindFirstValidSteve();
         if (!validSteve)
             return;
