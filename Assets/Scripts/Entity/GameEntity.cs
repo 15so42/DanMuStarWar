@@ -108,7 +108,14 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
       if (attackInfo.attackType != AttackType.Heal)
       {
          attackInfo.attacker?.OnAttackOther(this, attackInfo);
+         FlyText.Instance.ShowDamageText(transform.position+Vector3.up,attackInfo.value+"");
       }
+      else
+      {
+         FlyText.Instance.ShowHealText(transform.position+Vector3.up,attackInfo.value+"");
+      }
+      
+     
 
       if(attackInfo.attackType!=AttackType.Heal && (GameEntity) attackInfo.attacker!=this)
          onAttacked?.Invoke(attackInfo.value);

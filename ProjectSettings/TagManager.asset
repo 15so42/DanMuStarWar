@@ -6,6 +6,7 @@ TagManager:
   tags:
   - pos
   - Bullet
+  - Main Canvas
   layers:
   - Default
   - TransparentFX
