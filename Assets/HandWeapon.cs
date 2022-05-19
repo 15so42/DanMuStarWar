@@ -13,20 +13,17 @@ public class HandWeapon : Weapon
     
     private Transform root;
     [HideInInspector] public Animator animator;
+    
+    
+    //附魔用nbt代替
+    public SteveWeaponNbt weaponNbt;
 
-    //public int stoppingDistance=5;
-
-    //附魔
-    public int vampire = 0;//吸血
-    public int fire = 0;//火焰附加
-    public int parry = 0;//招架
+    [Header("附魔列表")] public List<string> randomStrs = new List<string>();
+    [Header("高阶附魔")] public List<string> rareRandomStrs=new List<string>();
 
     [Header("最大耐久")] public int maxEndurance=15;
     [Header("耐久")] public int endurance;
-
-    private UnityEvent<IVictimAble,int> vampireDelegate;
-    private UnityEvent fireDelegate;
-    private UnityEvent parryDelegate;
+    
 
     [Header("击飞高度和力度")]
     public int pushBackHeight=4;
@@ -45,6 +42,21 @@ public class HandWeapon : Weapon
         endurance = maxEndurance;
         OnEnduranceChange(endurance,maxEndurance);
 
+        weaponNbt=new SteveWeaponNbt();
+        
+        AddEvent();
+    }
+
+    void AddEvent()
+    {
+        
+        owner.onAttackOther += OnAttackOther;
+        
+        owner.onBeforeAttacked += OnBeforeAttacked;
+
+        owner.onAttacked += OnAttacked;
+        owner.onSlainOther += OnSlainOther;
+
     }
 
     public void AddEndurance(int value)
@@ -53,65 +65,45 @@ public class HandWeapon : Weapon
         OnEnduranceChange(endurance,maxEndurance);
     }
 
-    public virtual void Load(int endurance,int vampire,int fire,int parry)
+    public virtual void Load(SteveWeaponNbt weaponNbt)
     {
-        this.endurance = endurance;
-        this.vampire = vampire;
-        this.fire = fire;
-        this.parry = parry;
+        if(weaponNbt==null)//没有nbt数据
+            return;
+        this.endurance = weaponNbt.endurance;
+        this.weaponNbt = weaponNbt;
+        
         OnSpellChange();
         OnEnduranceChange(endurance,maxEndurance);
+        
     }
+
+  
 
     public void SaveToCommander()
     {
         var steveCommander = owner.planetCommander as SteveCommander;
         if(steveCommander==null)
             return;
-        steveCommander.weaponSaved = true;
+        
+        
+        steveCommander.steveWeaponNbt = this.weaponNbt;
         steveCommander.desireWeaponId = mcWeaponId;
-        steveCommander.endurance = endurance;
-        steveCommander.fire = fire;
-        steveCommander.vampire = vampire;
-        steveCommander.parry = parry;
+        
     }
 
     //随机附魔
-    public void RandomSpell()
+    public void RandomSpell(bool rare)
     {
-        
-        var random0 = UnityEngine.Random.Range(0, 3);
-        if (random0 == 0)
-        {
-            if(vampire==1)
-                MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔失败");
-            else
-            {
-                MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔-吸血");
-            }
-            vampire = 1;
-        }
 
-        if (random0 == 1)
+        var spellStr = randomStrs[UnityEngine.Random.Range(0, randomStrs.Count)];
+        if (GetWeaponLevelByNbt(spellStr) > 0)
         {
-            if(fire==1)
-                MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔失败");
-            else
-            {
-                MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔-火焰");
-            }
-            fire = 1;
+            MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔失败");
         }
-
-        if (random0 == 2)
+        else
         {
-            if(parry==1)
-                MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔失败");
-            else
-            {
-                MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔-格挡");
-            }
-            parry = 1;
+            MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔"+spellStr);
+            SetWeaponLevel(spellStr, 1);
         }
             
             
@@ -122,26 +114,14 @@ public class HandWeapon : Weapon
     public void OnSpellChange()
     {
         var str = "";
-        if (vampire > 0)
+        for (int i = 0; i < weaponNbt.enhancementLevels.Count; i++)
         {
-            if(owner.onAttackOther==null)
-                owner.onAttackOther += OnAttackOther;
-            str += "|吸血";
+            if (weaponNbt.enhancementLevels[i].level>0)
+            {
+                str += "|" + weaponNbt.enhancementLevels[i].enhancementName;
+            }
         }
-
-        if (parry > 0)
-        {
-            if(owner.onAttacked==null)
-                owner.onBeforeAttacked += Parry;
-            str += "|格挡";
-        }
-
-        if (fire > 0)
-        {
-            if(owner.onAttackOther==null)
-                owner.onAttackOther += OnAttackOther;
-            str += "|火焰";
-        }
+        
         owner.hpUI.SetWeaponText(weaponName+str);
     }
 
@@ -169,6 +149,7 @@ public class HandWeapon : Weapon
     public void OnEnduranceChange(int endurance,int maxEndurance)
     {
         (owner as Steve).UpdateWeaponEndurance(endurance,maxEndurance);
+        weaponNbt.endurance = endurance;
     }
 
     public void Damage()
@@ -187,12 +168,12 @@ public class HandWeapon : Weapon
     //吸血
     public void OnAttackOther(IVictimAble victimAble,int damage)
     {
-        if (fire > 0)
+        if (GetWeaponLevelByNbt("火焰") > 0)
         {
             if(victimAble.GetVictimEntity())
                 SkillManager.Instance.AddSkill("Skill_着火_LV1",victimAble.GetVictimEntity(),owner.planetCommander);
         }
-        if(vampire>0)
+        if(GetWeaponLevelByNbt("吸血")>0)
             owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,(int)(damage*0.25f)));
     }
 
@@ -202,25 +183,66 @@ public class HandWeapon : Weapon
        
     }
 
-    public AttackInfo Parry(AttackInfo attackInfo)
+    public void OnSlainOther()
     {
-        if(UnityEngine.Random.Range(0, 2) > 0)
+        if (GetWeaponLevelByNbt("凯旋")>0)
         {
-            attackInfo.value /= 2;
-            Debug.Log("格挡");
+            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,10));    
+        }
+    }
+
+    public AttackInfo OnBeforeAttacked(AttackInfo attackInfo)
+    {
+        if (GetWeaponLevelByNbt("格挡") > 0)
+        {
+            if(UnityEngine.Random.Range(0, 2) > 0)
+            {
+                attackInfo.value /= 2;
+                Debug.Log("格挡");
+            }
+
+            
         }
 
         return attackInfo;
+    }
+
+    public int GetWeaponLevelByNbt(string key)
+    {
+        EnhancementLevel ret = null;
+        ret = weaponNbt.enhancementLevels.Find(x => x.enhancementName == key);
+        if (ret == null)
+            return 0;
+        else
+        {
+            return ret.level;
+        }
+    }
+
+    public void SetWeaponLevel(string key, int level)
+    {
+        EnhancementLevel ret = null;
+        ret = weaponNbt.enhancementLevels.Find(x => x.enhancementName == key);
+        if (ret == null)
+        {
+            weaponNbt.enhancementLevels.Add(new EnhancementLevel(key,level));
+            
+            return;
+        }
+        else
+        {
+            ret.level = level;
+        }
     }
 
 
     private void OnDisable()
     {
         //清除所有事件绑定
-        owner.onAttacked =null;
+        owner.onAttacked -= OnAttacked;
        
-        owner.onAttackOther =null;
-        owner.onBeforeAttacked = null;
+        owner.onAttackOther -= OnAttackOther ;
+        owner.onBeforeAttacked -= OnBeforeAttacked;
 
     }
 }

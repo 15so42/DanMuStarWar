@@ -55,13 +55,9 @@ public class Steve : WarPlane
         var steveCommander = (planetCommander as SteveCommander);
         if (steveCommander == null)
             return null;
-        if (steveCommander.weaponSaved==false)
-        {
-            return null;
-        }//武器有改动过
+        
         var liveWeapon=ChangeWeapon(steveCommander.desireWeaponId);
-        (liveWeapon as HandWeapon).Load(steveCommander.endurance, steveCommander.vampire
-            , steveCommander.fire, steveCommander.parry);
+        (liveWeapon as HandWeapon).Load(steveCommander.steveWeaponNbt);
 
         return liveWeapon; 
     }
@@ -103,6 +99,10 @@ public class Steve : WarPlane
 
     public void RandomWeapon()
     {
+        if(die)
+            return;
+        
+        Debug.Log("抽取武器");
         var steveCommander = (planetCommander as SteveCommander);
         if (steveCommander != null && steveCommander.point > 6)
         {
@@ -118,15 +118,15 @@ public class Steve : WarPlane
         else
         {
             MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"自动抽取失败，点数不足");
-            var liveWeapon = ChangeWeapon(7);
+            var liveWeapon = ChangeWeapon(0);
             hpUI.SetWeaponText(liveWeapon.weaponName);
         }
     }
 
-    public void RandomSpell()
+    public void RandomSpell(bool rare)
     {
         var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
-        (liveWeapon as HandWeapon).RandomSpell();
+        (liveWeapon as HandWeapon).RandomSpell(rare);
     }
     
     public Vector3 GetPos(int index)

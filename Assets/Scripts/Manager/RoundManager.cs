@@ -430,6 +430,8 @@ public class RoundManager : MonoBehaviour
 
         gameManager.uiManager.UpdateMapVoteUi(normalModeCounter,battleGroundModeCounter);
     }
+
+  
     
     [PunRPC]
     //解析命令
@@ -615,7 +617,8 @@ public class RoundManager : MonoBehaviour
                 ParseAddMaxHp(steveCommander,false);
             }
             
-            MessageBox._instance.AddMessage("["+user.userName+"]:"+trim);
+            //MessageBox._instance.AddMessage("["+user.userName+"]:"+trim);
+            LogTip(steveCommander,trim);
         }
 
     }
@@ -682,6 +685,15 @@ public class RoundManager : MonoBehaviour
         
     }
     
+    public void LogTip(SteveCommander steveCommander,string trim)
+    {
+        var validSteve = steveCommander.FindFirstValidSteve();
+        if (!validSteve)
+            return;
+
+        validSteve.LogTip(trim);
+    }
+    
     void ParseRandomSpell(SteveCommander steveCommander)
     {
         
@@ -694,7 +706,7 @@ public class RoundManager : MonoBehaviour
             steveCommander.commanderUi.LogTip("需要点数:8");
             return;
         }
-        validSteve.RandomSpell();
+        validSteve.RandomSpell(false);
         steveCommander.AddPoint(-8);
     }
     

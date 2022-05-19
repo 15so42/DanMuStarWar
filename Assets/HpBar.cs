@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Microsoft.Win32;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityTimer;
+using Sequence = Bolt.Sequence;
 
 public class HpBar : MonoBehaviour
 {
@@ -140,6 +142,7 @@ public class HpBar : MonoBehaviour
         
     }
 
+    private DG.Tweening.Sequence sequence;
     public void LogTip(string msg)
     {
         if(gameObject==null)
@@ -147,6 +150,10 @@ public class HpBar : MonoBehaviour
         tipText.gameObject.SetActive(true);
         tipText.text = msg;
         logTimer?.Cancel();
+        sequence?.Kill();
+        tipText.transform.position = hpFill.transform.position;
+        sequence = tipText.transform.DOLocalJump(tipText.transform.localPosition + Vector3.up * 50, 0.5f, 1, 0.5f);
+        
         logTimer = UnityTimer.Timer.Register(6, () =>
         {
             if(tipText==null)

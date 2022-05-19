@@ -4889,9 +4889,15 @@ MonoBehaviour:
   addAtkDistanceByDP: 1
   mcWeaponId: 6
   animator: {fileID: 0}
-  vampire: 0
-  fire: 0
-  parry: 0
+  weaponNbt:
+    endurance: 0
+    enhancementLevels: []
+  randomStrs:
+  - "\u706B\u7130"
+  - "\u5438\u8840"
+  - "\u683C\u6321"
+  - "\u51EF\u65CB"
+  rareRandomStrs: []
   maxEndurance: 35
   endurance: 35
   pushBackHeight: 4
@@ -5054,9 +5060,11 @@ MonoBehaviour:
   addAtkDistanceByDP: 0
   mcWeaponId: 0
   animator: {fileID: 0}
-  vampire: 0
-  fire: 0
-  parry: 0
+  weaponNbt:
+    endurance: 0
+    enhancementLevels: []
+  randomStrs: []
+  rareRandomStrs: []
   maxEndurance: 0
   endurance: 0
   pushBackHeight: 4
@@ -5873,9 +5881,15 @@ MonoBehaviour:
   addAtkDistanceByDP: 0
   mcWeaponId: 0
   animator: {fileID: 0}
-  vampire: 0
-  fire: 0
-  parry: 0
+  weaponNbt:
+    endurance: 0
+    enhancementLevels: []
+  randomStrs:
+  - "\u706B\u7130"
+  - "\u5438\u8840"
+  - "\u683C\u6321"
+  - "\u51EF\u65CB"
+  rareRandomStrs: []
   maxEndurance: 200
   endurance: 200
   pushBackHeight: 5
@@ -6063,9 +6077,15 @@ MonoBehaviour:
   addAtkDistanceByDP: 0
   mcWeaponId: 3
   animator: {fileID: 0}
-  vampire: 0
-  fire: 0
-  parry: 0
+  weaponNbt:
+    endurance: 0
+    enhancementLevels: []
+  randomStrs:
+  - "\u706B\u7130"
+  - "\u5438\u8840"
+  - "\u683C\u6321"
+  - "\u51EF\u65CB"
+  rareRandomStrs: []
   maxEndurance: 20
   endurance: 20
   pushBackHeight: 5
@@ -6188,9 +6208,15 @@ MonoBehaviour:
   addAtkDistanceByDP: 0
   mcWeaponId: 1
   animator: {fileID: 0}
-  vampire: 0
-  fire: 0
-  parry: 0
+  weaponNbt:
+    endurance: 0
+    enhancementLevels: []
+  randomStrs:
+  - "\u706B\u7130"
+  - "\u5438\u8840"
+  - "\u683C\u6321"
+  - "\u51EF\u65CB"
+  rareRandomStrs: []
   maxEndurance: 20
   endurance: 20
   pushBackHeight: 5
@@ -6313,9 +6339,15 @@ MonoBehaviour:
   addAtkDistanceByDP: 0
   mcWeaponId: 5
   animator: {fileID: 0}
-  vampire: 0
-  fire: 0
-  parry: 0
+  weaponNbt:
+    endurance: 0
+    enhancementLevels: []
+  randomStrs:
+  - "\u706B\u7130"
+  - "\u5438\u8840"
+  - "\u683C\u6321"
+  - "\u51EF\u65CB"
+  rareRandomStrs: []
   maxEndurance: 50
   endurance: 50
   pushBackHeight: 5
@@ -6438,9 +6470,15 @@ MonoBehaviour:
   addAtkDistanceByDP: 0
   mcWeaponId: 2
   animator: {fileID: 0}
-  vampire: 0
-  fire: 0
-  parry: 0
+  weaponNbt:
+    endurance: 0
+    enhancementLevels: []
+  randomStrs:
+  - "\u706B\u7130"
+  - "\u5438\u8840"
+  - "\u683C\u6321"
+  - "\u51EF\u65CB"
+  rareRandomStrs: []
   maxEndurance: 30
   endurance: 30
   pushBackHeight: 5
@@ -6563,9 +6601,15 @@ MonoBehaviour:
   addAtkDistanceByDP: 0
   mcWeaponId: 4
   animator: {fileID: 0}
-  vampire: 0
-  fire: 0
-  parry: 0
+  weaponNbt:
+    endurance: 0
+    enhancementLevels: []
+  randomStrs:
+  - "\u706B\u7130"
+  - "\u5438\u8840"
+  - "\u683C\u6321"
+  - "\u51EF\u65CB"
+  rareRandomStrs: []
   maxEndurance: 40
   endurance: 40
   pushBackHeight: 5
@@ -7181,6 +7225,31 @@ PrefabInstance:
         type: 3}
       propertyPath: animTriggerName
       value: Throw
+      objectReference: {fileID: 0}
+    - target: {fileID: 295026220649352987, guid: 4e7d335b0b435f7449978791ed7c9eec,
+        type: 3}
+      propertyPath: randomStrs.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 295026220649352987, guid: 4e7d335b0b435f7449978791ed7c9eec,
+        type: 3}
+      propertyPath: randomStrs.Array.data[0]
+      value: "\u706B\u7130"
+      objectReference: {fileID: 0}
+    - target: {fileID: 295026220649352987, guid: 4e7d335b0b435f7449978791ed7c9eec,
+        type: 3}
+      propertyPath: randomStrs.Array.data[1]
+      value: "\u5438\u8840"
+      objectReference: {fileID: 0}
+    - target: {fileID: 295026220649352987, guid: 4e7d335b0b435f7449978791ed7c9eec,
+        type: 3}
+      propertyPath: randomStrs.Array.data[2]
+      value: "\u683C\u6321"
+      objectReference: {fileID: 0}
+    - target: {fileID: 295026220649352987, guid: 4e7d335b0b435f7449978791ed7c9eec,
+        type: 3}
+      propertyPath: randomStrs.Array.data[3]
+      value: "\u51EF\u65CB"
       objectReference: {fileID: 0}
     - target: {fileID: 5884236140117475635, guid: 4e7d335b0b435f7449978791ed7c9eec,
         type: 3}

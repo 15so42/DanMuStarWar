@@ -12,13 +12,16 @@ public class SteveCommander : PlanetCommander
     //记录自己控制的单位
     public List<Steve> battleUnits=new List<Steve>();
 
+
+    public SteveWeaponNbt steveWeaponNbt;
     //武器耐久
-    public bool weaponSaved;
+    // public bool weaponSaved;
     public int desireWeaponId;
-    public int endurance;//武器耐久值
-    public int vampire = 0;
-    public int fire = 0;
-    public int parry = 0;
+    // public int endurance;//武器耐久值
+    // public int vampire = 0;
+    // public int fire = 0;
+    // public int parry = 0;
+    // public int triumph = 0;
     
     
     //复活timer
@@ -77,7 +80,8 @@ public class SteveCommander : PlanetCommander
                 return;
             var time = FightingManager.Instance.roundManager.elapsedTime/10;
             time *= 0.6f;
-            (commanderUi as SteveCommanderUi)?.StartCountDown((int)time);
+            if(commanderUi!=null)
+                (commanderUi as SteveCommanderUi)?.StartCountDown((int)time);
             unityTimer?.Cancel();
             unityTimer=Timer.Register(time, () => { CreateSteve(); });
         }

@@ -71,7 +71,7 @@ public class NavMeshMoveManager : MoveManager
                 navMeshAgent.nextPosition = transform.position;
                 navMeshAgent.updatePosition = true;
                 rigidbody.isKinematic = true;
-                Debug.Log("落地");
+                //Debug.Log("落地");
                 yield break;
             }
 

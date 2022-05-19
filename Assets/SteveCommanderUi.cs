@@ -25,6 +25,7 @@ public class SteveCommanderUi : CommanderUI
 
     public void StartCountDown(int time)
     {
+        
         StopAllCoroutines();
         StartCoroutine(RespawnCountDown(time));
     }

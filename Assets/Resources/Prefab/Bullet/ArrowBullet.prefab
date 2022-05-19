@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4067413289378705714}
   - component: {fileID: 4321251868669868009}
   - component: {fileID: 7279337312995709216}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ArrowBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 9021431140277381818}
   - component: {fileID: 9021431140276537106}
   - component: {fileID: 9021431140275333116}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: ArrowBullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
