@@ -35,6 +35,9 @@ public class TntBullet : ArrowBullet
 
     private void OnCollisionEnter(Collision other)
     {
+        if(other.collider.gameObject==owner.GetAttackEntity().gameObject)
+            return;
+        
         if (sticky)
         {
             transform.SetParent(other.transform);

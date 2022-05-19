@@ -9,10 +9,10 @@ public class TntWeapon : BowWeapon
   
     public override void InitArrow(ArrowBullet arrowComp,Vector3 dir)
     {
-        var bowStrength = GetWeaponLevelByNbt("黏性");
+        var sticky = GetWeaponLevelByNbt("黏性")>0;
         (arrowComp as TntBullet).Init(owner, dir);
 
-        (arrowComp as TntBullet).SetSticky(true);
+        (arrowComp as TntBullet).SetSticky(sticky);
     }
     
 }

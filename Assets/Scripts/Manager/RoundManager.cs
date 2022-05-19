@@ -834,16 +834,19 @@ public class RoundManager : MonoBehaviour
 
         if (giftName == "这个好诶")
         {
-            ParseRespawn(uid,true);
+            //ParseRespawn(uid,true);
             //ParseAddMaxHp(steveCommander);
             
-        }
-        
-        if (giftName == "白银宝箱")
-        {
+            
             //特殊武器
             ParseRareWeapon(steveCommander);
         }
+        
+        // if (giftName == "白银宝盒")
+        // {
+        //     //特殊武器
+        //     ParseRareWeapon(steveCommander);
+        // }
 
         if (giftName == "牛哇牛哇")
         {

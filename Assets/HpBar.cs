@@ -51,6 +51,9 @@ public class HpBar : MonoBehaviour
 
     public void UpdateWeaponEndurance(int endurance, int maxEndurance)
     {
+        if(gameObject==null)
+            return;
+        
         weaponEnduranceBg.gameObject.SetActive(true);
         weaponEnduranceFill.fillAmount = (float) endurance / (float)maxEndurance;
     }

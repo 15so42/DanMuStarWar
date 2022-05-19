@@ -88,7 +88,7 @@ public class Steve : WarPlane
         
         liveWeapon.gameObject.SetActive(true);
         liveWeapon.Init(this);
-        
+        hpUI.SetWeaponText(liveWeapon.weaponName);
         return liveWeapon;
     }
 
