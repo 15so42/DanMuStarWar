@@ -91,10 +91,29 @@ public class HandWeapon : Weapon
         
     }
 
+    public bool TryRandomSpell(bool byGift)
+    {
+        if (weaponNbt.enhancementLevels.Count >= 3 && !byGift)
+        {
+            MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔已达上限，投喂打call可继续附魔");
+
+            return false;
+        }
+
+        if (weaponNbt.enhancementLevels.Count >= randomStrs.Count )
+        {
+            MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"已获得所有附魔,无法再附魔了");
+            return false;
+        }
+
+        return true;
+    }
+
     //随机附魔
     public void RandomSpell(bool rare)
     {
 
+        
         var spellStr = randomStrs[UnityEngine.Random.Range(0, randomStrs.Count)];
         if (GetWeaponLevelByNbt(spellStr) > 0)
         {
@@ -142,8 +161,25 @@ public class HandWeapon : Weapon
     {
         animator.SetTrigger("Attack");
         Invoke(nameof(Damage),0.3f);
-        endurance--;
-        OnEnduranceChange(endurance,maxEndurance);
+        if (GetWeaponLevelByNbt("耐久") > 0)
+        {
+            var random=UnityEngine.Random.Range(0, 3);
+            if (random == 0)
+            {
+                //不扣除耐久
+            }
+            else
+            {
+                endurance--;
+                OnEnduranceChange(endurance,maxEndurance);
+            }
+        }
+        else
+        {
+            endurance--;
+            OnEnduranceChange(endurance,maxEndurance);
+        }
+        
     }
 
     public void OnEnduranceChange(int endurance,int maxEndurance)
@@ -175,6 +211,8 @@ public class HandWeapon : Weapon
         }
         if(GetWeaponLevelByNbt("吸血")>0)
             owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,(int)(damage*0.25f)));
+
+        
     }
 
     //招架
@@ -189,6 +227,11 @@ public class HandWeapon : Weapon
         {
             owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,10));    
         }
+
+        if (GetWeaponLevelByNbt("经验修补") > 0)
+        {
+            AddEndurance(maxEndurance/3);
+        }
     }
 
     public AttackInfo OnBeforeAttacked(AttackInfo attackInfo)
@@ -200,8 +243,11 @@ public class HandWeapon : Weapon
                 attackInfo.value /= 2;
                 Debug.Log("格挡");
             }
-
             
+        }
+        if (GetWeaponLevelByNbt("锋利") > 0)
+        {
+            attackInfo.value=(int)(attackInfo.value*1.25f);
         }
 
         return attackInfo;

@@ -123,6 +123,12 @@ public class Steve : WarPlane
         }
     }
 
+    public bool TryRandomSpell(bool byGift)
+    {
+        var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
+        return (liveWeapon as HandWeapon).TryRandomSpell(byGift);
+    }
+    
     public void RandomSpell(bool rare)
     {
         var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);

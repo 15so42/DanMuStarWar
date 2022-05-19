@@ -33,6 +33,8 @@ public class HpBar : MonoBehaviour
     public Image weaponEnduranceFill;
     public UnityTimer.Timer logTimer;
     private Camera mainCamera;
+
+    public Transform tipTextBg;
     private void Awake()
     {
         mainCamera=Camera.main;
@@ -147,18 +149,22 @@ public class HpBar : MonoBehaviour
     {
         if(gameObject==null)
             return;
+        tipTextBg.gameObject.SetActive(true);
         tipText.gameObject.SetActive(true);
+        
         tipText.text = msg;
         logTimer?.Cancel();
         sequence?.Kill();
-        tipText.transform.position = hpFill.transform.position;
-        sequence = tipText.transform.DOLocalJump(tipText.transform.localPosition + Vector3.up * 50, 0.5f, 1, 0.5f);
+        
+        tipTextBg.transform.position = hpFill.transform.position;
+        sequence = tipTextBg.transform.DOLocalJump(tipTextBg.transform.localPosition + Vector3.up * 50, 0.5f, 1, 0.5f);
         
         logTimer = UnityTimer.Timer.Register(6, () =>
         {
             if(tipText==null)
                 return;
             tipText.gameObject.SetActive(false);
+            tipTextBg.gameObject.SetActive(false);
         });
     }
     

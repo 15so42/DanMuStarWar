@@ -604,13 +604,13 @@ public class RoundManager : MonoBehaviour
 
             if (trim == "附魔")
             {
-                ParseRandomSpell(steveCommander);
+                ParseRandomSpell(steveCommander,false,false);
             }
 
-            if (trim == "维修")
-            {
-                ParseFixWeapon(steveCommander);
-            }
+            // if (trim == "维修")
+            // {
+            //     ParseFixWeapon(steveCommander);
+            // }
 
             if (trim == "兑换生命")
             {
@@ -694,20 +694,34 @@ public class RoundManager : MonoBehaviour
         validSteve.LogTip(trim);
     }
     
-    void ParseRandomSpell(SteveCommander steveCommander)
+    void ParseRandomSpell(SteveCommander steveCommander,bool rare,bool byGift)
     {
         
         var validSteve = steveCommander.FindFirstValidSteve();
         if (!validSteve)
             return;
         
-        if (steveCommander.point < 8)
+        if (steveCommander.point < 8 )
         {
-            steveCommander.commanderUi.LogTip("需要点数:8");
-            return;
+            if (!byGift)
+            {
+                steveCommander.commanderUi.LogTip("需要点数:8");
+                return;
+            }
+           
         }
-        validSteve.RandomSpell(false);
-        steveCommander.AddPoint(-8);
+
+        if (validSteve.TryRandomSpell(byGift))
+        {
+            validSteve.RandomSpell(rare);
+            if (!byGift)
+            {
+                steveCommander.AddPoint(-8);
+            }
+            
+        }
+            
+      
     }
     
     void ParseAddMaxHp(SteveCommander steveCommander,bool byGift)
@@ -717,7 +731,7 @@ public class RoundManager : MonoBehaviour
         if (!validSteve)
             return;
         if(byGift)
-            validSteve.AddMaxHp(5);
+            validSteve.AddMaxHp(1);
         else
         {
             if (steveCommander.point < 25)
@@ -810,13 +824,15 @@ public class RoundManager : MonoBehaviour
         if (giftName == "打call")
         {
             //ParseRespawn(uid,true);
-            ParseAddMaxHp(steveCommander,true);
+            //ParseAddMaxHp(steveCommander,true);
+            ParseRandomSpell(steveCommander,false,true);
         }
 
         if (giftName == "这个好诶")
         {
             ParseRespawn(uid,true);
             //ParseAddMaxHp(steveCommander);
+            
         }
         
         if (giftName == "风吟")
@@ -828,6 +844,11 @@ public class RoundManager : MonoBehaviour
         if (giftName == "牛哇牛哇")
         {
             ParseAddPoint(steveCommander);
+        }
+        
+        if (giftName == "i了i了")
+        {
+            ParseAddMaxHp(steveCommander,true);
         }
     }
 

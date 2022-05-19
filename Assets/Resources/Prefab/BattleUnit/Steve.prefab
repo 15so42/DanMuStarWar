@@ -4897,13 +4897,15 @@ MonoBehaviour:
   - "\u5438\u8840"
   - "\u683C\u6321"
   - "\u51EF\u65CB"
+  - "\u529B\u91CF"
+  - "\u8010\u4E45"
+  - "\u7ECF\u9A8C\u4FEE\u8865"
   rareRandomStrs: []
   maxEndurance: 35
   endurance: 35
   pushBackHeight: 4
   pushBackStrength: 1
   shootPoint: {fileID: 826501389}
-  bowStrength: 1
   bulletName: ArrowBullet
   animTriggerName: BowAttack
   invokeDelay: 0.6
@@ -5885,10 +5887,7 @@ MonoBehaviour:
     endurance: 0
     enhancementLevels: []
   randomStrs:
-  - "\u706B\u7130"
-  - "\u5438\u8840"
   - "\u683C\u6321"
-  - "\u51EF\u65CB"
   rareRandomStrs: []
   maxEndurance: 200
   endurance: 200
@@ -6085,6 +6084,9 @@ MonoBehaviour:
   - "\u5438\u8840"
   - "\u683C\u6321"
   - "\u51EF\u65CB"
+  - "\u950B\u5229"
+  - "\u8010\u4E45"
+  - "\u7ECF\u9A8C\u4FEE\u8865"
   rareRandomStrs: []
   maxEndurance: 20
   endurance: 20
@@ -6216,6 +6218,9 @@ MonoBehaviour:
   - "\u5438\u8840"
   - "\u683C\u6321"
   - "\u51EF\u65CB"
+  - "\u950B\u5229"
+  - "\u8010\u4E45"
+  - "\u7ECF\u9A8C\u4FEE\u8865"
   rareRandomStrs: []
   maxEndurance: 20
   endurance: 20
@@ -6347,6 +6352,9 @@ MonoBehaviour:
   - "\u5438\u8840"
   - "\u683C\u6321"
   - "\u51EF\u65CB"
+  - "\u950B\u5229"
+  - "\u8010\u4E45"
+  - "\u7ECF\u9A8C\u4FEE\u8865"
   rareRandomStrs: []
   maxEndurance: 50
   endurance: 50
@@ -6478,6 +6486,9 @@ MonoBehaviour:
   - "\u5438\u8840"
   - "\u683C\u6321"
   - "\u51EF\u65CB"
+  - "\u950B\u5229"
+  - "\u8010\u4E45"
+  - "\u7ECF\u9A8C\u4FEE\u8865"
   rareRandomStrs: []
   maxEndurance: 30
   endurance: 30
@@ -6609,6 +6620,9 @@ MonoBehaviour:
   - "\u5438\u8840"
   - "\u683C\u6321"
   - "\u51EF\u65CB"
+  - "\u950B\u5229"
+  - "\u8010\u4E45"
+  - "\u7ECF\u9A8C\u4FEE\u8865"
   rareRandomStrs: []
   maxEndurance: 40
   endurance: 40
@@ -7229,7 +7243,7 @@ PrefabInstance:
     - target: {fileID: 295026220649352987, guid: 4e7d335b0b435f7449978791ed7c9eec,
         type: 3}
       propertyPath: randomStrs.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 295026220649352987, guid: 4e7d335b0b435f7449978791ed7c9eec,
         type: 3}
@@ -7250,6 +7264,11 @@ PrefabInstance:
         type: 3}
       propertyPath: randomStrs.Array.data[3]
       value: "\u51EF\u65CB"
+      objectReference: {fileID: 0}
+    - target: {fileID: 295026220649352987, guid: 4e7d335b0b435f7449978791ed7c9eec,
+        type: 3}
+      propertyPath: randomStrs.Array.data[4]
+      value: "\u9ECF\u6027"
       objectReference: {fileID: 0}
     - target: {fileID: 5884236140117475635, guid: 4e7d335b0b435f7449978791ed7c9eec,
         type: 3}

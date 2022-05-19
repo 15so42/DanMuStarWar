@@ -8,6 +8,7 @@ public class TntBullet : ArrowBullet
 {
     private Material material;
 
+    private bool sticky = false;
    
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,13 @@ public class TntBullet : ArrowBullet
         
     }
 
+    public void SetSticky(bool status)
+    {
+        this.sticky = status;
+    }
+    
+    
+
     private void OnEnable()
     {
         StopAllCoroutines();
@@ -27,7 +35,11 @@ public class TntBullet : ArrowBullet
 
     private void OnCollisionEnter(Collision other)
     {
-        //DoNothing
+        if (sticky)
+        {
+            transform.SetParent(other.transform);
+            rigidbody.isKinematic = true;
+        }
     }
 
     IEnumerator TNTExplosion()
@@ -58,5 +70,12 @@ public class TntBullet : ArrowBullet
             //Debug.Log(gameObject.name+"Explosion一次");
             recycleAbleObject.Recycle();
         
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        SetSticky(false);
+        rigidbody.isKinematic = false;
     }
 }

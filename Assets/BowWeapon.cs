@@ -9,11 +9,13 @@ public class BowWeapon : HandWeapon
 {
     public Transform shootPoint;
     [Header("弓箭附魔力量等级")]
-    public int bowStrength;
+    
 
     public string bulletName="ArrowBullet";
     public string animTriggerName = "BowAttack";
     public float invokeDelay = 0.6f;
+    
+   
     
     public override void Fire()
     {
@@ -50,7 +52,21 @@ public class BowWeapon : HandWeapon
         dir = targetPos - transform.position;
         
         Debug.DrawRay(transform.position,dir);
-        arrowComp.Init(owner, dir,1);
+
+      
+       
+        InitArrow(arrowComp,dir);
+        
+        //arrowComp.Init(owner, dir,strength);
+    }
+    
+    
+
+    public virtual void InitArrow(ArrowBullet arrowComp,Vector3 dir)
+    {
+        var bowStrength = GetWeaponLevelByNbt("力量");
+        arrowComp.Init(owner, dir);
+        arrowComp.SetStrength(bowStrength);
     }
 
   

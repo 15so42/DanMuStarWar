@@ -434,6 +434,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
 
     public override void OnSlainOther()
     {
+        base.OnSlainOther();
         OnSlainOtherCount();
     }
    
