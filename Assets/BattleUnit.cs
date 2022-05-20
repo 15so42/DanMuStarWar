@@ -125,10 +125,35 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
             SetChaseTarget(entrant);
         }
     }
+
+
+    public virtual GameEntity OverLapEnemyInMc()
+    {
+        var colliders = Physics.OverlapSphere(transform.position, findEnemyDistance);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            var collider1 = colliders[i];
+            var gameEntity = collider1.GetComponent<GameEntity>();
+            if (!gameEntity) //不是单位
+                return null;
+
+            var gameEntityOwner = gameEntity.GetVictimOwner();
+            if (gameEntityOwner == GetAttackerOwner()) //同星球
+                return null;
+            
+            if (gameEntity.die) //已经死亡
+                return null;
+
+            // var targetPlanet = gameEntityOwner as Planet;
+            // if (targetPlanet == null) //如果只对敌对星球寻敌，而敌对星球不存在，或找到的单位不属于，不算作敌人
+            //     return null;
+        }
+
+        return null;
+    }
     
 
-    //不需要宣战状态，宣战后直接向目标星球前进，途中通过此函数寻找最近敌人，没找到的话直接进攻星球，否则性能消耗太高
-    //固定距离寻敌，
+    //星球大战模式专用，整个场景只有单位是碰撞体，因此不会漏寻敌，但是MC模式会漏寻敌，因为可能随机到场景的碰撞体
     public virtual GameEntity OverLapEnemy(bool onlyEnemyPlanet=true)
     {
         var colliders = Physics.OverlapSphere(transform.position, findEnemyDistance);

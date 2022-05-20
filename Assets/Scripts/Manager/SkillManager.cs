@@ -142,18 +142,18 @@ public class SkillManager : MonoBehaviour
     
     
     
-    public void AddSkill(string skillName, GameEntity target,PlanetCommander planetCommander)
+    public SkillBase AddSkill(string skillName, GameEntity target,PlanetCommander planetCommander)
     {
-        if (target.AddSkillCheck(skillName)==false)//可以添加重复的
+        if (target.AddSkillCheck(skillName)==false)
         {
-            return;
+            return null;
         }
         var skill = GetSkillInstance(skillName);
         skill.Init(target,planetCommander);
         var skillItemUi = GameObject.Instantiate(skillItemUiPfb).GetComponent<SkillItemUI>();
         skillItemUi.Init(skill);
         target.AddSkill(skillItemUi);
-        
+        return skill;
     }
 
     public void AddSkillToObj(string skillName, SkillContainer container)

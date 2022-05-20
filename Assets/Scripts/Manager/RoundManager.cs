@@ -820,10 +820,10 @@ public class RoundManager : MonoBehaviour
         if(steveCommander==null)
             return;
         
-        if (giftName == "小花花" || giftName=="辣条")
-        {
-            ParseCameraFocus(uid);
-        }
+        // if (giftName == "小花花" || giftName=="辣条")
+        // {
+        //     ParseCameraFocus(uid);
+        // }
 
         if (giftName == "打call")
         {

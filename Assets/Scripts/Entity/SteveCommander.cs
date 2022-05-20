@@ -48,6 +48,10 @@ public class SteveCommander : PlanetCommander
 
     public void CreateSteve()
     {
+        if (hangUp)
+        {
+            return;
+        }
         ownerPlanet.AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_STEVE,1),this));
         die = false;
     }
@@ -73,6 +77,8 @@ public class SteveCommander : PlanetCommander
 
     public void OnSteveDie(Steve steve)
     {
+        if(hangUp)
+            return;
         if (steve.planetCommander == this)
         {
             die = true;
@@ -99,6 +105,13 @@ public class SteveCommander : PlanetCommander
     public override void OnHangUp()
     {
         base.OnHangUp();
+        (commanderUi as SteveCommanderUi)?.OnHangUp();
+        for (int i = 0; i < battleUnits.Count; i++)
+        {
+            battleUnits[i].Die();
+        }
+
         
+
     }
 }

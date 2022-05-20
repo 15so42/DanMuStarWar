@@ -5564,7 +5564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data:
-    _json: '{"declarations":{"collection":{"$content":[],"$version":"A"},"$version":"A"}}'
+    _json: '{"declarations":{"collection":{"$content":[{"name":"escape","value":{"$content":false,"$type":"System.Boolean"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
     _objectReferences: []
 --- !u!114 &6049223277468553489
 MonoBehaviour:
@@ -7332,9 +7332,11 @@ MonoBehaviour:
   - "\u683C\u6321"
   - "\u51EF\u65CB"
   - "\u9ECF\u6027"
+  - "\u8010\u4E45"
+  - "\u7ECF\u9A8C\u4FEE\u8865"
   rareRandomStrs: []
-  maxEndurance: 35
-  endurance: 35
+  maxEndurance: 45
+  endurance: 45
   pushBackHeight: 4
   pushBackStrength: 1
   shootPoint: {fileID: 7421650654588731531}

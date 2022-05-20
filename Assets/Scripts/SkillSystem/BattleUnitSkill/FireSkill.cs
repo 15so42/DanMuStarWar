@@ -23,8 +23,9 @@ public class FireSkill : SkillBase
     protected override void Play()
     {
         base.Play();
-        gameEntity.OnAttacked(new AttackInfo(gameEntity,AttackType.Physics, 1));
-        
+        gameEntity.OnAttacked(new AttackInfo(null,AttackType.Physics, 1));
+        createCommander.attackOtherDamage += 1;
+
     }
 
 }

@@ -50,4 +50,10 @@ public class SteveCommanderUi : CommanderUI
                
         }
     }
+
+    public void OnHangUp()
+    {
+        fill.fillAmount = 1;
+        countDownText.text = "挂机";
+    }
 }

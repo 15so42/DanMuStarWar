@@ -64,7 +64,11 @@ public class Steve : WarPlane
 
     public void UpdateWeaponEndurance(int endurance,int maxEndurance)
     {
-        hpUI.UpdateWeaponEndurance(endurance, maxEndurance);
+        if (hpUI && hpUI.gameObject)
+        {
+            hpUI.UpdateWeaponEndurance(endurance, maxEndurance);
+        }
+        
         if (endurance <= 0)
         {
             RandomWeapon();

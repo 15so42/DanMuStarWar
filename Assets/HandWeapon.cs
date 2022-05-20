@@ -93,18 +93,18 @@ public class HandWeapon : Weapon
 
     public bool TryRandomSpell(bool byGift)
     {
-        if (weaponNbt.enhancementLevels.Count >= 3 && !byGift)
-        {
-            MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔已达上限，投喂打call可继续附魔");
+        // if (weaponNbt.enhancementLevels.Count >= 3 && !byGift)
+        // {
+        //     MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔已达上限，投喂打call可继续附魔");
+        //
+        //     return false;
+        // }
 
-            return false;
-        }
-
-        if (weaponNbt.enhancementLevels.Count >= randomStrs.Count )
-        {
-            MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"已获得所有附魔,无法再附魔了");
-            return false;
-        }
+        // if (weaponNbt.enhancementLevels.Count >= randomStrs.Count )
+        // {
+        //     //MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"已获得所有附魔,无法再附魔了");
+        //     //return false;
+        // }
 
         return true;
     }
@@ -115,15 +115,16 @@ public class HandWeapon : Weapon
 
         
         var spellStr = randomStrs[UnityEngine.Random.Range(0, randomStrs.Count)];
-        if (GetWeaponLevelByNbt(spellStr) > 0)
-        {
-            MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔失败");
-        }
-        else
-        {
-            MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔"+spellStr);
-            SetWeaponLevel(spellStr, 1);
-        }
+        // if (GetWeaponLevelByNbt(spellStr) > 0)
+        // {
+        //     MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔失败");
+        // }
+        // else
+        // {
+        //     
+        // }
+        MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔"+spellStr);
+        SetWeaponLevel(spellStr, GetWeaponLevelByNbt(spellStr)+1);
             
             
         OnSpellChange();
@@ -137,7 +138,7 @@ public class HandWeapon : Weapon
         {
             if (weaponNbt.enhancementLevels[i].level>0)
             {
-                str += "|" + weaponNbt.enhancementLevels[i].enhancementName;
+                str += "|" + weaponNbt.enhancementLevels[i].enhancementName+weaponNbt.enhancementLevels[i].level;
             }
         }
         
@@ -161,10 +162,12 @@ public class HandWeapon : Weapon
     {
         animator.SetTrigger("Attack");
         Invoke(nameof(Damage),0.3f);
-        if (GetWeaponLevelByNbt("耐久") > 0)
+
+        var enduranceLevel = GetWeaponLevelByNbt("耐久");
+        if (enduranceLevel > 0)
         {
-            var random=UnityEngine.Random.Range(0, 3);
-            if (random == 0)
+            var random=UnityEngine.Random.Range(0, 100);
+            if (random < (0.2+0.1*enduranceLevel)*100)
             {
                 //不扣除耐久
             }
@@ -204,13 +207,28 @@ public class HandWeapon : Weapon
     //吸血
     public void OnAttackOther(IVictimAble victimAble,int damage)
     {
-        if (GetWeaponLevelByNbt("火焰") > 0)
+        var fireLevel = GetWeaponLevelByNbt("火焰");
+        if (fireLevel > 0)
         {
-            if(victimAble.GetVictimEntity())
-                SkillManager.Instance.AddSkill("Skill_着火_LV1",victimAble.GetVictimEntity(),owner.planetCommander);
+            if (victimAble.GetVictimEntity())
+            {
+                var skill=SkillManager.Instance.AddSkill("Skill_着火_LV1", victimAble.GetVictimEntity(), owner.planetCommander);
+                if (skill as FireSkill)//第一次附加火焰没问题，但是之后无法再附加火焰而是刷新火焰Buff
+                {
+                    (skill as FireSkill).life = 4 + fireLevel;
+                }
+                
+            }
+            
         }
-        if(GetWeaponLevelByNbt("吸血")>0)
-            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,(int)(damage*0.25f)));
+
+        var vampireLevel = GetWeaponLevelByNbt("吸血");
+
+        if (vampireLevel > 0)
+        {
+            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,(int)(damage* (0.2f+0.05*fireLevel)  )));
+        }
+            
 
         
     }
@@ -223,29 +241,34 @@ public class HandWeapon : Weapon
 
     public void OnSlainOther()
     {
-        if (GetWeaponLevelByNbt("凯旋")>0)
+        var triumphLevel = GetWeaponLevelByNbt("凯旋");
+        if (triumphLevel>0)
         {
-            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,10));    
+            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,(int)(owner.props.maxHp*(0.15f+0.05f*triumphLevel))));    
         }
 
-        if (GetWeaponLevelByNbt("经验修补") > 0)
+        var expFixLevel = GetWeaponLevelByNbt("经验修补");
+        if (expFixLevel > 0)
         {
-            AddEndurance(maxEndurance/3);
+            AddEndurance((int)(maxEndurance*(0.15f+0.05f*expFixLevel)));
         }
     }
 
     public AttackInfo OnBeforeAttacked(AttackInfo attackInfo)
     {
-        if (GetWeaponLevelByNbt("格挡") > 0)
+        var parryLevel = GetWeaponLevelByNbt("格挡");
+        if (parryLevel > 0 && attackInfo.attackType!=AttackType.Heal)
         {
-            if(UnityEngine.Random.Range(0, 2) > 0)
+            var targetValue = (0.15 + 0.1 * parryLevel)*100;
+            if(UnityEngine.Random.Range(0, 100) <targetValue)
             {
                 attackInfo.value /= 2;
                 Debug.Log("格挡");
             }
-            
         }
-        if (GetWeaponLevelByNbt("锋利") > 0)
+
+        var sharpLevel = GetWeaponLevelByNbt("锋利");
+        if (sharpLevel > 0)
         {
             attackInfo.value=(int)(attackInfo.value*1.25f);
         }

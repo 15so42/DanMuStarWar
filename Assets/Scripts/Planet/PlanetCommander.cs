@@ -87,5 +87,6 @@ public class PlanetCommander
         commanderUi.LogTip("触发挂机判定");
         //分发点数
         hangUp = true;
+        
     }
 }
