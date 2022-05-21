@@ -135,18 +135,20 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
             var collider1 = colliders[i];
             var gameEntity = collider1.GetComponent<GameEntity>();
             if (!gameEntity) //不是单位
-                return null;
+                continue;
 
             var gameEntityOwner = gameEntity.GetVictimOwner();
             if (gameEntityOwner == GetAttackerOwner()) //同星球
-                return null;
+                continue;
             
             if (gameEntity.die) //已经死亡
-                return null;
+                continue;
 
             // var targetPlanet = gameEntityOwner as Planet;
             // if (targetPlanet == null) //如果只对敌对星球寻敌，而敌对星球不存在，或找到的单位不属于，不算作敌人
             //     return null;
+            
+            return gameEntity;
         }
 
         return null;

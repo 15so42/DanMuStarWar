@@ -109,6 +109,13 @@ public class HandWeapon : Weapon
         return true;
     }
 
+    public void OnlyUpdateSpell()
+    {
+        var randomEnhancementLevel =  weaponNbt.enhancementLevels[UnityEngine.Random.Range( 0,weaponNbt.enhancementLevels.Count)];
+        randomEnhancementLevel.level++;
+        OnSpellChange();
+    }
+    
     //随机附魔
     public void RandomSpell(bool rare)
     {
@@ -123,6 +130,7 @@ public class HandWeapon : Weapon
         // {
         //     
         // }
+       
         MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔"+spellStr);
         SetWeaponLevel(spellStr, GetWeaponLevelByNbt(spellStr)+1);
             
@@ -207,6 +215,9 @@ public class HandWeapon : Weapon
     //吸血
     public void OnAttackOther(IVictimAble victimAble,int damage)
     {
+        if (gameObject.activeSelf == false)
+            return;
+        
         var fireLevel = GetWeaponLevelByNbt("火焰");
         if (fireLevel > 0)
         {
@@ -236,11 +247,14 @@ public class HandWeapon : Weapon
     //招架
     public void OnAttacked(int damage)
     {
-       
+        if (gameObject.activeSelf == false)
+            return;
     }
 
     public void OnSlainOther()
     {
+        if (gameObject.activeSelf == false)
+            return;
         var triumphLevel = GetWeaponLevelByNbt("凯旋");
         if (triumphLevel>0)
         {
@@ -256,6 +270,9 @@ public class HandWeapon : Weapon
 
     public AttackInfo OnBeforeAttacked(AttackInfo attackInfo)
     {
+        if (gameObject.activeSelf == false)
+            return attackInfo;
+        
         var parryLevel = GetWeaponLevelByNbt("格挡");
         if (parryLevel > 0 && attackInfo.attackType!=AttackType.Heal)
         {
@@ -309,7 +326,8 @@ public class HandWeapon : Weapon
     {
         //清除所有事件绑定
         owner.onAttacked -= OnAttacked;
-       
+
+        owner.onSlainOther -= OnSlainOther;
         owner.onAttackOther -= OnAttackOther ;
         owner.onBeforeAttacked -= OnBeforeAttacked;
 

@@ -5521,6 +5521,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: "MCWAR\u5730\u56FE"
       objectReference: {fileID: 0}
+    - target: {fileID: 7067705108936178959, guid: 2fba047777269fb4c81b3f4942e09a3d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757354386471755574, guid: 2fba047777269fb4c81b3f4942e09a3d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fba047777269fb4c81b3f4942e09a3d, type: 3}
 --- !u!1 &390667739

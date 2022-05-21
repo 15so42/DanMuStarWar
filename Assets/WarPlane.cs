@@ -50,7 +50,7 @@ public class WarPlane : BattleUnit,ISupportAble
       var victimOwner = GetVictimOwner();
       
       
-      if ( attackerOwner != victimOwner) 
+      if ( attackerOwner != victimOwner && !IsTargetAlive()) 
       {
          var victim = attacker.GetAttackEntity();
          SetChaseTarget(victim);

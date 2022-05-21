@@ -701,11 +701,11 @@ public class RoundManager : MonoBehaviour
         if (!validSteve)
             return;
         
-        if (steveCommander.point < 8 )
+        if (steveCommander.point < 10 )
         {
             if (!byGift)
             {
-                steveCommander.commanderUi.LogTip("需要点数:8");
+                steveCommander.commanderUi.LogTip("需要点数:10");
                 return;
             }
            
@@ -713,10 +713,11 @@ public class RoundManager : MonoBehaviour
 
         if (validSteve.TryRandomSpell(byGift))
         {
-            validSteve.RandomSpell(rare);
+            
+            validSteve.RandomSpell(rare,byGift);
             if (!byGift)
             {
-                steveCommander.AddPoint(-8);
+                steveCommander.AddPoint(-10);
             }
             
         }

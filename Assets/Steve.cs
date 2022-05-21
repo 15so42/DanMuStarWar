@@ -122,8 +122,8 @@ public class Steve : WarPlane
         else
         {
             MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"自动抽取失败，点数不足");
-            var liveWeapon = ChangeWeapon(0);
-            hpUI.SetWeaponText(liveWeapon.weaponName);
+            // var liveWeapon = ChangeWeapon(0);
+            // hpUI.SetWeaponText(liveWeapon.weaponName);
         }
     }
 
@@ -133,10 +133,20 @@ public class Steve : WarPlane
         return (liveWeapon as HandWeapon).TryRandomSpell(byGift);
     }
     
-    public void RandomSpell(bool rare)
+    
+    
+    public void RandomSpell(bool rare,bool gift)
     {
         var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
-        (liveWeapon as HandWeapon).RandomSpell(rare);
+        if ((liveWeapon as HandWeapon).weaponNbt.enhancementLevels.Count >= 3 && !gift)
+        {
+            (liveWeapon as HandWeapon).OnlyUpdateSpell();
+        }
+        else
+        {
+            (liveWeapon as HandWeapon).RandomSpell(rare);
+        }
+        
     }
     
     public Vector3 GetPos(int index)
