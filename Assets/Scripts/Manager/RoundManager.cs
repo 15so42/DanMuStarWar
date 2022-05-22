@@ -607,6 +607,11 @@ public class RoundManager : MonoBehaviour
                 ParseRandomSpell(steveCommander,false,false);
             }
 
+            if (trim == "祛魔")
+            {
+                ParseRemoveSpell(steveCommander);
+            }
+
             if (trim == "维修")
             {
                 ParseFixWeapon(steveCommander);
@@ -723,6 +728,24 @@ public class RoundManager : MonoBehaviour
         }
             
       
+    }
+
+    void ParseRemoveSpell(SteveCommander steveCommander)
+    {
+        var validSteve = steveCommander.FindFirstValidSteve();
+        if (!validSteve)
+            return;
+
+        if (steveCommander.point < 10)
+        {
+            steveCommander.commanderUi.LogTip("需要点数:10");
+            return;
+        }
+        
+        validSteve.RemoveSpell();
+        
+        steveCommander.AddPoint(-10);
+        
     }
     
     void ParseAddMaxHp(SteveCommander steveCommander,bool byGift)

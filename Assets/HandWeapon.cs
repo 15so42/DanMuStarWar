@@ -82,9 +82,12 @@ public class HandWeapon : Weapon
     public void SaveToCommander()
     {
         var steveCommander = owner.planetCommander as SteveCommander;
-        if(steveCommander==null)
+        if (steveCommander == null)
+        {
+            Debug.Log("steveCimmander为空");
             return;
-        
+        }
+           
         
         steveCommander.steveWeaponNbt = this.weaponNbt;
         steveCommander.desireWeaponId = mcWeaponId;
@@ -122,14 +125,7 @@ public class HandWeapon : Weapon
 
         
         var spellStr = randomStrs[UnityEngine.Random.Range(0, randomStrs.Count)];
-        // if (GetWeaponLevelByNbt(spellStr) > 0)
-        // {
-        //     MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔失败");
-        // }
-        // else
-        // {
-        //     
-        // }
+       
        
         MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔"+spellStr);
         SetWeaponLevel(spellStr, GetWeaponLevelByNbt(spellStr)+1);
@@ -137,6 +133,16 @@ public class HandWeapon : Weapon
             
         OnSpellChange();
             
+    }
+
+    public void RemoveSpell()
+    {
+        if (weaponNbt.enhancementLevels.Count > 0)
+        {
+            weaponNbt.enhancementLevels.RemoveAt(weaponNbt.enhancementLevels.Count-1);
+            OnSpellChange();
+        }
+       
     }
     
     public void OnSpellChange()
@@ -206,8 +212,10 @@ public class HandWeapon : Weapon
         var victim = owner.chaseTarget.GetVictimEntity();
         victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,attackValue));
         var navMeshMoveManager = victim.GetComponent<NavMeshMoveManager>();
+        // if(navMeshMoveManager)
+        //     navMeshMoveManager.PushBack(victim.transform.position-transform.position+Vector3.up*pushBackHeight,pushBackStrength);
         if(navMeshMoveManager)
-            navMeshMoveManager.PushBack(victim.transform.position-transform.position+Vector3.up*pushBackHeight,pushBackStrength);
+            navMeshMoveManager.PushBackByPos(victim.transform.position,transform.position,pushBackHeight,pushBackStrength);
         
     }
 
@@ -226,6 +234,7 @@ public class HandWeapon : Weapon
                 var skill=SkillManager.Instance.AddSkill("Skill_着火_LV1", victimAble.GetVictimEntity(), owner.planetCommander);
                 if (skill as FireSkill)//第一次附加火焰没问题，但是之后无法再附加火焰而是刷新火焰Buff
                 {
+                    (skill as FireSkill).SetAttacker(owner); 
                     (skill as FireSkill).life = 4 + fireLevel;
                 }
                 

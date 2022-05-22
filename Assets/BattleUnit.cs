@@ -290,7 +290,22 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
 
     public void SetChaseTarget(IVictimAble target)
     {
-        this.chaseTarget = target;
+        if (IsTargetAlive() == false)
+        {
+            this.chaseTarget = target;
+            return;
+        }
+        
+        var position = transform.position;
+        float oldDistance = (chaseTarget.GetVictimEntity().transform.position - position).sqrMagnitude;
+        float newDistance = (target.GetVictimEntity().transform.position - position).sqrMagnitude;
+
+        if (newDistance < oldDistance)
+        {
+            this.chaseTarget = target;
+        }
+        
+        
     }
 
     public void ClaimWar()

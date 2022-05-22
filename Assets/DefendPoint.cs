@@ -5,20 +5,21 @@ using UnityEngine;
 
 public class DefendPoint : MonoBehaviour
 {
-    public int addValue = 10;
+    public int rangeValue = 10;
+    public int attackDistanceValue = 10;
     // Start is called before the first frame update
     
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
         var battleUnit = other.gameObject.GetComponent<Steve>();
         if (battleUnit)
-            battleUnit.EnterDefendState(addValue);
+            battleUnit.EnterDefendState(rangeValue,attackDistanceValue);
     }
     
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision other)
     {
         var battleUnit = other.gameObject.GetComponent<Steve>();
         if (battleUnit)
-            battleUnit.ExitDefendState(addValue);
+            battleUnit.ExitDefendState(rangeValue,attackDistanceValue);
     }
 }

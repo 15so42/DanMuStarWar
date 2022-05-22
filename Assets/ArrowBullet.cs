@@ -62,7 +62,7 @@ public class ArrowBullet : MonoBehaviour
         victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,3+strength*2));
         var navMeshMoveManager = victim.GetGameObject().GetComponent<NavMeshMoveManager>();
         if(navMeshMoveManager)
-            navMeshMoveManager.PushBack(victim.GetGameObject().transform.position-transform.position+Vector3.up*strength*4,strength);
+            navMeshMoveManager.PushBackByPos(victim.GetGameObject().transform.position,owner.GetAttackerOwner().transform.position,3,2,1+strength*0.2f);
         attacked.Add(victim);
         recycleAbleObject.Recycle();
     }

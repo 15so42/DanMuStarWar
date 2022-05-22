@@ -35,7 +35,7 @@ public class AttackManager : MonoBehaviour
             var navMove = gameEntity.GetComponent<NavMeshMoveManager>();
             if (navMove)
             {
-                navMove.PushBack((gameEntity.transform.position-transform.position).normalized);
+                navMove.PushBackByPos( gameEntity.transform.position,transform.position,3,2,1);
             }
             
         }

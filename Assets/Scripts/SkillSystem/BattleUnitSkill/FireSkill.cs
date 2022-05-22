@@ -6,6 +6,13 @@ using UnityEngine;
 public class FireSkill : SkillBase
 {
     public int time=5;
+
+    public GameEntity attacker;
+
+    public void SetAttacker(GameEntity gameEntity)
+    {
+        this.attacker = gameEntity;
+    }
     
     public override void Init(GameEntity gameEntity,PlanetCommander planetCommander)
     {
@@ -23,7 +30,7 @@ public class FireSkill : SkillBase
     protected override void Play()
     {
         base.Play();
-        gameEntity.OnAttacked(new AttackInfo(null,AttackType.Physics, 1));
+        gameEntity.OnAttacked(new AttackInfo(attacker,AttackType.Physics, 1));
         createCommander.attackOtherDamage += 1;
 
     }

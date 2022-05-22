@@ -18,15 +18,21 @@ public class Steve : WarPlane
     public SkinnedMeshRenderer[] meshRenderers;
 
     [Header("火焰特效")] public Transform fireFx;
-    
+
+
+    [Header("Trigger")] public SphereCollider trigger;
+    [HideInInspector]public bool canPushBack=true;//是否可被击退,在箭塔时不可被击退哦
+
+    private int curWeaponId;//切换武器时更新
    
     
     protected override void Start()
     {
         base.Start();
+        canPushBack = true;
        
         fightingManager = GameManager.Instance.fightingManager;
-        moveManager = GetComponent<MoveManager>();
+       
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
         //RandomWeapon();
         hpUI.SetNameText(planetCommander.player.userName);
@@ -47,6 +53,9 @@ public class Steve : WarPlane
         {
             RandomWeapon();
         }
+        
+        //todo 删除测试
+        //ChangeWeapon(6);
         
     }
 
@@ -93,12 +102,36 @@ public class Steve : WarPlane
         liveWeapon.gameObject.SetActive(true);
         liveWeapon.Init(this);
         hpUI.SetWeaponText(liveWeapon.weaponName);
+        curWeaponId = weaponId;
+        
+        
+        //(liveWeapon as HandWeapon)?.SaveToCommander();
         return liveWeapon;
     }
 
     public void RandomRareWeapon()
     {
-        ChangeWeapon(7);
+        var random = UnityEngine.Random.Range(0, 2);
+        if (curWeaponId == 7 || curWeaponId == 8)
+        {
+            if (curWeaponId == 7)
+            {
+                ChangeWeapon(8);
+                return;
+            }
+
+            if (curWeaponId == 8)
+            {
+                ChangeWeapon(7);
+                return;
+            }
+               
+        }
+        
+        if(random==0)
+            ChangeWeapon(7);
+        if (random == 1)
+            ChangeWeapon(8);
     }
 
     public void RandomWeapon()
@@ -111,7 +144,7 @@ public class Steve : WarPlane
         if (steveCommander != null && steveCommander.point > 6)
         {
             
-            var randomId=UnityEngine.Random.Range(1, weapons.Count - 1);
+            var randomId=UnityEngine.Random.Range(1, weapons.Count - 2);
             var liveWeapon = ChangeWeapon(randomId);
             MessageBox._instance.AddMessage("[系统]" + planetCommander.player.userName + "抽取武器:" + liveWeapon.weaponName);
             
@@ -146,6 +179,14 @@ public class Steve : WarPlane
         {
             (liveWeapon as HandWeapon).RandomSpell(rare);
         }
+        
+    }
+
+    public void RemoveSpell()
+    {
+        var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
+
+        (liveWeapon as HandWeapon)?.RemoveSpell();
         
     }
     
@@ -236,8 +277,12 @@ public class Steve : WarPlane
     }
 
     //进入防御点位后，武器的攻击距离增加
-    public void EnterDefendState(int value)
+    public void EnterDefendState(int findDistance,int attackDistance)
     {
+        trigger.radius += findDistance;
+        findEnemyDistance += findDistance;
+        canPushBack = false;
+        
         float minDistance = 10000;
         foreach (var w in weapons)
         {
@@ -245,17 +290,22 @@ public class Steve : WarPlane
                 continue;
             if (w.addAtkDistanceByDP)
             {
-                w.attackDistance += value;
+                w.attackDistance += attackDistance;
             }
             if (w.attackDistance < minDistance)
                 minDistance = w.attackDistance;
             
         }
+        
         SetAttackDistance(minDistance);
     }
 
-    public void ExitDefendState(int value)
+    public void ExitDefendState(int findDistance,int attackDistance)
     {
+        trigger.radius -= findDistance;
+        findEnemyDistance -= findDistance;
+        canPushBack = true;
+        
         float minDistance = 10000;
         foreach (var w in weapons)
         {
@@ -263,7 +313,7 @@ public class Steve : WarPlane
                 continue;
             if (w.addAtkDistanceByDP)
             {
-                w.attackDistance -= value;
+                w.attackDistance -= attackDistance;
             }
             if (w.attackDistance < minDistance)
                 minDistance = w.attackDistance;
