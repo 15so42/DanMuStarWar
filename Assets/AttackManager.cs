@@ -13,7 +13,7 @@ public class AttackManager : MonoBehaviour
         Instance = this;
     }
 
-    public void Explosion(AttackInfo attackInfo,Vector3 center,float radius,string fxName="")
+    public void Explosion(AttackInfo attackInfo,IDamageAble damageAble,Vector3 center,float radius,string fxName="")
     {
         var attacker = attackInfo.attacker;
         var colliders = Physics.OverlapSphere(center, radius);
@@ -29,8 +29,11 @@ public class AttackManager : MonoBehaviour
             if (gameEntity.die)//已经死亡
                 continue;
             
-            gameEntity.OnAttacked(attackInfo);
-            
+            var hpAndShield = gameEntity.OnAttacked(attackInfo);
+            damageAble?.OnDamageOther(gameEntity,hpAndShield);
+
+
+
             //steve
             var navMove = gameEntity.GetComponent<NavMeshMoveManager>();
             if (navMove)

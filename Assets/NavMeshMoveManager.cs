@@ -76,12 +76,13 @@ public class NavMeshMoveManager : MoveManager
             timer += Time.fixedDeltaTime;
             
             RaycastHit raycastHit=new RaycastHit();
-            if (timer>3 || lastVelocityY<0 && Physics.Raycast(transform.position, -1 * Vector3.up, out raycastHit, 0.5f))
+            Debug.DrawLine(transform.position+Vector3.up*0.2f,transform.position-transform.up*0.5f);
+            if (timer>3 || lastVelocityY<=0 && Physics.Raycast(transform.position+Vector3.up*0.2f, -1 * Vector3.up, out raycastHit, 0.5f/*,~LayerMask.GetMask("BattleUnit")*/))
             {
                 navMeshAgent.nextPosition = transform.position;
                 navMeshAgent.updatePosition = true;
                 rigidbody.isKinematic = true;
-                Debug.Log("落地");
+                //Debug.Log("落地");
                 yield break;
             }
             

@@ -53,11 +53,7 @@ public class Collector : BattleUnit
       scanFx.transform.up = transform.position-minePlanet.transform.position;
    }
 
-   public  override void OnAttacked(AttackInfo attackInfo)
-   {
-      base.OnAttacked(attackInfo);
-      //SkillManager.Instance.AddSkill("Skill_加速_LV1",this);
-   }
+  
 
  
    public void CollectEnd()

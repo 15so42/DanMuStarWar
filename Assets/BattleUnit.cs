@@ -414,7 +414,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     }
     
     
-    public override void OnAttacked(AttackInfo attackInfo)
+    public override BattleUnitProps.HpAndShield OnAttacked(AttackInfo attackInfo)
     {
         if (attackInfo.attackType == AttackType.Heal)
         {
@@ -425,19 +425,22 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
             OnAttackedCount(attackInfo.value);
         }
         
+        var hpAndShield = base.OnAttacked(attackInfo);
         
-        base.OnAttacked(attackInfo);
+        
+        
+        
         if (!IsTargetAlive())//当自己处于和平状态时被袭击
         {
-            if(Math.Abs(supportDistance) < 0.5f)
-                return;
+            if (Math.Abs(supportDistance) < 0.5f)
+                return hpAndShield;
             if (attackInfo.attacker==null || attackInfo.attacker.GetAttackerOwner() == GetVictimOwner())//同一阵营
             {
-                return;
+                return hpAndShield;
                 
             }
             if(ownerPlanet==null)
-                return;
+                return hpAndShield;
             for (int i = 0; i < ownerPlanet.battleUnits.Count; i++)
             {
                 if (ownerPlanet.battleUnits[i]!=null && ownerPlanet.battleUnits[i]!=this && Vector3.Distance(ownerPlanet.battleUnits[i].transform.position, transform.position) < supportDistance)
@@ -447,7 +450,9 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
                 }
             }
         }
-       
+
+        return hpAndShield;
+
     }
 
     public override void OnAttackOther(IVictimAble victimAble, AttackInfo attackInfo)

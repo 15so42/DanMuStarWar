@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5220398732295002394}
   - component: {fileID: 8370706224914702945}
   - component: {fileID: 4197380409716762378}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: TNTBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,9 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 020cac6b0a9f18649bae33b9c03fbd99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3000
+  handWeapon: {fileID: 0}
+  speed: 1800
   strength: 1
-  recycleAbleObject: {fileID: 0}
 --- !u!54 &5220398732295002394
 Rigidbody:
   m_ObjectHideFlags: 0

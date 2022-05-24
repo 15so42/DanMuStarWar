@@ -39,13 +39,13 @@ public class WarPlane : BattleUnit,ISupportAble
    
    
    
-   public  override void OnAttacked(AttackInfo attackInfo)
+   public  override BattleUnitProps.HpAndShield OnAttacked(AttackInfo attackInfo)
    {
-      base.OnAttacked(attackInfo);
+      var hpAndShield = base.OnAttacked(attackInfo);
       //if(!chaseTarget)
       var attacker = attackInfo.attacker;
       if(attacker==null || setAttackerTarget==false)//attacker为null表示是系统，或者事件导致的扣血
-         return;
+         return hpAndShield;
       var attackerOwner = attacker.GetAttackerOwner();
       var victimOwner = GetVictimOwner();
       
@@ -56,7 +56,8 @@ public class WarPlane : BattleUnit,ISupportAble
          SetChaseTarget(victim);
         
       }
-         
+
+      return hpAndShield;
    }
 
    private void OnDrawGizmos()

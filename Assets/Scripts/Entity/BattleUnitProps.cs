@@ -24,11 +24,13 @@ public class BattleUnitProps : MonoBehaviour
     {
         public int hpValue;
         public int shieldValue;
+        public AttackInfo calAttackInfo;
 
-        public HpAndShield(int hpValue, int shieldValue)
+        public HpAndShield(int hpValue, int shieldValue,AttackInfo calAttackInfo)
         {
             this.hpValue = hpValue;
             this.shieldValue = shieldValue;
+            this.calAttackInfo = calAttackInfo;
         }
 
         
@@ -86,7 +88,7 @@ public class BattleUnitProps : MonoBehaviour
         if (hp > maxHp)
             hp = maxHp;
 
-        return new HpAndShield(hp,shield);
+        return new HpAndShield(hp,shield,new AttackInfo(attackInfo.attacker,attackInfo.attackType,attackInfo.value));
        
         
     }

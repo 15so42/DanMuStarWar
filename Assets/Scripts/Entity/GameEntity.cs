@@ -100,11 +100,16 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
       return attackInfo;
    }
 
-   public virtual void OnAttacked(AttackInfo attackInfo)
+   public virtual BattleUnitProps.HpAndShield OnAttacked(AttackInfo attackInfo)
    {
-      attackInfo=OnBeforeAttacked(attackInfo);
-      var hpAndShield = props.OnAttacked(attackInfo);
+      
+      
+      attackInfo=OnBeforeAttacked(attackInfo);//减伤增伤判断
+      
+      var hpAndShield = props.OnAttacked(attackInfo);//返回剩余生命值和护盾和实际伤害
+      
       OnHpChanged(hpAndShield.hpValue,props.maxHp,hpAndShield.shieldValue,props.maxShield);
+      
       if (attackInfo.attackType != AttackType.Heal)
       {
          attackInfo.attacker?.OnAttackOther(this, attackInfo);
@@ -115,7 +120,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
          FlyText.Instance.ShowHealText(transform.position+Vector3.up,attackInfo.value+"");
       }
       
-     
+      //事件触发
 
       if(attackInfo.attackType!=AttackType.Heal && (GameEntity) attackInfo.attacker!=this)
          onAttacked?.Invoke(attackInfo.value);
@@ -126,8 +131,8 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
          Die();
       }
 
-     
-
+      
+      return hpAndShield;
 
    }
    

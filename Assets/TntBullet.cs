@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BattleScene.Scripts;
+using DG.Tweening;
 using UnityEngine;
 
 public class TntBullet : ArrowBullet
@@ -9,6 +10,10 @@ public class TntBullet : ArrowBullet
     private Material material;
 
     private bool sticky = false;
+    private int highExplosiveLevel = 0;
+
+    public IVictimAble followTarget;
+    private bool lastTargetStatus=false;
    
     // Start is called before the first frame update
     void Start()
@@ -16,12 +21,27 @@ public class TntBullet : ArrowBullet
         material = GetComponent<MeshRenderer>().material;
         material.EnableKeyword("_EMISSION");
         
-        
+    }
+
+    public override void Init(IAttackAble owner, Vector3 dir, HandWeapon handWeapon)
+    {
+        base.Init(owner, dir, handWeapon);
+        rigidbody.velocity=Vector3.zero;
     }
 
     public void SetSticky(bool status)
     {
         this.sticky = status;
+    }
+
+    public void SetHighExplosive(int level)
+    {
+        this.highExplosiveLevel = level;
+    }
+
+    public void SetFollowTarget(IVictimAble target)
+    {
+        this.followTarget = target;
     }
     
     
@@ -35,14 +55,37 @@ public class TntBullet : ArrowBullet
 
     private void OnCollisionEnter(Collision other)
     {
-        if(other.collider.gameObject==owner.GetAttackEntity().gameObject)
-            return;
-        
-        if (sticky)
+        // if(other.collider.gameObject==owner.GetAttackEntity().gameObject)
+        //     return;
+        //
+        // if (sticky)
+        // {
+        //     transform.SetParent(other.transform);
+        //     rigidbody.isKinematic = true;
+        // }
+    }
+
+    private void Update()
+    {
+        var dieState = followTarget==null || followTarget.GetVictimEntity().die;//是否已经嗝屁
+        if (dieState != lastTargetStatus)
         {
-            transform.SetParent(other.transform);
-            rigidbody.isKinematic = true;
+            if (dieState)//突然嗝屁
+            {
+                rigidbody.velocity=Vector3.zero;
+            }
+            // else//初次设置敌人
+            // {
+            //     transform.DOMove(followTarget.GetVictimEntity().transform.position + Vector3.up * 12f,0.5f);
+            // }
+                
         }
+
+        if (!dieState)
+        {
+            transform.position = followTarget.GetVictimEntity().transform.position + Vector3.up * 12f;
+        }
+        
     }
 
     IEnumerator TNTExplosion()
@@ -66,10 +109,10 @@ public class TntBullet : ArrowBullet
 
     void ExplosionDamage()
     {
-        
-            var attackInfo = new AttackInfo(owner, AttackType.Physics, 5);
+            
+            var attackInfo = new AttackInfo(owner, AttackType.Physics, 5+highExplosiveLevel*2);
             var position = transform.position;
-            AttackManager.Instance.Explosion(attackInfo, position, 15,"MCExplosionFx");
+            AttackManager.Instance.Explosion(attackInfo,handWeapon, position, 15,"MCExplosionFx");
             //Debug.Log(gameObject.name+"Explosion一次");
             recycleAbleObject.Recycle();
         
@@ -80,5 +123,8 @@ public class TntBullet : ArrowBullet
         base.OnDisable();
         SetSticky(false);
         rigidbody.isKinematic = false;
+        highExplosiveLevel = 0;
+        followTarget = null;
+        lastTargetStatus = false;
     }
 }

@@ -12,6 +12,6 @@ public interface IVictimAble
 
     GameObject GetGameObject();
 
-    void OnAttacked(AttackInfo attackInfo);
+    BattleUnitProps.HpAndShield OnAttacked(AttackInfo attackInfo);
 
 }

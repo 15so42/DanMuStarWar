@@ -7,7 +7,7 @@ using UnityEngine.Events;
 using Random = System.Random;
 
 [Serializable]
-public class HandWeapon : Weapon
+public class HandWeapon : Weapon,IDamageAble
 {
     [Header("武器id")] public int mcWeaponId;
     
@@ -210,18 +210,69 @@ public class HandWeapon : Weapon
         if(owner.chaseTarget==null)
             return;
         var victim = owner.chaseTarget.GetVictimEntity();
-        victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,attackValue));
+        var realDamage= victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,attackValue));
         var navMeshMoveManager = victim.GetComponent<NavMeshMoveManager>();
         // if(navMeshMoveManager)
         //     navMeshMoveManager.PushBack(victim.transform.position-transform.position+Vector3.up*pushBackHeight,pushBackStrength);
         if(navMeshMoveManager)
             navMeshMoveManager.PushBackByPos(victim.transform.position,transform.position,pushBackHeight,pushBackStrength);
         
+        OnDamageOther(victim,realDamage);
     }
 
 
     //吸血
     public void OnAttackOther(IVictimAble victimAble,int damage)
+    {
+        // if (gameObject.activeSelf == false)
+        //     return;
+        //
+        // var fireLevel = GetWeaponLevelByNbt("火焰");
+        // if (fireLevel > 0)
+        // {
+        //     if (victimAble.GetVictimEntity())
+        //     {
+        //         var skill=SkillManager.Instance.AddSkill("Skill_着火_LV1", victimAble.GetVictimEntity(), owner.planetCommander);
+        //         if (skill as FireSkill)//第一次附加火焰没问题，但是之后无法再附加火焰而是刷新火焰Buff
+        //         {
+        //             (skill as FireSkill).SetAttacker(owner); 
+        //             (skill as FireSkill).life = 4 + fireLevel;
+        //         }
+        //         
+        //     }
+        //     
+        // }
+        //
+        // var vampireLevel = GetWeaponLevelByNbt("吸血");
+        //
+        // if (vampireLevel > 0)
+        // {
+        //     owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,(int)(damage* (0.2f+0.05*fireLevel)  )));
+        // }
+        //     
+
+        
+    }
+    
+    
+    //通过武器造成伤害
+    public GameEntity GetVictimOwner()
+    {
+        return owner;
+    }
+
+    public GameEntity GetVictimEntity()
+    {
+        return owner;
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+    
+
+    public void OnDamageOther(IVictimAble victimAble, BattleUnitProps.HpAndShield realDamage)
     {
         if (gameObject.activeSelf == false)
             return;
@@ -246,11 +297,9 @@ public class HandWeapon : Weapon
 
         if (vampireLevel > 0)
         {
-            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,(int)(damage* (0.2f+0.05*fireLevel)  )));
-        }
             
-
-        
+            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,Mathf.CeilToInt(realDamage.calAttackInfo.value * (0.2f+0.05f*fireLevel))));
+        }
     }
 
     //招架
@@ -296,7 +345,7 @@ public class HandWeapon : Weapon
         var sharpLevel = GetWeaponLevelByNbt("锋利");
         if (sharpLevel > 0)
         {
-            attackInfo.value=(int)(attackInfo.value*1.25f);
+            attackInfo.value=(int)(attackInfo.value*(1+ (0.25f+sharpLevel*0.1f)));
         }
 
         return attackInfo;

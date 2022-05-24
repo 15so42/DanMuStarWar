@@ -5624,7 +5624,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6049223277468553492}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 7ab08b29e80693b47997882d2c905af3, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -7462,7 +7462,7 @@ MonoBehaviour:
   - "\u5438\u8840"
   - "\u683C\u6321"
   - "\u51EF\u65CB"
-  - "\u9ECF\u6027"
+  - "\u9AD8\u7206"
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
   rareRandomStrs: []

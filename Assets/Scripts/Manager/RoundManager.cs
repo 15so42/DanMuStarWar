@@ -622,6 +622,8 @@ public class RoundManager : MonoBehaviour
                 ParseAddMaxHp(steveCommander,false);
             }
             
+            
+            
             //MessageBox._instance.AddMessage("["+user.userName+"]:"+trim);
             LogTip(steveCommander,trim);
         }
@@ -736,15 +738,15 @@ public class RoundManager : MonoBehaviour
         if (!validSteve)
             return;
 
-        if (steveCommander.point < 10)
+        if (steveCommander.point < 3)
         {
-            steveCommander.commanderUi.LogTip("需要点数:10");
+            steveCommander.commanderUi.LogTip("需要点数:3");
             return;
         }
         
         validSteve.RemoveSpell();
         
-        steveCommander.AddPoint(-10);
+        steveCommander.AddPoint(-3);
         
     }
     
@@ -759,16 +761,16 @@ public class RoundManager : MonoBehaviour
         if (!validSteve)
             return;
         if(byGift)
-            validSteve.AddMaxHp(1);
+            validSteve.AddMaxHp(2);
         else
         {
-            if (steveCommander.point < 25)
+            if (steveCommander.point < 15)
             {
-                steveCommander.commanderUi.LogTip("需要点数:25");
+                steveCommander.commanderUi.LogTip("需要点数:15");
                 return;
             }
             validSteve.AddMaxHp(5);
-            steveCommander.AddPoint(-25);
+            steveCommander.AddPoint(-15);
         }
     }
     
@@ -803,7 +805,7 @@ public class RoundManager : MonoBehaviour
     
     void ParseAddPoint(SteveCommander steveCommander)
     {
-        steveCommander.AddPoint(1);
+        steveCommander.AddPoint(2);
     }
     
 
@@ -872,7 +874,7 @@ public class RoundManager : MonoBehaviour
         //     ParseRareWeapon(steveCommander);
         // }
 
-        if (giftName == "牛哇牛哇")
+        if (giftName == "牛哇牛哇" || giftName == "牛哇")
         {
             ParseAddPoint(steveCommander);
         }

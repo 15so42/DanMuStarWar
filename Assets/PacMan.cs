@@ -45,7 +45,7 @@ public class PacMan : BattleUnit
     {
         var attackInfo = new AttackInfo(this, AttackType.Physics, 20);
         var position = transform.position;
-        AttackManager.Instance.Explosion(attackInfo, position, 30);
+        AttackManager.Instance.Explosion(attackInfo, null,position, 30);
         //Debug.Log(gameObject.name+"Explosion一次");
     }
 }

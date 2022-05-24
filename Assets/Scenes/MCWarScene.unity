@@ -5511,25 +5511,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6080400719081905571, guid: 2fba047777269fb4c81b3f4942e09a3d,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6386251523371466506, guid: 2fba047777269fb4c81b3f4942e09a3d,
         type: 3}
       propertyPath: m_Name
       value: "MCWAR\u5730\u56FE"
-      objectReference: {fileID: 0}
-    - target: {fileID: 7067705108936178959, guid: 2fba047777269fb4c81b3f4942e09a3d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8757354386471755574, guid: 2fba047777269fb4c81b3f4942e09a3d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fba047777269fb4c81b3f4942e09a3d, type: 3}
@@ -10869,7 +10854,7 @@ MonoBehaviour:
   roundManager: {fileID: 1504619295}
   mapManager: {fileID: 1581382676}
   waitingJoinSecond: 25
-  kickOutTime: 220
+  kickOutTime: 300
   maxWaitingPlayerTime: 300
   planetRoot: {fileID: 0}
   battleUnitRoot: {fileID: 0}
@@ -14241,12 +14226,12 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194230}
-  - component: {fileID: 963194229}
   - component: {fileID: 963194231}
   - component: {fileID: 963194232}
   - component: {fileID: 963194233}
   - component: {fileID: 963194234}
+  - component: {fileID: 963194230}
+  - component: {fileID: 963194229}
   m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -26420,6 +26405,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: "MCWAR\u5730\u56FE"
       objectReference: {fileID: 0}
+    - target: {fileID: 6386251523371466506, guid: 2fba047777269fb4c81b3f4942e09a3d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fba047777269fb4c81b3f4942e09a3d, type: 3}
 --- !u!1 &1831973636
@@ -31318,6 +31308,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Nethrite Sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 8770130340072778057, guid: 3277e68e0e0c8a343a38453ddfea7766,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3277e68e0e0c8a343a38453ddfea7766, type: 3}

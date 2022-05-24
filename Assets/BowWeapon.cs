@@ -36,6 +36,8 @@ public class BowWeapon : HandWeapon
 
     public  void ShootArrow()
     {
+        if(owner.IsTargetAlive()==false)
+            return;
         
         var arrowComp=InitBullet<ArrowBullet>(bulletName);
         var dir = Vector3.forward;
@@ -46,6 +48,8 @@ public class BowWeapon : HandWeapon
             targetPos = owner.chaseTarget.GetVictimEntity().transform.position +
                         Vector3.up * UnityEngine.Random.Range(3, 7);
         }
+        
+       
         // targetPos = owner.chaseTarget.GetVictimEntity().transform.position +
         //                 Vector3.up * UnityEngine.Random.Range(0, 7);
 
@@ -65,7 +69,7 @@ public class BowWeapon : HandWeapon
     public virtual void InitArrow(ArrowBullet arrowComp,Vector3 dir)
     {
         var bowStrength = GetWeaponLevelByNbt("力量");
-        arrowComp.Init(owner, dir);
+        arrowComp.Init(owner, dir,this);
         arrowComp.SetStrength(bowStrength);
     }
 

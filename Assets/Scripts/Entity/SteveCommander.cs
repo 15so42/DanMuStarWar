@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -112,6 +113,16 @@ public class SteveCommander : PlanetCommander
         }
 
         
+        ownerPlanet.commanderUis.Remove(commanderUi);
+        ownerPlanet.planetCommanders.Remove(this);
+        FightingManager.Instance.players.Remove(player);
+        GameObject.Destroy(commanderUi.gameObject);
+        if (ownerPlanet.planetCommanders.Count == 0)
+        {
+            ownerPlanet.Die();
+        }
+        GC.Collect();
+
 
     }
 }

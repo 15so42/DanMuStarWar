@@ -26,6 +26,8 @@ public class Steve : WarPlane
     private int curWeaponId;//切换武器时更新
    
     
+    
+    
     protected override void Start()
     {
         base.Start();
@@ -55,8 +57,16 @@ public class Steve : WarPlane
         }
         
         //todo 删除测试
-        //ChangeWeapon(6);
+        ChangeWeapon(7);
         
+        //关闭碰撞体
+        //trigger.enabled = false;
+
+    }
+
+    public void OpenTrigger()
+    {
+        //.enabled = true;
     }
 
     public Weapon InitDesireWeapon()
@@ -327,20 +337,20 @@ public class Steve : WarPlane
     /// 受击特效
     /// </summary>
     /// <param name="attackInfo"></param>
-    public override void OnAttacked(AttackInfo attackInfo)
+    public override BattleUnitProps.HpAndShield OnAttacked(AttackInfo attackInfo)
     {
-        base.OnAttacked(attackInfo);
+        var hpAndShield = base.OnAttacked(attackInfo);
         
         if(attackInfo.attackType==AttackType.Heal)
-            return;
+            return hpAndShield;
         
         StopAllCoroutines();
         if (gameObject.activeSelf)
         {
             StartCoroutine(VictimFx());
         }
-        
 
+        return hpAndShield;
     }
 
    

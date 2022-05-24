@@ -1185,16 +1185,16 @@ public class Planet : GameEntity
         base.OnStartWaitingJoin();
     }
 
-    public override void OnAttacked(AttackInfo attackInfo)
+    public override BattleUnitProps.HpAndShield OnAttacked(AttackInfo attackInfo)
     {
-        base.OnAttacked(attackInfo);
+        var hpAndShield = base.OnAttacked(attackInfo);
 
         if (Math.Abs(supportDistance) < 0.5f)
-            return;
+            return hpAndShield;
         if (attackInfo.attacker == null || attackInfo.attackType == AttackType.Heal ||
             attackInfo.attacker.GetAttackerOwner() == GetVictimOwner()) //同一阵营
         {
-            return;
+            return hpAndShield;
         }
 
         for (int i = 0; i < battleUnits.Count; i++)
@@ -1206,6 +1206,7 @@ public class Planet : GameEntity
                 supportAble?.Support(attackInfo.attacker as BattleUnit);
             }
         }
-        
+
+        return hpAndShield;
     }
 }

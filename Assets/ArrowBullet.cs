@@ -7,6 +7,8 @@ using UnityEngine;
 public class ArrowBullet : MonoBehaviour
 {
     public IAttackAble owner;
+
+    public HandWeapon handWeapon;
     //private int damageValue;
     public int speed = 30;
     public int strength=1;
@@ -24,11 +26,12 @@ public class ArrowBullet : MonoBehaviour
         recycleAbleObject = GetComponent<RecycleAbleObject>();
     }
 
-    public virtual void Init(IAttackAble owner,Vector3 dir)
+    public virtual void Init(IAttackAble owner,Vector3 dir,HandWeapon handWeapon)
     {
         this.owner = owner;
         transform.forward = dir;
         rigidbody= GetComponent<Rigidbody>();
+        this.handWeapon = handWeapon;
 
         rigidbody.AddForce(dir.normalized*speed);
     }
@@ -59,7 +62,11 @@ public class ArrowBullet : MonoBehaviour
         //取消友伤
         if(victim.GetVictimOwner()==owner.GetAttackerOwner())
             return;
-        victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,3+strength*2));
+
+       
+        var hpAndShield = victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,3+strength*2));
+        handWeapon.OnDamageOther(victim,hpAndShield);
+        
         var navMeshMoveManager = victim.GetGameObject().GetComponent<NavMeshMoveManager>();
         if(navMeshMoveManager)
             navMeshMoveManager.PushBackByPos(victim.GetGameObject().transform.position,owner.GetAttackerOwner().transform.position,3,2,1+strength*0.2f);
