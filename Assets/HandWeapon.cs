@@ -39,10 +39,12 @@ public class HandWeapon : Weapon,IDamageAble
             Debug.Log(name+"需要手动配置");
         (owner as Steve).SetAttackDistance(attackDistance);
         
+        weaponNbt=new SteveWeaponNbt();
+        
         endurance = maxEndurance;
         OnEnduranceChange(endurance,maxEndurance);
 
-        weaponNbt=new SteveWeaponNbt();
+        
         
         AddEvent();
     }

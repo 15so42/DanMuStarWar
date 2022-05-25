@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5220398732295002394}
   - component: {fileID: 8370706224914702945}
   - component: {fileID: 4197380409716762378}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: TNTBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -57,7 +57,7 @@ public class Steve : WarPlane
         }
         
         //todo 删除测试
-        ChangeWeapon(7);
+        //ChangeWeapon(7);
         
         //关闭碰撞体
         //trigger.enabled = false;
@@ -113,6 +113,7 @@ public class Steve : WarPlane
         liveWeapon.Init(this);
         hpUI.SetWeaponText(liveWeapon.weaponName);
         curWeaponId = weaponId;
+        
         
         
         //(liveWeapon as HandWeapon)?.SaveToCommander();
@@ -205,13 +206,22 @@ public class Steve : WarPlane
         return fightingManager.mcPosManager.GetPosByIndex(index);
     }
 
-    public override void GoMCPos(Vector3 pos)
+    public override void GoMCPos(Vector3 pos,bool escape)
     {
-        base.GoMCPos(pos);
+        base.GoMCPos(pos,escape);
 
         targetMcPos = pos;
-        CustomEvent.Trigger(gameObject, "OnDestinationSet");
+        CustomEvent.Trigger(gameObject, "OnDestinationSet",escape);
     }
+
+
+    public void OnBuyWeaponSuccess(string weaponName)
+    {
+        var targetWeapon = weapons.Find(x => x.weaponName == weaponName);
+        var id = (targetWeapon as HandWeapon).mcWeaponId;
+        ChangeWeapon(id);
+    }
+   
 
    
     public bool NearTargetPos()

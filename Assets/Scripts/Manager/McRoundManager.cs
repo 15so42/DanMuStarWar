@@ -7,17 +7,10 @@ using Photon.Pun;
 using UnityEngine;
 using Random = System.Random;
 
-[Serializable]
-public class McWeaponsPrice
-{
-    public string weaponName;
-    public int price;
-}
-
 /// <summary>
 /// 局内处理
 /// </summary>
-public class RoundManager : MonoBehaviour
+public class McRoundManager : RoundManager
 {
     
     private float timer = 0;
@@ -34,9 +27,6 @@ public class RoundManager : MonoBehaviour
     
     //游戏时间
     public float elapsedTime=0;
-    
-    [Header("MC武器购买列表")]
-    public List<McWeaponsPrice> mcWeaponsPrices=new List<McWeaponsPrice>();
     public void Init(GameManager gameManager, List<Player> players)
     {
         this.gameManager = gameManager;
@@ -620,11 +610,6 @@ public class RoundManager : MonoBehaviour
                 ParseRandomWeapon(steveCommander);
             }
 
-            if (trim.StartsWith("购买"))
-            {
-                ParseBuyMcWeapon(steveCommander,trim);
-            }
-
             if (trim == "附魔")
             {
                 ParseRandomSpell(steveCommander,false,false);
@@ -653,6 +638,11 @@ public class RoundManager : MonoBehaviour
 
     }
 
+    // public virtual void ParseMcCommand(int uid, string text)
+    // {
+    //     
+    // }
+
     void ParseCameraFocus(int uid)
     {
         var planet = GetPlantByPlayerUid(uid);
@@ -673,39 +663,6 @@ public class RoundManager : MonoBehaviour
                 break;
             }
         }
-    }
-
-    void ParseBuyMcWeapon(SteveCommander steveCommander,string trim)
-    {
-        var validSteve = steveCommander.FindFirstValidSteve();
-        if (!validSteve)
-            return;
-
-        var weaponName = trim.Substring(2);
-        Debug.Log("购买武器"+weaponName);
-
-        var pricePair = mcWeaponsPrices.Find(x => x.weaponName == weaponName);
-        if (pricePair==null)
-        {
-            var allWeaponStr = "";
-            for (int i = 0; i < mcWeaponsPrices.Count; i++)
-            {
-                allWeaponStr += " " + mcWeaponsPrices[i].weaponName + " ";
-            }
-            MessageBox._instance.AddMessage(steveCommander.player.userName,"购买命令错误，可以购买的武器有:"+allWeaponStr);
-            return;
-        }
-
-        var price = pricePair.price;
-        if (steveCommander.point < price)
-        {
-            steveCommander.commanderUi.LogTip("需要点数:"+price);
-            return;
-        }
-
-        validSteve.OnBuyWeaponSuccess(weaponName);
-        steveCommander.AddPoint(-1*price);
-
     }
 
     void ParseRespawn(int uid,bool byGift)

@@ -740,7 +740,8 @@ public class Planet : GameEntity
 
                 var commanderCount = planetCommanders.Count;
 
-                var point = totalPoint / (commanderCount - hangUpPlayerCount);
+                //var point = totalPoint / (commanderCount - hangUpPlayerCount);
+                var point = totalPoint / commanderCount ;
                 for (int i = 0; i < planetCommanders.Count; i++)
                 {
                     var commander = planetCommanders[i];
@@ -1138,7 +1139,7 @@ public class Planet : GameEntity
         }
     }
     
-    public void GoWhere(int uid,int index)
+    public void GoWhere(int uid,int index,bool escape)
     {
         var commander = GetCommanderByUid(uid);
         if (commander != null)
@@ -1156,8 +1157,8 @@ public class Planet : GameEntity
                 if (battleUnits[i] != null && battleUnits[i].die == false &&
                     battleUnits[i].planetCommander == commander)
                 {
-
-                    battleUnits[i].GoMCPos(pos);
+                        
+                    battleUnits[i].GoMCPos(pos,escape);
 
                     //var targetPos = fightingManager.mcPosManager.GetPosByIndex(targetIndex);
                     //battleUnits[i].LogTip(commander.player.userName);
@@ -1165,6 +1166,7 @@ public class Planet : GameEntity
             }
         }
     }
+    
     
 
     public override GameEntity GetAttackerOwner()

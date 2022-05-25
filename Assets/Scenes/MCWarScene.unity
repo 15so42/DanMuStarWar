@@ -22544,6 +22544,19 @@ MonoBehaviour:
   desireMode: 0
   voted: 
   elapsedTime: 0
+  mcWeaponsPrices:
+  - weaponName: "\u6728\u5251"
+    price: 2
+  - weaponName: "\u77F3\u5251"
+    price: 4
+  - weaponName: "\u91D1\u5251"
+    price: 2
+  - weaponName: "\u94C1\u5251"
+    price: 8
+  - weaponName: "\u94BB\u77F3\u5251"
+    price: 12
+  - weaponName: "\u5F13"
+    price: 10
 --- !u!4 &1504619296
 Transform:
   m_ObjectHideFlags: 0

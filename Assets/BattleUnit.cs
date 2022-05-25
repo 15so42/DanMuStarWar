@@ -71,7 +71,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     /// <summary>
     /// MC模式表示前往某地
     /// </summary>
-    public virtual void GoMCPos(Vector3 pos)
+    public virtual void GoMCPos(Vector3 pos,bool escape)
     {
         
     }

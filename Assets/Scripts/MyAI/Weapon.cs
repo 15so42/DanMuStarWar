@@ -33,6 +33,7 @@ public class Weapon : MonoBehaviour
 
         
         timer = 1 / attackSpeed;
+        
     }
 
     void Update()
