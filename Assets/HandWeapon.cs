@@ -137,14 +137,19 @@ public class HandWeapon : Weapon,IDamageAble
             
     }
 
-    public void RemoveSpell()
+    public bool RemoveSpell(int index)
     {
-        if (weaponNbt.enhancementLevels.Count > 0)
+        if (index - 1 < 0 || index - 1 >= weaponNbt.enhancementLevels.Count || weaponNbt.enhancementLevels.Count==0)
         {
-            weaponNbt.enhancementLevels.RemoveAt(weaponNbt.enhancementLevels.Count-1);
-            OnSpellChange();
+            owner.planetCommander.commanderUi.LogTip("序号错误");
+            return false;
         }
-       
+
+        
+        weaponNbt.enhancementLevels.RemoveAt(index-1);
+        OnSpellChange();
+        return true;
+
     }
     
     public void OnSpellChange()
@@ -212,12 +217,23 @@ public class HandWeapon : Weapon,IDamageAble
         if(owner.chaseTarget==null)
             return;
         var victim = owner.chaseTarget.GetVictimEntity();
-        var realDamage= victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,attackValue));
+
+        var attackInfo = new AttackInfo(this.owner, AttackType.Physics, attackValue);
+        var sharpLevel = GetWeaponLevelByNbt("锋利");
+        if (sharpLevel > 0)
+        {
+            attackInfo.value=(int)(attackInfo.value*(1+ (0.25f+sharpLevel*0.1f)));
+        }
+
+        
+        var realDamage= victim.OnAttacked(attackInfo);
         var navMeshMoveManager = victim.GetComponent<NavMeshMoveManager>();
         // if(navMeshMoveManager)
         //     navMeshMoveManager.PushBack(victim.transform.position-transform.position+Vector3.up*pushBackHeight,pushBackStrength);
         if(navMeshMoveManager)
             navMeshMoveManager.PushBackByPos(victim.transform.position,transform.position,pushBackHeight,pushBackStrength);
+        
+        
         
         OnDamageOther(victim,realDamage);
     }
@@ -344,12 +360,7 @@ public class HandWeapon : Weapon,IDamageAble
             }
         }
 
-        var sharpLevel = GetWeaponLevelByNbt("锋利");
-        if (sharpLevel > 0)
-        {
-            attackInfo.value=(int)(attackInfo.value*(1+ (0.25f+sharpLevel*0.1f)));
-        }
-
+        
         return attackInfo;
     }
 

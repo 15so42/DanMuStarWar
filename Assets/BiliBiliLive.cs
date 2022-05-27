@@ -35,6 +35,11 @@ public class BiliBiliLive : MonoBehaviour
     public int lastGiftCount = 0;//记录GiftMsg列表长度，update中检测长度，当长度发生变化时分发事件
     
     public int roomId;
+
+    //定时重连
+    private TcpDanmakuClientV2 client;
+    private float timerAfterDisconnect;
+    
     // Start is called before the first frame update
     async void Start()
     {
@@ -45,8 +50,9 @@ public class BiliBiliLive : MonoBehaviour
         }
            
         
-        TcpDanmakuClientV2 client=new TcpDanmakuClientV2();
+        client=new TcpDanmakuClientV2();
         await client.ConnectAsync(roomId);
+        
         client.HeartbeatInterval = TimeSpan.FromSeconds(25);
         
         client.ReceivedMessageEvt += OnReceivedMessage;
@@ -89,6 +95,7 @@ public class BiliBiliLive : MonoBehaviour
         
         Start();
         Debug.Log("重连");
+        timerAfterDisconnect = 0;
         return Task.CompletedTask;
     }
 
@@ -139,6 +146,24 @@ public class BiliBiliLive : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //重连判定
+        if (client.Connected == false)
+        {
+            timerAfterDisconnect += Time.deltaTime;
+            if (timerAfterDisconnect > 5)
+            {
+                timerAfterDisconnect = 0;
+                if (client.Connected == false)
+                {
+                    Start();
+                }
+                
+                timerAfterDisconnect = 0;
+
+            }
+        }
+        
+        
         if (Input.GetKeyDown(KeyCode.H))
         {
             //"收到来自[23204263]云ぃ空的1个小花花"

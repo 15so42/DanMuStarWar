@@ -630,9 +630,9 @@ public class RoundManager : MonoBehaviour
                 ParseRandomSpell(steveCommander,false,false);
             }
 
-            if (trim == "祛魔")
+            if (trim.StartsWith("祛魔"))
             {
-                ParseRemoveSpell(steveCommander);
+                ParseRemoveSpell(steveCommander,trim);
             }
 
             if (trim == "维修")
@@ -788,8 +788,15 @@ public class RoundManager : MonoBehaviour
       
     }
 
-    void ParseRemoveSpell(SteveCommander steveCommander)
+    void ParseRemoveSpell(SteveCommander steveCommander,string trim)
     {
+        
+        var pattern=@"^(祛魔){1}(\d{1})$";
+        if(Regex.IsMatch(trim,pattern)==false)
+            return;
+
+        var index = trim.Substring(2);
+        
         var validSteve = steveCommander.FindFirstValidSteve();
         if (!validSteve)
             return;
@@ -800,9 +807,12 @@ public class RoundManager : MonoBehaviour
             return;
         }
         
-        validSteve.RemoveSpell();
+        if(validSteve.RemoveSpell(int.Parse(index)))
+        {
+            steveCommander.AddPoint(-3);
+        }
         
-        steveCommander.AddPoint(-3);
+       
         
     }
     

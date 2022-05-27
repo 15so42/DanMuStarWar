@@ -51,10 +51,10 @@ public class Steve : WarPlane
         }
 
         var liveWeapon = InitDesireWeapon();//读档，如果读取是空手就随机武器
-        if (liveWeapon==null ||  (liveWeapon as HandWeapon).mcWeaponId == 0)//空手
-        {
-            RandomWeapon();
-        }
+        // if (liveWeapon==null ||  (liveWeapon as HandWeapon).mcWeaponId == 0)//空手
+        // {
+        //     RandomWeapon();
+        // }
         
         //todo 删除测试
         //ChangeWeapon(7);
@@ -193,11 +193,13 @@ public class Steve : WarPlane
         
     }
 
-    public void RemoveSpell()
+    public bool RemoveSpell(int index)
     {
         var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
 
-        (liveWeapon as HandWeapon)?.RemoveSpell();
+        if (liveWeapon == null || liveWeapon as HandWeapon == null)
+            return false;
+        return (liveWeapon as HandWeapon).RemoveSpell(index);
         
     }
     
