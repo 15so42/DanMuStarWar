@@ -17,11 +17,13 @@ public class Player
     public Sprite faceSprite;
     public Action onSpriteDownload;
     
-  
+    public UserSaveData userSaveData;
+
+    public void SetUserData(UserSaveData target)
+    {
+        this.userSaveData = target;
+    }
     
-    
-    
-  
     
     public Player(int uid, string userName, string faceUrl,string top_photo)
     {

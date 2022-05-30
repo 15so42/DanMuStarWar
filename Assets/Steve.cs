@@ -24,10 +24,13 @@ public class Steve : WarPlane
     [HideInInspector]public bool canPushBack=true;//是否可被击退,在箭塔时不可被击退哦
 
     private int curWeaponId;//切换武器时更新
-   
-    
-    
-    
+
+    [HideInInspector] public string cs64Code = "";
+    private static readonly int MainTex = Shader.PropertyToID("_MainTex");
+
+    [Header("换肤材质球")] public List<SkinnedMeshRenderer> skinMeshRenderers;
+    [Header("本地皮肤列表")] public List<Texture> skinTextures;
+
     protected override void Start()
     {
         base.Start();
@@ -62,6 +65,38 @@ public class Steve : WarPlane
         //关闭碰撞体
         //trigger.enabled = false;
 
+        
+        //使用皮肤
+        var steveCommander = planetCommander as SteveCommander;
+        if (steveCommander.player.userSaveData.skinId == -1)
+        {
+            SetSkin(steveCommander.player.userSaveData.customSkin64Code);
+        }
+        else
+        {
+            SetSkinById(steveCommander.player.userSaveData.skinId);
+        }
+        
+    }
+
+    void SetSkin(string cs64Code)
+    {
+        Texture2D _texture = new Texture2D(64, 32);
+        _texture.LoadImage(Convert.FromBase64String(cs64Code));
+        _texture.filterMode = FilterMode.Point;
+        for (int i = 0; i < skinMeshRenderers.Count; i++)
+        {
+            skinMeshRenderers[i].material.SetTexture(MainTex,_texture);
+        }
+        
+    }
+
+    void SetSkinById(int index)
+    {
+        for (int i = 0; i < skinMeshRenderers.Count; i++)
+        {
+            skinMeshRenderers[i].material.SetTexture(MainTex,skinTextures[index]);
+        }
     }
 
     public void OpenTrigger()

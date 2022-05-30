@@ -53,6 +53,8 @@ public class SteveCommander : PlanetCommander
         {
             return;
         }
+
+       
         ownerPlanet.AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_STEVE,1),this));
         die = false;
     }

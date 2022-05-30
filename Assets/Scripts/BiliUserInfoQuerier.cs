@@ -47,6 +47,7 @@ public class BiliUserInfoQuerier : MonoBehaviour
             player.top_photo = ret.data.top_photo;
             player.onGetUrl?.Invoke();
                 
+            PhpTester.Instance.GetUserByUid(uid,player.userName, player.SetUserData);
         }
             
             
