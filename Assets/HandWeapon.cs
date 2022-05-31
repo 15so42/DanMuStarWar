@@ -224,6 +224,16 @@ public class HandWeapon : Weapon,IDamageAble
         {
             attackInfo.value=(int)(attackInfo.value*(1+ (0.25f+sharpLevel*0.1f)));
         }
+        
+        var criticalLevel=GetWeaponLevelByNbt("暴击");
+        if (criticalLevel > 0)
+        {
+            var rate = UnityEngine.Random.Range(0, 10);
+            if (rate < criticalLevel)
+            {
+                attackInfo.value = (int) (attackInfo.value * (1.5 + criticalLevel * 0.1));
+            }
+        }
 
         
         var realDamage= victim.OnAttacked(attackInfo);

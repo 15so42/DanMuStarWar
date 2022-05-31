@@ -30,6 +30,10 @@ public class Steve : WarPlane
 
     [Header("换肤材质球")] public List<SkinnedMeshRenderer> skinMeshRenderers;
     [Header("本地皮肤列表")] public List<Texture> skinTextures;
+    
+    [Header("普通武器")]
+    public List<HandWeapon> normalWeapons=new List<HandWeapon>();
+    public List<HandWeapon> rareWeapons=new List<HandWeapon>();
 
     protected override void Start()
     {
@@ -157,27 +161,17 @@ public class Steve : WarPlane
 
     public void RandomRareWeapon()
     {
-        var random = UnityEngine.Random.Range(0, 2);
-        if (curWeaponId == 7 || curWeaponId == 8)
+        var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
+        while (true)
         {
-            if (curWeaponId == 7)
+            var random = rareWeapons[UnityEngine.Random.Range(0, rareWeapons.Count)].mcWeaponId;
+            if (random != (liveWeapon as HandWeapon).mcWeaponId)
             {
-                ChangeWeapon(8);
-                return;
+                ChangeWeapon(random);
+                break;
             }
-
-            if (curWeaponId == 8)
-            {
-                ChangeWeapon(7);
-                return;
-            }
-               
         }
-        
-        if(random==0)
-            ChangeWeapon(7);
-        if (random == 1)
-            ChangeWeapon(8);
+
     }
 
     public void RandomWeapon()
@@ -190,7 +184,7 @@ public class Steve : WarPlane
         if (steveCommander != null && steveCommander.point > 6)
         {
             
-            var randomId=UnityEngine.Random.Range(1, weapons.Count - 2);
+            var randomId=normalWeapons[ UnityEngine.Random.Range(1, normalWeapons.Count)].mcWeaponId;
             var liveWeapon = ChangeWeapon(randomId);
             MessageBox._instance.AddMessage("[系统]" + planetCommander.player.userName + "抽取武器:" + liveWeapon.weaponName);
             

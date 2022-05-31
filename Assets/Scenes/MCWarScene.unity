@@ -10858,7 +10858,6 @@ MonoBehaviour:
   maxWaitingPlayerTime: 300
   planetRoot: {fileID: 0}
   battleUnitRoot: {fileID: 0}
-  saveDataManager: {fileID: 486641839}
   colorTable: {fileID: 11400000, guid: 09969591bfaee2240b86f2535ee14349, type: 2}
   firstPlanetIndex: 0
   lastPlanetIndex: 1

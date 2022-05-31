@@ -67,6 +67,11 @@ public class PhpTester : MonoBehaviour
     {
         void OnGetUserJson(string json)
         {
+            if (json == "")
+            {
+                //说明获取玩家失败了
+                return;
+            }
             UserSaveData jsonUserSaveData = JsonUtility.FromJson<UserSaveData>(json);
             onParseJson.Invoke(jsonUserSaveData);
         }
@@ -98,6 +103,7 @@ public class PhpTester : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
+                onGetJson.Invoke("");//返回空json
             }
             else
             {
@@ -106,6 +112,8 @@ public class PhpTester : MonoBehaviour
                 if (result.StartsWith("Error"))
                 {
                     Debug.LogError("获取"+uid+"玩家信息错误");
+                    onGetJson.Invoke("");//返回空json
+                    
                     yield break;
                 }
 

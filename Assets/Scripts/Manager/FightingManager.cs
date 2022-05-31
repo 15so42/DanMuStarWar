@@ -150,8 +150,13 @@ public class FightingManager : MonoBehaviourPunCallbacks
     /// <param name="value"></param>
     public void AddPlayerDataValue(int uid,string key,object value)
     {
-        UserSaveData userSaveData = players.Find(x => x.uid == uid).userSaveData;
-       
+        var findRet = players.Find(x => x.uid == uid);
+        if(findRet==null)
+            return;
+        
+        UserSaveData userSaveData = findRet.userSaveData;
+        if(userSaveData==null)//特殊情况容错处理
+           return;
         
         if (key == "giftPoint")
         {
