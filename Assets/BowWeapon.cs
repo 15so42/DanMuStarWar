@@ -14,12 +14,21 @@ public class BowWeapon : HandWeapon
     public string bulletName="ArrowBullet";
     public string animTriggerName = "BowAttack";
     public float invokeDelay = 0.6f;
-    
+
+    [Header("偏差高度")]
+    public int minHeight = 3;
+    public int maxHeight = 7;
    
     
     public override void Fire()
     {
         animator.SetTrigger(animTriggerName);
+        if (endurance == 0)
+        {
+            owner.LogTip("没耐久啦");
+            return;
+        }
+        
         Invoke(nameof(ShootArrow),invokeDelay);
         endurance--;
         OnEnduranceChange(endurance,maxEndurance);
@@ -46,7 +55,7 @@ public class BowWeapon : HandWeapon
         if (owner.chaseTarget != null)
         {
             targetPos = owner.chaseTarget.GetVictimEntity().transform.position +
-                        Vector3.up * UnityEngine.Random.Range(3, 7);
+                        Vector3.up * UnityEngine.Random.Range(minHeight, maxHeight);
         }
         
        

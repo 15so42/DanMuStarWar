@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using BattleScene.Scripts;
 using UnityEngine;
 
+
+
+
+
 public class ArrowBullet : MonoBehaviour
 {
     public IAttackAble owner;
@@ -17,7 +21,11 @@ public class ArrowBullet : MonoBehaviour
 
     List<IVictimAble> attacked=new List<IVictimAble>();//储存伤害过单位列表，不能多次伤害同一单位
 
+    public bool recycleOnCollision = true;
+
     protected RecycleAbleObject recycleAbleObject;
+
+    public bool damageOnce = true;
 
 
     //弓箭伤害=3+力量等级*2,力量等级也带有更强的击退效果
@@ -42,36 +50,77 @@ public class ArrowBullet : MonoBehaviour
         this.strength = strength;
     }
 
-    //strength决定伤害和击退距离
-    private void OnCollisionEnter(Collision other)
+
+    protected IVictimAble ValidCheck(Collider other)
     {
         if(gameObject==null || rigidbody==null)
-            return;
+            return null;
         if(rigidbody.velocity.magnitude<1)
-            return;
-        
+            return null;
         
         var victim = other.gameObject.GetComponent<IVictimAble>();
         if(victim==null)
-            return;
+            return null;
         
         victim =victim.GetVictimEntity();
         if(victim==this.owner || attacked.Contains(victim))
-            return;
+            return null;
         
         //取消友伤
         if(victim.GetVictimOwner()==owner.GetAttackerOwner())
+            return null;
+        return victim;
+    }
+    
+
+    //strength决定伤害和击退距离
+    public virtual void OnCollisionEnter(Collision other)
+    {
+        var victim = ValidCheck(other.collider);
+        if(victim==null)
             return;
 
        
+        // var hpAndShield = victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,3+strength*2));
+        // handWeapon.OnDamageOther(victim,hpAndShield);
+        // attacked.Add(victim);
+        DamageVictim(victim);
+        
+        // var navMeshMoveManager = victim.GetGameObject().GetComponent<NavMeshMoveManager>();
+        // if(navMeshMoveManager)
+        //     navMeshMoveManager.PushBackByPos(victim.GetGameObject().transform.position,owner.GetAttackerOwner().transform.position,3,2,1+strength*0.2f);
+        //
+        //
+        // if (recycleAbleObject)
+        // {
+        //     recycleAbleObject.Recycle();
+        // }
+       
+        DamageFx(victim);
+            
+        
+    }
+
+    protected void DamageVictim(IVictimAble victim)
+    {
         var hpAndShield = victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,3+strength*2));
         handWeapon.OnDamageOther(victim,hpAndShield);
-        
+        if(damageOnce)
+            attacked.Add(victim);
+    }
+
+    protected void DamageFx(IVictimAble victim)
+    {
         var navMeshMoveManager = victim.GetGameObject().GetComponent<NavMeshMoveManager>();
         if(navMeshMoveManager)
             navMeshMoveManager.PushBackByPos(victim.GetGameObject().transform.position,owner.GetAttackerOwner().transform.position,3,2,1+strength*0.2f);
-        attacked.Add(victim);
-        recycleAbleObject.Recycle();
+        
+
+        if (recycleAbleObject && recycleOnCollision)
+        {
+            recycleAbleObject.Recycle();
+        }
+        
     }
 
     public virtual void OnDisable()

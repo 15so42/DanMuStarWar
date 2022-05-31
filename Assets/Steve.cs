@@ -70,7 +70,7 @@ public class Steve : WarPlane
         //trigger.enabled = false;
 
         
-        //使用皮肤
+        //使用皮肤,异步
         var steveCommander = planetCommander as SteveCommander;
         if (steveCommander.player.userSaveData.skinId == -1)
         {
@@ -129,7 +129,7 @@ public class Steve : WarPlane
         
         if (endurance <= 0)
         {
-            RandomWeapon();
+            //RandomWeapon();
         }
     }
     

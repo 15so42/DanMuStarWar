@@ -22600,7 +22600,9 @@ MonoBehaviour:
   - weaponName: "\u94BB\u77F3\u5251"
     price: 16
   - weaponName: "\u5F13"
-    price: 12
+    price: 14
+  - weaponName: "\u94BB\u77F3\u65A7"
+    price: 16
 --- !u!4 &1504619296
 Transform:
   m_ObjectHideFlags: 0
@@ -30767,6 +30769,80 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 420a483c8bc4870489e86edff45c13c7, type: 3}
+--- !u!1001 &4558867485985719448
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6924106730535618336, guid: bafdc821fd2a8e947a89dd146288ccb9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 6924106730535618336, guid: bafdc821fd2a8e947a89dd146288ccb9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0013392223
+      objectReference: {fileID: 0}
+    - target: {fileID: 6924106730535618336, guid: bafdc821fd2a8e947a89dd146288ccb9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6924106730535618336, guid: bafdc821fd2a8e947a89dd146288ccb9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0058984472
+      objectReference: {fileID: 0}
+    - target: {fileID: 6924106730535618336, guid: bafdc821fd2a8e947a89dd146288ccb9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9751805
+      objectReference: {fileID: 0}
+    - target: {fileID: 6924106730535618336, guid: bafdc821fd2a8e947a89dd146288ccb9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6924106730535618336, guid: bafdc821fd2a8e947a89dd146288ccb9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.22141138
+      objectReference: {fileID: 0}
+    - target: {fileID: 6924106730535618336, guid: bafdc821fd2a8e947a89dd146288ccb9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6924106730535618336, guid: bafdc821fd2a8e947a89dd146288ccb9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6924106730535618336, guid: bafdc821fd2a8e947a89dd146288ccb9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -25.584
+      objectReference: {fileID: 0}
+    - target: {fileID: 6924106730535618336, guid: bafdc821fd2a8e947a89dd146288ccb9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736215276786015642, guid: bafdc821fd2a8e947a89dd146288ccb9,
+        type: 3}
+      propertyPath: m_Name
+      value: BoomerangBullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736215276786015642, guid: bafdc821fd2a8e947a89dd146288ccb9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bafdc821fd2a8e947a89dd146288ccb9, type: 3}
 --- !u!1001 &5474798844865633041
 PrefabInstance:
   m_ObjectHideFlags: 0

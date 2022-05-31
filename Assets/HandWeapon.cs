@@ -182,6 +182,12 @@ public class HandWeapon : Weapon,IDamageAble
     public override void Fire()
     {
         animator.SetTrigger("Attack");
+        if (endurance == 0)
+        {
+            owner.LogTip("没耐久啦");
+            return;
+        }
+        
         Invoke(nameof(Damage),0.3f);
 
         var enduranceLevel = GetWeaponLevelByNbt("耐久");
