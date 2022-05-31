@@ -77,7 +77,7 @@ public class NavMeshMoveManager : MoveManager
             
             RaycastHit raycastHit=new RaycastHit();
             Debug.DrawLine(transform.position+Vector3.up*0.2f,transform.position-transform.up*0.5f);
-            if (timer>3 || lastVelocityY<=0 && Physics.Raycast(transform.position+Vector3.up*0.2f, -1 * Vector3.up, out raycastHit, 0.5f/*,~LayerMask.GetMask("BattleUnit")*/))
+            if (timer>3 || rigidbody.velocity.magnitude<1  /*||lastVelocityY<=0 && Physics.Raycast(transform.position+Vector3.up*0.2f, -1 * Vector3.up, out raycastHit, 0.5f/*,~LayerMask.GetMask("BattleUnit"))*/)
             {
                 navMeshAgent.nextPosition = transform.position;
                 navMeshAgent.updatePosition = true;

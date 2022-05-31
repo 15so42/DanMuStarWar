@@ -125,8 +125,8 @@ public class PlanetUI : MonoBehaviour
     {
         if(owner.owner==null)
             return;
-        var data = FightingManager.Instance.playerDataTable.FindByUid(owner.owner.uid);
-        giftPoint.text = data.giftPoint.ToString();
+        //var data = FightingManager.Instance.playerDataTable.FindByUid(owner.owner.uid);
+        //giftPoint.text = data.giftPoint.ToString();
         //Debug.Log("礼物UI尚未实现");
     }
 

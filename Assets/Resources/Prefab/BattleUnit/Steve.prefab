@@ -5902,6 +5902,7 @@ MonoBehaviour:
     enhancementLevels: []
   randomStrs:
   - "\u683C\u6321"
+  - "\u8346\u68D8"
   rareRandomStrs: []
   maxEndurance: 200
   endurance: 200
@@ -6230,6 +6231,7 @@ MonoBehaviour:
   - "\u950B\u5229"
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
+  - "\u8346\u68D8"
   rareRandomStrs: []
   maxEndurance: 16
   endurance: 16
@@ -6364,6 +6366,7 @@ MonoBehaviour:
   - "\u950B\u5229"
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
+  - "\u8346\u68D8"
   rareRandomStrs: []
   maxEndurance: 16
   endurance: 16
@@ -6498,6 +6501,7 @@ MonoBehaviour:
   - "\u950B\u5229"
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
+  - "\u8346\u68D8"
   rareRandomStrs: []
   maxEndurance: 60
   endurance: 60
@@ -6632,6 +6636,7 @@ MonoBehaviour:
   - "\u950B\u5229"
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
+  - "\u8346\u68D8"
   rareRandomStrs: []
   maxEndurance: 40
   endurance: 40
@@ -6766,6 +6771,7 @@ MonoBehaviour:
   - "\u950B\u5229"
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
+  - "\u8346\u68D8"
   rareRandomStrs: []
   maxEndurance: 50
   endurance: 50

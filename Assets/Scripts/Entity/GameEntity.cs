@@ -43,7 +43,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    //击杀相关事件
    public Func<AttackInfo,AttackInfo> onBeforeAttacked;
    public Action<IVictimAble,int> onAttackOther;
-   public Action<int> onAttacked;
+   public Action<AttackInfo> onAttacked;
    public Action onSlainOther;
 
    public void Awake()
@@ -123,7 +123,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
       //事件触发
 
       if(attackInfo.attackType!=AttackType.Heal && (GameEntity) attackInfo.attacker!=this)
-         onAttacked?.Invoke(attackInfo.value);
+         onAttacked?.Invoke(attackInfo);
      
       if (hpAndShield.hpValue <= 0 && !die)
       {

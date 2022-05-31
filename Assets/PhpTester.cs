@@ -55,10 +55,10 @@ public class PhpTester : MonoBehaviour
         //StartCoroutine(InsertNewUser(2,"ss"));
         //StartCoroutine(UpdateUser(2,"yyyy",2,3,1,1,1,1,1,""));
 
-        GetUserByUid(7, "默认名称", (user) =>
-        {
-            Debug.Log(user.uid+","+user.userName);
-        });
+        // GetUserByUid(7, "默认名称", (user) =>
+        // {
+        //     Debug.Log(user.uid+","+user.userName);
+        // });
     }
 
 
@@ -74,10 +74,7 @@ public class PhpTester : MonoBehaviour
         StartCoroutine(GetUserByUidC(uid, userName,OnGetUserJson));
     }
 
-    public void UpdateUser(UserSaveData userSaveData)
-    {
-        
-    }
+   
 
     /// <summary>
     /// 输入php名称，不要斜杠，如GetuserByUid.php
@@ -128,8 +125,14 @@ public class PhpTester : MonoBehaviour
     }
 
    
+    public void UpdateUser(UserSaveData userSaveData)
+    {
+        StartCoroutine(UpdateUserC(userSaveData.uid, userSaveData.userName, userSaveData.giftPoint,
+            userSaveData.winCount, userSaveData.loseCount
+            , userSaveData.coin, userSaveData.killCount, userSaveData.dieCount, userSaveData.skinId));
+    }
     
-    IEnumerator UpdateUser(int uid,string userName,int giftPoint,int winCount,int loseCount,int coin,int killCount,int dieCount,int skinId,string customSkin64Code)
+    IEnumerator UpdateUserC(int uid,string userName,int giftPoint,int winCount,int loseCount,int coin,int killCount,int dieCount,int skinId)
     {
         WWWForm wwwForm=new WWWForm();
         wwwForm.AddField("uid",uid);
@@ -141,7 +144,7 @@ public class PhpTester : MonoBehaviour
         wwwForm.AddField("killCount",killCount);
         wwwForm.AddField("dieCount",dieCount);
         wwwForm.AddField("skinId",skinId);
-        wwwForm.AddField("customSkin64Code",customSkin64Code);
+        //
         
         using (UnityWebRequest www = UnityWebRequest.Post(GetPath("UpdateUser.php") ,wwwForm))
         {

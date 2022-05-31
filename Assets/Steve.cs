@@ -427,6 +427,8 @@ public class Steve : WarPlane
         var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
         (liveWeapon as HandWeapon).SaveToCommander();
         
+        fightingManager.AddPlayerDataValue(planetCommander.player.uid,"dieCount",1);
+        
         base.Die();
         
        
@@ -436,6 +438,7 @@ public class Steve : WarPlane
     {
         base.OnSlainOther();
         planetCommander.AddPoint(2);
+        fightingManager.AddPlayerDataValue(planetCommander.player.uid,"killCount",1);
     }
     
     //

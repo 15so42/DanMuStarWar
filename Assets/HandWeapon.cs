@@ -321,10 +321,16 @@ public class HandWeapon : Weapon,IDamageAble
     }
 
     //招架
-    public void OnAttacked(int damage)
+    public void OnAttacked(AttackInfo attackInfo)
     {
         if (gameObject.activeSelf == false)
             return;
+        var thronLevel = GetWeaponLevelByNbt("荆棘");
+        if (thronLevel > 0)
+        {
+            attackInfo.attacker.GetAttackEntity()
+                .OnAttacked(new AttackInfo(owner, AttackType.Real, Mathf.CeilToInt(attackInfo.value * (0.15f + thronLevel*0.05f))));
+        }
     }
 
     public void OnSlainOther()

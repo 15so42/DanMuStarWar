@@ -13,6 +13,7 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Object = System.Object;
 using Timer = System.Timers.Timer;
 
 public enum GameStatus
@@ -71,7 +72,10 @@ public class FightingManager : MonoBehaviourPunCallbacks
     public GameObject battleUnitRoot;
 
     //存档读档
-    public SaveDataManager saveDataManager;
+    //public SaveDataManager saveDataManager;
+    
+    //服务器存档
+    public NetSaveDataManager saveDataManager;
     public PlayerDataTable playerDataTable;
 
     public ColorTable colorTable;
@@ -102,7 +106,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
         this.gameManager = gameManager;
         uiManager = gameManager.uiManager;
         
-        saveDataManager.LoadByJson();//异步读档
+       saveDataManager=new NetSaveDataManager();
         
         
         StartWaitingJoin();
@@ -133,7 +137,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
     #region 存档
     private void Save()
     {
-        saveDataManager.SaveByJson();
+        //saveDataManager.Sav
     }
 
     //开启战绩系统
@@ -144,26 +148,47 @@ public class FightingManager : MonoBehaviourPunCallbacks
     /// <param name="uid"></param>
     /// <param name="key">"giftPoint,winCount,loseCount"</param>
     /// <param name="value"></param>
-    public void AddPlayerDataValue(int uid,string key,int value)
+    public void AddPlayerDataValue(int uid,string key,object value)
     {
-        PlayerData playerData = playerDataTable.FindByUid(uid);
+        UserSaveData userSaveData = players.Find(x => x.uid == uid).userSaveData;
+       
+        
         if (key == "giftPoint")
         {
-            playerData.giftPoint+=value;
+            userSaveData.giftPoint+=(int)value;
+        }
+
+        if (key == "coin")
+        {
+            userSaveData.coin += (int)value;
         }
 
         if (key == "winCount")
         {
-            playerData.winCount += value;
+            userSaveData.winCount += (int)value;
         }
 
         if (key == "loseCount")
         {
-            playerData.loseCount += value;
+            userSaveData.loseCount += (int)value;
+        }
+
+        if (key == "killCount")
+        {
+            userSaveData.killCount += (int)value;
+        }
+
+        if (key == "dieCount")
+        {
+            userSaveData.dieCount += (int)value;
+        }
+
+        if (key == "skinId")
+        {
+            userSaveData.skinId = (int)value;
         }
        
-        playerDataTable.UpdateByUid(uid,playerData);
-        Save();
+       
     }
     
     
@@ -588,11 +613,29 @@ public class FightingManager : MonoBehaviourPunCallbacks
     {
         gameStatus = GameStatus.WaitingNewFighting;
         MessageBox._instance.Hide();
+
+        for (int i = 0; i < winners.Count; i++)
+        {
+            var player = winners[i].player;
+            AddPlayerDataValue(player.uid, "winCount", 1);
+        }
+        for (int i = 0; i < losers.Count; i++)
+        {
+            var player = losers[i].player;
+            AddPlayerDataValue(player.uid, "loseCount", 1);
+        }
+        
+        SaveAllPlayer();
         MCBattleOverDialog.ShowDialog(15,GameMode.MCWar,winners,losers,
             ()=>
             {
                 StartNewBattle();
             });
+    }
+
+    public void SaveAllPlayer()
+    {
+        saveDataManager.Save(players);
     }
 }
 
