@@ -40,12 +40,14 @@ public class BoomerangBullet : ArrowBullet
 
             Vector3 distanceDir = transform.position - owner.GetAttackEntity().transform.position;
             distanceDir.y = 0;
-            if (distanceDir.magnitude < 3f)
+            if (distanceDir.magnitude < 3f||timer>6)
             {
                 timer = 0;
                 recycleAbleObject.Recycle();
                 (handWeapon as BoomerangeWeapon).OnBoomerangeBack();//飞回后才能进行下一次的攻击
             }
+            
+            
         }
         else
         {
@@ -54,10 +56,7 @@ public class BoomerangBullet : ArrowBullet
         
     }
 
-    public override int CalDamage()
-    {
-        return 2 + strength * 1;
-    }
+    
 
     void OnStartBack()
     {

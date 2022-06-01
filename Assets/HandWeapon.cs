@@ -341,11 +341,16 @@ public class HandWeapon : Weapon,IDamageAble
     {
         if (gameObject.activeSelf == false)
             return;
+        if (attackInfo.attackType == AttackType.Heal)
+        {
+            return;
+        }
+        
         var thronLevel = GetWeaponLevelByNbt("荆棘");
-        if (thronLevel > 0)
+        if (thronLevel > 0 && attackInfo.attackType!=AttackType.Reflect)
         {
             attackInfo.attacker.GetAttackEntity()
-                .OnAttacked(new AttackInfo(owner, AttackType.Real, Mathf.CeilToInt(attackInfo.value * (0.15f + thronLevel*0.05f))));
+                .OnAttacked(new AttackInfo(owner, AttackType.Reflect, Mathf.CeilToInt(attackInfo.value * (0.15f + thronLevel*0.05f))));
         }
     }
 

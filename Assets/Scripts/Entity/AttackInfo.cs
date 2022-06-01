@@ -6,7 +6,8 @@ public enum AttackType{
     Physics,
     Magic,
     Real,
-    Heal
+    Heal,
+    Reflect
 }
 public class AttackInfo
 {

@@ -5242,7 +5242,7 @@ MonoBehaviour:
   attackDistance: 3
   owner: {fileID: 0}
   weaponName: "\u94BB\u77F3\u65A7"
-  attackSpeed: 0.42
+  attackSpeed: 0.64
   scatteringAngel: 5
   rayDistance: 20
   attackType: 0
@@ -5260,8 +5260,8 @@ MonoBehaviour:
   - "\u51EF\u65CB"
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
-  - "\u8346\u68D8"
   - "\u66B4\u51FB"
+  - "\u8346\u68D8"
   rareRandomStrs: []
   maxEndurance: 60
   endurance: 60
@@ -5889,10 +5889,10 @@ MonoBehaviour:
   - {fileID: 5196666267320263148}
   - {fileID: 1012542143}
   - {fileID: 1799835517}
+  - {fileID: 3160901585147511013}
   rareWeapons:
   - {fileID: 279433266491246655}
   - {fileID: 1658495703}
-  - {fileID: 3160901585147511013}
 --- !u!195 &1629974822948850975
 NavMeshAgent:
   m_ObjectHideFlags: 0
