@@ -801,15 +801,15 @@ public class RoundManager : MonoBehaviour
         if (!validSteve)
             return;
 
-        if (steveCommander.point < 3)
+        if (steveCommander.point <0)
         {
-            steveCommander.commanderUi.LogTip("需要点数:3");
+            steveCommander.commanderUi.LogTip("需要点数:0");
             return;
         }
         
         if(validSteve.RemoveSpell(int.Parse(index)))
         {
-            steveCommander.AddPoint(-3);
+            //steveCommander.AddPoint(-3);
         }
         
        
@@ -830,13 +830,13 @@ public class RoundManager : MonoBehaviour
             validSteve.AddMaxHp(2);
         else
         {
-            if (steveCommander.point < 15)
+            if (steveCommander.point < 10)
             {
-                steveCommander.commanderUi.LogTip("需要点数:15");
+                steveCommander.commanderUi.LogTip("需要点数:10");
                 return;
             }
             validSteve.AddMaxHp(5);
-            steveCommander.AddPoint(-15);
+            steveCommander.AddPoint(-10);
         }
     }
     

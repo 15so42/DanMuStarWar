@@ -19,7 +19,7 @@ public class ArrowBullet : MonoBehaviour
 
     protected Rigidbody rigidbody;
 
-    List<IVictimAble> attacked=new List<IVictimAble>();//储存伤害过单位列表，不能多次伤害同一单位
+    protected List<IVictimAble> attacked=new List<IVictimAble>();//储存伤害过单位列表，不能多次伤害同一单位
 
     public bool recycleOnCollision = true;
 
@@ -101,9 +101,13 @@ public class ArrowBullet : MonoBehaviour
         
     }
 
+    public virtual int CalDamage()
+    {
+        return 3 + strength * 2;
+    }
     protected void DamageVictim(IVictimAble victim)
     {
-        var hpAndShield = victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,3+strength*2));
+        var hpAndShield = victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,CalDamage()));
         handWeapon.OnDamageOther(victim,hpAndShield);
         if(damageOnce)
             attacked.Add(victim);

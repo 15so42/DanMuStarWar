@@ -26,10 +26,14 @@ public class BoomerangBullet : ArrowBullet
     private Vector3 refPosition;
     void Update()
     {
-       
+        var lastTimer = timer;
         timer += Time.deltaTime;
         if (timer > 3)
         {
+            if (lastTimer <= 3 && timer > 3)
+            {
+                OnStartBack();
+            }
             rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, Vector3.zero, 1*Time.deltaTime);
             transform.position = Vector3.SmoothDamp(transform.position, owner.GetAttackEntity().transform.position+Vector3.up*5,
                 ref refPosition, 1);
@@ -48,6 +52,16 @@ public class BoomerangBullet : ArrowBullet
             //transform.Translate(dir * (speed * Time.deltaTime),Space.World);
         }
         
+    }
+
+    public override int CalDamage()
+    {
+        return 2 + strength * 1;
+    }
+
+    void OnStartBack()
+    {
+        attacked.Clear();
     }
     
     private void OnTriggerEnter(Collider other)

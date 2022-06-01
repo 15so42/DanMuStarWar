@@ -131,7 +131,7 @@ MonoBehaviour:
   speed: 700
   strength: 1
   recycleOnCollision: 0
-  damageOnce: 0
+  damageOnce: 1
 --- !u!114 &5205686425886490895
 MonoBehaviour:
   m_ObjectHideFlags: 0

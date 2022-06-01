@@ -23,12 +23,7 @@ public class BowWeapon : HandWeapon
     public override void Fire()
     {
         animator.SetTrigger(animTriggerName);
-        if (endurance == 0)
-        {
-            owner.LogTip("没耐久啦");
-            return;
-        }
-        
+
         Invoke(nameof(ShootArrow),invokeDelay);
         endurance--;
         OnEnduranceChange(endurance,maxEndurance);
