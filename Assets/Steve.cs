@@ -206,12 +206,22 @@ public class Steve : WarPlane
         return (liveWeapon as HandWeapon).TryRandomSpell(byGift);
     }
     
+    public bool TrySpecificSpell(string spellName)
+    {
+        var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
+        return (liveWeapon as HandWeapon).TrySpecificSpell(spellName);
+    }
+    
     
     
     public void RandomSpell(bool rare,bool gift)
     {
         var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
-        if ((liveWeapon as HandWeapon).weaponNbt.enhancementLevels.Count >= 3 && !gift)
+        var weaponNbt = (liveWeapon as HandWeapon).weaponNbt;
+        if(weaponNbt==null)
+            return;
+        
+        if (weaponNbt.enhancementLevels.Count >= weaponNbt.maxSpellCount && !gift)
         {
             (liveWeapon as HandWeapon).OnlyUpdateSpell();
         }
@@ -221,6 +231,16 @@ public class Steve : WarPlane
         }
         
     }
+    
+    public bool SpecificSpell(bool rare,string name)
+    {
+        var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
+        if (liveWeapon == null)
+            return false;
+        (liveWeapon as HandWeapon)?.SpecificSpell(name);
+        return true;
+    }
+
 
     public bool RemoveSpell(int index)
     {

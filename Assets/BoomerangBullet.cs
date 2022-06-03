@@ -28,6 +28,8 @@ public class BoomerangBullet : ArrowBullet
     {
         var lastTimer = timer;
         timer += Time.deltaTime;
+        if(owner==null || owner.GetAttackEntity()==null)
+            return;
         if (timer > 3)
         {
             if (lastTimer <= 3 && timer > 3)

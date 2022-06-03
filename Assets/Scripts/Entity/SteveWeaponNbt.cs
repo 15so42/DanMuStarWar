@@ -19,7 +19,8 @@ public class EnhancementLevel
 [Serializable]
 public class SteveWeaponNbt
 {
-    
+
+    public int maxSpellCount = 3;
     public int endurance;//耐久
     
     public List<EnhancementLevel> enhancementLevels=new List<EnhancementLevel>();

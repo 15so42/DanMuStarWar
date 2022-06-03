@@ -114,6 +114,52 @@ public class HandWeapon : Weapon,IDamageAble
         return true;
     }
 
+    public bool TrySpecificSpell(string name)
+    {
+        if (randomStrs.Contains(name) == false)
+        {
+            var str = "";
+            foreach (var t in randomStrs)
+            {
+                str += " "+ t;
+            }
+            MessageBox._instance.AddMessage(owner.planetCommander.player.userName,"附魔名称错误，可附魔列表为："+str);
+            return false;
+        }
+        
+        if ((owner.planetCommander as SteveCommander).leftSpecificSpell <= 0)
+        {
+            MessageBox._instance.AddMessage(owner.planetCommander.player.userName,"指定附魔次数已用完");
+            return false;
+        }
+            
+        if (weaponNbt.enhancementLevels.Find(x => x.enhancementName == name) != null)
+        {
+            return true;
+        }
+        //新附魔
+        if (weaponNbt.enhancementLevels.Count >= weaponNbt.maxSpellCount)
+        {
+            MessageBox._instance.AddMessage(owner.planetCommander.player.userName,"达到附魔栏位限制");
+            return false;
+        }
+        // if (weaponNbt.enhancementLevels.Count >= weaponNbt.maxSpellCount)
+        // {
+        //     owner.LogTip("到达附魔上限，投喂打call可增加附魔栏位");
+        //     return false;
+        // }
+
+        
+
+        return true;
+    }
+
+    public void SpecificSpell(string name)
+    {
+        SetWeaponLevel(name,GetWeaponLevelByNbt(name)+1);
+        OnSpellChange();
+    }
+
     public void OnlyUpdateSpell()
     {
         var randomEnhancementLevel =  weaponNbt.enhancementLevels[UnityEngine.Random.Range( 0,weaponNbt.enhancementLevels.Count)];
@@ -320,7 +366,7 @@ public class HandWeapon : Weapon,IDamageAble
                 if (skill as FireSkill)//第一次附加火焰没问题，但是之后无法再附加火焰而是刷新火焰Buff
                 {
                     (skill as FireSkill).SetAttacker(owner); 
-                    (skill as FireSkill).life = 4 + fireLevel;
+                    (skill as FireSkill).life = 4 + fireLevel*2;
                 }
                 
             }

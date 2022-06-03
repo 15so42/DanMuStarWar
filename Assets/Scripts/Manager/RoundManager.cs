@@ -629,6 +629,13 @@ public class RoundManager : MonoBehaviour
             {
                 ParseRandomSpell(steveCommander,false,false);
             }
+            else
+            {
+                if (trim.StartsWith("指定附魔"))
+                {
+                    ParseSpecificSpell(steveCommander, false, trim);
+                }
+            }
 
             if (trim.StartsWith("祛魔"))
             {
@@ -755,6 +762,32 @@ public class RoundManager : MonoBehaviour
             return;
 
         validSteve.LogTip(trim);
+    }
+
+    void ParseSpecificSpell(SteveCommander steveCommander, bool rare,string trim)
+    {
+         var validSteve = steveCommander.FindFirstValidSteve();
+         if (!validSteve)
+             return;
+
+         if (steveCommander.point < 16)
+         {
+            
+                 steveCommander.commanderUi.LogTip("需要点数:16");
+                 return;
+             
+         }
+
+         var spellName = trim.Substring(4);
+         if (validSteve.TrySpecificSpell(spellName))
+         {
+             var success=validSteve.SpecificSpell(rare, spellName);
+             if (success)
+             {
+                 steveCommander.AddPoint(-16);
+                 steveCommander.leftSpecificSpell--;
+             }
+         }
     }
     
     void ParseRandomSpell(SteveCommander steveCommander,bool rare,bool byGift)

@@ -23,7 +23,9 @@ public class SteveCommander : PlanetCommander
     // public int fire = 0;
     // public int parry = 0;
     // public int triumph = 0;
-    
+
+
+    public int leftSpecificSpell = 2;
     
     //复活timer
     public UnityTimer.Timer unityTimer;

@@ -30,11 +30,10 @@ public class GameManager : MonoBehaviour
         
         fightingManager.Init(this,PhotonLauncher.playMode);
         
-        //moveChessManager由GridManager初始化
-        //moveChessManager.Init();
+       
         //设置帧率为30fps
         Application.targetFrameRate = 30;
-        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        //Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
     // Start is called before the first frame update
     void Start()

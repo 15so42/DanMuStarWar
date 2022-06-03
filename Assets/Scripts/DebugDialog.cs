@@ -19,6 +19,7 @@ public class DebugDialog : Dialog
 
     public string initName = "云空";
     public int initUid = 23204263;
+    
     public int playerIndex = 0;
     
 
