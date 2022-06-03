@@ -135,6 +135,8 @@ public class PhpTester : MonoBehaviour
    
     public void UpdateUser(UserSaveData userSaveData)
     {
+        if(userSaveData==null)
+            return;
         StartCoroutine(UpdateUserC(userSaveData.uid, userSaveData.userName, userSaveData.giftPoint,
             userSaveData.winCount, userSaveData.loseCount
             , userSaveData.coin, userSaveData.killCount, userSaveData.dieCount, userSaveData.skinId));

@@ -9,6 +9,8 @@ public class NetSaveDataManager
     {
         for (int i = 0; i < players.Count; i++)
         {
+            if(players[i]==null)
+                return;
             PhpTester.Instance.UpdateUser(players[i].userSaveData);
         }
     }

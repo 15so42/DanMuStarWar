@@ -18,10 +18,12 @@ public class Player
     public Action onSpriteDownload;
     
     public UserSaveData userSaveData;
+    public Action onSetUserData;
 
     public void SetUserData(UserSaveData target)
     {
         this.userSaveData = target;
+        onSetUserData?.Invoke();
     }
     
     

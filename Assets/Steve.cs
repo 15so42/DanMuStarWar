@@ -69,9 +69,19 @@ public class Steve : WarPlane
         //关闭碰撞体
         //trigger.enabled = false;
 
+
+        planetCommander.player.onSetUserData += OnPlayerSetData;
         
+        //如果在Steve生成前已经就触发了onSetUserData,生成时就不会触发，所以需要手动触发
+        OnPlayerSetData();
+    }
+
+    public void OnPlayerSetData()
+    {
         //使用皮肤,异步
         var steveCommander = planetCommander as SteveCommander;
+        if(steveCommander.player.userSaveData==null)
+            return;
         if (steveCommander.player.userSaveData.skinId == -1)
         {
             SetSkin(steveCommander.player.userSaveData.customSkin64Code);
@@ -80,7 +90,6 @@ public class Steve : WarPlane
         {
             SetSkinById(steveCommander.player.userSaveData.skinId);
         }
-        
     }
 
     void SetSkin(string cs64Code)
@@ -443,6 +452,7 @@ public class Steve : WarPlane
         
         fightingManager.AddPlayerDataValue(planetCommander.player.uid,"dieCount",1);
         
+        planetCommander.player.onSetUserData = null;
         base.Die();
         
        
@@ -465,4 +475,6 @@ public class Steve : WarPlane
     {
         fireFx.gameObject.SetActive(false);
     }
+    
+    
 }
