@@ -66,6 +66,12 @@ public class BiliBiliLive : MonoBehaviour
         string m = e.Message.ToString();
         JObject jObject=JsonConvert.DeserializeObject(m) as JObject;
         string type = jObject["cmd"].ToString();
+
+        if (type.StartsWith("DANMU_MSG"))
+        {
+            type = "DANMU_MSG";
+        }
+        
         switch (type)
         {
             case "DANMU_MSG":

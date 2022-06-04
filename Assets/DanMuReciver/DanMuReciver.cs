@@ -42,7 +42,7 @@ public class DanMuReciver : MonoBehaviour
     void Start()
     {
         url = url + roomId;
-        //StartCoroutine(ReciveDanMu());
+        StartCoroutine(ReciveDanMu());
         DontDestroyOnLoad(gameObject);
       
     }

@@ -55,8 +55,8 @@ public class ArrowBullet : MonoBehaviour
     {
         if(gameObject==null || rigidbody==null)
             return null;
-        if(rigidbody.velocity.magnitude<1)
-            return null;
+        // if(rigidbody.velocity.magnitude<1)
+        //     return null;
         
         var victim = other.gameObject.GetComponent<IVictimAble>();
         if(victim==null)

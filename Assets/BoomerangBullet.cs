@@ -12,7 +12,7 @@ public class BoomerangBullet : ArrowBullet
 
 
     private TrailRenderer[] trailRenderers;
-    private void Start()
+    private void Awake()
     {
         trailRenderers = GetComponentsInChildren<TrailRenderer>();
         

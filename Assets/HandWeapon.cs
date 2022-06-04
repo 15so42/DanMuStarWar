@@ -37,7 +37,7 @@ public class HandWeapon : Weapon,IDamageAble
         animator = root.GetComponent<BattleUnit>().animator;
         if(animator==null)
             Debug.Log(name+"需要手动配置");
-        (owner as Steve).SetAttackDistance(attackDistance);
+        (owner as McUnit).SetAttackDistance(attackDistance);
         
         weaponNbt=new SteveWeaponNbt();
         

@@ -978,7 +978,7 @@ public class RoundManager : MonoBehaviour
             ParseAddPoint(steveCommander);
         }
         
-        if (giftName == "i了i了")
+        if (giftName == "flag")
         {
             ParseAddMaxHp(steveCommander,true);
         }

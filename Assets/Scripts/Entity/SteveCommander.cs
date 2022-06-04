@@ -11,7 +11,7 @@ public class SteveCommander : PlanetCommander
     public int desireMaxHp;//通过送礼叠加到的最大hp
     
     //记录自己控制的单位
-    public List<Steve> battleUnits=new List<Steve>();
+    public List<McUnit> battleUnits=new List<McUnit>();
 
 
     public SteveWeaponNbt steveWeaponNbt;
@@ -65,8 +65,8 @@ public class SteveCommander : PlanetCommander
     {
         for (int i = 0; i < battleUnits.Count; i++)
         {
-            if (battleUnits[i] && battleUnits[i].die == false)
-                return battleUnits[i];
+            if (battleUnits[i] && battleUnits[i].die == false && battleUnits[i].GetType()==typeof(Steve))
+                return battleUnits[i] as Steve;
         }
 
         return null;
