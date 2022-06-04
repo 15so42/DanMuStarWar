@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using BattleScene.Scripts;
 using ExitGames.Client.Photon.StructWrapping;
 using UnityEngine;
 
@@ -12,10 +13,11 @@ public class BoomerangBullet : ArrowBullet
 
 
     private TrailRenderer[] trailRenderers;
-    private void Awake()
+    public void Awake()
     {
+        base.Awake();
         trailRenderers = GetComponentsInChildren<TrailRenderer>();
-        
+       
     }
 
 

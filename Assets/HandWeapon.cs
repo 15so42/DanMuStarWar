@@ -407,7 +407,7 @@ public class HandWeapon : Weapon,IDamageAble
         var triumphLevel = GetWeaponLevelByNbt("凯旋");
         if (triumphLevel>0)
         {
-            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,(int)(owner.props.maxHp*(0.15f+0.05f*triumphLevel))));    
+            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,(int)(4+triumphLevel*3)));    
         }
 
         var expFixLevel = GetWeaponLevelByNbt("经验修补");

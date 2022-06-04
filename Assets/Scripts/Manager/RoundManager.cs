@@ -631,7 +631,7 @@ public class RoundManager : MonoBehaviour
             }
             else
             {
-                if (trim.StartsWith("指定附魔"))
+                if (trim.StartsWith("附魔"))
                 {
                     ParseSpecificSpell(steveCommander, false, trim);
                 }
@@ -778,7 +778,7 @@ public class RoundManager : MonoBehaviour
              
          }
 
-         var spellName = trim.Substring(4);
+         var spellName = trim.Substring(2);
          if (validSteve.TrySpecificSpell(spellName))
          {
              var success=validSteve.SpecificSpell(rare, spellName);
@@ -860,7 +860,7 @@ public class RoundManager : MonoBehaviour
         if (!validSteve)
             return;
         if(byGift)
-            validSteve.AddMaxHp(2);
+            validSteve.AddMaxHp(3);
         else
         {
             if (steveCommander.point < 10)

@@ -19704,6 +19704,7 @@ MonoBehaviour:
   weapons: []
   warPlaneType: 0
   setAttackerTarget: 1
+  targetMcPos: {x: 0, y: 0, z: 0}
   attackDistance: 0
   meshRenderers: []
   fireFx: {fileID: 0}

@@ -29,7 +29,7 @@ public class ArrowBullet : MonoBehaviour
 
 
     //弓箭伤害=3+力量等级*2,力量等级也带有更强的击退效果
-    private void Awake()
+    public void Awake()
     {
         recycleAbleObject = GetComponent<RecycleAbleObject>();
     }
