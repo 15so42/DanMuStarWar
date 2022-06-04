@@ -9,11 +9,15 @@ public class BoomerangBullet : ArrowBullet
     private float timer = 0;
 
     private Vector2 dir;
-    private void OnEnable()
+
+
+    private TrailRenderer[] trailRenderers;
+    private void Start()
     {
-        //throw new NotImplementedException();
-       
+        trailRenderers = GetComponentsInChildren<TrailRenderer>();
+        
     }
+
 
     public override void Init(IAttackAble owner, Vector3 dir, HandWeapon handWeapon)
     {
@@ -21,6 +25,11 @@ public class BoomerangBullet : ArrowBullet
         this.dir = dir;
         //rigidbody.isKinematic = true;
         timer = 0;
+        for (int i = 0; i < trailRenderers.Length; i++)
+        {
+            trailRenderers[i].Clear();
+        }
+       
     }
 
     private Vector3 refPosition;
@@ -37,12 +46,13 @@ public class BoomerangBullet : ArrowBullet
                 OnStartBack();
             }
             rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, Vector3.zero, 1*Time.deltaTime);
-            transform.position = Vector3.SmoothDamp(transform.position, owner.GetAttackEntity().transform.position+Vector3.up*5,
-                ref refPosition, 1);
+            // transform.position = Vector3.Slerp(transform.position, owner.GetAttackEntity().transform.position+Vector3.up*5,
+            //      1*Time.deltaTime);
+            transform.position+=(owner.GetAttackEntity().transform.position+Vector3.up*5-transform.position).normalized * (speed*0.07f * Time.deltaTime);
 
             Vector3 distanceDir = transform.position - owner.GetAttackEntity().transform.position;
             distanceDir.y = 0;
-            if (distanceDir.magnitude < 3f||timer>6)
+            if (distanceDir.magnitude < 3f||timer>10)
             {
                 timer = 0;
                 recycleAbleObject.Recycle();
