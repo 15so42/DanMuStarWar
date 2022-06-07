@@ -21,6 +21,8 @@ public class MoveManager : MonoBehaviour
 
     public bool autoRotate = false;
 
+    protected bool stop;
+
     
     public void Init(Planet planet)
     {
@@ -52,6 +54,8 @@ public class MoveManager : MonoBehaviour
 
     protected virtual void Update()
     {
+        if(stop)
+            return;
         transform.Translate(Vector3.forward * (curSpeed * Time.deltaTime),Space.Self);
         if (autoRotate)//巡航时不启用方向控制
         {
@@ -78,6 +82,16 @@ public class MoveManager : MonoBehaviour
             SetTmpTarget(finalTarget);
         }
         
+    }
+
+    public virtual void Enable()
+    {
+        stop = false;
+    }
+
+    public virtual void Stop()
+    {
+        stop = true;
     }
 
     

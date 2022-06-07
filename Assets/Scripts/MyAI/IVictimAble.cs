@@ -12,6 +12,8 @@ public interface IVictimAble
 
     GameObject GetGameObject();
 
+
+    Vector3 GetVictimPosition();
     BattleUnitProps.HpAndShield OnAttacked(AttackInfo attackInfo);
 
 }

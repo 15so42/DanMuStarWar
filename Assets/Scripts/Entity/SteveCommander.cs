@@ -44,9 +44,27 @@ public class SteveCommander : PlanetCommander
         EventCenter.AddListener<Steve>(EnumEventType.OnSteveDied,OnSteveDie);
         point = 0;
         AddPoint(0);
+
+        if (player.userSaveData != null)
+        {
+            OnSetUserData();
+        }
+        else
+        {
+            player.onSetUserData += OnSetUserData;
+        }
+
         
+
         //绑定事件检测自己的单位得产生
         //EventCenter.AddListener(EnumEventType.OnBattleUnitCreated,OnSteveCreated);
+    }
+
+    void OnSetUserData()
+    {
+        var userSaveData = player.userSaveData;
+        desireMaxHp = 20 + Mathf.CeilToInt((float)userSaveData.giftPoint / 40);
+        leftSpecificSpell += Mathf.CeilToInt((float)userSaveData.giftPoint / 150);
     }
 
     public void CreateSteve()

@@ -32,7 +32,8 @@ public class PointTerritorySkill : SkillBase
             {
                 //Debug.Log("给"+b.name+"添加护盾");
                 //b.OnAttacked(new AttackInfo(gameEntity,AttackType.Heal,value));
-                b.planetCommander.AddPoint(value);
+                b.planetCommander?.AddPoint(value);
+
             }
                 
         }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class MCPosManager : MonoBehaviour
 {
     public List<Vector3> positions=new List<Vector3>();
+    public int firstPlanetPos=0;
+    public int lastPlanetPos=9;
     
     // Start is called before the first frame update
     void Start()

@@ -38,7 +38,9 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     
     //动画
     [HideInInspector]public Animator animator;
-    
+
+
+    private bool awaked = false;
     protected void Awake()
     {
         base.Awake();
@@ -51,7 +53,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         battleUnitManager = gameManager.battleUnitManager;
         animator = GetComponentInChildren<Animator>();
 
-       
+        awaked = true;
 
     }
 
@@ -290,11 +292,15 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
 
     public void SetChaseTarget(IVictimAble target)
     {
+        if(target.GetVictimEntity().canBeTarget==false)
+            return;
+        
         if (IsTargetAlive() == false)
         {
             this.chaseTarget = target;
             return;
         }
+        
         
         var position = transform.position;
         float oldDistance = (chaseTarget.GetVictimEntity().transform.position - position).sqrMagnitude;
@@ -360,8 +366,15 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     public void Init(Planet planet,PlanetCommander planetCommander)
     {
         this.ownerPlanet = planet;
+        if (!awaked)
+        {
+            Awake();
+            awaked = true;
+        }
+           
+        
         moveManager.Init(planet);
-        LogTip(planetCommander.uid+"");
+        //LogTip(planetCommander.uid+"");
         this.planetCommander = planetCommander;
        
         //isDefending = true;
@@ -489,31 +502,43 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     //伤害统计
     public void OnAttackOtherCount(int damage)
     {
+        if(planetCommander==null)
+            return;
         planetCommander.attackOtherDamage += damage;
     }
     
     public void OnAttackedCount(int damage)
     {
+        if(planetCommander==null)
+            return;
         planetCommander.attackedDamage += damage;
     }
 
     public void OnHealSelfCount(int value)
     {
+        if(planetCommander==null)
+            return;
         planetCommander.healSelfValue+=value;
     }
     
     public void OnHealOtherCount(int value)
     {
+        if(planetCommander==null)
+            return;
         planetCommander.healOtherValue+=value;
     }
     
     public void OnSlainOtherCount()
     {
+        if(planetCommander==null)
+            return;
         planetCommander.slainCount++;
     }
 
     public void OnDieCount()
     {
+        if(planetCommander==null)
+            return;
         planetCommander.dieCount++;
     }
     

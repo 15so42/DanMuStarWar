@@ -341,14 +341,14 @@ public class FightingManager : MonoBehaviourPunCallbacks
                        
                         PlanetManager.Instance.allPlanets[firstPlanetIndex].AddCommander(commander,0);
                         if (i == 0)
-                            PlanetManager.Instance.allPlanets[firstPlanetIndex].SetOwner(players[i]);
+                            PlanetManager.Instance.allPlanets[firstPlanetIndex].SetOwner(players[i],commander);
                     }
                     else
                     {
                         
                         PlanetManager.Instance.allPlanets[lastPlanetIndex].AddCommander(commander,1); 
-                        if(i==1)
-                            PlanetManager.Instance.allPlanets[lastPlanetIndex].SetOwner(players[i]);
+                        if(i==lastPlanetIndex)
+                            PlanetManager.Instance.allPlanets[lastPlanetIndex].SetOwner(players[i],commander);
                     }
 
                     
@@ -386,7 +386,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
                 for (int i = 0; i < players.Count; i++)
                 {
                     var index = ((planetNum / playersCount) * i) % planetNum;
-                    PlanetManager.Instance.allPlanets[index].SetOwner(players[i]);
+                    PlanetManager.Instance.allPlanets[index].SetOwner(players[i],null);
                     PlanetManager.Instance.allPlanets[index].maxSkillCount = 2;
                 }
                 //设置护盾星球
@@ -533,7 +533,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
                                     var newPlayer = new Player(uid, userName, "", "");
                                     JoinGame(newPlayer);
                                     BiliUserInfoQuerier.Instance.Query(uid, newPlayer);
-                                    planet.SetOwner(newPlayer);
+                                    planet.SetOwner(newPlayer,null);
                                     planet.maxSkillCount = 2;
 
 
@@ -548,7 +548,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
                             if (players.Find(x => x.uid == uid) == null)
                             {
                                 JoinGame(newPlayer1);
-                                BiliUserInfoQuerier.Instance.Query(uid,newPlayer1);
+                                
                                 PlanetCommander commander = null;
                                 if (gameMode == GameMode.MCWar)
                                 {
@@ -559,6 +559,8 @@ public class FightingManager : MonoBehaviourPunCallbacks
                                     commander = new PlanetCommander(newPlayer1.uid, newPlayer1,
                                         colorTable.colors[players.Count]);
                                 }
+                                
+                                BiliUserInfoQuerier.Instance.Query(uid,newPlayer1);
                                 if (players.Count % 2 == 1)
                                 {
                                     //Debug.Log("加入后玩家数："+players.Count+"去0星球");

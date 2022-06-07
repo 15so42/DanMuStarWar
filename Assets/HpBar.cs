@@ -18,6 +18,8 @@ public class HpBar : MonoBehaviour
     [Header("血条刻度线")]
     public Transform hpTile;
 
+    public Text hpNumText;
+
     
 
     public Transform tileLine;
@@ -42,6 +44,7 @@ public class HpBar : MonoBehaviour
         hpTile.gameObject.SetActive(false);
         weaponNameText.gameObject.SetActive(false);
         weaponEnduranceBg.gameObject.SetActive(false);
+        hpNumText.gameObject.SetActive(false);
     }
 
     public void OnHpChanged(int hp,int maxHP,int shield,int maxShield)
@@ -79,6 +82,12 @@ public class HpBar : MonoBehaviour
         weaponNameText.text = "[" + weaponName + "]";
     }
 
+    public void OpenHpNumText()
+    {
+        hpNumText.gameObject.SetActive(true);
+    }
+    
+
     void UpdateHp(int hp,int maxHP,int shield,int maxShield)
     {
         // if (hp + shield < maxHP)
@@ -106,6 +115,8 @@ public class HpBar : MonoBehaviour
                 GameObject.Instantiate(tileLine, hpTile);
             }
         }
+
+        hpNumText.text = hp + "/" + maxHP;
     }
 
     void UpDatePos()

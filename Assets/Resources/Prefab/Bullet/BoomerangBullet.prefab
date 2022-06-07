@@ -388,7 +388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handWeapon: {fileID: 0}
-  speed: 700
+  speed: 550
   strength: 1
   recycleOnCollision: 0
   damageOnce: 1

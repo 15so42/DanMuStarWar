@@ -52,9 +52,25 @@ public class Steve : McUnit
 
 
         planetCommander.player.onSetUserData += OnPlayerSetData;
+        //planetCommander.player.onSetUserData += RewardUser;
         
         //如果在Steve生成前已经就触发了onSetUserData,生成时就不会触发，所以需要手动触发
         OnPlayerSetData();
+        
+    }
+
+    void RewardUser()
+    {
+        var steveCommander = planetCommander as SteveCommander;
+        if(steveCommander.player.userSaveData==null)
+            return;
+        var saveData = steveCommander.player.userSaveData;
+        if (saveData.giftPoint > 0)
+        {
+            steveCommander.desireMaxHp+=Mathf.CeilToInt((float)saveData.giftPoint / 50); 
+            AddMaxHp(steveCommander.desireMaxHp - props.maxHp);
+            steveCommander.leftSpecificSpell += Mathf.CeilToInt((float)saveData.giftPoint / 200); 
+        }
     }
 
     public void OnPlayerSetData()
@@ -71,6 +87,9 @@ public class Steve : McUnit
         {
             SetSkinById(steveCommander.player.userSaveData.skinId);
         }
+        
+        
+        
     }
 
     void SetSkin(string cs64Code)
@@ -107,18 +126,7 @@ public class Steve : McUnit
         return liveWeapon; 
     }
 
-    public void UpdateWeaponEndurance(int endurance,int maxEndurance)
-    {
-        if (hpUI && hpUI.gameObject)
-        {
-            hpUI.UpdateWeaponEndurance(endurance, maxEndurance);
-        }
-        
-        if (endurance <= 0)
-        {
-            //RandomWeapon();
-        }
-    }
+   
     
     public void FixWeapon(int value)
     {

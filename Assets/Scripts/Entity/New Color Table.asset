@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: New Color Table
   m_EditorClassIdentifier: 
   colors:
+  - {r: 1, g: 0.9864793, b: 0, a: 1}
   - {r: 0, g: 1, b: 0.9226117, a: 1}
   - {r: 0.02520132, g: 1, b: 0, a: 1}
-  - {r: 1, g: 0.9864793, b: 0, a: 1}
   - {r: 1, g: 0.57096726, b: 0, a: 1}
   - {r: 1, g: 0, b: 0.8144698, a: 1}
   - {r: 0.6981132, g: 0.5555399, b: 0, a: 1}

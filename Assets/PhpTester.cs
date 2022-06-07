@@ -18,8 +18,9 @@ public class UserSaveData
     public int dieCount;
     public int skinId;
     public string customSkin64Code;
+    public int jianzhang;//0 false,1 true
 
-    public UserSaveData(int uid, string userName, int giftPoint, int winCount, int loseCount, int coin, int killCount, int dieCount, int skinId, string customSkin64Code)
+    public UserSaveData(int uid, string userName, int giftPoint, int winCount, int loseCount, int coin, int killCount, int dieCount, int skinId, string customSkin64Code,int jianzhang)
     {
         this.uid = uid;
         this.userName = userName;
@@ -31,6 +32,7 @@ public class UserSaveData
         this.dieCount = dieCount;
         this.skinId = skinId;
         this.customSkin64Code = customSkin64Code;
+        this.jianzhang = jianzhang;
     }
 }
 

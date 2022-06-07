@@ -568,16 +568,18 @@ public class Planet : GameEntity
     }
 
     //由fighingManager在玩家进入游戏时选择星球并占领
-    public void SetOwner(Player player)
+    public void SetOwner(Player player,PlanetCommander planetCommander)
     {
         this.owner = player;
         planetUi.SetOwner(player,fightingManager.gameMode);
-        if (planetCommanders.Find(x => x.uid == player.uid) == null)
+        if (planetCommanders.Find(x => x.uid == player.uid) == null && planetCommander==null)
         {
             //planetCommanders.Add();
             if (fightingManager.gameMode == GameMode.MCWar)
             {
-                AddCommander(new SteveCommander(player.uid,player,planetColor),1);
+                var commander = new SteveCommander(player.uid, player, planetColor);
+                AddCommander(commander,1);
+                
             }
             else
             {
@@ -587,12 +589,14 @@ public class Planet : GameEntity
         }
         else
         {
+            AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_IronGolem",5),null));
+            AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_McPlanetTower",5),null));
             return;
         }
         
         
         ringUi.gameObject.SetActive(false);
-        //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_探索船",5)));
+        
         //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_探索船",5)));
         //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_战斗机",5)));
         //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_战斗机",5)));

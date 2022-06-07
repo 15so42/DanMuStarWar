@@ -230,11 +230,16 @@ public class HandWeapon : Weapon,IDamageAble
         return false;
     }
 
-    public override void Fire()
+    public virtual void FireAnim()
     {
         animator.SetTrigger("Attack");
         
         Invoke(nameof(Damage),0.3f);
+    }
+
+    public override void Fire()
+    {
+        FireAnim();
 
         var enduranceLevel = GetWeaponLevelByNbt("耐久");
         if (enduranceLevel > 0)
@@ -260,9 +265,11 @@ public class HandWeapon : Weapon,IDamageAble
 
     public void OnEnduranceChange(int endurance,int maxEndurance)
     {
-        (owner as Steve).UpdateWeaponEndurance(endurance,maxEndurance);
+        (owner as McUnit).UpdateWeaponEndurance(endurance,maxEndurance);
         weaponNbt.endurance = endurance;
     }
+    
+    
 
     public void Damage()
     {
@@ -378,7 +385,7 @@ public class HandWeapon : Weapon,IDamageAble
         if (vampireLevel > 0)
         {
             
-            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,Mathf.CeilToInt(realDamage.calAttackInfo.value * (0.2f+0.05f*fireLevel))));
+            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,Mathf.CeilToInt(realDamage.calAttackInfo.value * (0.2f+0.1f*fireLevel))));
         }
     }
 
@@ -392,12 +399,12 @@ public class HandWeapon : Weapon,IDamageAble
             return;
         }
         
-        var thronLevel = GetWeaponLevelByNbt("荆棘");
-        if (thronLevel > 0 && attackInfo.attackType!=AttackType.Reflect)
-        {
-            attackInfo.attacker.GetAttackEntity()
-                .OnAttacked(new AttackInfo(owner, AttackType.Reflect, Mathf.CeilToInt(attackInfo.value * (0.15f + thronLevel*0.05f))));
-        }
+        // var thronLevel = GetWeaponLevelByNbt("荆棘");
+        // if (thronLevel > 0 && attackInfo.attackType!=AttackType.Reflect)
+        // {
+        //     attackInfo.attacker.GetAttackEntity()
+        //         .OnAttacked(new AttackInfo(owner, AttackType.Reflect, Mathf.CeilToInt(attackInfo.value * (0.15f + thronLevel*0.05f))));
+        // }
     }
 
     public void OnSlainOther()
@@ -421,6 +428,13 @@ public class HandWeapon : Weapon,IDamageAble
     {
         if (gameObject.activeSelf == false)
             return attackInfo;
+        
+        var thronLevel = GetWeaponLevelByNbt("荆棘");
+        if (thronLevel > 0 && attackInfo.attackType!=AttackType.Reflect && attackInfo.attackType!=AttackType.Heal)
+        {
+            attackInfo.attacker.GetAttackEntity()
+                .OnAttacked(new AttackInfo(owner, AttackType.Reflect, Mathf.CeilToInt(attackInfo.value * (0.15f + thronLevel*0.05f))));
+        }
         
         var parryLevel = GetWeaponLevelByNbt("格挡");
         if (parryLevel > 0 && attackInfo.attackType!=AttackType.Heal)

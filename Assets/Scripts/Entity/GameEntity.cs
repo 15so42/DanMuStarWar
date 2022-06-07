@@ -45,6 +45,9 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    public Action<IVictimAble,int> onAttackOther;
    public Action<AttackInfo> onAttacked;
    public Action onSlainOther;
+   
+   //能否被作为受击者的反击目标，防御塔不可以"
+   [HideInInspector]public bool canBeTarget=true;
 
    public void Awake()
    {
@@ -88,6 +91,11 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    public GameObject GetGameObject()
    {
       return gameObject;
+   }
+
+   public Vector3 GetVictimPosition()
+   {
+      return transform.position + Vector3.up * 6;
    }
 
    public virtual AttackInfo OnBeforeAttacked(AttackInfo attackInfo)

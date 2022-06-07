@@ -18,17 +18,24 @@ public class BowWeapon : HandWeapon
     [Header("偏差高度")]
     public int minHeight = 3;
     public int maxHeight = 7;
-   
-    
-    public override void Fire()
+
+
+    public override void FireAnim()
     {
         animator.SetTrigger(animTriggerName);
 
         Invoke(nameof(ShootArrow),invokeDelay);
-        endurance--;
-        OnEnduranceChange(endurance,maxEndurance);
-        
     }
+
+    // public override void Fire()
+    // {
+    //     animator.SetTrigger(animTriggerName);
+    //
+    //     Invoke(nameof(ShootArrow),invokeDelay);
+    //     endurance--;
+    //     OnEnduranceChange(endurance,maxEndurance);
+    //     
+    // }
 
     public virtual T InitBullet<T>(string bulletName) where T:Component
     {

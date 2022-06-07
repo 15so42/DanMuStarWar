@@ -44,8 +44,13 @@ public class RoundManager : MonoBehaviour
         this.players = players;
         EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
         EventCenter.AddListener<int,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
-        fightingManager.StartCoroutine(ParseGiftList());
+       
+        
         elapsedTime = 0;
+        UnityTimer.Timer.Register(30, () =>
+        {
+            fightingManager.StartCoroutine(ParseGiftList());
+        });
     }
 
     
@@ -770,10 +775,10 @@ public class RoundManager : MonoBehaviour
          if (!validSteve)
              return;
 
-         if (steveCommander.point < 16)
+         if (steveCommander.point < 10)
          {
             
-                 steveCommander.commanderUi.LogTip("需要点数:16");
+                 steveCommander.commanderUi.LogTip("需要点数:10");
                  return;
              
          }
@@ -784,7 +789,7 @@ public class RoundManager : MonoBehaviour
              var success=validSteve.SpecificSpell(rare, spellName);
              if (success)
              {
-                 steveCommander.AddPoint(-16);
+                 steveCommander.AddPoint(-10);
                  steveCommander.leftSpecificSpell--;
              }
          }
@@ -797,11 +802,11 @@ public class RoundManager : MonoBehaviour
         if (!validSteve)
             return;
         
-        if (steveCommander.point < 10 )
+        if (steveCommander.point < 8 )
         {
             if (!byGift)
             {
-                steveCommander.commanderUi.LogTip("需要点数:10");
+                steveCommander.commanderUi.LogTip("需要点数:8");
                 return;
             }
            
@@ -813,7 +818,7 @@ public class RoundManager : MonoBehaviour
             validSteve.RandomSpell(rare,byGift);
             if (!byGift)
             {
-                steveCommander.AddPoint(-10);
+                steveCommander.AddPoint(-8);
             }
             
         }
@@ -912,11 +917,14 @@ public class RoundManager : MonoBehaviour
     {
         public int uid;
         public string giftName;
+        public int battery;
 
-        public GiftMSg(int uid, string giftName)
+       
+        public GiftMSg(int uid, string giftName,int battery)
         {
             this.uid = uid;
             this.giftName = giftName;
+            this.battery = battery;
         }
     }
     
@@ -927,16 +935,20 @@ public class RoundManager : MonoBehaviour
     
     public void OnGiftReceived(int uid, string userName, int num, string giftName, int totalCoin)
     {
-
+        if (elapsedTime < 30)
+        {
+            TipsDialog.ShowDialog("开局30秒内投喂的礼物会在30秒后生效",null);
+        }
+        
         for (int i = 0; i < num; i++)
         {
-            giftQueue.Enqueue(new GiftMSg(uid,giftName));
+            giftQueue.Enqueue(new GiftMSg(uid,giftName,totalCoin));
         }
         
     }
     
 
-    void ParseGiftInMcWar(int uid, string giftName)
+    void ParseGiftInMcWar(int uid, string giftName,int battery)
     {
         var planet = GetPlantByPlayerUid(uid);
         if(planet==null)
@@ -982,6 +994,8 @@ public class RoundManager : MonoBehaviour
         {
             ParseAddMaxHp(steveCommander,true);
         }
+        Debug.LogError(battery+","+battery/100);
+        EventCenter.Broadcast(EnumEventType.OnMcBatteryReceived,planet,battery/100);
     }
 
     void ParseGift(int uid,string giftName)
@@ -1037,7 +1051,8 @@ public class RoundManager : MonoBehaviour
                 
                 if (fightingManager.gameMode == GameMode.MCWar)
                 {
-                    ParseGiftInMcWar(giftMsg.uid,giftMsg.giftName);
+                    
+                    ParseGiftInMcWar(giftMsg.uid,giftMsg.giftName,giftMsg.battery);
                 }
                 else
                 {

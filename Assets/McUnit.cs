@@ -68,7 +68,37 @@ public class McUnit : WarPlane
             return true;
         return false;
     }
+
+
+    #region 耐久
+    public void UpdateWeaponEndurance(int endurance,int maxEndurance)
+    {
+        if (hpUI && hpUI.gameObject)
+        {
+            hpUI.UpdateWeaponEndurance(endurance, maxEndurance);
+        }
+        
+        if (endurance <= 0)
+        {
+            //RandomWeapon();
+        }
+    }
     
+
+    #endregion
+
+    public Vector3 GetEnemyPlanetPos()
+    {
+
+        Vector3 enemyPlanetPos = Vector3.zero;
+        if ( ownerPlanet.enemyPlanets.Count>0)
+        {
+            enemyPlanetPos=ownerPlanet.enemyPlanets[0].transform.position;
+        }
+
+        return enemyPlanetPos;
+
+    }
     
     public Vector3 GetPos(int index)
     {
@@ -134,8 +164,12 @@ public class McUnit : WarPlane
     public override void OnSlainOther()
     {
         base.OnSlainOther();
-        planetCommander.AddPoint(2);
-        fightingManager.AddPlayerDataValue(planetCommander.player.uid,"killCount",1);
+        if (planetCommander!=null)
+        {
+            planetCommander.AddPoint(2);
+            fightingManager.AddPlayerDataValue(planetCommander.player.uid,"killCount",1);
+        }
+        
     }
 
     IEnumerator VictimFx()

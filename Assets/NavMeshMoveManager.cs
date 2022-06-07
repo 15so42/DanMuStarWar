@@ -14,14 +14,14 @@ public class NavMeshMoveManager : MoveManager
     private Rigidbody rigidbody;
     public float onGroundThreshold = 0.3f;
 
-    private Steve steve;
+    private McUnit steve;
 
     private void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.enabled = true;
         rigidbody = GetComponent<Rigidbody>();
-        steve = GetComponent<Steve>();
+        steve = GetComponent<McUnit>();
     }
 
   
@@ -99,5 +99,17 @@ public class NavMeshMoveManager : MoveManager
         }
         
         
+    }
+
+    public override void Stop()
+    {
+        base.Stop();
+        navMeshAgent.isStopped = true;
+    }
+
+    public override void Enable()
+    {
+        base.Enable();
+        navMeshAgent.isStopped = false;
     }
 }

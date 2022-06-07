@@ -12,6 +12,7 @@ public class Player
     public string top_photo;
 
     public bool die;
+    
    
     public Action onGetUrl;
     public Sprite faceSprite;
