@@ -643,6 +643,14 @@ public class RoundManager : MonoBehaviour
                 var player = steveCommander.player;
                 MessageBox._instance.AddMessage("系统", player.userName+"剩余指定附魔次数为"+steveCommander.leftSpecificSpell);
             }
+            
+            if (trim.Equals("查询统计"))
+            {
+                var player = steveCommander.player;
+                MessageBox._instance.AddMessage("系统", player.userName+
+                                                      "统计信息为：\n"+"胜/败:"+player.userSaveData.winCount+"/"+player.userSaveData.loseCount+
+                                                      "\n击杀/死亡:"+player.userSaveData.killCount+"/"+player.userSaveData.dieCount);
+            }
 
             if (trim == "附魔")
             {

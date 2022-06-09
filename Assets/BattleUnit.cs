@@ -66,7 +66,21 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     public bool IsInFindRange()
     {
         var target = chaseTarget?.GetVictimEntity();
-        return target != null  && !target.die && Vector3.Distance(target.transform.position,transform.position)<findEnemyDistance;
+        var ret=target != null  && !target.die && Vector3.Distance(target.transform.position,transform.position)<findEnemyDistance;
+        if (ret == false)
+        {
+            // if (target == null)
+            // {
+            //     Debug.Log("nullInRange");
+            // }
+            // else
+            // {
+            //     Debug.Log(target+""+target.die+Vector3.Distance(target.transform.position,transform.position));
+            // }
+            
+        }
+        return ret;
+        //return target != null  && !target.die && Vector3.Distance(target.transform.position,transform.position)<findEnemyDistance;
     }
 
     
@@ -129,32 +143,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
     }
 
 
-    public virtual GameEntity OverLapEnemyInMc()
-    {
-        var colliders = Physics.OverlapSphere(transform.position, findEnemyDistance);
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            var collider1 = colliders[i];
-            var gameEntity = collider1.GetComponent<GameEntity>();
-            if (!gameEntity) //不是单位
-                continue;
-
-            var gameEntityOwner = gameEntity.GetVictimOwner();
-            if (gameEntityOwner == GetAttackerOwner()) //同星球
-                continue;
-            
-            if (gameEntity.die) //已经死亡
-                continue;
-
-            // var targetPlanet = gameEntityOwner as Planet;
-            // if (targetPlanet == null) //如果只对敌对星球寻敌，而敌对星球不存在，或找到的单位不属于，不算作敌人
-            //     return null;
-            
-            return gameEntity;
-        }
-
-        return null;
-    }
+   
     
 
     //星球大战模式专用，整个场景只有单位是碰撞体，因此不会漏寻敌，但是MC模式会漏寻敌，因为可能随机到场景的碰撞体

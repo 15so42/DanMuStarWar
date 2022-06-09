@@ -83,7 +83,7 @@ public class PlanetTask
                var pos = planet.spawnPoint.transform.position;
                if (FightingManager.Instance.gameMode == GameMode.MCWar)
                   pos = planet.transform.position;
-               Debug.Log(pos);
+//               Debug.Log(pos);
                go=ResFactory.Instance.CreateBattleUnit(splitArr[1],pos);
                
                go.name = go.name + planet.name;

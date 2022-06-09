@@ -66,8 +66,9 @@ public class SteveCommander : PlanetCommander
     void OnSetUserData()
     {
         var userSaveData = player.userSaveData;
-        desireMaxHp = 20 + Mathf.CeilToInt((float)userSaveData.giftPoint / 40);
-        leftSpecificSpell += Mathf.CeilToInt((float)userSaveData.giftPoint / 150);
+        //desireMaxHp = 20 + Mathf.CeilToInt((float)userSaveData.giftPoint / 40);
+        desireMaxHp = 20;
+        leftSpecificSpell += Mathf.CeilToInt((float)userSaveData.giftPoint / 300);
         if (userSaveData.jianzhang == 1)
         {
             desireSpellCount++;
