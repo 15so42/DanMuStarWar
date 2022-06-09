@@ -111,7 +111,15 @@ public class Planet : GameEntity
     //紧急维修
     public bool urgentRepair = false;
 
-    
+    private UnityTimer.Timer refreshIronGolem;
+    public void RefreshIronGolem()
+    {
+        refreshIronGolem?.Cancel();
+        refreshIronGolem = UnityTimer.Timer.Register(300, () =>
+        {
+            AddTask(new PlanetTask(new TaskParams(TaskType.Create, "BattleUnit_IronGolem", 5), null));
+        });
+    }
       
     void Awake()
     {
@@ -1054,7 +1062,8 @@ public class Planet : GameEntity
     public override void Die()
     {
         base.Die();
-
+        
+        refreshIronGolem?.Cancel();
         // try
         // {
         EventCenter.Broadcast(EnumEventType.OnPlanetDie, this);

@@ -122,6 +122,8 @@ public class Steve : McUnit
         
         var liveWeapon=ChangeWeapon(steveCommander.desireWeaponId);
         (liveWeapon as HandWeapon).Load(steveCommander.steveWeaponNbt);
+        
+        
 
         return liveWeapon; 
     }
@@ -145,6 +147,7 @@ public class Steve : McUnit
         
         liveWeapon.gameObject.SetActive(true);
         liveWeapon.Init(this);
+        (liveWeapon as HandWeapon).SetMaxSpellCount((planetCommander as SteveCommander).desireSpellCount);
         hpUI.SetWeaponText(liveWeapon.weaponName);
         curWeaponId = weaponId;
         

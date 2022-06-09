@@ -227,6 +227,40 @@ public class FightingManager : MonoBehaviourPunCallbacks
     
     public Dictionary<int,PlayerStatus> playerStatusTable=new Dictionary<int, PlayerStatus>(){};
 
+    public void JoinGameByChoose(string teamName,int uid,string userName)
+    {
+        Player player=new Player(uid,userName,"","");
+        BiliUserInfoQuerier.Instance.Query(uid,player);
+        player.onSetUserData+= () =>
+        {
+            if (player.userSaveData.jianzhang == 0)
+            {
+                TipsDialog.ShowDialog("仅舰长可使用选队功能",null);
+                return;
+            }
+            var targetPlanet = PlanetManager.Instance.allPlanets[teamName=="加入黄队"?firstPlanetIndex: lastPlanetIndex ];
+            int uiArea = teamName == "加入黄队" ? 0 : 1;
+            PlanetCommander commander=new SteveCommander(player.uid,player,targetPlanet.planetColor);
+            if (players.Count < maxPlayerCount  &&
+                players.Find(x => x.uid == player.uid) == null)
+            {
+                players.Add(player);
+                targetPlanet.AddCommander(commander,uiArea);
+                EventCenter.Broadcast(EnumEventType.OnPlayerJoined,player);
+                TipsDialog.ShowDialog(userName+"加入了游戏",null);
+            }
+            else
+            {
+                TipsDialog.ShowDialog("人数已满，无法加入",null);
+            }
+
+            
+            
+        };
+    }
+    
+   
+    
     public void JoinGame(Player player)
     {
         //var ownerAblePlanets = PlanetManager.Instance.ownerAblePlanets;//可占领行星
@@ -501,6 +535,11 @@ public class FightingManager : MonoBehaviourPunCallbacks
         {
             SongHime.Instance.NextSong();
         }
+
+        if (text.Equals("加入黄队") || text.Equals("加入绿队") && gameStatus==GameStatus.Playing)
+        {
+            JoinGameByChoose(text,uid,userName);
+        }
         
         if (text.Split(' ')[0] == "加入"||text.Split(' ')[0] == "加入游戏")
         {
@@ -563,12 +602,12 @@ public class FightingManager : MonoBehaviourPunCallbacks
                                 BiliUserInfoQuerier.Instance.Query(uid,newPlayer1);
                                 if (players.Count % 2 == 1)
                                 {
-                                    //Debug.Log("加入后玩家数："+players.Count+"去0星球");
+                                    MessageBox._instance.AddMessage("系统",newPlayer1.userName+"加入后玩家数："+players.Count+"去左边");
                                     PlanetManager.Instance.allPlanets[firstPlanetIndex].AddCommander(commander,0);
                                 }
                                 else
                                 {
-                                    //Debug.Log("加入后玩家数："+players.Count+"去最后星球");
+                                    MessageBox._instance.AddMessage("系统",newPlayer1.userName+"加入后玩家数："+players.Count+"去右边");
                                     PlanetManager.Instance.allPlanets[lastPlanetIndex].AddCommander(commander,1);
                                 }
                             }

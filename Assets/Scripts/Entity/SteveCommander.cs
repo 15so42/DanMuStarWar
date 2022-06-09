@@ -24,6 +24,8 @@ public class SteveCommander : PlanetCommander
     // public int parry = 0;
     // public int triumph = 0;
 
+    public int desireSpellCount=3;
+
 
     public int leftSpecificSpell = 2;
     
@@ -44,6 +46,7 @@ public class SteveCommander : PlanetCommander
         EventCenter.AddListener<Steve>(EnumEventType.OnSteveDied,OnSteveDie);
         point = 0;
         AddPoint(0);
+        desireSpellCount = 3;
 
         if (player.userSaveData != null)
         {
@@ -65,6 +68,10 @@ public class SteveCommander : PlanetCommander
         var userSaveData = player.userSaveData;
         desireMaxHp = 20 + Mathf.CeilToInt((float)userSaveData.giftPoint / 40);
         leftSpecificSpell += Mathf.CeilToInt((float)userSaveData.giftPoint / 150);
+        if (userSaveData.jianzhang == 1)
+        {
+            desireSpellCount++;
+        }
     }
 
     public void CreateSteve()

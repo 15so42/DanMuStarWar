@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class IronGolem : McUnit
 {
-    public Action<int> updateRebootPointAction;
+    public Action<float> updateRebootPointAction;
 
-    public int rebootPoint;
+    public float rebootPoint;
     public int maxRebootPoint = 2;
 
     private bool rebooted = false;
@@ -32,7 +32,7 @@ public class IronGolem : McUnit
 
     void UpdateHpUIByNameText(int hp,int maxHp,int shield,int maxShield)
     {
-        hpUI.SetWeaponText(hp+"/"+maxHp);
+        hpUI.SetNameText(hp+"/"+maxHp);
     }
 
     #region Statemachine
@@ -41,12 +41,13 @@ public class IronGolem : McUnit
     {
         animator.SetTrigger("ShutDown");
         moveManager.SetFinalTarget(transform.position,true);
+        maxRebootPoint = fightingManager.players.Count * 7;
     }
 
     #endregion
 
 
-    public void AddRebootPoint(int point)
+    public void AddRebootPoint(float point)
     {
         rebootPoint += point;
         updateRebootPointAction?.Invoke(point);
@@ -79,7 +80,8 @@ public class IronGolem : McUnit
         //血量计算
         animator.SetTrigger("ReBoot");
 
-        var addHp=fightingManager.players.Count * 25;
+        
+        int addHp=fightingManager.players.Count * (Mathf.CeilToInt(fightingManager.roundManager.elapsedTime/300)* 15);
         props.maxHp += addHp;
         
         OnAttacked(new AttackInfo(this,AttackType.Heal,addHp));
@@ -95,6 +97,8 @@ public class IronGolem : McUnit
 
     public void OnSteveDie(Steve steve)
     {
+        if(rebooted)
+            return;
         if (steve.ownerPlanet == ownerPlanet)
         {
             AddRebootPoint(2);
@@ -107,12 +111,27 @@ public class IronGolem : McUnit
 
     void OnMcBatteryReceived(Planet planet, int battery)
     {
-        if (ownerPlanet.enemyPlanets.Contains(planet))
+        if (ownerPlanet.enemyPlanets.Contains(planet) && !rebooted)
         {
             props.maxHp += battery*2;
             OnAttacked(new AttackInfo(this,AttackType.Heal,battery*2));
-            AddRebootPoint(Mathf.CeilToInt((float)battery/2));
+            AddRebootPoint((float)battery/2);
             LogTip("HP+"+battery*2+" 重启进度:"+GetProgress());
         }
+    }
+
+    public override BattleUnitProps.HpAndShield OnAttacked(AttackInfo attackInfo)
+    {
+        if (props.hp <= props.maxHp * 0.5f && !rebooted && attackInfo.attackType!=AttackType.Heal)
+        {
+            Reboot();
+        }
+        return base.OnAttacked(attackInfo);
+    }
+
+    public override void Die()
+    {
+        base.Die();
+        ownerPlanet.RefreshIronGolem();
     }
 }

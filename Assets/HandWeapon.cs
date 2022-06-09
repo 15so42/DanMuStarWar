@@ -28,8 +28,13 @@ public class HandWeapon : Weapon,IDamageAble
     [Header("击飞高度和力度")]
     public int pushBackHeight=4;
     public int pushBackStrength=1;
-    
 
+
+    public void SetMaxSpellCount(int value)
+    {
+        weaponNbt.maxSpellCount = value;
+    }
+    
     public override void Init(BattleUnit owner)
     {
         base.Init(owner);

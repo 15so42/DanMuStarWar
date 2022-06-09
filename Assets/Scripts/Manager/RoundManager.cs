@@ -59,9 +59,11 @@ public class RoundManager : MonoBehaviour
     {
         timer += Time.deltaTime;
         elapsedTime += Time.deltaTime;
-        if (timer >180)
+        if (timer >600)
         {
             GameEnvEventManager.Instance.PlayRandomEvent();
+            
+
             timer = 0;
         }
     }
@@ -630,6 +632,18 @@ public class RoundManager : MonoBehaviour
                 ParseBuyMcWeapon(steveCommander,trim);
             }
 
+            if (trim.Equals("查询礼物点数"))
+            {
+                var player = steveCommander.player;
+                MessageBox._instance.AddMessage("系统", player.userName+"的礼物点数为"+player.userSaveData.giftPoint);
+            }
+
+            if (trim.Equals("查询指定附魔次数"))
+            {
+                var player = steveCommander.player;
+                MessageBox._instance.AddMessage("系统", player.userName+"剩余指定附魔次数为"+steveCommander.leftSpecificSpell);
+            }
+
             if (trim == "附魔")
             {
                 ParseRandomSpell(steveCommander,false,false);
@@ -868,13 +882,13 @@ public class RoundManager : MonoBehaviour
             validSteve.AddMaxHp(3);
         else
         {
-            if (steveCommander.point < 10)
+            if (steveCommander.point < 8)
             {
-                steveCommander.commanderUi.LogTip("需要点数:10");
+                steveCommander.commanderUi.LogTip("需要点数:8");
                 return;
             }
             validSteve.AddMaxHp(5);
-            steveCommander.AddPoint(-10);
+            steveCommander.AddPoint(-8);
         }
     }
     
@@ -886,14 +900,14 @@ public class RoundManager : MonoBehaviour
             return;
 
 
-        if (steveCommander.point < 5)
+        if (steveCommander.point < 3)
         {
-            steveCommander.commanderUi.LogTip("需要点数:5");
+            steveCommander.commanderUi.LogTip("需要点数:3");
             return;
         }
 
         validSteve.FixWeapon(10);
-        steveCommander.AddPoint(-5);
+        steveCommander.AddPoint(-3);
         
     }
     
@@ -909,7 +923,7 @@ public class RoundManager : MonoBehaviour
     
     void ParseAddPoint(SteveCommander steveCommander)
     {
-        steveCommander.AddPoint(2);
+        steveCommander.AddPoint(1.5f);
     }
     
 
@@ -994,7 +1008,7 @@ public class RoundManager : MonoBehaviour
         {
             ParseAddMaxHp(steveCommander,true);
         }
-        Debug.LogError(battery+","+battery/100);
+        //Debug.LogError(battery+","+battery/100);
         EventCenter.Broadcast(EnumEventType.OnMcBatteryReceived,planet,battery/100);
     }
 

@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skills: []
-  simpleSkillUI: 0
+  simpleSkillUI: 1
   noSkillUi: 0
   gameEntity: {fileID: 0}
 --- !u!95 &5767243140281171584
