@@ -246,26 +246,28 @@ public class HandWeapon : Weapon,IDamageAble
     {
         FireAnim();
 
-        var enduranceLevel = GetWeaponLevelByNbt("耐久");
-        if (enduranceLevel > 0)
-        {
-            var random=UnityEngine.Random.Range(0, 100);
-            if (random < (0.2+0.1*enduranceLevel)*100)
-            {
-                //不扣除耐久
-            }
-            else
-            {
-                endurance--;
-                OnEnduranceChange(endurance,maxEndurance);
-            }
-        }
-        else
-        {
-            endurance--;
-            OnEnduranceChange(endurance,maxEndurance);
-        }
-        
+        // var enduranceLevel = GetWeaponLevelByNbt("耐久");
+        // if (enduranceLevel > 0)
+        // {
+        //     var random=UnityEngine.Random.Range(0, 100);
+        //     if (random < (0.2+0.1*enduranceLevel)*100)
+        //     {
+        //         //不扣除耐久
+        //     }
+        //     else
+        //     {
+        //         endurance--;
+        //         OnEnduranceChange(endurance,maxEndurance);
+        //     }
+        // }
+        // else
+        // {
+        //     endurance--;
+        //     OnEnduranceChange(endurance,maxEndurance);
+        // }
+        endurance--;
+        OnEnduranceChange(endurance,maxEndurance);
+    
     }
 
     public void OnEnduranceChange(int endurance,int maxEndurance)
@@ -273,7 +275,27 @@ public class HandWeapon : Weapon,IDamageAble
         (owner as McUnit).UpdateWeaponEndurance(endurance,maxEndurance);
         weaponNbt.endurance = endurance;
     }
-    
+
+    private float spellTimer = 0;
+    void Update()
+    {
+        spellTimer += Time.deltaTime;
+        
+        if (spellTimer > 5)
+        {
+            var enduranceLevel = GetWeaponLevelByNbt("耐久");
+            if (enduranceLevel >0)
+            {
+                endurance += 1 * enduranceLevel;
+                if (endurance >= maxEndurance)
+                {
+                    (owner.planetCommander as SteveCommander).AddPoint(0.05f*2);
+                }
+                
+            }
+            spellTimer = 0;
+        }
+    }
     
 
     public void Damage()
@@ -438,7 +460,7 @@ public class HandWeapon : Weapon,IDamageAble
         if (thronLevel > 0 && attackInfo.attackType!=AttackType.Reflect && attackInfo.attackType!=AttackType.Heal)
         {
             attackInfo.attacker.GetAttackEntity()
-                .OnAttacked(new AttackInfo(owner, AttackType.Reflect, Mathf.CeilToInt(attackInfo.value * (0.15f + thronLevel*0.05f))));
+                .OnAttacked(new AttackInfo(owner, AttackType.Reflect, Mathf.CeilToInt(attackInfo.value * (0.15f + thronLevel*0.1f))));
         }
         
         var parryLevel = GetWeaponLevelByNbt("格挡");

@@ -72,6 +72,7 @@ public class SteveCommander : PlanetCommander
         if (userSaveData.jianzhang == 1)
         {
             desireSpellCount++;
+            AddPoint(30);
         }
     }
 

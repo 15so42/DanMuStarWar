@@ -22921,7 +22921,7 @@ MonoBehaviour:
   - weaponName: "\u94BB\u77F3\u65A7"
     price: 16
   - weaponName: "\u56DE\u65CB\u9556"
-    price: 17
+    price: 16
 --- !u!4 &1504619296
 Transform:
   m_ObjectHideFlags: 0
