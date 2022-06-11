@@ -132,6 +132,6 @@ public class IronGolem : McUnit
     public override void Die()
     {
         base.Die();
-        ownerPlanet.RefreshIronGolem();
+        //ownerPlanet.RefreshIronGolem();
     }
 }

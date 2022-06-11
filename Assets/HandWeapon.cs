@@ -279,6 +279,7 @@ public class HandWeapon : Weapon,IDamageAble
     private float spellTimer = 0;
     void Update()
     {
+        base.Update();
         spellTimer += Time.deltaTime;
         
         if (spellTimer > 5)
@@ -289,7 +290,7 @@ public class HandWeapon : Weapon,IDamageAble
                 endurance += 1 * enduranceLevel;
                 if (endurance >= maxEndurance)
                 {
-                    (owner.planetCommander as SteveCommander).AddPoint(0.05f*2);
+                    (owner.planetCommander as SteveCommander).AddPoint(0.05f*enduranceLevel);
                 }
                 
             }

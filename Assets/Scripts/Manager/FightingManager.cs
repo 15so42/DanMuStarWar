@@ -231,28 +231,46 @@ public class FightingManager : MonoBehaviourPunCallbacks
     {
         Player player=new Player(uid,userName,"","");
         BiliUserInfoQuerier.Instance.Query(uid,player);
+        
+        var targetPlanet = PlanetManager.Instance.allPlanets[teamName=="加入黄队"?firstPlanetIndex: lastPlanetIndex ];
+        int uiArea = teamName == "加入黄队" ? 0 : 1;
+        PlanetCommander commander=new SteveCommander(player.uid,player,targetPlanet.planetColor);
+        if (players.Count < maxPlayerCount  &&
+            players.Find(x => x.uid == player.uid) == null)
+        {
+            players.Add(player);
+            targetPlanet.AddCommander(commander,uiArea);
+            EventCenter.Broadcast(EnumEventType.OnPlayerJoined,player);
+            TipsDialog.ShowDialog(userName+"加入了游戏",null);
+        }
+        else
+        {
+            TipsDialog.ShowDialog("人数已满，无法加入",null);
+        }
+        
         player.onSetUserData+= () =>
         {
             if (player.userSaveData.jianzhang == 0)
             {
                 TipsDialog.ShowDialog("仅舰长可使用选队功能",null);
+                commander.OnHangUp();
                 return;
             }
-            var targetPlanet = PlanetManager.Instance.allPlanets[teamName=="加入黄队"?firstPlanetIndex: lastPlanetIndex ];
-            int uiArea = teamName == "加入黄队" ? 0 : 1;
-            PlanetCommander commander=new SteveCommander(player.uid,player,targetPlanet.planetColor);
-            if (players.Count < maxPlayerCount  &&
-                players.Find(x => x.uid == player.uid) == null)
-            {
-                players.Add(player);
-                targetPlanet.AddCommander(commander,uiArea);
-                EventCenter.Broadcast(EnumEventType.OnPlayerJoined,player);
-                TipsDialog.ShowDialog(userName+"加入了游戏",null);
-            }
-            else
-            {
-                TipsDialog.ShowDialog("人数已满，无法加入",null);
-            }
+            // var targetPlanet = PlanetManager.Instance.allPlanets[teamName=="加入黄队"?firstPlanetIndex: lastPlanetIndex ];
+            // int uiArea = teamName == "加入黄队" ? 0 : 1;
+            // PlanetCommander commander=new SteveCommander(player.uid,player,targetPlanet.planetColor);
+            // if (players.Count < maxPlayerCount  &&
+            //     players.Find(x => x.uid == player.uid) == null)
+            // {
+            //     players.Add(player);
+            //     targetPlanet.AddCommander(commander,uiArea);
+            //     EventCenter.Broadcast(EnumEventType.OnPlayerJoined,player);
+            //     TipsDialog.ShowDialog(userName+"加入了游戏",null);
+            // }
+            // else
+            // {
+            //     TipsDialog.ShowDialog("人数已满，无法加入",null);
+            // }
 
             
             
