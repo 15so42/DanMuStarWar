@@ -8,7 +8,7 @@ public interface IAttackAble
     GameEntity GetAttackEntity();
     void Attack();
 
-    void OnSlainOther();
+    void OnSlainOther(GameEntity victim);
 
     void OnAttackOther(IVictimAble victimAble,AttackInfo attackInfo);
 }

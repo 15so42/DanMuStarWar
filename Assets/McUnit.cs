@@ -189,9 +189,9 @@ public class McUnit : WarPlane
 
    
 
-    public override void OnSlainOther()
+    public override void OnSlainOther(GameEntity victim)
     {
-        base.OnSlainOther();
+        base.OnSlainOther(victim);
         if (planetCommander!=null)
         {
             planetCommander.AddPoint(2);

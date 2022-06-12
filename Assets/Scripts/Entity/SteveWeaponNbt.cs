@@ -22,6 +22,7 @@ public class SteveWeaponNbt
 
     public int maxSpellCount = 3;
     public int endurance;//耐久
+    public int maxEndurance;
     
     public List<EnhancementLevel> enhancementLevels=new List<EnhancementLevel>();
 }

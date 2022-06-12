@@ -44,7 +44,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    public Func<AttackInfo,AttackInfo> onBeforeAttacked;
    public Action<IVictimAble,int> onAttackOther;
    public Action<AttackInfo> onAttacked;
-   public Action onSlainOther;
+   public Action<GameEntity> onSlainOther;
    
    //能否被作为受击者的反击目标，防御塔不可以"
    [HideInInspector]public bool canBeTarget=true;
@@ -210,10 +210,12 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
      //Do nothing
    }
 
-   public virtual void OnSlainOther()
+  
+
+   public virtual void OnSlainOther(GameEntity victim)
    {
       //throw new NotImplementedException();
-      onSlainOther?.Invoke();
+      onSlainOther?.Invoke(victim);
    }
 
    public virtual void OnAttackOther(IVictimAble victimAble, AttackInfo attackInfo)

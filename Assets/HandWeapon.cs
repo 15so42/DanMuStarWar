@@ -69,6 +69,8 @@ public class HandWeapon : Weapon,IDamageAble
     public void AddEndurance(int value)
     {
         endurance += value;
+        if (endurance > maxEndurance)
+            endurance = maxEndurance;
         OnEnduranceChange(endurance,maxEndurance);
     }
 
@@ -77,6 +79,7 @@ public class HandWeapon : Weapon,IDamageAble
         if(weaponNbt==null)//没有nbt数据
             return;
         this.endurance = weaponNbt.endurance;
+        this.maxEndurance = weaponNbt.maxEndurance;
         this.weaponNbt = weaponNbt;
         
         OnSpellChange();
@@ -274,6 +277,7 @@ public class HandWeapon : Weapon,IDamageAble
     {
         (owner as McUnit).UpdateWeaponEndurance(endurance,maxEndurance);
         weaponNbt.endurance = endurance;
+        weaponNbt.maxEndurance = maxEndurance;
     }
 
     private float spellTimer = 0;
@@ -287,13 +291,58 @@ public class HandWeapon : Weapon,IDamageAble
             var enduranceLevel = GetWeaponLevelByNbt("耐久");
             if (enduranceLevel >0)
             {
-                endurance += 1 * enduranceLevel;
+               
+                AddEndurance(enduranceLevel);
                 if (endurance >= maxEndurance)
                 {
                     (owner.planetCommander as SteveCommander).AddPoint(0.05f*enduranceLevel);
                 }
                 
             }
+            
+            
+            var healLevel = GetWeaponLevelByNbt("回复");
+            if (healLevel > 0)
+            {
+                var healValue = healLevel;
+                owner.OnAttacked(new AttackInfo(owner, AttackType.Heal, Mathf.CeilToInt(healValue)));
+                if (healLevel >= 4)
+                {
+                    var colliders = Physics.OverlapSphere(transform.position, owner.findEnemyDistance);
+                    for (int i = 0; i < colliders.Length; i++)
+                    {
+                        var collider1 = colliders[i];
+                        var gameEntity = collider1.GetComponent<GameEntity>();
+                        if (!gameEntity) //不是单位
+                            continue;
+
+                        if (gameEntity.die) //已经死亡
+                            continue;
+                        if(gameEntity==owner)
+                            continue;
+                        
+                        var gameEntityOwner = gameEntity.GetVictimOwner();
+                        if (gameEntityOwner == owner.GetAttackerOwner()) //治疗友军
+                        {
+                            gameEntity.OnAttacked(new AttackInfo(owner,AttackType.Heal,Mathf.CeilToInt(healValue*0.2f)));
+                        }
+                        else
+                        {
+                            if (healLevel >= 8)
+                            {
+                                var hpAndShield = gameEntity.OnAttacked(new AttackInfo(owner,AttackType.Physics,1));
+                                OnDamageOther(gameEntity,hpAndShield);
+                            }
+                            
+                        }
+                        
+                    }
+
+                }
+            }
+
+
+
             spellTimer = 0;
         }
     }
@@ -315,11 +364,23 @@ public class HandWeapon : Weapon,IDamageAble
         var criticalLevel=GetWeaponLevelByNbt("暴击");
         if (criticalLevel > 0)
         {
-            var rate = UnityEngine.Random.Range(0, 10);
-            if (rate < criticalLevel)
+            var rate = UnityEngine.Random.Range(0, 100);
+            var multiplier = 1.5f + criticalLevel * 0.1f;
+
+            var str = "暴击";
+            if (rate < criticalLevel*20)
             {
-                attackInfo.value = (int) (attackInfo.value * (1.5 + criticalLevel * 0.1));
+                attackInfo.value = (int) (attackInfo.value * multiplier);
             }
+            
+            //双重暴击
+            var random1= UnityEngine.Random.Range(0, 100);
+            if(random1<10)
+            {
+                attackInfo.value = (int)multiplier*attackInfo.value;
+                str = "双重暴击";
+            }
+            //FlyText.Instance.ShowDamageText(owner.transform.position,str);
         }
 
         
@@ -413,7 +474,7 @@ public class HandWeapon : Weapon,IDamageAble
         if (vampireLevel > 0)
         {
             
-            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,Mathf.CeilToInt(realDamage.calAttackInfo.value * (0.2f+0.1f*fireLevel))));
+            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,Mathf.CeilToInt(realDamage.calAttackInfo.value * (0.2f+0.1f*vampireLevel))));
         }
     }
 
@@ -435,20 +496,46 @@ public class HandWeapon : Weapon,IDamageAble
         // }
     }
 
-    public void OnSlainOther()
+    public void OnSlainOther(GameEntity victim)
     {
         if (gameObject.activeSelf == false)
             return;
         var triumphLevel = GetWeaponLevelByNbt("凯旋");
         if (triumphLevel>0)
         {
-            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,(int)(4+triumphLevel*3)));    
+            float total = victim.props.maxHp * (0.15f + triumphLevel * 0.1f);//能回的
+            float need = owner.props.maxHp - owner.props.hp;//该回的
+            float overflow = total - need;
+            if (overflow>0)
+            {
+                if (overflow > owner.props.maxHp * 0.5f)
+                {
+                    overflow = owner.props.maxHp * 0.5f;
+                }
+                owner.props.maxHp += Mathf.CeilToInt(overflow);
+                (owner.planetCommander as SteveCommander).desireMaxHp = owner.props.maxHp;
+            }
+            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,Mathf.CeilToInt(total)));    
+            //FlyText.Instance.ShowDamageText(owner.transform.position,"凯旋");
         }
 
+        
+        
         var expFixLevel = GetWeaponLevelByNbt("经验修补");
         if (expFixLevel > 0)
         {
-            AddEndurance((int)(maxEndurance*(0.15f+0.05f*expFixLevel)));
+            
+            float total = maxEndurance * (0.05f + expFixLevel * 0.05f);//能回的
+            float need = maxEndurance-endurance;//该回的
+            float overflow = total - need;
+           
+            if (overflow > 0)
+            {
+                maxEndurance += (int)overflow;
+                
+            }
+            AddEndurance((int)total);
+            //FlyText.Instance.ShowDamageText(owner.transform.position,"经验修补");
         }
     }
 
@@ -467,12 +554,28 @@ public class HandWeapon : Weapon,IDamageAble
         var parryLevel = GetWeaponLevelByNbt("格挡");
         if (parryLevel > 0 && attackInfo.attackType!=AttackType.Heal)
         {
-            var targetValue = (0.15 + 0.1 * parryLevel)*100;
-            if(UnityEngine.Random.Range(0, 100) <targetValue)
+            // var targetValue = (0.15 + 0.1 * parryLevel)*100;
+            // if(UnityEngine.Random.Range(0, 100) <targetValue)
+            // {
+            //     attackInfo.value /= 2;
+            //     //Debug.Log("格挡");
+            // }
+
+            if (endurance < 1)
             {
-                attackInfo.value /= 2;
-                Debug.Log("格挡");
+                return attackInfo;
             }
+
+            var realDamage = attackInfo.value;
+            attackInfo.value -= parryLevel;
+            if (parryLevel >= 3)
+            {
+                float parryRate = (float)endurance / maxEndurance;
+                attackInfo.value = (int)(attackInfo.value* (1-parryRate));
+            }
+           
+            AddEndurance(-1*realDamage);
+            
         }
 
         

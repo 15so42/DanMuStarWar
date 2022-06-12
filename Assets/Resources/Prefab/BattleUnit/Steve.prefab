@@ -4934,16 +4934,17 @@ MonoBehaviour:
   mcWeaponId: 6
   animator: {fileID: 0}
   weaponNbt:
+    maxSpellCount: 3
     endurance: 0
     enhancementLevels: []
   randomStrs:
   - "\u706B\u7130"
   - "\u5438\u8840"
-  - "\u683C\u6321"
   - "\u51EF\u65CB"
   - "\u529B\u91CF"
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
+  - "\u56DE\u590D"
   rareRandomStrs: []
   maxEndurance: 45
   endurance: 45
@@ -5011,16 +5012,17 @@ MonoBehaviour:
   mcWeaponId: 10
   animator: {fileID: 0}
   weaponNbt:
+    maxSpellCount: 3
     endurance: 0
     enhancementLevels: []
   randomStrs:
   - "\u706B\u7130"
   - "\u5438\u8840"
-  - "\u683C\u6321"
   - "\u51EF\u65CB"
   - "\u529B\u91CF"
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
+  - "\u56DE\u590D"
   rareRandomStrs: []
   maxEndurance: 45
   endurance: 45
@@ -5187,6 +5189,7 @@ MonoBehaviour:
   mcWeaponId: 0
   animator: {fileID: 0}
   weaponNbt:
+    maxSpellCount: 3
     endurance: 0
     enhancementLevels: []
   randomStrs: []
@@ -5251,6 +5254,7 @@ MonoBehaviour:
   mcWeaponId: 9
   animator: {fileID: 0}
   weaponNbt:
+    maxSpellCount: 3
     endurance: 0
     enhancementLevels: []
   randomStrs:
@@ -5847,6 +5851,7 @@ MonoBehaviour:
   hpUI: {fileID: 0}
   hpUIOffse: {x: 0, y: -17.71, z: 0}
   hpUIScale: {x: 2, y: 4, z: 1}
+  canBeTarget: 1
   ownerPlanet: {fileID: 0}
   gameManager: {fileID: 0}
   battleUnitManager: {fileID: 0}
@@ -5861,9 +5866,8 @@ MonoBehaviour:
   weapons: []
   warPlaneType: 0
   setAttackerTarget: 1
-  attackDistance: 0
-  ownerPosIndex: 0
   targetMcPos: {x: 0, y: 0, z: 0}
+  attackDistance: 0
   meshRenderers: []
   fireFx: {fileID: 248371897}
   trigger: {fileID: 904162018}
@@ -6094,14 +6098,21 @@ MonoBehaviour:
   mcWeaponId: 0
   animator: {fileID: 0}
   weaponNbt:
+    maxSpellCount: 3
     endurance: 0
     enhancementLevels: []
   randomStrs:
   - "\u683C\u6321"
   - "\u8346\u68D8"
+  - "\u8010\u4E45"
+  - "\u7ECF\u9A8C\u4FEE\u8865"
+  - "\u56DE\u590D"
+  - "\u706B\u7130"
+  - "\u51EF\u65CB"
+  - "\u5438\u8840"
   rareRandomStrs: []
-  maxEndurance: 200
-  endurance: 200
+  maxEndurance: 125
+  endurance: 125
   pushBackHeight: 6
   pushBackStrength: 3
 --- !u!1 &6859617013637145693
@@ -6283,6 +6294,7 @@ MonoBehaviour:
   mcWeaponId: 8
   animator: {fileID: 0}
   weaponNbt:
+    maxSpellCount: 3
     endurance: 0
     enhancementLevels: []
   randomStrs:
@@ -6294,6 +6306,7 @@ MonoBehaviour:
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
   - "\u8346\u68D8"
+  - "\u56DE\u590D"
   rareRandomStrs: []
   maxEndurance: 70
   endurance: 70
@@ -6418,6 +6431,7 @@ MonoBehaviour:
   mcWeaponId: 3
   animator: {fileID: 0}
   weaponNbt:
+    maxSpellCount: 3
     endurance: 0
     enhancementLevels: []
   randomStrs:
@@ -6429,6 +6443,7 @@ MonoBehaviour:
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
   - "\u8346\u68D8"
+  - "\u56DE\u590D"
   rareRandomStrs: []
   maxEndurance: 16
   endurance: 16
@@ -6553,6 +6568,7 @@ MonoBehaviour:
   mcWeaponId: 1
   animator: {fileID: 0}
   weaponNbt:
+    maxSpellCount: 3
     endurance: 0
     enhancementLevels: []
   randomStrs:
@@ -6564,6 +6580,7 @@ MonoBehaviour:
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
   - "\u8346\u68D8"
+  - "\u56DE\u590D"
   rareRandomStrs: []
   maxEndurance: 16
   endurance: 16
@@ -6763,6 +6780,7 @@ MonoBehaviour:
   mcWeaponId: 5
   animator: {fileID: 0}
   weaponNbt:
+    maxSpellCount: 3
     endurance: 0
     enhancementLevels: []
   randomStrs:
@@ -6774,6 +6792,7 @@ MonoBehaviour:
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
   - "\u8346\u68D8"
+  - "\u56DE\u590D"
   rareRandomStrs: []
   maxEndurance: 60
   endurance: 60
@@ -6973,6 +6992,7 @@ MonoBehaviour:
   mcWeaponId: 2
   animator: {fileID: 0}
   weaponNbt:
+    maxSpellCount: 3
     endurance: 0
     enhancementLevels: []
   randomStrs:
@@ -6984,6 +7004,7 @@ MonoBehaviour:
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
   - "\u8346\u68D8"
+  - "\u56DE\u590D"
   rareRandomStrs: []
   maxEndurance: 40
   endurance: 40
@@ -7108,6 +7129,7 @@ MonoBehaviour:
   mcWeaponId: 4
   animator: {fileID: 0}
   weaponNbt:
+    maxSpellCount: 3
     endurance: 0
     enhancementLevels: []
   randomStrs:
@@ -7119,6 +7141,7 @@ MonoBehaviour:
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
   - "\u8346\u68D8"
+  - "\u56DE\u590D"
   rareRandomStrs: []
   maxEndurance: 50
   endurance: 50
@@ -7850,16 +7873,17 @@ MonoBehaviour:
   mcWeaponId: 7
   animator: {fileID: 0}
   weaponNbt:
+    maxSpellCount: 3
     endurance: 0
     enhancementLevels: []
   randomStrs:
   - "\u706B\u7130"
   - "\u5438\u8840"
-  - "\u683C\u6321"
   - "\u51EF\u65CB"
   - "\u9AD8\u7206"
   - "\u8010\u4E45"
   - "\u7ECF\u9A8C\u4FEE\u8865"
+  - "\u56DE\u590D"
   rareRandomStrs: []
   maxEndurance: 45
   endurance: 45

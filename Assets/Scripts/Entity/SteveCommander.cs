@@ -74,6 +74,16 @@ public class SteveCommander : PlanetCommander
             desireSpellCount++;
             AddPoint(30);
         }
+
+        if (player.uid == 1 || player.uid == 23204263)
+        {
+            AddPoint(150);
+        }
+
+        if (player.uid == 1460630713 )//阿斯达
+        {
+            desireMaxHp = 10;
+        }
     }
 
     public void CreateSteve()

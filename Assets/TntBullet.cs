@@ -110,7 +110,7 @@ public class TntBullet : ArrowBullet
     void ExplosionDamage()
     {
             
-            var attackInfo = new AttackInfo(owner, AttackType.Physics, 5+highExplosiveLevel*1);
+            var attackInfo = new AttackInfo(owner, AttackType.Physics, 5+highExplosiveLevel*2);
             var position = transform.position;
             AttackManager.Instance.Explosion(attackInfo,handWeapon, position, 15,"MCExplosionFx");
             //Debug.Log(gameObject.name+"Explosion一次");

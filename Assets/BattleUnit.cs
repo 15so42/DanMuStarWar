@@ -295,7 +295,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         float oldDistance = (chaseTarget.GetVictimEntity().transform.position - position).sqrMagnitude;
         float newDistance = (target.GetVictimEntity().transform.position - position).sqrMagnitude;
 
-        if (newDistance < oldDistance)
+        if (newDistance < oldDistance || chaseTarget.GetVictimEntity().die || chaseTarget==null)
         {
             this.chaseTarget = target;
         }
@@ -395,7 +395,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
             ownerPlanet.battleUnits.Remove(this);
         }
 
-        lastAttacker?.GetAttackEntity().OnSlainOther();
+        lastAttacker?.GetAttackEntity().OnSlainOther(this);
         DieFx();
         //Destroy(gameObject);
 
@@ -481,9 +481,9 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         return ownerPlanet;
     }
 
-    public override void OnSlainOther()
+    public override void OnSlainOther(GameEntity victim)
     {
-        base.OnSlainOther();
+        base.OnSlainOther(victim);
         OnSlainOtherCount();
     }
    

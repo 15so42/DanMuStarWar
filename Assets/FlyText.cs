@@ -44,6 +44,8 @@ public class FlyText : MonoBehaviour
     {
         Show(worldPos,msg,new Color(1,1,1));
     }
+    
+    //public void ShowTipText()
 
     public void ShowHealText(Vector3 worldPos,string msg)
     {

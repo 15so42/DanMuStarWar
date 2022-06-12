@@ -108,11 +108,20 @@ public class HpBar : MonoBehaviour
         var targetCount = maxHP / 5;
         var childCount = hpTile.childCount;
         var sub = targetCount - childCount;
+        if (sub < 0)//减少最大生命值
+        {
+            for (int i = 0; i < sub*-1; i++)
+            {
+               
+                hpTile.GetChild(i).gameObject.SetActive(false);
+            }
+        }
         if (sub > 0)
         {
             for (int i = 0; i < sub; i++)
             {
-                GameObject.Instantiate(tileLine, hpTile);
+                var t=GameObject.Instantiate(tileLine, hpTile);
+                t.gameObject.SetActive(true);
             }
         }
 
