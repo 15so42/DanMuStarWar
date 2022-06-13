@@ -24,13 +24,24 @@ public class MoveManager : MonoBehaviour
     protected bool stop;
 
     
+    
     public void Init(Planet planet)
     {
         this.planet = planet;
       
     }
+
+    //加速
+    public virtual void StartBoost(float value)
+    {
+        curSpeed += value;
+    }
     
-    
+    //停止加速
+    public virtual void EndBoost(float value)
+    {
+        curSpeed -= value;
+    }
 
    
 

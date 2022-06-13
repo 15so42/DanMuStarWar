@@ -142,13 +142,14 @@ public class SkillManager : MonoBehaviour
     
     
     
-    public SkillBase AddSkill(string skillName, GameEntity target,PlanetCommander planetCommander)
+    public SkillBase AddSkill(string skillName, GameEntity target,PlanetCommander planetCommander,Action<SkillBase> setParams=null)
     {
         if (target.AddSkillCheck(skillName)==false)
         {
             return null;
         }
         var skill = GetSkillInstance(skillName);
+        setParams?.Invoke(skill);
         skill.Init(target,planetCommander);
         var skillItemUi = GameObject.Instantiate(skillItemUiPfb).GetComponent<SkillItemUI>();
         skillItemUi.Init(skill);

@@ -24,7 +24,15 @@ public class NavMeshMoveManager : MoveManager
         steve = GetComponent<McUnit>();
     }
 
-  
+    public override void StartBoost(float value)
+    {
+        navMeshAgent.speed += value;
+    }
+
+    public override void EndBoost(float value)
+    {
+        navMeshAgent.speed -= value;
+    }
 
     public override void SetTmpTarget(Vector3 tmpTarget)
     {

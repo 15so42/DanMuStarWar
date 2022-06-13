@@ -295,8 +295,18 @@ public class HandWeapon : Weapon,IDamageAble
                 AddEndurance(enduranceLevel);
                 if (endurance >= maxEndurance)
                 {
-                    (owner.planetCommander as SteveCommander).AddPoint(0.05f*enduranceLevel);
+                    (owner.planetCommander as SteveCommander).AddPoint(0.07f*enduranceLevel);
                 }
+                
+            }
+            
+            var sharpLevel = GetWeaponLevelByNbt("锋利");
+            if (sharpLevel > 0)
+            {
+                var skill=SkillManager.Instance.AddSkill("Skill_加速_LV1", owner, owner.planetCommander, (skill) =>
+                {
+                    (skill as AccelerateSkill).addMoveSpeed = sharpLevel * 0.35f;
+                });
                 
             }
             
@@ -573,9 +583,16 @@ public class HandWeapon : Weapon,IDamageAble
                 float parryRate = (float)endurance / maxEndurance;
                 attackInfo.value = (int)(attackInfo.value* (1-parryRate));
             }
-           
-            AddEndurance(-1*realDamage);
-            
+
+            if (parryLevel > 10)
+            {
+                AddEndurance(Mathf.CeilToInt (-1*realDamage*(1-0.1f*parryLevel)));
+            }
+            else
+            {
+                AddEndurance((int) (-1*realDamage*(1-0.1f*parryLevel)));
+            }
+
         }
 
         

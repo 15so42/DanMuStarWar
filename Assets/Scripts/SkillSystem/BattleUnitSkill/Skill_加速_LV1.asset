@@ -22,11 +22,12 @@ MonoBehaviour:
   cd: 0
   timer: 0
   life: 1
-  autoLife: 0
+  autoLife: 1
   stackAbleCount: 1
   passive: 0
   gameEntity: {fileID: 0}
   ready: 1
   finished: 0
-  addMoveSpeed: 4
-  duration: 3
+  skillContainer: {fileID: 0}
+  addMoveSpeed: 1
+  duration: 2.5

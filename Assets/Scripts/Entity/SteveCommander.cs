@@ -80,7 +80,7 @@ public class SteveCommander : PlanetCommander
             AddPoint(150);
         }
 
-        if (player.uid == 1460630713 )//阿斯达
+        if (player.uid == 1460630713 || player.uid==1834685283 )//阿斯达，小梦荒野
         {
             desireMaxHp = 10;
         }
