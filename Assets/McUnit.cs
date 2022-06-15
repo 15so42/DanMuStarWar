@@ -16,6 +16,7 @@ public class McUnit : WarPlane
     public SkinnedMeshRenderer[] meshRenderers;
     
     [Header("火焰特效")] public Transform fireFx;
+    [Header("毒特效")] public Transform poisonFx;
 
 
     [Header("寻敌Trigger")] public SphereCollider trigger;
@@ -233,5 +234,14 @@ public class McUnit : WarPlane
         fireFx.gameObject.SetActive(false);
     }
 
+    public void OpenPoisonFx()
+    {
+        
+    }
+    
+    public void ClosePoisonFx()
+    {
+        
+    }
     
 }

@@ -1,0 +1,219 @@
+Using pre-set license
+Built from '2020.3/china_unity/release' branch; Version is '2020.3.31f1c1 (f95fbe3d210a) revision 16342974'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19043) 64bit Professional' Language: 'zh' Physical Memory: 16332 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+COMMAND LINE ARGUMENTS:
+D:\Software\2020.3.31f1c1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+F:/sa_unity/UnityProjects/StarWar
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+11806
+Successfully changed project path to: F:/sa_unity/UnityProjects/StarWar
+F:/sa_unity/UnityProjects/StarWar
+Using Asset Import Pipeline V2.
+AS: AutoStreaming module initializing.Refreshing native plugins compatible for Editor in 341.95 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.31f1c1 (f95fbe3d210a)
+[Subsystems] Discovering subsystems at path D:/Software/2020.3.31f1c1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path F:/sa_unity/UnityProjects/StarWar/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 2060 SUPER (ID=0x1f06)
+    Vendor:   
+    VRAM:     8031 MB
+    Driver:   27.21.14.5671
+Initialize mono
+Mono path[0] = 'D:/Software/2020.3.31f1c1/Editor/Data/Managed'
+Mono path[1] = 'D:/Software/2020.3.31f1c1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'D:/Software/2020.3.31f1c1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56060
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/Software/2020.3.31f1c1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: D:/Software/2020.3.31f1c1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.003016 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 53.64 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.583 seconds
+Domain Reload Profiling:
+	ReloadAssembly (583ms)
+		BeginReloadAssembly (85ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (432ms)
+			LoadAssemblies (85ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (137ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (33ms)
+			SetupLoadedEditorAssemblies (179ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (5ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (54ms)
+				BeforeProcessingInitializeOnLoad (11ms)
+				ProcessInitializeOnLoadAttributes (76ms)
+				ProcessInitializeOnLoadMethodAttributes (34ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.314307 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.87 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Curl error 42: Callback aborted
+DisplayProgressbar: Restoring NuGet Packages
+Curl error 42: Callback aborted
+Mono: successfully reloaded assembly
+- Completed reload, in  3.831 seconds
+Domain Reload Profiling:
+	ReloadAssembly (3832ms)
+		BeginReloadAssembly (137ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (19ms)
+		EndReloadAssembly (3641ms)
+			LoadAssemblies (1003ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (339ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (64ms)
+			SetupLoadedEditorAssemblies (2154ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (5ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (85ms)
+				ProcessInitializeOnLoadAttributes (2049ms)
+				ProcessInitializeOnLoadMethodAttributes (9ms)
+				AfterProcessingInitializeOnLoad (3ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.11 seconds
+Refreshing native plugins compatible for Editor in 0.76 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2082 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 99.3 MB.
+System memory in use after: 99.4 MB.
+
+Unloading 45 unused Assets to reduce memory usage. Loaded Objects now: 2549.
+Total: 3.284300 ms (FindLiveObjects: 0.185400 ms CreateObjectMapping: 0.059100 ms MarkObjects: 2.946000 ms  DeleteObjects: 0.092800 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  path: Assets/Model/MCModels/MinecraftZombie
+  artifactKey: Guid(13a7d74b1b0c67b428009463b76c4e27) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Model/MCModels/MinecraftZombie using Guid(13a7d74b1b0c67b428009463b76c4e27) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1dca8234e326990a8e6c357eb74be64e') in 0.040924 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 47.932277 seconds.
+  path: Assets/Model/MCModels/MinecraftZombie/Minecraft-Zombie.fbx
+  artifactKey: Guid(c5200ce30e8dd644191d084372d65e5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Model/MCModels/MinecraftZombie/Minecraft-Zombie.fbx using Guid(c5200ce30e8dd644191d084372d65e5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c221c1a1ef49c18cdb669d50be02f6ad') in 0.157374 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 49.742797 seconds.
+  path: Assets/Model/MCModels/MinecraftZombie/Minecraft-Zombie.fbx
+  artifactKey: Guid(c5200ce30e8dd644191d084372d65e5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Model/MCModels/MinecraftZombie/Minecraft-Zombie.fbx using Guid(c5200ce30e8dd644191d084372d65e5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '803836343987176e913103bf2568be01') in 0.171792 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.981366 seconds.
+  path: Assets/Model/MCModels/MinecraftZombie/Minecraft-Zombie.fbx
+  artifactKey: Guid(c5200ce30e8dd644191d084372d65e5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Model/MCModels/MinecraftZombie/Minecraft-Zombie.fbx using Guid(c5200ce30e8dd644191d084372d65e5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21f33a65b6f9bb772fd9415ec50b9e66') in 0.045193 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6578.994802 seconds.
+  path: Assets/Model/MCModels/MinecraftZombie/zombie.png
+  artifactKey: Guid(b4bef87593f70cd479d54608edf3b7fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Model/MCModels/MinecraftZombie/zombie.png using Guid(b4bef87593f70cd479d54608edf3b7fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '75d8325d3dc9b445470ef49c9aafeb14') in 0.076076 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.923871 seconds.
+  path: Assets/Model/MCModels/MinecraftZombie/zombie.png
+  artifactKey: Guid(b4bef87593f70cd479d54608edf3b7fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Model/MCModels/MinecraftZombie/zombie.png using Guid(b4bef87593f70cd479d54608edf3b7fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '939af8c23f2f470e468bff753d62e116') in 0.018276 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.497758 seconds.
+  path: Assets/Model/MCModels/MinecraftZombie/Minecraft-Zombie.fbx
+  artifactKey: Guid(c5200ce30e8dd644191d084372d65e5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Model/MCModels/MinecraftZombie/Minecraft-Zombie.fbx using Guid(c5200ce30e8dd644191d084372d65e5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3ff8cff50d419121a752cb9a5493e846') in 0.026450 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.374191 seconds.
+  path: Assets/Model/MCModels/MinecraftZombie/Minecraft-Zombie.fbx
+  artifactKey: Guid(c5200ce30e8dd644191d084372d65e5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Model/MCModels/MinecraftZombie/Minecraft-Zombie.fbx using Guid(c5200ce30e8dd644191d084372d65e5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '630bb81f32257775d25be90968d43ed8') in 0.037175 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 23.281001 seconds.
+  path: Assets/Model/MCModels/MinecraftZombie/Minecraft-Zombie.fbx
+  artifactKey: Guid(c5200ce30e8dd644191d084372d65e5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Model/MCModels/MinecraftZombie/Minecraft-Zombie.fbx using Guid(c5200ce30e8dd644191d084372d65e5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '429ff35e456579d367e18b6dda9b84d9') in 0.023618 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.489882 seconds.
+  path: Assets/Model/MCModels/MinecraftZombie/Minecraft-Zombie.fbx
+  artifactKey: Guid(c5200ce30e8dd644191d084372d65e5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Model/MCModels/MinecraftZombie/Minecraft-Zombie.fbx using Guid(c5200ce30e8dd644191d084372d65e5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd96af4cefdbdb0ff2994ef520842fe51') in 0.024362 seconds 
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 468.86 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 39 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 72.5 MB.
+System memory in use after: 72.6 MB.
+
+Unloading 38 unused Assets to reduce memory usage. Loaded Objects now: 2595.
+Total: 3.498000 ms (FindLiveObjects: 0.214800 ms CreateObjectMapping: 0.049500 ms MarkObjects: 3.213700 ms  DeleteObjects: 0.019500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file

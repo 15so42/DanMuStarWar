@@ -69,21 +69,32 @@ public class SteveCommander : PlanetCommander
         //desireMaxHp = 20 + Mathf.CeilToInt((float)userSaveData.giftPoint / 40);
         desireMaxHp = 20;
         leftSpecificSpell += Mathf.CeilToInt((float)userSaveData.giftPoint / 300);
-        if (userSaveData.jianzhang == 1)
+        
+        
+        if (player.uid==402554900)//绝言功能，额外附魔槽位，额外初始点数
         {
             desireSpellCount++;
             AddPoint(30);
         }
 
-        if (player.uid == 1 || player.uid == 23204263)
+        #if UNITY_EDITOR
+        if (player.uid == 1 || player.uid == 23204263)//DEbug专用额外点数
         {
             AddPoint(150);
         }
+        #endif
 
-        if (player.uid == 1460630713 || player.uid==1834685283 )//阿斯达，小梦荒野
+        // if (player.uid == 1460630713  )//阿斯达10滴血
+        // {
+        //     desireMaxHp = 10;
+        // }
+
+        if (player.uid == 1834685283)//小梦荒野5滴血
         {
             desireMaxHp = 10;
         }
+        
+        
     }
 
     public void CreateSteve()
@@ -132,6 +143,15 @@ public class SteveCommander : PlanetCommander
                 (commanderUi as SteveCommanderUi)?.StartCountDown((int)time);
             unityTimer?.Cancel();
             unityTimer=Timer.Register(time, () => { CreateSteve(); });
+        }
+        
+    }
+
+    public override void Update()
+    {
+        if (player.uid == 8045498 )
+        {
+            AddPoint(0.6f);
         }
         
     }

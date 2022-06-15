@@ -65,6 +65,11 @@ public class PlanetCommander
         onPointChanged?.Invoke(point);
     }
 
+    public virtual void Update()
+    {
+        
+    }
+
     /// <summary>
     /// 挂机判定
     /// </summary>

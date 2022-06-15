@@ -741,6 +741,7 @@ public class Planet : GameEntity
                 {
                     var planetCommander = planetCommanders[i];
                     planetCommander.HangUpCheck();
+                    planetCommander.Update();
                     if (planetCommander.hangUp)
                     {
                         totalPoint += planetCommander.point*1.1f;

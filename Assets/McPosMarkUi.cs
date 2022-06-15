@@ -13,23 +13,31 @@ public class McPosMarkUi : MonoBehaviour
     private Camera mainCamera;
 
     private int index;
+
+    public Text tipText;
+
+    private string tipStr;
     // Start is called before the first frame update
 
     private FightingManager fightingManager;
 
-    public void Init(GameObject obj, int index)
+    public void Init(GameObject obj, int index,string tip,Vector3 offset)
     {
         this.obj = obj;
         this.index = index;
         EventCenter.AddListener(EnumEventType.OnPlanetsSpawned,Show);
         EventCenter.AddListener(EnumEventType.OnStartWaitingJoin,Hide);
         gameObject.SetActive(false);
-        
+        tipText.gameObject.SetActive(true);
+        this.tipStr = tip;
+        this.offset = offset;
+
     }
     void Start()
     {
         mainCamera=Camera.main;
         this.text.text = "> " + index + " <";
+        tipText.text = tipStr;
         fightingManager = GameManager.Instance.fightingManager;
     }
 

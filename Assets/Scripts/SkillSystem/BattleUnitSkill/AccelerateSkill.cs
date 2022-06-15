@@ -24,8 +24,12 @@ public class AccelerateSkill : BuffBase
             UnityTimer.Timer.Register(duration, () =>
             {
                 //moveManager.curSpeed -= addMoveSpeed;
-                moveManager.EndBoost(addMoveSpeed);
-                ChangeLife(--life);
+                if (moveManager != null)
+                {
+                    moveManager.EndBoost(addMoveSpeed);
+                    ChangeLife(--life);
+                }
+               
                 
             });
         }

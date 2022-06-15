@@ -71,6 +71,8 @@ public class HandWeapon : Weapon,IDamageAble
         endurance += value;
         if (endurance > maxEndurance)
             endurance = maxEndurance;
+        if (endurance < 0)
+            endurance = 0;
         OnEnduranceChange(endurance,maxEndurance);
     }
 
@@ -295,7 +297,16 @@ public class HandWeapon : Weapon,IDamageAble
                 AddEndurance(enduranceLevel);
                 if (endurance >= maxEndurance)
                 {
-                    (owner.planetCommander as SteveCommander).AddPoint(0.07f*enduranceLevel);
+                    //(owner.planetCommander as SteveCommander).AddPoint(0.07f*enduranceLevel);
+                     var random=UnityEngine.Random.Range(0, 100);
+                    
+                         if (random < 10 * enduranceLevel)
+                         {
+                             maxEndurance++;
+                             AddEndurance(1);
+                             FlyText.Instance.ShowDamageText(owner.transform.position,"耐久上限+1");
+                         }
+                     
                 }
                 
             }
@@ -310,7 +321,13 @@ public class HandWeapon : Weapon,IDamageAble
                 
             }
             
-            
+            var fortuneLevel= GetWeaponLevelByNbt("财运");
+            if (fortuneLevel > 0)
+            {
+                (owner.planetCommander as SteveCommander).AddPoint(0.1f*fortuneLevel);
+            }
+
+
             var healLevel = GetWeaponLevelByNbt("回复");
             if (healLevel > 0)
             {
@@ -478,6 +495,24 @@ public class HandWeapon : Weapon,IDamageAble
             }
             
         }
+        
+        var poisonLevel = GetWeaponLevelByNbt("毒");
+        if (poisonLevel > 0)
+        {
+            if (victimAble.GetVictimEntity())
+            {
+                var skill=SkillManager.Instance.AddSkill("Skill_毒_LV1", victimAble.GetVictimEntity(), owner.planetCommander);
+                if (skill as PoisonSkill)//第一次附加火焰没问题，但是之后无法再附加火焰而是刷新火焰Buff
+                {
+                    (skill as PoisonSkill).SetAttacker(owner);
+                    var maxHp = victimAble.GetVictimEntity().props.maxHp;
+                    (skill as PoisonSkill).SetAttackDamage(1+Mathf.CeilToInt (0.002f+0.005f*poisonLevel*maxHp)); 
+                    (skill as PoisonSkill).life = 3;
+                }
+                
+            }
+            
+        }
 
         var vampireLevel = GetWeaponLevelByNbt("吸血");
 
@@ -562,7 +597,7 @@ public class HandWeapon : Weapon,IDamageAble
         }
         
         var parryLevel = GetWeaponLevelByNbt("格挡");
-        if (parryLevel > 0 && attackInfo.attackType!=AttackType.Heal)
+        if (parryLevel > 0 && attackInfo.attackType!=AttackType.Heal && attackInfo.attackType!=AttackType.Real)
         {
             // var targetValue = (0.15 + 0.1 * parryLevel)*100;
             // if(UnityEngine.Random.Range(0, 100) <targetValue)
@@ -571,7 +606,7 @@ public class HandWeapon : Weapon,IDamageAble
             //     //Debug.Log("格挡");
             // }
 
-            if (endurance < 1)
+            if (endurance < 1 || (float)endurance/maxEndurance<0.25f )
             {
                 return attackInfo;
             }
@@ -582,16 +617,17 @@ public class HandWeapon : Weapon,IDamageAble
             {
                 float parryRate = (float)endurance / maxEndurance;
                 attackInfo.value = (int)(attackInfo.value* (1-parryRate));
+                
             }
 
-            if (parryLevel > 10)
-            {
-                AddEndurance(Mathf.CeilToInt (-1*realDamage*(1-0.1f*parryLevel)));
-            }
-            else
-            {
-                AddEndurance((int) (-1*realDamage*(1-0.1f*parryLevel)));
-            }
+            if (attackInfo.value < 0)
+                attackInfo.value = 0;
+
+            var realCost = realDamage - parryLevel;
+            if (realCost < 0)
+                realCost = 0;
+            AddEndurance((int) (-1* realCost ));
+            
 
         }
 

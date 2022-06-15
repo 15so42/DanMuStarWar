@@ -58,8 +58,13 @@ public class Steve : McUnit
         OnPlayerSetData();
         
     }
-    
-   
+
+
+    public HandWeapon GetActiveWeapon()
+    {
+        var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
+        return liveWeapon as HandWeapon;
+    }
     
 
     void RewardUser()

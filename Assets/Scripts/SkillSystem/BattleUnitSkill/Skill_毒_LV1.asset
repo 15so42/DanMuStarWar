@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69d4c421841652b4aaadfd50dd116d6f, type: 3}
+  m_Name: "Skill_\u6BD2_LV1"
+  m_EditorClassIdentifier: 
+  usePoint: 1
+  removePoint: 1
+  desc: "\u9020\u6210\u767E\u5206\u6BD4\u4F24\u5BB3"
+  skillItemUi: {fileID: 0}
+  skillName: "Skill_\u6BD2_LV1"
+  icon: {fileID: 0}
+  isBuff: 0
+  cd: 1
+  timer: 0
+  life: 3
+  autoLife: 1
+  stackAbleCount: 1
+  passive: 1
+  gameEntity: {fileID: 0}
+  ready: 1
+  finished: 0
+  skillContainer: {fileID: 0}
+  time: 5
+  attacker: {fileID: 0}
+  damageValue: 1
