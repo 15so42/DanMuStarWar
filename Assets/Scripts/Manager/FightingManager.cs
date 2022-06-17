@@ -618,16 +618,25 @@ public class FightingManager : MonoBehaviourPunCallbacks
                                 }
                                 
                                 BiliUserInfoQuerier.Instance.Query(uid,newPlayer1);
-                                if (players.Count % 2 == 1)
-                                {
-                                    MessageBox._instance.AddMessage("系统",newPlayer1.userName+"加入后玩家数："+players.Count+"去左边");
-                                    PlanetManager.Instance.allPlanets[firstPlanetIndex].AddCommander(commander,0);
-                                }
-                                else
-                                {
-                                    MessageBox._instance.AddMessage("系统",newPlayer1.userName+"加入后玩家数："+players.Count+"去右边");
-                                    PlanetManager.Instance.allPlanets[lastPlanetIndex].AddCommander(commander,1);
-                                }
+
+                                var firstCount = PlanetManager.Instance.allPlanets[firstPlanetIndex].planetCommanders
+                                    .Count;
+                                var lastCount = PlanetManager.Instance.allPlanets[lastPlanetIndex].planetCommanders
+                                    .Count;
+                                var lessPlanet = firstCount > lastCount ? lastPlanetIndex : firstPlanetIndex;
+                                
+                                PlanetManager.Instance.allPlanets[lessPlanet].AddCommander(commander,lessPlanet==firstPlanetIndex?0:1 );
+                                commander.AddPoint(roundManager.elapsedTime/20);
+                                // if (players.Count % 2 == 1)
+                                // {
+                                //     MessageBox._instance.AddMessage("系统",newPlayer1.userName+"加入后玩家数："+players.Count+"去左边");
+                                //     PlanetManager.Instance.allPlanets[firstPlanetIndex].AddCommander(commander,0);
+                                // }
+                                // else
+                                // {
+                                //     MessageBox._instance.AddMessage("系统",newPlayer1.userName+"加入后玩家数："+players.Count+"去右边");
+                                //     PlanetManager.Instance.allPlanets[lastPlanetIndex].AddCommander(commander,1);
+                                // }
                             }
                             
                         }

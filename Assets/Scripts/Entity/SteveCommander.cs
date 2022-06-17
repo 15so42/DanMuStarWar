@@ -28,6 +28,8 @@ public class SteveCommander : PlanetCommander
 
 
     public int leftSpecificSpell = 2;
+
+    private bool surrendered = false;
     
     //复活timer
     public UnityTimer.Timer unityTimer;
@@ -61,6 +63,35 @@ public class SteveCommander : PlanetCommander
 
         //绑定事件检测自己的单位得产生
         //EventCenter.AddListener(EnumEventType.OnBattleUnitCreated,OnSteveCreated);
+    }
+
+    public void ParseSurrenderInMc()
+    {
+        surrendered = true;
+        UnityTimer.Timer.Register(120, () =>
+        {
+            surrendered = false;
+            MessageBox._instance.AddMessage("系统", player.userName + "取消了投降");
+
+        });
+
+        var surrenderCount = 0;
+        var commandersCount = ownerPlanet.planetCommanders.Count;
+        for (int i = 0; i < commandersCount; i++)
+        {
+            if ((ownerPlanet.planetCommanders[i] as SteveCommander).surrendered)
+            {
+                surrenderCount++;
+            }
+        }
+        TipsDialog.ShowDialog(player.userName+"发起了投降,["+surrenderCount+"/"+commandersCount+"]",null);
+        MessageBox._instance.AddMessage("系统", player.userName + "发起了投降,[" + surrenderCount + "/" + commandersCount + "]");
+        if ((float) surrenderCount / commandersCount > 0.5f)
+        {
+            TipsDialog.ShowDialog("投降成功",null);
+            ownerPlanet.Die();
+        }
+        
     }
 
     void OnSetUserData()

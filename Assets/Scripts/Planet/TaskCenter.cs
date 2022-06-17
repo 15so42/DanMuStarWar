@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class TaskCenter : MonoBehaviour
 {
-    public Planet planet;
+    public ITaskAble owner;
     
     [HideInInspector]
     public List<PlanetTask> tasks=new List<PlanetTask>();
 
-    public void Init(Planet planet)
+    public void Init(ITaskAble taskAble)
     {
-        this.planet = planet;
+        this.owner = taskAble;
     }
     
     public void Run()
@@ -30,7 +30,7 @@ public class TaskCenter : MonoBehaviour
 
     public void AddTask(PlanetTask task)
     {
-        task.planet = this.planet;
+        task.owner = this.owner;
         tasks.Add(task);
     }
 }

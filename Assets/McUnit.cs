@@ -156,10 +156,10 @@ public class McUnit : WarPlane
             return null;
 
         var targetPlanet = gameEntityOwner as Planet;
-        if(targetPlanet==null )//如果只对敌对星球寻敌，而敌对星球不存在，或找到的单位不属于，不算作敌人
-            return null;
-            
-        if (ownerPlanet.enemyPlanets.Contains(targetPlanet))
+        if(targetPlanet==null )//只要不是自己星球的，都算作敌人
+            return gameEntity;
+        
+        if (ownerPlanet==null || ownerPlanet.enemyPlanets.Contains(targetPlanet) )
         {
             return gameEntity;
         }

@@ -117,7 +117,7 @@ public class ArrowBullet : MonoBehaviour
     {
         var navMeshMoveManager = victim.GetGameObject().GetComponent<NavMeshMoveManager>();
         if(navMeshMoveManager)
-            navMeshMoveManager.PushBackByPos(victim.GetGameObject().transform.position,owner.GetAttackerOwner().transform.position,3,2,1+strength*0.2f);
+            navMeshMoveManager.PushBackByPos(victim.GetGameObject().transform.position,owner.GetAttackerOwner().transform.position,3,2,1+strength*0.15f);
         
 
         if (recycleAbleObject && recycleOnCollision)

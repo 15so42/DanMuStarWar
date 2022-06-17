@@ -669,6 +669,11 @@ public class RoundManager : MonoBehaviour
                 ParseRemoveSpell(steveCommander,trim);
             }
 
+            if (trim == "投降")
+            {
+                ParseSurrenderInMc(steveCommander);   
+            }
+
             if (trim == "维修")
             {
                 ParseFixWeapon(steveCommander);
@@ -815,6 +820,11 @@ public class RoundManager : MonoBehaviour
                  steveCommander.leftSpecificSpell--;
              }
          }
+    }
+
+    void ParseSurrenderInMc(SteveCommander steveCommander)
+    {
+        steveCommander.ParseSurrenderInMc();
     }
     
     void ParseRandomSpell(SteveCommander steveCommander,bool rare,bool byGift)

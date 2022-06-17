@@ -33,7 +33,7 @@ public class ColonyPair
 }
 
 
-public class Planet : GameEntity
+public class Planet : GameEntity,ITaskAble
 {
 
     private FightingManager fightingManager;
@@ -115,7 +115,7 @@ public class Planet : GameEntity
     public void RefreshIronGolem()
     {
         refreshIronGolem?.Cancel();
-        refreshIronGolem = UnityTimer.Timer.Register(300, () =>
+        refreshIronGolem = UnityTimer.Timer.Register(480, () =>
         {
             AddTask(new PlanetTask(new TaskParams(TaskType.Create, "BattleUnit_IronGolem", 5), null));
         });
@@ -1224,5 +1224,10 @@ public class Planet : GameEntity
         }
 
         return hpAndShield;
+    }
+
+    public Transform GetSpawnPoint()
+    {
+        return spawnPoint;
     }
 }

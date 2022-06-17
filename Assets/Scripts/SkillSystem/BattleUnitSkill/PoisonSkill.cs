@@ -23,12 +23,12 @@ public class PoisonSkill : SkillBase
     public override void Init(GameEntity gameEntity,PlanetCommander planetCommander)
     {
         base.Init(gameEntity,planetCommander);
-        if(gameEntity==null || (gameEntity as Steve)==null ||  gameEntity.die)
+        if(gameEntity==null || (gameEntity as McUnit)==null ||  gameEntity.die)
             return;
-        (base.gameEntity as Steve).OpenPoisonFx();
+        (base.gameEntity as McUnit).OpenPoisonFx();
         
         
-        onFinished+= (base.gameEntity as Steve).ClosePoisonFx;
+        onFinished+= (base.gameEntity as McUnit).ClosePoisonFx;
     }
 
    

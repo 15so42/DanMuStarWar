@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Ludiq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -39,7 +40,7 @@ public class HandWeapon : Weapon,IDamageAble
     {
         base.Init(owner);
         root = transform.root;
-        animator = root.GetComponent<BattleUnit>().animator;
+        animator = root.GetComponentInChildren<BattleUnit>().animator;
         if(animator==null)
             Debug.Log(name+"需要手动配置");
         (owner as McUnit).SetAttackDistance(attackDistance);
@@ -320,11 +321,13 @@ public class HandWeapon : Weapon,IDamageAble
                 });
                 
             }
+
+           
             
             var fortuneLevel= GetWeaponLevelByNbt("财运");
             if (fortuneLevel > 0)
             {
-                (owner.planetCommander as SteveCommander).AddPoint(0.1f*fortuneLevel);
+                (owner.planetCommander as SteveCommander).AddPoint(0.08f*fortuneLevel);
             }
 
 
@@ -385,7 +388,30 @@ public class HandWeapon : Weapon,IDamageAble
         var sharpLevel = GetWeaponLevelByNbt("锋利");
         if (sharpLevel > 0)
         {
-            attackInfo.value=(int)(attackInfo.value*(1+ (0.25f+sharpLevel*0.1f)));
+            attackInfo.value=Mathf.CeilToInt(attackInfo.value*(1+ (0.25f+sharpLevel*0.1f)));
+        }
+        
+        
+        var ghostKillLevel = GetWeaponLevelByNbt("亡灵杀手");
+        if (ghostKillLevel > 0)
+        {
+            if (victim as Zombie)
+            {
+                attackInfo.value += 3 * ghostKillLevel;
+            }
+            
+        }
+        
+
+        var eatLevel = GetWeaponLevelByNbt("吞噬");
+        if (eatLevel > 0)
+        {
+            attackInfo.value += Mathf.CeilToInt (owner.props.maxHp * ( 0.01f * eatLevel));
+            if (eatLevel >= 5)
+            {
+                attackInfo.value+= Mathf.CeilToInt((victim.props.maxHp * ( 0.01f * eatLevel)));
+
+            }
         }
         
         var criticalLevel=GetWeaponLevelByNbt("暴击");
@@ -495,6 +521,10 @@ public class HandWeapon : Weapon,IDamageAble
             }
             
         }
+       
+        
+        
+       
         
         var poisonLevel = GetWeaponLevelByNbt("毒");
         if (poisonLevel > 0)

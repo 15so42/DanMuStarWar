@@ -34,7 +34,7 @@ public class PlanetTask
    public bool isFininshed = false;
 
    public TaskParams taskParams;
-   public Planet planet;
+   public ITaskAble owner;
    
    public PlanetTask(TaskParams taskParams,PlanetCommander planetCommander)
    {
@@ -59,7 +59,7 @@ public class PlanetTask
 
    public void InitBattleUnit(BattleUnit battleUnit,PlanetCommander planetCommander)
    {
-      battleUnit.Init(planet,planetCommander);
+      battleUnit.Init(owner as Planet,planetCommander);
       
    }
 
@@ -80,13 +80,13 @@ public class PlanetTask
             if (type == "BattleUnit")
             {
 
-               var pos = planet.spawnPoint.transform.position;
+               var pos = owner.GetSpawnPoint().position;
                if (FightingManager.Instance.gameMode == GameMode.MCWar)
-                  pos = planet.transform.position;
+                  pos = owner.GetGameObject().transform.position;
 //               Debug.Log(pos);
                go=ResFactory.Instance.CreateBattleUnit(splitArr[1],pos);
                
-               go.name = go.name + planet.name;
+               go.name = go.name + owner.GetGameObject().name;
                InitBattleUnit(go.GetComponent<BattleUnit>(),planetCommander);
                
             }

@@ -17,12 +17,12 @@ public class FireSkill : SkillBase
     public override void Init(GameEntity gameEntity,PlanetCommander planetCommander)
     {
         base.Init(gameEntity,planetCommander);
-        if(gameEntity==null || (gameEntity as Steve)==null ||  gameEntity.die)
+        if(gameEntity==null || (gameEntity as McUnit)==null ||  gameEntity.die)
             return;
-        (base.gameEntity as Steve).OpenFireFx();
+        (base.gameEntity as McUnit).OpenFireFx();
         
         
-        onFinished+= (base.gameEntity as Steve).CloseFireFx;
+        onFinished+= (base.gameEntity as McUnit).CloseFireFx;
     }
 
    
@@ -31,7 +31,11 @@ public class FireSkill : SkillBase
     {
         base.Play();
         gameEntity.OnAttacked(new AttackInfo(attacker,AttackType.Physics, 1));
-        createCommander.attackOtherDamage += 1;
+        if (createCommander != null)
+        {
+            createCommander.attackOtherDamage += 1;
+        }
+        
         (gameEntity as Steve)?.GetActiveWeapon()?.AddEndurance(-1);
 
     }

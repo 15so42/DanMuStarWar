@@ -161,7 +161,7 @@ public abstract class SkillBase : ScriptableObject
     public virtual void Refresh()
     {
         //刷新
-        timer = cd;
+        //timer = cd;
         life = maxLife;
     }
 
