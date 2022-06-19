@@ -44,6 +44,14 @@ public class McUnit : WarPlane
         var colliders = Physics.OverlapSphere(transform.position, trigger.radius);
         for (int i = 0; i < colliders.Length; i++)
         {
+            var victim= EnemyCheck(colliders[i]);
+            if (victim != null && victim.GetVictimEntity()!=null)
+                return victim.GetVictimEntity();
+            continue;
+            
+            
+            
+            
             var collider1 = colliders[i];
             var gameEntity = collider1.GetComponent<GameEntity>();
             if (!gameEntity) //不是单位
@@ -90,7 +98,7 @@ public class McUnit : WarPlane
     
     public bool IsInAttackRange()
     {
-        if (chaseTarget == null)
+        if (chaseTarget == null || chaseTarget.GetVictimEntity()==null)
             return false;
         float distance = Vector3.Distance(chaseTarget.GetVictimEntity().transform.position, transform.position);
         if (distance < attackDistance)
@@ -196,7 +204,11 @@ public class McUnit : WarPlane
         if (planetCommander!=null)
         {
             planetCommander.AddPoint(2);
-            fightingManager.AddPlayerDataValue(planetCommander.player.uid,"killCount",1);
+            if (victim as Steve)
+            {
+                fightingManager.AddPlayerDataValue(planetCommander.player.uid,"killCount",1);
+            }
+            
         }
         
     }

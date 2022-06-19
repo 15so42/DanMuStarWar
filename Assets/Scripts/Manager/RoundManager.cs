@@ -652,7 +652,7 @@ public class RoundManager : MonoBehaviour
                                                       "\n击杀/死亡:"+player.userSaveData.killCount+"/"+player.userSaveData.dieCount);
             }
 
-            if (trim == "附魔")
+            if (trim == "附魔"||trim=="随机附魔")
             {
                 ParseRandomSpell(steveCommander,false,false);
             }
@@ -1027,7 +1027,20 @@ public class RoundManager : MonoBehaviour
             ParseAddMaxHp(steveCommander,true);
         }
         //Debug.LogError(battery+","+battery/100);
-        EventCenter.Broadcast(EnumEventType.OnMcBatteryReceived,planet,battery/100);
+
+        if (giftName == "辣条")
+        {
+            battery = 0;
+        }
+
+        if (steveCommander.flowerSpell == false && battery>0)
+        {
+            steveCommander.leftSpecificSpell++;
+            MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"通过电池礼物获得1次额外指定附魔次数（每局任意电池礼物可获得一次额外指定附魔次数，每局限一次）");
+            steveCommander.flowerSpell = true;
+        }
+        
+        EventCenter.Broadcast(EnumEventType.OnMcBatteryReceived,planet,battery==0? 0:battery/100);
     }
 
     void ParseGift(int uid,string giftName)

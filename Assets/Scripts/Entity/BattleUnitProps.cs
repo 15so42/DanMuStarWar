@@ -54,6 +54,11 @@ public class BattleUnitProps : MonoBehaviour
         {
             damage = attackInfo.value * (1 - mDef / (100 + mDef));
         }
+        
+        if (attackInfo.attackType == AttackType.Reflect)
+        {
+            damage = attackInfo.value ;
+        }
 
         if (attackInfo.attackType == AttackType.Real)
         {

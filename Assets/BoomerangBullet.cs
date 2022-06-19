@@ -58,7 +58,7 @@ public class BoomerangBullet : ArrowBullet
             {
                 timer = 0;
                 recycleAbleObject.Recycle();
-                (handWeapon as BoomerangeWeapon).OnBoomerangeBack();//飞回后才能进行下一次的攻击
+                //(handWeapon as BoomerangeWeapon).OnBoomerangeBack();//飞回后才能进行下一次的攻击
             }
             
             
@@ -75,6 +75,11 @@ public class BoomerangBullet : ArrowBullet
     void OnStartBack()
     {
         attacked.Clear();
+    }
+    
+    public override int CalDamage()
+    {
+        return Mathf.CeilToInt(3 + strength * 1.2f);
     }
     
     private void OnTriggerEnter(Collider other)

@@ -406,6 +406,7 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
         
         
         gameObject.SetActive(false);
+        //Destroy(gameObject,5);
         
     }
 

@@ -21,7 +21,11 @@ public class PlanetTerritory : MonoBehaviour
        
         foreach (var b in inTerritory)
         {
-            b.OnBattleUnitEnterPlanet(entrant, ownerPlanet);
+            if (b != null)
+            {
+                b.OnBattleUnitEnterPlanet(entrant, ownerPlanet);
+            }
+            
         }
         inTerritory.Add(entrant);
     }

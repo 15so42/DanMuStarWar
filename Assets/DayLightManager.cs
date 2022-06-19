@@ -15,7 +15,7 @@ public class DayLightManager : MonoBehaviour
     //旋转直线光，0到180为从上往下照，180到360为从下网上，由于会漏光，因此从下网上照时隐藏光源
     public Light dayLight;
     
-    [Header("昼夜时间")] public int daySeconds = 30;
+    [Header("整天时间")] public int wholeDaySeconds = 30;
     
     [Header("颜色")]
     public Color dayColor=new Color(1,1,1);
@@ -42,11 +42,11 @@ public class DayLightManager : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        dayLight.transform.Rotate(new Vector3((float)360/daySeconds*Time.deltaTime,0,0));
+        dayLight.transform.Rotate(new Vector3((float)360/wholeDaySeconds*Time.deltaTime,0,0));
         
 
         var time = GetTime();
-        Debug.Log(time);
+        //Debug.Log(time);
         var targetColor = dayColor;
         var targetIntensity = dayIntensity;
         var targetAmbientLight=new Color(0.85f,0.85f,0.85f);
@@ -81,7 +81,7 @@ public class DayLightManager : MonoBehaviour
 
     float GetTime()
     {
-        var wholeDay = daySeconds * 2;
-        return (8+((timer % wholeDay) / daySeconds) * 24)%24;
+        var wholeDay = wholeDaySeconds * 2;
+        return (8+((timer % wholeDay) / wholeDaySeconds) * 24)%24;
     }
 }

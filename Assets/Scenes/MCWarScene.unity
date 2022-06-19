@@ -865,7 +865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dayLight: {fileID: 705507994}
-  daySeconds: 300
+  wholeDaySeconds: 50
   dayColor: {r: 1, g: 1, b: 1, a: 1}
   dayIntensity: 1.5
   nightColor: {r: 0.6784314, g: 0.8156863, b: 0.99215686, a: 1}
@@ -28722,9 +28722,9 @@ MonoBehaviour:
   - weaponName: "\u94BB\u77F3\u65A7"
     price: 16
   - weaponName: "\u56DE\u65CB\u9556"
-    price: 16
+    price: 14
   - weaponName: "\u541E\u566C\u8005"
-    price: 20
+    price: 16
 --- !u!4 &1504619296
 Transform:
   m_ObjectHideFlags: 0

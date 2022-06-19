@@ -50,7 +50,7 @@ MonoBehaviour:
   scatteringAngel: 5
   rayDistance: 20
   attackType: 0
-  attackValue: 5
+  attackValue: 4
   addAtkDistanceByDP: 0
   mcWeaponId: 0
   animator: {fileID: 0}
@@ -5165,7 +5165,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 28
+  m_Radius: 14
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &150296520278913299
 PrefabInstance:

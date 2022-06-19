@@ -202,8 +202,12 @@ public class HandWeapon : Weapon,IDamageAble
             return false;
         }
 
+        var spellLevel = weaponNbt.enhancementLevels[index-1].level;
+        (owner.planetCommander as SteveCommander)?.AddPoint(spellLevel*3);
+        MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"祛魔返还"+spellLevel*3+"点数");
         
         weaponNbt.enhancementLevels.RemoveAt(index-1);
+       
         OnSpellChange();
         return true;
 
@@ -335,7 +339,9 @@ public class HandWeapon : Weapon,IDamageAble
             if (healLevel > 0)
             {
                 var healValue = healLevel;
+                
                 owner.OnAttacked(new AttackInfo(owner, AttackType.Heal, Mathf.CeilToInt(healValue)));
+                
                 if (healLevel >= 4)
                 {
                     var colliders = Physics.OverlapSphere(transform.position, owner.findEnemyDistance);
@@ -406,12 +412,8 @@ public class HandWeapon : Weapon,IDamageAble
         var eatLevel = GetWeaponLevelByNbt("吞噬");
         if (eatLevel > 0)
         {
-            attackInfo.value += Mathf.CeilToInt (owner.props.maxHp * ( 0.01f * eatLevel));
-            if (eatLevel >= 5)
-            {
-                attackInfo.value+= Mathf.CeilToInt((victim.props.maxHp * ( 0.01f * eatLevel)));
-
-            }
+            attackInfo.value += Mathf.CeilToInt (owner.props.maxHp * ( 0.02f * eatLevel));
+            
         }
         
         var criticalLevel=GetWeaponLevelByNbt("暴击");
@@ -578,20 +580,40 @@ public class HandWeapon : Weapon,IDamageAble
         var triumphLevel = GetWeaponLevelByNbt("凯旋");
         if (triumphLevel>0)
         {
-            float total = victim.props.maxHp * (0.15f + triumphLevel * 0.1f);//能回的
-            float need = owner.props.maxHp - owner.props.hp;//该回的
-            float overflow = total - need;
-            if (overflow>0)
+            // float total = victim.props.maxHp * (0.15f + triumphLevel * 0.1f);//能回的
+            // float need = owner.props.maxHp - owner.props.hp;//该回的
+            // float overflow = total - need;
+            // if (overflow>0)
+            // {
+            //     if (overflow > owner.props.maxHp * 0.5f)
+            //     {
+            //         overflow = owner.props.maxHp * 0.5f;
+            //     }
+            //     owner.props.maxHp += Mathf.CeilToInt(overflow);
+            //     (owner.planetCommander as SteveCommander).desireMaxHp = owner.props.maxHp;
+            // }
+            // owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,Mathf.CeilToInt(total)));  
+
+            bool isSteve = victim as Steve;
+
+            var multiplier = 2;
+            if (isSteve == false)
             {
-                if (overflow > owner.props.maxHp * 0.5f)
-                {
-                    overflow = owner.props.maxHp * 0.5f;
-                }
-                owner.props.maxHp += Mathf.CeilToInt(overflow);
-                (owner.planetCommander as SteveCommander).desireMaxHp = owner.props.maxHp;
+                multiplier = 1;
+                Debug.Log("凯旋非玩家，效能减半");
             }
-            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,Mathf.CeilToInt(total)));    
-            //FlyText.Instance.ShowDamageText(owner.transform.position,"凯旋");
+            int total = triumphLevel * multiplier;
+            int need = owner.props.maxHp - owner.props.hp;
+            int overflow = total - need;
+            if (overflow > 0)
+            {
+                overflow = Mathf.CeilToInt( (float)overflow / 2);
+                owner.props.maxHp += overflow;
+                (owner.planetCommander as SteveCommander).desireMaxHp = owner.props.maxHp;
+                FlyText.Instance.ShowDamageText( owner.transform.position-Vector3.up*2,"最大生命+"+overflow);
+            }
+            
+            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,total));    
         }
 
         
@@ -623,7 +645,7 @@ public class HandWeapon : Weapon,IDamageAble
         if (thronLevel > 0 && attackInfo.attackType!=AttackType.Reflect && attackInfo.attackType!=AttackType.Heal)
         {
             attackInfo.attacker.GetAttackEntity()
-                .OnAttacked(new AttackInfo(owner, AttackType.Reflect, Mathf.CeilToInt(attackInfo.value * (0.15f + thronLevel*0.1f))));
+                .OnAttacked(new AttackInfo(owner, AttackType.Reflect, thronLevel));
         }
         
         var parryLevel = GetWeaponLevelByNbt("格挡");

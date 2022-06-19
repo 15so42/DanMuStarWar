@@ -9,13 +9,16 @@ public class ZombieSpawner : MonoBehaviour,ITaskAble
 
     private DayLightManager dayLightManager;
 
-    private float timer=15;
+    private FightingManager fightingManager;
+
+    private float timer=45;
     // Start is called before the first frame update
     void Start()
     {
         taskCenter = GetComponent<TaskCenter>();
         taskCenter.Init(this);
         dayLightManager=DayLightManager.Instance;
+        fightingManager=FightingManager.Instance;
     }
     
     
@@ -32,7 +35,12 @@ public class ZombieSpawner : MonoBehaviour,ITaskAble
                 
                 
                 taskCenter.AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_Zombie",1),null ));
-                timer = UnityEngine.Random.Range(1, 60);
+                timer = 60 - (fightingManager.roundManager.elapsedTime / 60);
+                Debug.Log("间隔时间"+timer);
+                if (timer < 30)
+                {
+                    timer = 30;
+                }
             }
         }
     }

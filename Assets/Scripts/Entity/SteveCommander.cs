@@ -30,6 +30,9 @@ public class SteveCommander : PlanetCommander
     public int leftSpecificSpell = 2;
 
     private bool surrendered = false;
+
+    //每局任意礼物可获得一次额外次数
+    public bool flowerSpell = false;
     
     //复活timer
     public UnityTimer.Timer unityTimer;
@@ -120,10 +123,10 @@ public class SteveCommander : PlanetCommander
         //     desireMaxHp = 10;
         // }
 
-        if (player.uid == 1834685283)//小梦荒野5滴血
-        {
-            desireMaxHp = 10;
-        }
+        // if (player.uid == 1834685283)//小梦荒野5滴血
+        // {
+        //     desireMaxHp = 10;
+        // }
         
         
     }
@@ -170,6 +173,8 @@ public class SteveCommander : PlanetCommander
                 return;
             var time = FightingManager.Instance.roundManager.elapsedTime/10;
             time *= 0.6f;
+            if (time > 90)
+                time = 90;
             if(commanderUi!=null)
                 (commanderUi as SteveCommanderUi)?.StartCountDown((int)time);
             unityTimer?.Cancel();

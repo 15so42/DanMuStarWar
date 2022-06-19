@@ -103,7 +103,7 @@ public class ArrowBullet : MonoBehaviour
 
     public virtual int CalDamage()
     {
-        return 3 + strength * 2;
+        return Mathf.CeilToInt(3 + strength * 1.6f);
     }
     protected void DamageVictim(IVictimAble victim)
     {
@@ -116,9 +116,14 @@ public class ArrowBullet : MonoBehaviour
     protected void DamageFx(IVictimAble victim)
     {
         var navMeshMoveManager = victim.GetGameObject().GetComponent<NavMeshMoveManager>();
-        if(navMeshMoveManager)
-            navMeshMoveManager.PushBackByPos(victim.GetGameObject().transform.position,owner.GetAttackerOwner().transform.position,3,2,1+strength*0.15f);
-        
+        if (navMeshMoveManager)
+        {
+            float force = 1 + strength * 0.1f;
+            if (force > 2)
+                force = 2;
+            navMeshMoveManager.PushBackByPos(victim.GetGameObject().transform.position,
+                owner.GetAttackerOwner().transform.position, 3, 2, force);
+        }
 
         if (recycleAbleObject && recycleOnCollision)
         {
