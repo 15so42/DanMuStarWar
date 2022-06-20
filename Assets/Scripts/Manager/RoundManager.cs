@@ -918,14 +918,14 @@ public class RoundManager : MonoBehaviour
             return;
 
 
-        if (steveCommander.point < 2)
+        if (steveCommander.point < 5)
         {
-            steveCommander.commanderUi.LogTip("需要点数:2");
+            steveCommander.commanderUi.LogTip("需要点数:5");
             return;
         }
 
-        validSteve.FixWeapon(10);
-        steveCommander.AddPoint(-2);
+        validSteve.FixWeapon(20);
+        steveCommander.AddPoint(-5);
         
     }
     

@@ -27,7 +27,7 @@ public class BoomerangeWeapon : BowWeapon
         OnFlyOut();
     }
 
-    void Update()
+    protected override void Update()
     {
         base.Update();
         if (!back)

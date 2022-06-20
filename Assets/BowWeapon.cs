@@ -20,6 +20,8 @@ public class BowWeapon : HandWeapon
     public int maxHeight = 7;
 
 
+ 
+    
     public override void FireAnim()
     {
         animator.SetTrigger(animTriggerName);

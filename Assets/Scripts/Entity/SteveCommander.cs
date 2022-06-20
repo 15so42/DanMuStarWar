@@ -101,7 +101,7 @@ public class SteveCommander : PlanetCommander
     {
         var userSaveData = player.userSaveData;
         //desireMaxHp = 20 + Mathf.CeilToInt((float)userSaveData.giftPoint / 40);
-        desireMaxHp = 20;
+        desireMaxHp = 25;
         leftSpecificSpell += Mathf.CeilToInt((float)userSaveData.giftPoint / 300);
         
         

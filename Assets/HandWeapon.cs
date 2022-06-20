@@ -288,7 +288,7 @@ public class HandWeapon : Weapon,IDamageAble
     }
 
     private float spellTimer = 0;
-    void Update()
+    protected override void Update()
     {
         base.Update();
         spellTimer += Time.deltaTime;
@@ -413,7 +413,15 @@ public class HandWeapon : Weapon,IDamageAble
         if (eatLevel > 0)
         {
             attackInfo.value += Mathf.CeilToInt (owner.props.maxHp * ( 0.02f * eatLevel));
-            
+            float rate = (float)eatLevel / (eatLevel + 20);
+            var random = UnityEngine.Random.Range(0, 100);
+            if (random < rate * 100)
+            {
+                owner.props.maxHp++;
+                (owner.planetCommander as SteveCommander).desireMaxHp = owner.props.maxHp;
+                owner.OnAttacked(new AttackInfo(owner, AttackType.Heal, 1));
+                FlyText.Instance.ShowDamageText(owner.transform.position-Vector3.up*2, "最大生命值+1");
+            }
         }
         
         var criticalLevel=GetWeaponLevelByNbt("暴击");
@@ -538,7 +546,7 @@ public class HandWeapon : Weapon,IDamageAble
                 {
                     (skill as PoisonSkill).SetAttacker(owner);
                     var maxHp = victimAble.GetVictimEntity().props.maxHp;
-                    (skill as PoisonSkill).SetAttackDamage(1+Mathf.CeilToInt (0.002f+0.005f*poisonLevel*maxHp)); 
+                    (skill as PoisonSkill).SetAttackDamage(1+Mathf.CeilToInt (0.004f*poisonLevel*maxHp)); 
                     (skill as PoisonSkill).life = 3;
                 }
                 
@@ -596,24 +604,30 @@ public class HandWeapon : Weapon,IDamageAble
 
             bool isSteve = victim as Steve;
 
-            var multiplier = 2;
-            if (isSteve == false)
+            float multiplier = 0.5f;//玩家用0.5倍
+            if (isSteve == false)//非玩家效能减半
             {
-                multiplier = 1;
+                multiplier *=0.5f;
                 Debug.Log("凯旋非玩家，效能减半");
             }
-            int total = triumphLevel * multiplier;
-            int need = owner.props.maxHp - owner.props.hp;
-            int overflow = total - need;
-            if (overflow > 0)
+
+            if (attackDistance > 10)
             {
-                overflow = Mathf.CeilToInt( (float)overflow / 2);
-                owner.props.maxHp += overflow;
-                (owner.planetCommander as SteveCommander).desireMaxHp = owner.props.maxHp;
-                FlyText.Instance.ShowDamageText( owner.transform.position-Vector3.up*2,"最大生命+"+overflow);
+                multiplier *=0.5f;
+                Debug.Log("远程，效能减半");
             }
             
-            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,total));    
+            int total = Mathf.CeilToInt((triumphLevel * multiplier));
+            
+           
+            if (total > 0)
+            {
+                owner.props.maxHp += total;
+                (owner.planetCommander as SteveCommander).desireMaxHp = owner.props.maxHp;
+                FlyText.Instance.ShowDamageText( owner.transform.position-Vector3.up*2,"最大生命+"+total);
+            }
+            
+            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,total*2*2));    
         }
 
         

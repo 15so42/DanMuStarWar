@@ -36,7 +36,7 @@ public class Weapon : MonoBehaviour
         
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         timer -= Time.deltaTime;
         if (timer < 0)

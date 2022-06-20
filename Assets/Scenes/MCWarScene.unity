@@ -865,7 +865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dayLight: {fileID: 705507994}
-  wholeDaySeconds: 50
+  wholeDaySeconds: 500
   dayColor: {r: 1, g: 1, b: 1, a: 1}
   dayIntensity: 1.5
   nightColor: {r: 0.6784314, g: 0.8156863, b: 0.99215686, a: 1}
