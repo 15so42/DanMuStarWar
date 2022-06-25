@@ -24,6 +24,11 @@ public class McTowerWeapon : HandWeapon
         Destroy(line.gameObject,0.6f);
     }
 
+    public override AttackInfo GetBaseAttackInfo()
+    {
+        return new AttackInfo(owner,AttackType.Real,attackValue);
+    }
+
     Vector3 GetRandomPos(Vector3 start,Vector3 end)
     {
         return new Vector3(UnityEngine.Random.Range(start.x,end.x),UnityEngine.Random.Range(start.y,end.y),UnityEngine.Random.Range(start.z,end.z) );

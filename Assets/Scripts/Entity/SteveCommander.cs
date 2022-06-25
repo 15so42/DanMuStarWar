@@ -37,12 +37,21 @@ public class SteveCommander : PlanetCommander
     //复活timer
     public UnityTimer.Timer unityTimer;
     
+    //兑换礼物武器次数
+    public int giftWeaponCount = 0;
+    
     public SteveCommander(int uid, Player player) : base(uid, player)
     {
     }
 
     public SteveCommander(int uid, Player player, Color color) : base(uid, player, color)
     {
+    }
+
+    public void SetMaxSpellCount()
+    {
+        var steve = FindFirstValidSteve();
+        steve.GetActiveWeapon().SetMaxSpellCount(desireSpellCount);
     }
 
     public override void Init(Planet ownerPlanet)
@@ -187,7 +196,7 @@ public class SteveCommander : PlanetCommander
     {
         if (player.uid == 8045498 )
         {
-            AddPoint(0.6f);
+            AddPoint(0.3f);
         }
         
     }
@@ -203,6 +212,7 @@ public class SteveCommander : PlanetCommander
     public override void OnHangUp()
     {
         base.OnHangUp();
+        FightingManager.Instance.exitPlayers.Add(player.uid);
         (commanderUi as SteveCommanderUi)?.OnHangUp();
         for (int i = 0; i < battleUnits.Count; i++)
         {
@@ -218,6 +228,7 @@ public class SteveCommander : PlanetCommander
         {
             ownerPlanet.Die();
         }
+        
         GC.Collect();
 
 

@@ -20,6 +20,7 @@ public class HandWeapon : Weapon,IDamageAble
     public SteveWeaponNbt weaponNbt;
 
     [Header("附魔列表")] public List<string> randomStrs = new List<string>();
+    [Header("互斥附魔")] public List<string> mutexSpells = new List<string>();
     [Header("高阶附魔")] public List<string> rareRandomStrs=new List<string>();
 
     [Header("最大耐久")] public int maxEndurance=15;
@@ -121,12 +122,21 @@ public class HandWeapon : Weapon,IDamageAble
         //     //MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"已获得所有附魔,无法再附魔了");
         //     //return false;
         // }
+        
+        
+        
 
         return true;
     }
 
     public bool TrySpecificSpell(string name)
     {
+        if (IsValidSpell(name) == false)
+        {
+            MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔失败，因为存在互斥附魔");
+            return false;
+        }
+            
         if (randomStrs.Contains(name) == false)
         {
             var str = "";
@@ -177,21 +187,41 @@ public class HandWeapon : Weapon,IDamageAble
         randomEnhancementLevel.level++;
         OnSpellChange();
     }
+
+    bool IsValidSpell(string spellStr)
+    {
+        if (mutexSpells.Contains(spellStr) )
+        {
+            foreach (var spell in weaponNbt.enhancementLevels)
+            {
+                if (mutexSpells.Contains(spell.enhancementName) && spell.enhancementName != spellStr)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
     
     //随机附魔
     public void RandomSpell(bool rare)
     {
+        string spellStr = "";
+        do
+        {
+            spellStr = randomStrs[UnityEngine.Random.Range(0, randomStrs.Count)];
+        }
+        while(!IsValidSpell(spellStr));
 
-        
-        var spellStr = randomStrs[UnityEngine.Random.Range(0, randomStrs.Count)];
-       
-       
-        MessageBox._instance.AddMessage("系统",owner.planetCommander.player.userName+"附魔"+spellStr);
-        SetWeaponLevel(spellStr, GetWeaponLevelByNbt(spellStr)+1);
-            
-            
+
+        MessageBox._instance.AddMessage("系统", owner.planetCommander.player.userName + "附魔" + spellStr);
+        SetWeaponLevel(spellStr, GetWeaponLevelByNbt(spellStr) + 1);
+
+
         OnSpellChange();
-            
+        
+
     }
 
     public bool RemoveSpell(int index)
@@ -288,10 +318,20 @@ public class HandWeapon : Weapon,IDamageAble
     }
 
     private float spellTimer = 0;
+    private float lastTimer = 0;//每秒执行
     protected override void Update()
     {
         base.Update();
         spellTimer += Time.deltaTime;
+        lastTimer += Time.deltaTime;
+
+        if (lastTimer > 1)
+        {
+            
+
+
+            lastTimer = 0;
+        }
         
         if (spellTimer > 5)
         {
@@ -331,7 +371,7 @@ public class HandWeapon : Weapon,IDamageAble
             var fortuneLevel= GetWeaponLevelByNbt("财运");
             if (fortuneLevel > 0)
             {
-                (owner.planetCommander as SteveCommander).AddPoint(0.08f*fortuneLevel);
+                (owner.planetCommander as SteveCommander).AddPoint(0.06f*fortuneLevel);
             }
 
 
@@ -376,11 +416,16 @@ public class HandWeapon : Weapon,IDamageAble
 
                 }
             }
-
+           
 
 
             spellTimer = 0;
         }
+    }
+
+    public virtual AttackInfo GetBaseAttackInfo()
+    {
+        return new AttackInfo(this.owner, AttackType.Physics, attackValue);
     }
     
 
@@ -390,7 +435,7 @@ public class HandWeapon : Weapon,IDamageAble
             return;
         var victim = owner.chaseTarget.GetVictimEntity();
 
-        var attackInfo = new AttackInfo(this.owner, AttackType.Physics, attackValue);
+        var attackInfo = GetBaseAttackInfo();
         var sharpLevel = GetWeaponLevelByNbt("锋利");
         if (sharpLevel > 0)
         {
@@ -526,6 +571,7 @@ public class HandWeapon : Weapon,IDamageAble
                 {
                     (skill as FireSkill).SetAttacker(owner); 
                     (skill as FireSkill).life = 4 + fireLevel*2;
+                    (skill as FireSkill).damage = Mathf.CeilToInt((float)fireLevel/5);
                 }
                 
             }
@@ -546,7 +592,7 @@ public class HandWeapon : Weapon,IDamageAble
                 {
                     (skill as PoisonSkill).SetAttacker(owner);
                     var maxHp = victimAble.GetVictimEntity().props.maxHp;
-                    (skill as PoisonSkill).SetAttackDamage(1+Mathf.CeilToInt (0.004f*poisonLevel*maxHp)); 
+                    (skill as PoisonSkill).SetAttackDamage(1+Mathf.CeilToInt (0.0055f*poisonLevel*maxHp)); 
                     (skill as PoisonSkill).life = 3;
                 }
                 
@@ -658,9 +704,21 @@ public class HandWeapon : Weapon,IDamageAble
         var thronLevel = GetWeaponLevelByNbt("荆棘");
         if (thronLevel > 0 && attackInfo.attackType!=AttackType.Reflect && attackInfo.attackType!=AttackType.Heal)
         {
+            var value = Mathf.CeilToInt(attackInfo.value * ((float)thronLevel / (thronLevel + 10)));
             attackInfo.attacker.GetAttackEntity()
-                .OnAttacked(new AttackInfo(owner, AttackType.Reflect, thronLevel));
+                .OnAttacked(new AttackInfo(owner, AttackType.Reflect, value));
         }
+        
+        var protectionLevel=GetWeaponLevelByNbt("保护");
+        if (protectionLevel>0 && attackInfo.attackType != AttackType.Heal && attackInfo.attackType != AttackType.Real)
+        {
+            attackInfo.value = (int) (attackInfo.value * (1 - (float) protectionLevel / (protectionLevel + 10)));
+        }
+        
+        // var arrowProteLevel=GetWeaponLevelByNbt("弹射物保护")
+        // {
+        //     
+        // }
         
         var parryLevel = GetWeaponLevelByNbt("格挡");
         if (parryLevel > 0 && attackInfo.attackType!=AttackType.Heal && attackInfo.attackType!=AttackType.Real)
@@ -692,6 +750,8 @@ public class HandWeapon : Weapon,IDamageAble
             var realCost = realDamage - parryLevel;
             if (realCost < 0)
                 realCost = 0;
+            if (realCost == 0)
+                realCost = 1;
             AddEndurance((int) (-1* realCost ));
             
 

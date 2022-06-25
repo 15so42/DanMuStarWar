@@ -9,6 +9,9 @@ public class BoomerangeWeapon : BowWeapon
     public bool back = true;
 
     private float leftTimer = 0;
+
+    [Header("大于几秒后强制收回")] public bool backByWeapon = true;
+    public float maxLeftTimer = 6;
     
     public override bool FireCheck()
     {
@@ -30,10 +33,12 @@ public class BoomerangeWeapon : BowWeapon
     protected override void Update()
     {
         base.Update();
+        if(!backByWeapon)
+            return;
         if (!back)
         {
             leftTimer += Time.deltaTime;
-            if (leftTimer > 6)
+            if (leftTimer > maxLeftTimer)
             {
                 back = true;
                 leftTimer = 0;
@@ -49,9 +54,6 @@ public class BoomerangeWeapon : BowWeapon
     {
         back = false;
     }
-    public void OnBoomerangeBack()
-    {
-        back = true;
-    }
+    
     
 }

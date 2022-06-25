@@ -49,6 +49,8 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    //能否被作为受击者的反击目标，防御塔不可以"
    [HideInInspector]public bool canBeTarget=true;
 
+   private float lastDamageTime = 0;//受伤间隔
+
    public void Awake()
    {
       stateMachine = GetComponent<StateMachine>();
@@ -110,7 +112,10 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
 
    public virtual BattleUnitProps.HpAndShield OnAttacked(AttackInfo attackInfo)
    {
-      
+      if (Time.time < lastDamageTime + 0.3)
+      {
+         attackInfo.value = Mathf.CeilToInt(attackInfo.value * 0.5f);
+      }
       
       attackInfo=OnBeforeAttacked(attackInfo);//减伤增伤判断
       

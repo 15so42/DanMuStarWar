@@ -45,13 +45,13 @@ public class NavMeshMoveManager : MoveManager
         //DoNothing
     }
 
-    public void PushBackByPos(Vector3 victimPos,Vector3 selfPos,float upForce,float pushForce,float multiplier=1)
+    public void PushBackByPos(Vector3 victimPos,Vector3 attackerPos,float upForce,float pushForce,float multiplier=1)
     {
         if(steve.canPushBack==false)
             return;
 
         Vector3 retDir=Vector3.zero;
-        Vector3 horDir = (victimPos - selfPos).normalized;
+        Vector3 horDir = (victimPos - attackerPos).normalized;
         horDir.y = 0;
         retDir = (horDir * pushForce) + upForce*Vector3.up;
         PushBack(retDir,multiplier);

@@ -48,6 +48,9 @@ public class FightingManager : MonoBehaviourPunCallbacks
     public List<Player> players=new List<Player>();
     public int maxPlayerCount = 8;
     
+    //局内退出玩家
+    [HideInInspector]public List<int> exitPlayers=new List<int>();
+    
     //对局状态
     public GameStatus gameStatus = GameStatus.Init;
 
@@ -626,7 +629,11 @@ public class FightingManager : MonoBehaviourPunCallbacks
                                 var lessPlanet = firstCount > lastCount ? lastPlanetIndex : firstPlanetIndex;
                                 
                                 PlanetManager.Instance.allPlanets[lessPlanet].AddCommander(commander,lessPlanet==firstPlanetIndex?0:1 );
-                                commander.AddPoint(roundManager.elapsedTime/20);
+                                if (exitPlayers.Contains(commander.player.uid) == false)
+                                {
+                                    commander.AddPoint(roundManager.elapsedTime/20);
+                                }
+                                
                                 // if (players.Count % 2 == 1)
                                 // {
                                 //     MessageBox._instance.AddMessage("系统",newPlayer1.userName+"加入后玩家数："+players.Count+"去左边");
@@ -697,7 +704,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
             var player = losers[i].player;
             AddPlayerDataValue(player.uid, "loseCount", 1);
         }
-        
+        exitPlayers.Clear();
         SaveAllPlayer();
         MCBattleOverDialog.ShowDialog(15,GameMode.MCWar,winners,losers,
             ()=>

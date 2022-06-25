@@ -83,6 +83,8 @@ public class IronGolem : McUnit
         
         int addHp=fightingManager.players.Count * (Mathf.CeilToInt(fightingManager.roundManager.elapsedTime/300)* 15);
         props.maxHp += addHp;
+        var liveWeapon = GetActiveWeapon();
+        liveWeapon.attackValue += (int)(fightingManager.roundManager.elapsedTime / 300);
         
         OnAttacked(new AttackInfo(this,AttackType.Heal,addHp));
         rebooted = true;

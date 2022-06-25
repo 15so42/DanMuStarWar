@@ -11336,6 +11336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxPlayerCount: 24
+  exitPlayers: 
   gameStatus: 0
   gameMode: 2
   gameManager: {fileID: 0}
@@ -28725,6 +28726,13 @@ MonoBehaviour:
     price: 14
   - weaponName: "\u541E\u566C\u8005"
     price: 16
+  rareWeaponPrices:
+  - weaponName: TNT
+    price: 1
+  - weaponName: "\u4E0B\u754C\u5408\u91D1\u5251"
+    price: 1
+  - weaponName: "\u9493\u7AFF"
+    price: 1
 --- !u!4 &1504619296
 Transform:
   m_ObjectHideFlags: 0
@@ -37418,6 +37426,80 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 039b39e87fd7e2e4eac8cb2a86e12489, type: 3}
+--- !u!1001 &3214379307805771213
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 593591819750604246, guid: bd0d7052bfd3b3b419b236a4779e1f73,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 593591819750604246, guid: bd0d7052bfd3b3b419b236a4779e1f73,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 593591819750604246, guid: bd0d7052bfd3b3b419b236a4779e1f73,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 593591819750604246, guid: bd0d7052bfd3b3b419b236a4779e1f73,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 593591819750604246, guid: bd0d7052bfd3b3b419b236a4779e1f73,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 593591819750604246, guid: bd0d7052bfd3b3b419b236a4779e1f73,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 593591819750604246, guid: bd0d7052bfd3b3b419b236a4779e1f73,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 593591819750604246, guid: bd0d7052bfd3b3b419b236a4779e1f73,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 593591819750604246, guid: bd0d7052bfd3b3b419b236a4779e1f73,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 593591819750604246, guid: bd0d7052bfd3b3b419b236a4779e1f73,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 593591819750604246, guid: bd0d7052bfd3b3b419b236a4779e1f73,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5206492890783605867, guid: bd0d7052bfd3b3b419b236a4779e1f73,
+        type: 3}
+      propertyPath: m_Name
+      value: FishingRodBullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 5206492890783605867, guid: bd0d7052bfd3b3b419b236a4779e1f73,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bd0d7052bfd3b3b419b236a4779e1f73, type: 3}
 --- !u!1001 &5474798844865633041
 PrefabInstance:
   m_ObjectHideFlags: 0

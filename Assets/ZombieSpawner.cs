@@ -11,7 +11,7 @@ public class ZombieSpawner : MonoBehaviour,ITaskAble
 
     private FightingManager fightingManager;
 
-    private float timer=45;
+    private float timer=90;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,11 +35,11 @@ public class ZombieSpawner : MonoBehaviour,ITaskAble
                 
                 
                 taskCenter.AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_Zombie",1),null ));
-                timer = 60 - (fightingManager.roundManager.elapsedTime / 60);
+                timer = 90 - (fightingManager.roundManager.elapsedTime / 60);
                 Debug.Log("间隔时间"+timer);
-                if (timer < 30)
+                if (timer < 45)
                 {
-                    timer = 30;
+                    timer = 45;
                 }
             }
         }

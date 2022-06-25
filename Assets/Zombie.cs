@@ -16,13 +16,13 @@ public class Zombie : McUnit
         hpUI.OpenHPTile();
         
         var elapsedTime = FightingManager.Instance.roundManager.elapsedTime;
-        props.maxHp += (int)(elapsedTime * 0.03);
-        OnAttacked(new AttackInfo(this, AttackType.Heal, (int)(elapsedTime * 0.03)));
-        //props.hp+=(int)(elapsedTime * 0.03);
+        props.maxHp += (int)(elapsedTime * 0.015);
+        OnAttacked(new AttackInfo(this, AttackType.Heal, (int)(elapsedTime * 0.015)));
+       
         dayLightManager=DayLightManager.Instance;
 
-        liveWeapon.attackValue += (int) (elapsedTime / 180);
-        LogTip("血量+"+(int)(elapsedTime * 0.03)+",攻击力+"+(int) (elapsedTime / 180));
+        liveWeapon.attackValue += (int) (elapsedTime / 300);
+        LogTip("血量+"+(int)(elapsedTime * 0.015)+",攻击力+"+(int) (elapsedTime / 300));
     }
 
     private void Update()

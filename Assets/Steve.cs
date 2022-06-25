@@ -262,11 +262,14 @@ public class Steve : McUnit
 
     
 
-    public void OnBuyWeaponSuccess(string weaponName)
+    public bool OnBuyWeaponSuccess(string weaponName)
     {
         var targetWeapon = weapons.Find(x => x.weaponName == weaponName);
+        if (targetWeapon == null)
+            return false;
         var id = (targetWeapon as HandWeapon).mcWeaponId;
         ChangeWeapon(id);
+        return true;
     }
     
     

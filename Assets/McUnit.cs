@@ -38,6 +38,12 @@ public class McUnit : WarPlane
         return distance < 1f;
     }
     
+    public HandWeapon GetActiveWeapon()
+    {
+        var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
+        return liveWeapon as HandWeapon;
+    }
+    
     
     public virtual GameEntity OverLapEnemyInMc()
     {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Ludiq;
 using Photon.Pun;
+
 using UnityEngine;
 using Random = System.Random;
 
@@ -37,6 +38,7 @@ public class RoundManager : MonoBehaviour
     
     [Header("MC武器购买列表")]
     public List<McWeaponsPrice> mcWeaponsPrices=new List<McWeaponsPrice>();
+    public List<McWeaponsPrice> rareWeaponPrices=new List<McWeaponsPrice>();
     public void Init(GameManager gameManager, List<Player> players)
     {
         this.gameManager = gameManager;
@@ -632,6 +634,11 @@ public class RoundManager : MonoBehaviour
                 ParseBuyMcWeapon(steveCommander,trim);
             }
 
+            if (trim.StartsWith("兑换") && trim.StartsWith("兑换生命")==false)
+            {
+                ParseGiftWeapon(steveCommander, trim);
+            }
+
             if (trim.Equals("查询礼物点数"))
             {
                 var player = steveCommander.player;
@@ -650,6 +657,26 @@ public class RoundManager : MonoBehaviour
                 MessageBox._instance.AddMessage("系统", player.userName+
                                                       "统计信息为：\n"+"胜/败:"+player.userSaveData.winCount+"/"+player.userSaveData.loseCount+
                                                       "\n击杀/死亡:"+player.userSaveData.killCount+"/"+player.userSaveData.dieCount);
+            }
+
+            if (trim.StartsWith("多次附魔"))
+            {
+                var countStr = trim.Substring(4);
+                int count = 0;
+                try
+                {
+                    count = int.Parse(countStr);
+                }
+                catch (Exception e)
+                {
+                    return;
+                }
+                
+                
+                for (int i = 0; i < count; i++)
+                {
+                    ParseRandomSpell(steveCommander,false,false);
+                }
             }
 
             if (trim == "附魔"||trim=="随机附魔")
@@ -677,6 +704,24 @@ public class RoundManager : MonoBehaviour
             if (trim == "维修")
             {
                 ParseFixWeapon(steveCommander);
+            }
+
+            if (trim.StartsWith("多次兑换生命"))
+            {
+                var countStr = trim.Substring(6);
+                int count = 0;
+                try
+                {
+                    count = int.Parse(countStr);
+                }
+                catch (Exception e)
+                {
+                    return;
+                }
+                for (int i = 0; i < count; i++)
+                {
+                    ParseAddMaxHp(steveCommander,false);
+                }
             }
 
             if (trim == "兑换生命")
@@ -712,6 +757,40 @@ public class RoundManager : MonoBehaviour
                 break;
             }
         }
+    }
+
+    void ParseGiftWeapon(SteveCommander steveCommander, string trim)
+    {
+        var weaponName = trim.Substring(2);
+        if (steveCommander.giftWeaponCount <= 0)
+        {
+            MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"兑换礼物武器次数不足，投喂这个好诶增加次数，次数不保留至下局，请在局内使用完");
+            return;
+        }
+        var validSteve = steveCommander.FindFirstValidSteve();
+        if (!validSteve)
+        {
+            MessageBox._instance.AddMessage("系统", steveCommander.player.userName+"请玩家复活后再兑换礼物武器");
+            return;
+        }
+
+        if (rareWeaponPrices.Find(x => x.weaponName == weaponName) == null)
+        {
+            MessageBox._instance.AddMessage("系统", steveCommander.player.userName+"兑换失败，请兑换礼物武器");
+
+            return;
+        }
+        var success = validSteve.OnBuyWeaponSuccess(weaponName);
+        if (success == false)
+        {
+            MessageBox._instance.AddMessage("系统", steveCommander.player.userName+"兑换失败，请检查兑换武器名称是否正确");
+        }
+        else
+        {
+            steveCommander.giftWeaponCount--;
+        }
+        
+            
     }
 
     void ParseBuyMcWeapon(SteveCommander steveCommander,string trim)
@@ -1008,7 +1087,9 @@ public class RoundManager : MonoBehaviour
             
             
             //特殊武器
-            ParseRareWeapon(steveCommander);
+            //ParseRareWeapon(steveCommander);
+            steveCommander.giftWeaponCount++;
+            MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"兑换礼物武器次数增加一次，输入兑换+武器名称兑换武器，如兑换钓竿，兑换TNT");
         }
         
         // if (giftName == "白银宝盒")
@@ -1036,8 +1117,10 @@ public class RoundManager : MonoBehaviour
         if (steveCommander.flowerSpell == false && battery>0)
         {
             steveCommander.leftSpecificSpell++;
-            MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"通过电池礼物获得1次额外指定附魔次数（每局任意电池礼物可获得一次额外指定附魔次数，每局限一次）");
+            MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"通过电池礼物获得1次额外指定附魔次数和额外栏位（每局任意电池礼物可获得一次额外指定附魔次数和1个额外栏位，每局限一次）");
             steveCommander.flowerSpell = true;
+            steveCommander.desireSpellCount++;
+            steveCommander.SetMaxSpellCount();
         }
         
         EventCenter.Broadcast(EnumEventType.OnMcBatteryReceived,planet,battery==0? 0:battery/100);
