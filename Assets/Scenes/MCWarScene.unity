@@ -9835,6 +9835,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2072179998}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2140593658 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 581951060227328461, guid: d88c1c9ba97ab44428137cf48fb44b50,
+    type: 3}
+  m_PrefabInstance: {fileID: 581951059265430227}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2140593659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140593658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e5a7f52f5ca1e4d9fcd5ab826c67fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desireMode: 0
+  mcModeCount: 0
+  marbleModeCount: 0
+  voted: 
+  elapsedTime: 0
+  mcWeaponsPrices:
+  - weaponName: "\u6728\u5251"
+    price: 2
+  - weaponName: "\u77F3\u5251"
+    price: 4
+  - weaponName: "\u91D1\u5251"
+    price: 4
+  - weaponName: "\u94C1\u525110"
+    price: 0
+  - weaponName: "\u94BB\u77F3\u5251"
+    price: 16
+  - weaponName: "\u94BB\u77F3\u65A7"
+    price: 16
+  - weaponName: "\u5F13"
+    price: 14
+  - weaponName: "\u56DE\u65CB\u9556"
+    price: 14
+  rareWeaponPrices:
+  - weaponName: TNT
+    price: 1
+  - weaponName: "\u4E0B\u5C4A\u5408\u91D1\u5251"
+    price: 1
+  - weaponName: "\u9493\u7AFF"
+    price: 1
 --- !u!1 &2143763598
 GameObject:
   m_ObjectHideFlags: 0
@@ -9907,6 +9954,11 @@ PrefabInstance:
       propertyPath: mcPosManager
       value: 
       objectReference: {fileID: 98487466}
+    - target: {fileID: 581951058913513479, guid: d88c1c9ba97ab44428137cf48fb44b50,
+        type: 3}
+      propertyPath: roundManager
+      value: 
+      objectReference: {fileID: 2140593659}
     - target: {fileID: 581951059310007549, guid: d88c1c9ba97ab44428137cf48fb44b50,
         type: 3}
       propertyPath: dayLight
@@ -9950,6 +10002,11 @@ PrefabInstance:
     - target: {fileID: 2840895077824998836, guid: d88c1c9ba97ab44428137cf48fb44b50,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840895078866994803, guid: d88c1c9ba97ab44428137cf48fb44b50,
+        type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5800344132033192086, guid: d88c1c9ba97ab44428137cf48fb44b50,
@@ -10012,7 +10069,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 581951060227328460, guid: d88c1c9ba97ab44428137cf48fb44b50, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d88c1c9ba97ab44428137cf48fb44b50, type: 3}
 --- !u!1001 &2376565197188707708
 PrefabInstance:
