@@ -20,9 +20,27 @@ public class Steve : McUnit
     public List<HandWeapon> normalWeapons=new List<HandWeapon>();
     public List<HandWeapon> rareWeapons=new List<HandWeapon>();
 
+    [Header("手环")] public GameObject[] handRings;
+
     protected override void Start()
     {
         base.Start();
+
+        if (planetCommander.player.uid == 295585816 || planetCommander.player.uid == 23204263)
+        {
+            foreach (var handRing in handRings)
+            {
+                handRing.SetActive(true);
+            }
+            
+        }
+        else
+        {
+            foreach (var handRing in handRings)
+            {
+                handRing.SetActive(false);
+            }
+        }
        
         //RandomWeapon();
         hpUI.SetNameText(planetCommander.player.userName);

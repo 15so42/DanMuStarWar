@@ -40,25 +40,32 @@ public class FishingRodBullet : ArrowBullet
         timer += Time.deltaTime;
         if (timer > backHookTime)
         {
-            StartBackSequence();
-            
+            //StartBackSequence();
+            rigidbody.velocity = Vector3.zero;
+            var dir = fishHook.transform.position - transform.position;
+            transform.position+=(dir.normalized * (speed*0.02f * Time.deltaTime));
+            if (dir.magnitude < 2f||timer>3.5f)
+            {
+                (handWeapon as BoomerangeWeapon).back = true;
+                recycleAbleObject.Recycle();
+            }
         }
     }
 
     public override void OnCollisionEnter(Collision other)
     {
         base.OnCollisionEnter(other);
-        StartBackSequence();
+        timer = backHookTime;
     }
 
-    void StartBackSequence()
-    {
-        timer = 0;
-        backHookSequence?.Kill();
-        backHookSequence=transform.DOMove(fishHook.transform.position, 1f).OnComplete(() =>
-        {
-            (handWeapon as BoomerangeWeapon).back = true;
-            recycleAbleObject.Recycle();
-        });
-    }
+    // void StartBackSequence()
+    // {
+    //     timer = 0;
+    //     backHookSequence?.Kill();
+    //     backHookSequence=transform.DOMove( 1f).OnComplete(() =>
+    //     {
+    //         (handWeapon as BoomerangeWeapon).back = true;
+    //         recycleAbleObject.Recycle();
+    //     });
+    // }
 }

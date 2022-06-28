@@ -597,7 +597,7 @@ public class Planet : GameEntity,ITaskAble
         }
         else
         {
-            AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_IronGolem",1),null));
+            //AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_IronGolem",1),null));
             AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_McPlanetTower",1),null));
             return;
         }

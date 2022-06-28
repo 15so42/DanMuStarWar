@@ -465,8 +465,8 @@ public class FightingManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        
-        
+
+        mcPosManager = MCPosManager.Instance;
     }
 
     private void Update()
