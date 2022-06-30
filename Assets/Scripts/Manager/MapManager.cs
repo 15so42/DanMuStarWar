@@ -52,6 +52,8 @@ public class MapManager : MonoBehaviour
     public List<MapPosData> normalMapPoses=new List<MapPosData>();
     
     //分格子放星球
+
+    
     
     public void Init(FightingManager fightingManager)
     {
@@ -60,7 +62,7 @@ public class MapManager : MonoBehaviour
         
         
         grids=new string[zNum,xNum];
-        if(fightingManager.gameMode!=GameMode.MCWar)
+        if(fightingManager.gameMode!=GameMode.MCWar && fightingManager.gameMode!=GameMode.Marble)
             SpawnStones();
     }
 
@@ -111,7 +113,12 @@ public class MapManager : MonoBehaviour
                 SpawnPlantesByMapPos(GameMode.BattleGround);
             else
             {
-                SpawnPlantesByMapPos(GameMode.MCWar);
+                if(fightingManager.gameMode==GameMode.MCWar)
+                    SpawnPlantesByMapPos(GameMode.MCWar);
+                else
+                {
+                    SpawnPlantesByMapPos(GameMode.Marble);
+                }
             }
         }
         
@@ -145,7 +152,7 @@ public class MapManager : MonoBehaviour
         
             var planetName = planetsName[Random.Range(0, planetsName.Count)];
             //特定位置使用玩家星球
-            if (i == 0 || i == planetNum - 1 && gameMode==GameMode.BattleGround)
+            if ((i == 0 || i == planetNum - 1) && gameMode==GameMode.BattleGround)
             {
                 planetName = playerPlanets[Random.Range(0, playerPlanets.Length)];
             }

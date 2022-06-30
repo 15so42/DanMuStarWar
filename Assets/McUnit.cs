@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Bolt;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class McUnit : WarPlane
 {
@@ -31,7 +32,18 @@ public class McUnit : WarPlane
        
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
+
+    public Vector3 RandomDestination()
+    {
+        Vector3 newDest = UnityEngine.Random.insideUnitSphere * 25 ; //半径为500的球形随机点
+        NavMeshHit hit;
+        bool hasDestination = NavMesh.SamplePosition(newDest, out hit, 100,1); //unity到指定点最接近的位置
+       
+        return newDest;
+    }
     
+    
+
     public bool NearTargetPos()
     {
         float distance = Vector3.Distance(transform.position, moveManager.tmpTarget);
@@ -210,6 +222,7 @@ public class McUnit : WarPlane
         if (planetCommander!=null)
         {
             planetCommander.AddPoint(2);
+            ownerPlanet.OnAttacked(new AttackInfo(this, AttackType.Heal, 5));
             if (victim as Steve)
             {
                 fightingManager.AddPlayerDataValue(planetCommander.player.uid,"killCount",1);

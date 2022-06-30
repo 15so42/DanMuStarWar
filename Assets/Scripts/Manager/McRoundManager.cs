@@ -149,9 +149,10 @@ public class McRoundManager : RoundManager
     }
 
 
-    void ParseGoWhere(int uid,string trim,bool escape)
+    protected void ParseGoWhere(int uid,string trim,bool escape)
     {
         
+        return;
         string pattern = @"^(去){1}(\d{1,2})$";
         string escapePattern = @"^(溜){1}(\d{1,2})$";
         string letterPattern=@"^(q|Q|l|L){1}(\d{1,2})$";

@@ -30,6 +30,9 @@ public class DayLightManager : MonoBehaviour
     public float nightSceneLightIntensity = 1;
     
     private float timer=0;
+
+    private float lastTime = 0;
+    private int day = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -50,8 +53,8 @@ public class DayLightManager : MonoBehaviour
         var targetColor = dayColor;
         var targetIntensity = dayIntensity;
         var targetAmbientLight=new Color(0.85f,0.85f,0.85f);
-        var targetSceneLightIntensity = 2f;
-        if (time > 9 && time < 20)
+        var targetSceneLightIntensity = 5f;
+        if (time > 9 && time < 19)
         {
             targetSceneLightIntensity = nightSceneLightIntensity;
         }
@@ -71,6 +74,19 @@ public class DayLightManager : MonoBehaviour
                 Mathf.Lerp(sceneLights[i].intensity, targetSceneLightIntensity, 0.5f * Time.deltaTime);
         }
 
+        //重置太阳角度和计时以免误差累计
+        if ((int)time ==8 && (int)lastTime==7)
+        {
+            day++;
+            dayLight.transform.localEulerAngles=new Vector3(1,-30,0);
+            timer = 0;
+            Debug.Log("新的一天，天数为"+day);
+            
+
+        }
+        //Debug.Log(time+","+lastTime);
+        lastTime = time;
+        
     }
 
     public bool IsDay()

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Bolt;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Rendering;
 
 public class Steve : McUnit
@@ -75,6 +76,12 @@ public class Steve : McUnit
         //如果在Steve生成前已经就触发了onSetUserData,生成时就不会触发，所以需要手动触发
         OnPlayerSetData();
         
+        //将自己放在navemesh上
+        
+        NavMeshHit hit;
+        NavMesh.SamplePosition(transform.position, out hit, 30,1); //unity到指定点最接近的位置
+        
+        transform.position = hit.position;
     }
 
 

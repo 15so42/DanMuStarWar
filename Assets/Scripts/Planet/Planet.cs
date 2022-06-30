@@ -340,10 +340,10 @@ public class Planet : GameEntity,ITaskAble
         //if(colonyPoint==0)
         //    ringUi.gameObject.SetActive(false);
 
-        if (fightingManager.gameMode == GameMode.MCWar)
+        if (fightingManager.gameMode == GameMode.MCWar || fightingManager.gameMode==GameMode.Marble)
         {
-            props.maxHp = 200;
-            props.hp = 200;
+            props.maxHp = 225;
+            props.hp = 225;
         }
             
 
@@ -394,10 +394,17 @@ public class Planet : GameEntity,ITaskAble
         planetUi = GameManager.Instance.uiManager.CreatePlanetUI(this);
         planetUi.Init(this,fightingManager.gameMode);
 
-        if (fightingManager.gameMode == GameMode.MCWar)
+        if (fightingManager.gameMode == GameMode.MCWar || fightingManager.gameMode==GameMode.Marble)
         {
             transform.localScale=Vector3.one*0.5f;
             planetUi.gameObject.SetActive(false);
+        }
+
+        if (fightingManager.gameMode == GameMode.Marble)
+        {
+            //planetUi.gameObject.SetActive(true);
+            autoRoll = false;
+            SkillManager.Instance.AddSkill("Skill_永久腐蚀_LV1",this,null);
         }
 
         planetTerritory = GetComponent<PlanetTerritory>();
@@ -583,7 +590,7 @@ public class Planet : GameEntity,ITaskAble
         if (planetCommanders.Find(x => x.uid == player.uid) == null && planetCommander==null)
         {
             //planetCommanders.Add();
-            if (fightingManager.gameMode == GameMode.MCWar)
+            if (fightingManager.gameMode == GameMode.MCWar|| fightingManager.gameMode==GameMode.Marble)
             {
                 var commander = new SteveCommander(player.uid, player, planetColor);
                 AddCommander(commander,1);
@@ -651,9 +658,10 @@ public class Planet : GameEntity,ITaskAble
         }
 
         mark.transform.position = worldPos;
+        mark.gameObject.SetActive(false);
         mark.transform.SetParent(commanderGoContainer);
         CommanderUI commanderUi = null;
-        if (fightingManager.gameMode == GameMode.MCWar)
+        if (fightingManager.gameMode == GameMode.MCWar || fightingManager.gameMode==GameMode.Marble)
         {
             commanderUi=GameManager.Instance.uiManager.CreateSteveCommanderUi(mark,uiArea);
         }
@@ -663,7 +671,7 @@ public class Planet : GameEntity,ITaskAble
         }
         
         commanderUi.Init(mark,planetCommander);
-        if (fightingManager.gameMode == GameMode.MCWar)
+        if (fightingManager.gameMode == GameMode.MCWar|| fightingManager.gameMode==GameMode.Marble)
         {
             planetCommander.color = planetColor;
         }
@@ -683,7 +691,7 @@ public class Planet : GameEntity,ITaskAble
             
         }
 
-        if (fightingManager.gameMode == GameMode.MCWar)
+        if (fightingManager.gameMode == GameMode.MCWar || fightingManager.gameMode==GameMode.Marble)
         {
             (planetCommander as SteveCommander).CreateSteve();
         }

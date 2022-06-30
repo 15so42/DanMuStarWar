@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\u5F39\u7403\u6A21\u5F0F\u5730\u56FE"
   m_EditorClassIdentifier: 
   posData:
-  - {x: -100, y: 0, z: -100}
-  - {x: 100, y: 0, z: -100}
-  - {x: -100, y: 0, z: 100}
-  - {x: 100, y: 0, z: 100}
+  - {x: -60, y: 5, z: -60}
+  - {x: 60, y: 5, z: -60}
+  - {x: -60, y: 5, z: 60}
+  - {x: 60, y: 5, z: 60}

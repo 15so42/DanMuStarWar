@@ -6488,6 +6488,7 @@ GameObject:
   - component: {fileID: 460403375}
   - component: {fileID: 460403377}
   - component: {fileID: 460403376}
+  - component: {fileID: 460403378}
   m_Layer: 0
   m_Name: RoundManager
   m_TagString: Untagged
@@ -6544,6 +6545,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desireMode: 0
+  mcModeCount: 0
+  marbleModeCount: 0
+  voted: 
+  elapsedTime: 0
+--- !u!114 &460403378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460403374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b89eb47175d0ca245b0774938fe0d4a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desireMode: 0
+  mcModeCount: 0
+  marbleModeCount: 0
   voted: 
   elapsedTime: 0
 --- !u!1 &463454312
@@ -10174,6 +10194,7 @@ GameObject:
   - component: {fileID: 723415765}
   - component: {fileID: 723415764}
   - component: {fileID: 723415766}
+  - component: {fileID: 723415767}
   m_Layer: 0
   m_Name: FightingManager
   m_TagString: Untagged
@@ -10194,6 +10215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxPlayerCount: 6
+  exitPlayers: 
   gameStatus: 0
   gameMode: 0
   gameManager: {fileID: 0}
@@ -10203,13 +10225,9 @@ MonoBehaviour:
   waitingJoinSecond: 10
   kickOutTime: 150
   maxWaitingPlayerTime: 240
-  planetRoot: {fileID: 0}
-  battleUnitRoot: {fileID: 0}
-  saveDataManager: {fileID: 486641839}
   colorTable: {fileID: 11400000, guid: 09969591bfaee2240b86f2535ee14349, type: 2}
   firstPlanetIndex: 0
   lastPlanetIndex: 11
-  shieldSkillBase: {fileID: 11400000, guid: dd8ccb88e1de36e4cbf146cd2192516b, type: 2}
   mcPosManager: {fileID: 0}
   photonPlayMode: 0
 --- !u!4 &723415765
@@ -10248,6 +10266,35 @@ MonoBehaviour:
   viewIdField: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &723415767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723415763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2ae9ac6f42a6684199b6ad06c2f1fb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxPlayerCount: 6
+  exitPlayers: 
+  gameStatus: 0
+  gameMode: 0
+  gameManager: {fileID: 0}
+  uiManager: {fileID: 0}
+  roundManager: {fileID: 460403377}
+  mapManager: {fileID: 1581382676}
+  waitingJoinSecond: 10
+  kickOutTime: 150
+  maxWaitingPlayerTime: 240
+  colorTable: {fileID: 11400000, guid: 09969591bfaee2240b86f2535ee14349, type: 2}
+  firstPlanetIndex: 0
+  lastPlanetIndex: 11
+  mcPosManager: {fileID: 0}
+  photonPlayMode: 0
+  shieldSkillBase: {fileID: 11400000, guid: dd8ccb88e1de36e4cbf146cd2192516b, type: 2}
 --- !u!1 &726186249
 GameObject:
   m_ObjectHideFlags: 0

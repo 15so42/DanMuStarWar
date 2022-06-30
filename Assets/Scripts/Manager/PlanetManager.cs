@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlanetManager : MonoBehaviour
@@ -55,16 +56,16 @@ public class PlanetManager : MonoBehaviour
         if (count == 1)//如果存活的星球只剩最后一个
         {
             
-            if (FightingManager.Instance.gameMode==GameMode.MCWar)
+            if (FightingManager.Instance.gameMode==GameMode.MCWar|| FightingManager.Instance.gameMode==GameMode.Marble)
             {
-                List<PlanetCommander> losers = null;
+                List<PlanetCommander> losers = new List<PlanetCommander>();
                 List<PlanetCommander> winners = null;
                 
                 for (int i = 0; i < allPlanets.Count; i++)
                 {
                     if (allPlanets[i].die)
                     {
-                        losers = allPlanets[i].planetCommanders;
+                        losers=losers.Concat(allPlanets[i].planetCommanders).ToList();
                     }
                     else
                     {

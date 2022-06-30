@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MarbleFightingManager : FightingManager
 {
+    
      public override void OnJoinPlayingDanMuReceived(Player toJoinPlayer)
     {
         base.OnJoinPlayingDanMuReceived(toJoinPlayer);
@@ -13,20 +14,28 @@ public class MarbleFightingManager : FightingManager
 
         PlanetCommander commander = null;
 
-        commander = new PlanetCommander(newPlayer1.uid, newPlayer1,
+        commander = new SteveCommander(newPlayer1.uid, newPlayer1,
             colorTable.colors[players.Count]);
 
 
         BiliUserInfoQuerier.Instance.Query(newPlayer1.uid, newPlayer1);
 
-        var firstCount = PlanetManager.Instance.allPlanets[firstPlanetIndex].planetCommanders
-            .Count;
-        var lastCount = PlanetManager.Instance.allPlanets[lastPlanetIndex].planetCommanders
-            .Count;
-        var lessPlanet = firstCount > lastCount ? lastPlanetIndex : firstPlanetIndex;
+        int min = 9999;
+        var lessPlanet = PlanetManager.Instance.allPlanets[0];
+        foreach (var planet in PlanetManager.Instance.allPlanets)
+        {
+            if(planet.die)
+                continue;
+            var count = planet.planetCommanders.Count;
+            if (count < min)
+            {
+                min = count;
+                lessPlanet = planet;
+            }
+        }
 
-        PlanetManager.Instance.allPlanets[lessPlanet]
-            .AddCommander(commander, lessPlanet == firstPlanetIndex ? 0 : 1);
+        
+        lessPlanet.AddCommander(commander,0);
         if (exitPlayers.Contains(commander.player.uid) == false)
         {
             commander.AddPoint(roundManager.elapsedTime / 20);
@@ -37,36 +46,36 @@ public class MarbleFightingManager : FightingManager
     {
         base.SetOwnersAfter1Second();
 
+        var planetCount = PlanetManager.Instance.allPlanets.Count;
+
         for (int i = 0; i < players.Count; i++)
         {
             PlanetCommander commander = null;
 
             commander = new SteveCommander(players[i].uid, players[i], colorTable.colors[i]);
 
-
-            //var index = ((planetNum / playersCount) * i) % planetNum;
-            if (i % 2 == 0)
+            
+            PlanetManager.Instance.allPlanets[i%planetCount].AddCommander(commander,0);
+            if (i < planetCount)
             {
-                PlanetManager.Instance.allPlanets[firstPlanetIndex].AddCommander(commander, 0);
-                if (i == 0)
-                    PlanetManager.Instance.allPlanets[firstPlanetIndex].SetOwner(players[i], commander);
+                PlanetManager.Instance.allPlanets[i].SetOwner(players[i],commander);
             }
-            else
-            {
-                PlanetManager.Instance.allPlanets[lastPlanetIndex].AddCommander(commander, 1);
-                if (i == lastPlanetIndex)
-                    PlanetManager.Instance.allPlanets[lastPlanetIndex].SetOwner(players[i], commander);
-            }
+            
         }
 
-        var leftPlanet = PlanetManager.Instance.allPlanets[firstPlanetIndex];
-        var rightPlanet = PlanetManager.Instance.allPlanets[lastPlanetIndex];
-
-
-        if (gameMode == GameMode.MCWar)
+        //互相设置为敌人
+        foreach (var planet in PlanetManager.Instance.allPlanets)
         {
-            leftPlanet.enemyPlanets.Add(rightPlanet);
-            rightPlanet.enemyPlanets.Add(leftPlanet);
+            foreach (var ePlanet in PlanetManager.Instance.allPlanets)
+            {
+                if (ePlanet != planet && planet.enemyPlanets.Contains(ePlanet)==false)
+                {
+                    planet.enemyPlanets.Add(ePlanet);
+                }
+            }
         }
+
+
+       
     }
 }

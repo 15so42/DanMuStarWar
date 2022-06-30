@@ -307,11 +307,12 @@ public class FightingManager : MonoBehaviourPunCallbacks
             JoinGame(player);
         }
     }
-    
+
+    public int minPlayer = 2;
     [PunRPC]
     public void StartBattle()
     {
-        if (players.Count < 2 && photonPlayMode==PlayMode.Live)
+        if (players.Count < minPlayer && photonPlayMode==PlayMode.Live)
         {
             StartWaitingJoin();
             return;//重新等待

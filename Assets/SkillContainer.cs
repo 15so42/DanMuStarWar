@@ -21,7 +21,7 @@ public class SkillContainer : MonoBehaviour
     public virtual bool AddSkillCheck(string skillName)
     {
         //Mc模式有重复的话直接重置
-        if (FightingManager.Instance.gameMode == GameMode.MCWar)
+        if (FightingManager.Instance.gameMode == GameMode.MCWar || FightingManager.Instance.gameMode == GameMode.Marble)
         {
             for (int i = 0; i < skills.Count; i++)
             {

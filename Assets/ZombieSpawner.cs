@@ -11,6 +11,7 @@ public class ZombieSpawner : MonoBehaviour,ITaskAble
 
     private FightingManager fightingManager;
 
+    public float timeScale = 1;
     private float timer=90;
     // Start is called before the first frame update
     void Start()
@@ -29,7 +30,7 @@ public class ZombieSpawner : MonoBehaviour,ITaskAble
         taskCenter.Run();
         if (dayLightManager.IsDay()==false && FightingManager.Instance.gameStatus==GameStatus.Playing)
         {
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime*timeScale;
             if (timer <= 0)
             {
                 

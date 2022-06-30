@@ -22,7 +22,7 @@ public class McFightingManager : FightingManager
 
         PlanetCommander commander = null;
 
-        commander = new PlanetCommander(newPlayer1.uid, newPlayer1,
+        commander = new SteveCommander(newPlayer1.uid, newPlayer1,
             colorTable.colors[players.Count]);
 
 
