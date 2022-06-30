@@ -4,10 +4,12 @@ using UnityEngine;
 using SimpleBilibiliDanmakuClient.Clients;
 using SimpleBilibiliDanmakuClient.Models;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using LitJson;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEngine.Networking;
 
 [System.Serializable]
 public struct DanMuMsg
@@ -26,6 +28,11 @@ public struct GiftMsg
     public string giftName;
     public int totalCoin;
 }
+
+public class RoomSettings
+{
+    public int roomId;
+}
 public class BiliBiliLive : MonoBehaviour
 {
     public List<DanMuMsg> danMuMsgs=new List<DanMuMsg>();
@@ -40,6 +47,20 @@ public class BiliBiliLive : MonoBehaviour
     private TcpDanmakuClientV2 client;
     private float timerAfterDisconnect;
     
+    
+    
+ 
+    
+    
+
+    private void Awake()
+    {
+        //读取房间Id
+        RoomSettings roomSettings = LoadJson.LoadJsonFromFile<RoomSettings>("RoomSettings");
+        Debug.Log("房间信息"+roomSettings);
+        roomId = roomSettings.roomId;
+    }
+
     // Start is called before the first frame update
     async void Start()
     {
