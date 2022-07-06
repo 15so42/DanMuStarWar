@@ -1,17 +1,66 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class McFightingManager : FightingManager
 {
-    public MCPosManager mcPosManager;
+
+    private string nextMap = "村庄";
+
+    public string GetSceneNameByChinese(string chinese)
+    {
+        if (chinese == "村庄")
+        {
+            return "McWarScene_Village";
+        }
+
+        if (chinese == "矿井")
+        {
+            return "McWarScene_Mine";
+        }
+
+        return "McWarScene_Village";
+    }
 
     protected void Start()
     {
         base.Start();
-        mcPosManager = MCPosManager.Instance;
+        //mcPosManager=MCPosManager.Instance;
+        nextMap = "矿井";
+        SceneManager.LoadScene(GetSceneNameByChinese("矿井"), LoadSceneMode.Additive);
     }
 
+    // public void SetAdditiveScene(string name)
+    // {
+    //     SceneManager.LoadScene(name, LoadSceneMode.Additive);
+    //     
+    // }
+    //
+
+    public void SetNextMap(string key)
+    {
+        nextMap = key;
+    }
+
+    protected override void OnGameOver()
+    {
+        base.OnGameOver();
+        if (GetSceneNameByChinese(nextMap) == SceneManager.GetSceneAt(1).name)
+        {
+            return;
+        }
+        StartCoroutine(NewMap());
+    }
+
+    IEnumerator NewMap()
+    {
+        var unload=SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
+        yield return unload.isDone;
+        SceneManager.LoadScene(GetSceneNameByChinese(nextMap), LoadSceneMode.Additive);
+
+    }
+       
 
     public override void OnJoinPlayingDanMuReceived(Player toJoinPlayer)
     {

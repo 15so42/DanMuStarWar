@@ -13,6 +13,7 @@ public class MCPosManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        FightingManager.Instance.mcPosManager = this;
     }
 
     // Start is called before the first frame update

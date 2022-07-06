@@ -707,7 +707,7 @@ RectTransform:
   - {fileID: 581951059021787513}
   - {fileID: 581951059351895107}
   m_Father: {fileID: 7190002669101279228}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2471,50 +2471,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &581951058590719731
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 581951058590719730}
-  - component: {fileID: 581951058590719729}
-  m_Layer: 0
-  m_Name: DebugTool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &581951058590719730
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 581951058590719731}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 778.9096, y: 243.5023, z: 78.34465}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7190002669101279228}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &581951058590719729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 581951058590719731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6690bf3117bdf1040b3045036bbe0a5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debugSkin: {fileID: 11400000, guid: ad677b42850554a4b951274c53b55188, type: 2}
 --- !u!1 &581951058598660784
 GameObject:
   m_ObjectHideFlags: 0
@@ -3855,7 +3811,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7190002669101279228}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &581951058726750868
 MonoBehaviour:
@@ -4257,7 +4213,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7190002669101279228}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &581951058759400798
 MonoBehaviour:
@@ -6304,14 +6260,12 @@ MonoBehaviour:
   waitingJoinSecond: 25
   kickOutTime: 300
   maxWaitingPlayerTime: 300
-  planetRoot: {fileID: 0}
-  battleUnitRoot: {fileID: 0}
   colorTable: {fileID: 11400000, guid: 09969591bfaee2240b86f2535ee14349, type: 2}
   firstPlanetIndex: 0
   lastPlanetIndex: 1
-  shieldSkillBase: {fileID: 11400000, guid: dd8ccb88e1de36e4cbf146cd2192516b, type: 2}
   mcPosManager: {fileID: 0}
   photonPlayMode: 0
+  minPlayer: 2
 --- !u!1 &581951058915010182
 GameObject:
   m_ObjectHideFlags: 0
@@ -8218,7 +8172,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 7190002669101279228}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -13612,7 +13566,7 @@ Transform:
   - {fileID: 581951060414537202}
   - {fileID: 581951059310007550}
   m_Father: {fileID: 7190002669101279228}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &581951059485605540
 MonoBehaviour:
@@ -19311,7 +19265,7 @@ RectTransform:
   - {fileID: 2840895077737905988}
   - {fileID: 869277427158930566}
   m_Father: {fileID: 7190002669101279228}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -20373,34 +20327,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desireMode: 0
+  mcModeCount: 0
+  marbleModeCount: 0
   voted: 
   elapsedTime: 0
-  mcWeaponsPrices:
-  - weaponName: "\u6728\u5251"
-    price: 2
-  - weaponName: "\u77F3\u5251"
-    price: 6
-  - weaponName: "\u91D1\u5251"
-    price: 2
-  - weaponName: "\u94C1\u5251"
-    price: 10
-  - weaponName: "\u94BB\u77F3\u5251"
-    price: 16
-  - weaponName: "\u5F13"
-    price: 14
-  - weaponName: "\u94BB\u77F3\u65A7"
-    price: 16
-  - weaponName: "\u56DE\u65CB\u9556"
-    price: 14
-  - weaponName: "\u541E\u566C\u8005"
-    price: 16
-  rareWeaponPrices:
-  - weaponName: TNT
-    price: 1
-  - weaponName: "\u4E0B\u754C\u5408\u91D1\u5251"
-    price: 1
-  - weaponName: "\u9493\u7AFF"
-    price: 1
 --- !u!1 &581951060227631607
 GameObject:
   m_ObjectHideFlags: 0
@@ -20638,7 +20568,7 @@ Transform:
   - {fileID: 581951059165063410}
   - {fileID: 581951058983829263}
   m_Father: {fileID: 7190002669101279228}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &581951060251592707
 GameObject:
@@ -24133,7 +24063,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 581951060404271222}
-  - {fileID: 581951058590719730}
   - {fileID: 581951058726750875}
   - {fileID: 581951060240951060}
   - {fileID: 581951060130358451}

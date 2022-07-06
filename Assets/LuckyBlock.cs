@@ -11,6 +11,7 @@ public class LuckyBlock : MonoBehaviour
         
     }
 
+    private UnityTimer.Timer timer;
     // Update is called once per frame
     void Update()
     {
@@ -56,10 +57,15 @@ public class LuckyBlock : MonoBehaviour
 
         }
 
-        UnityTimer.Timer.Register(180, () =>
+        timer=UnityTimer.Timer.Register(180, () =>
         {
             ReSpawn();
         });
         gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        timer?.Cancel();
     }
 }

@@ -16,9 +16,9 @@ public struct TaskParams
    
    public string value;
    public float duration;
-   public Action onFinished;
+   public Action<GameObject> onFinished;
 
-   public TaskParams(TaskType taskType, string value, float duration, Action onFinished = null)
+   public TaskParams(TaskType taskType, string value, float duration, Action<GameObject> onFinished = null)
    {
       this.taskType = taskType;
       
@@ -27,6 +27,8 @@ public struct TaskParams
       this.onFinished = onFinished;
    }
 }
+
+
 public class PlanetTask 
 {
    private float timer = 0;
@@ -88,7 +90,7 @@ public class PlanetTask
                
                go.name = go.name + owner.GetGameObject().name;
                InitBattleUnit(go.GetComponent<BattleUnit>(),planetCommander);
-               
+               taskParams.onFinished?.Invoke(go);
             }
 
             if (type == "Bullet")
@@ -100,6 +102,7 @@ public class PlanetTask
             
             break;
       }
+      
    }
    
 }

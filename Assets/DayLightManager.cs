@@ -7,6 +7,7 @@ public class DayLightManager : MonoBehaviour
 {
     public static DayLightManager Instance;
 
+    public bool enable = true;
     private void Awake()
     {
         Instance = this;
@@ -27,6 +28,7 @@ public class DayLightManager : MonoBehaviour
     public Color ambientNightColor=new Color((float)110/255,(float)185/255,1);
 
     public Light[] sceneLights;
+    [Header("场景光强度")] public float daySceneLightIntensity = 2;
     public float nightSceneLightIntensity = 1;
     
     private float timer=0;
@@ -44,6 +46,8 @@ public class DayLightManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(enable==false)
+            return;
         timer += Time.deltaTime;
         dayLight.transform.Rotate(new Vector3((float)360/wholeDaySeconds*Time.deltaTime,0,0));
         
@@ -53,7 +57,7 @@ public class DayLightManager : MonoBehaviour
         var targetColor = dayColor;
         var targetIntensity = dayIntensity;
         var targetAmbientLight=new Color(0.85f,0.85f,0.85f);
-        var targetSceneLightIntensity = 5f;
+        var targetSceneLightIntensity = daySceneLightIntensity;
         if (time > 9 && time < 19)
         {
             targetSceneLightIntensity = nightSceneLightIntensity;

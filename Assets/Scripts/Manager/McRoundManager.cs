@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Photon.Pun;
 using UnityEngine;
+
+
 
 public class McRoundManager : RoundManager
 {
@@ -12,7 +15,11 @@ public class McRoundManager : RoundManager
     public List<McWeaponsPrice> rareWeaponPrices=new List<McWeaponsPrice>();
 
 
-  
+    public Dictionary<string,int> votedMap=new Dictionary<string, int>()
+    {
+        {"村庄",0},{"矿井",0}
+    };
+    
 
     protected override void ParseTrim(int uid, string text, string trim)
     {
@@ -78,7 +85,7 @@ public class McRoundManager : RoundManager
                 int count = 0;
                 try
                 {
-                    count = int.Parse(countStr);
+                    count = long.Parse(countStr)>25?25:int.Parse(countStr);
                 }
                 catch (Exception e)
                 {
@@ -125,7 +132,8 @@ public class McRoundManager : RoundManager
                 int count = 0;
                 try
                 {
-                    count = int.Parse(countStr);
+                    
+                    count = long.Parse(countStr)>25?25:int.Parse(countStr);
                 }
                 catch (Exception e)
                 {
@@ -141,18 +149,47 @@ public class McRoundManager : RoundManager
             {
                 ParseAddMaxHp(steveCommander,false);
             }
-            
+
+            if (trim.StartsWith("换地图"))
+            {
+                var sceneName = trim.Substring(3);
+                if (votedMap.ContainsKey(sceneName))
+                {
+                    votedMap[sceneName]++;
+                    var maxKv = votedMap.ElementAt(0);
+                    foreach (var kv in votedMap)
+                    {
+                        if (kv.Value > maxKv.Value)
+                        {
+                            maxKv = kv;
+                        }
+                    }
+                    (FightingManager.Instance  as McFightingManager)?.SetNextMap(maxKv.Key);
+                    
+                    
+                    MessageBox._instance.AddMessage("经过投票决定下一局地图为："+maxKv.Key);
+                }
+            }
             
             
             //MessageBox._instance.AddMessage("["+user.userName+"]:"+trim);
             LogTip(steveCommander,trim);
     }
 
+    public override void Stop()
+    {
+        base.Stop();
+        
+        for (int i=0;i<votedMap.Keys.Count;i++)
+        {
+            votedMap[votedMap.Keys.ElementAt(i)] = 0;
+        }
+    }
 
     protected void ParseGoWhere(int uid,string trim,bool escape)
     {
         
-        return;
+        
         string pattern = @"^(去){1}(\d{1,2})$";
         string escapePattern = @"^(溜){1}(\d{1,2})$";
         string letterPattern=@"^(q|Q|l|L){1}(\d{1,2})$";

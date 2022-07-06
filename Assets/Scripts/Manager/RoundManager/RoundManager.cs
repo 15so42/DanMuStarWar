@@ -73,7 +73,7 @@ public class RoundManager : MonoBehaviour
     /// <summary>
     /// 停止游戏内回合或者说是时间处理
     /// </summary>
-    public void Stop()
+    public virtual void Stop()
     {
         EventCenter.RemoveListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
         EventCenter.RemoveListener<int,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);

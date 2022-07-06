@@ -12,6 +12,22 @@ public class FlyText : MonoBehaviour
     private Transform canvas;
     private Camera mainCamera;
 
+    public Camera MainCamera
+    {
+        //习惯上属性大写 字段小写
+
+        get
+        {
+            if (mainCamera == null)
+            {
+                mainCamera = Camera.main;
+            }
+
+            return mainCamera;
+        }
+    }
+
+
     private void Awake()
     {
         Instance = this;
@@ -32,7 +48,7 @@ public class FlyText : MonoBehaviour
         if (go == null)
             go = GameObject.Instantiate(prefab).GetComponent<RecycleAbleObject>();
         go.transform.SetParent(canvas);
-        go.transform.position = mainCamera.WorldToScreenPoint(worldPos);
+        go.transform.position = MainCamera.WorldToScreenPoint(worldPos);
         go.GetComponent<FlyTextUi>().Init(msg,color);
         go.transform.DOJump(go.transform.position + Vector3.up * 50, 1, 1, 1f).OnComplete(() =>
         {

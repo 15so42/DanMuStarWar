@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class McPlanetTower : McUnit
 {
+
+    public float height = 10;
+    [Header("覆盖父级变量canBeTarget")]
+    public bool canBeAttack=false;//可被选中
     
     // Start is called before the first frame update
     void Awake()
@@ -12,12 +16,16 @@ public class McPlanetTower : McUnit
         base.Awake();
         EventCenter.AddListener<Planet>(EnumEventType.OnPlanetDie,OnPlanetDie);
         canBeTarget = false;
+        if (canBeAttack)
+        {
+            canBeTarget = true;
+        }
     }
 
     protected override void Start()
     {
         base.Start();
-        transform.DOMove(transform.position + Vector3.up * 10f, 5f);
+        transform.DOMove(transform.position + Vector3.up * height, 5f);
     }
 
 

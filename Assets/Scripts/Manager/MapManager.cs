@@ -4,8 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Ludiq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
+[System.Serializable]
+public struct ScenePosDataPair
+{
+    public string sceneName;
+    public MapPosData mapPosData;
+}
 public class MapManager : MonoBehaviour
 {
     
@@ -46,6 +53,9 @@ public class MapManager : MonoBehaviour
     //public Transform battleUnitRoot;
    
     //固定位置地图
+    
+    [Header("地图待选列表")]
+    public List<ScenePosDataPair> scenePosDataPairs=new List<ScenePosDataPair>();
     [Header("团战模式地图")]
     public List<MapPosData> mapPoses=new List<MapPosData>();
     [Header("混战模式地图")]
@@ -134,13 +144,20 @@ public class MapManager : MonoBehaviour
         var realMapFile = this.mapPoses;
         if (gameMode == GameMode.Normal)
             realMapFile = this.normalMapPoses;
-            
-        var planetNum = realMapFile[0].posData.Count;
+
+        //var targetPosData =  realMapFile[0].posData;
+
+        
+        var activeSceneName = SceneManager.GetSceneAt(1).name;
+        ScenePosDataPair pair = scenePosDataPairs.Find(x => x.sceneName ==activeSceneName );
+        var targetPosFile = pair.mapPosData;
+        
+        var planetNum = targetPosFile.posData.Count;
         var pfb = planets[Random.Range(0, planets.Length)];
         
         for (int i = 0; i < planetNum; i++)
         {
-            var worldPos = realMapFile[0].posData[i];
+            var worldPos = targetPosFile.posData[i];
             if (gameMode == GameMode.BattleGround || gameMode==GameMode.Normal)
             {
                 worldPos+=new Vector3(0,48.86f,-2.55f);//团战模式相机会近一些

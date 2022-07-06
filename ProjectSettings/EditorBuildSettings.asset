@@ -5,10 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MCWarScene.unity
     guid: e8bafd974722e9f489249ade99eba0ea
   - enabled: 1
+    path: Assets/Scenes/McWarScene_Mine.unity
+    guid: 2c92c9be91693054a91348ec30c9b398
+  - enabled: 1
+    path: Assets/Scenes/McWarScene_Village.unity
+    guid: 8db795c1012727841863f0b8b509dcd6
+  - enabled: 0
     path: Assets/Scenes/Marbles.unity
     guid: 4eba1f5eabb080c4996d423ffce3386a
   - enabled: 0

@@ -130,7 +130,7 @@ public class HpBar : MonoBehaviour
 
     void UpDatePos()
     {
-        if(owner)
+        if(owner && mainCamera)
             transform.position = mainCamera.WorldToScreenPoint(owner.transform.position)+offset;
     }
 

@@ -49,7 +49,14 @@ public class ColonyRingUi : MonoBehaviour
 
     void UpDatePos()
     {
-        if(owner)
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main;
+            if(mainCamera==null)
+                return;
+        }
+
+        if(owner )
             transform.position = mainCamera.WorldToScreenPoint(owner.transform.position)+offset;
     }
 

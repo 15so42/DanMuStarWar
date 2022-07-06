@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class McPosMarkUi : MonoBehaviour
@@ -31,7 +32,7 @@ public class McPosMarkUi : MonoBehaviour
         tipText.gameObject.SetActive(true);
         this.tipStr = tip;
         this.offset = offset;
-
+        SceneManager.sceneUnloaded += DestroySelf;
     }
     void Start()
     {
@@ -39,15 +40,24 @@ public class McPosMarkUi : MonoBehaviour
         this.text.text = "> " + index + " <";
         tipText.text = tipStr;
         fightingManager = GameManager.Instance.fightingManager;
+        transform.position = mainCamera.WorldToScreenPoint(obj.transform.position) + offset;
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        transform.position = mainCamera.WorldToScreenPoint(obj.transform.position) + offset;
+        //transform.position = mainCamera.WorldToScreenPoint(obj.transform.position) + offset;
         
         
+    }
+
+    void DestroySelf(Scene scene)
+    {
+        EventCenter.RemoveListener(EnumEventType.OnPlanetsSpawned,Show);
+        EventCenter.RemoveListener(EnumEventType.OnStartWaitingJoin,Hide);
+        Destroy(gameObject);
+        SceneManager.sceneUnloaded -= DestroySelf;
     }
 
     void Show()

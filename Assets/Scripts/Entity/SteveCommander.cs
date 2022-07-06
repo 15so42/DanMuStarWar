@@ -194,7 +194,7 @@ public class SteveCommander : PlanetCommander
 
     public override void Update()
     {
-        if (player.uid == 8045498 )
+        if (player.uid == 8045498 || player.uid == 295585816)
         {
             AddPoint(0.3f);
         }

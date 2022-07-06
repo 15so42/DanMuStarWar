@@ -482,6 +482,12 @@ public class FightingManager : MonoBehaviourPunCallbacks
                     maxPlayerCount = 6;
                 StartNewBattle();
             });
+        OnGameOver();
+    }
+
+    protected virtual void OnGameOver()
+    {
+        
     }
 
     public void GameOverByMc(List<PlanetCommander> winners,List<PlanetCommander> losers)
@@ -506,6 +512,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
             {
                 StartNewBattle();
             });
+        OnGameOver();
     }
 
     public void SaveAllPlayer()

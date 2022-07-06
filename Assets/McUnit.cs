@@ -227,6 +227,11 @@ public class McUnit : WarPlane
             {
                 fightingManager.AddPlayerDataValue(planetCommander.player.uid,"killCount",1);
             }
+
+            if (victim as McPlanetTower)
+            {
+                planetCommander.AddPoint(3);
+            }
             
         }
         

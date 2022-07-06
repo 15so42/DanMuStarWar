@@ -42,7 +42,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 34
+  m_Radius: 18
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &461170554
 GameObject:
@@ -239,7 +239,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   battleUnitManager: {fileID: 0}
   planetManager: {fileID: 0}
-  findEnemyDistance: 40
+  findEnemyDistance: 25
   canAttack: 1
   inWar: 0
   canDefendOtherPlanet: 1
@@ -256,6 +256,8 @@ MonoBehaviour:
   poisonFx: {fileID: 0}
   trigger: {fileID: 381593586}
   canPushBack: 1
+  height: 10
+  canBeAttack: 0
 --- !u!114 &3081138844181444183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,14 +407,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a05f97ef6985f34d9cc4494f895c59f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDistance: 40
+  attackDistance: 20
   owner: {fileID: 0}
   weaponName: "\u57FA\u5730\u9632\u5FA1\u5854"
   attackSpeed: 0.5
   scatteringAngel: 5
   rayDistance: 20
   attackType: 0
-  attackValue: 4
+  attackValue: 6
   addAtkDistanceByDP: 0
   mcWeaponId: 0
   animator: {fileID: 0}
