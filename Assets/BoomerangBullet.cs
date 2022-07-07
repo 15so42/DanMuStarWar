@@ -79,7 +79,15 @@ public class BoomerangBullet : ArrowBullet
     
     public override int CalDamage()
     {
-        return Mathf.CeilToInt(3 + strength * 1.2f);
+        if (timer < 3)
+        {
+            return Mathf.CeilToInt((3 + strength * 1.35f) * (1-0.25f*(attacked.Count>3?3:attacked.Count)));
+        }
+        else
+        {
+            return Mathf.CeilToInt((3 + strength * 1.35f));
+        }
+        
     }
     
     private void OnTriggerEnter(Collider other)

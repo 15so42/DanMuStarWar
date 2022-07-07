@@ -355,6 +355,8 @@ public class HandWeapon : Weapon,IDamageAble
                 }
                 
             }
+
+            
             
             var sharpLevel = GetWeaponLevelByNbt("锋利");
             if (sharpLevel > 0)
@@ -442,6 +444,11 @@ public class HandWeapon : Weapon,IDamageAble
             attackInfo.value=Mathf.CeilToInt(attackInfo.value*(1+ (0.25f+sharpLevel*0.1f)));
         }
         
+        var spineLevel = GetWeaponLevelByNbt("尖刺");
+        if (spineLevel > 0)
+        {
+            attackInfo.value += spineLevel;
+        }
         
         var ghostKillLevel = GetWeaponLevelByNbt("亡灵杀手");
         if (ghostKillLevel > 0)
@@ -609,6 +616,8 @@ public class HandWeapon : Weapon,IDamageAble
         }
     }
 
+    
+    
     //招架
     public void OnAttacked(AttackInfo attackInfo)
     {
@@ -695,14 +704,18 @@ public class HandWeapon : Weapon,IDamageAble
             //FlyText.Instance.ShowDamageText(owner.transform.position,"经验修补");
         }
     }
+    
+    //灵盾
+    private float lastSpiritualShieldTime = 0;
 
-    public AttackInfo OnBeforeAttacked(AttackInfo attackInfo)
+    public virtual AttackInfo OnBeforeAttacked(AttackInfo attackInfo)
     {
         if (gameObject.activeSelf == false)
             return attackInfo;
         
         var thronLevel = GetWeaponLevelByNbt("荆棘");
-        if (thronLevel > 0 && attackInfo.attackType!=AttackType.Reflect && attackInfo.attackType!=AttackType.Heal)
+        var ignoreDamageType = new List<AttackType>() {AttackType.Reflect,AttackType.Heal};
+        if (thronLevel > 0 && !ignoreDamageType.Contains(attackInfo.attackType))
         {
             var value = Mathf.CeilToInt(attackInfo.value * ((float)thronLevel / (thronLevel + 10)));
             attackInfo.attacker.GetAttackEntity()
@@ -710,7 +723,8 @@ public class HandWeapon : Weapon,IDamageAble
         }
         
         var protectionLevel=GetWeaponLevelByNbt("保护");
-        if (protectionLevel>0 && attackInfo.attackType != AttackType.Heal && attackInfo.attackType != AttackType.Real)
+        var ignoreDamageType1 = new List<AttackType>() {AttackType.Reflect,AttackType.Heal};
+        if (protectionLevel>0 && !ignoreDamageType1.Contains(attackInfo.attackType))
         {
             attackInfo.value = (int) (attackInfo.value * (1 - (float) protectionLevel / (protectionLevel + 10)));
         }
@@ -721,7 +735,8 @@ public class HandWeapon : Weapon,IDamageAble
         // }
         
         var parryLevel = GetWeaponLevelByNbt("格挡");
-        if (parryLevel > 0 && attackInfo.attackType!=AttackType.Heal && attackInfo.attackType!=AttackType.Real)
+        var ignoreDamageType2 = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Poison,AttackType.Real};
+        if (parryLevel > 0 && !ignoreDamageType2.Contains(attackInfo.attackType))
         {
             // var targetValue = (0.15 + 0.1 * parryLevel)*100;
             // if(UnityEngine.Random.Range(0, 100) <targetValue)
@@ -754,8 +769,23 @@ public class HandWeapon : Weapon,IDamageAble
                 realCost = 1;
             AddEndurance((int) (-1* realCost ));
             
-
         }
+
+        var spiritualShieldLevel = GetWeaponLevelByNbt("灵盾");
+        if (spiritualShieldLevel > 0)
+        {
+            var cd = 60 - 60 * ((float) spiritualShieldLevel / (spiritualShieldLevel + 10));
+            if (Time.time > lastSpiritualShieldTime + cd  && attackInfo.attackType!=AttackType.Heal)
+            {
+                owner.props.maxShield = owner.props.maxHp;
+                float shieldValue = owner.props.maxHp * (0.09f+spiritualShieldLevel*0.01f);
+                
+                owner.AddShield((int)shieldValue);
+                lastSpiritualShieldTime = Time.time;
+            }
+        }
+        
+        
 
         
         return attackInfo;

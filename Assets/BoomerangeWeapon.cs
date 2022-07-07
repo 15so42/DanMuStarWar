@@ -19,7 +19,7 @@ public class BoomerangeWeapon : BowWeapon
             return false;
         else
         {
-            return true;
+            return base.FireCheck();
         }
         //return base.FireCheck();
     }

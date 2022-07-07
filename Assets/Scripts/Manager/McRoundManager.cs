@@ -380,7 +380,17 @@ public class McRoundManager : RoundManager
 
     void ParseSurrenderInMc(SteveCommander steveCommander)
     {
-        steveCommander.ParseSurrenderInMc();
+        var surrenderTime = steveCommander.ownerPlanet.planetCommanders.Count * 2;
+        if (elapsedTime/60 < surrenderTime)
+        {
+            TipsDialog.ShowDialog("对局时间大于"+surrenderTime+"分钟后才能投降",null);
+            
+        }
+        else
+        {
+            steveCommander.ParseSurrenderInMc();
+        }
+        
     }
     
     void ParseRandomSpell(SteveCommander steveCommander,bool rare,bool byGift)

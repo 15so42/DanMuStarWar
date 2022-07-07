@@ -36,7 +36,7 @@ public class PoisonSkill : SkillBase
     protected override void Play()
     {
         base.Play();
-        gameEntity.OnAttacked(new AttackInfo(attacker,AttackType.Real, damageValue));
+        gameEntity.OnAttacked(new AttackInfo(attacker,AttackType.Poison, damageValue));
         createCommander.attackOtherDamage += damageValue;
 
     }
