@@ -23,6 +23,8 @@ public class Steve : McUnit
 
     [Header("手环")] public GameObject[] handRings;
 
+    public Action onStartComplete = null;
+
     protected override void Start()
     {
         base.Start();
@@ -82,6 +84,10 @@ public class Steve : McUnit
         NavMesh.SamplePosition(transform.position, out hit, 30,1); //unity到指定点最接近的位置
         
         transform.position = hit.position;
+        
+        
+        
+        onStartComplete?.Invoke();
     }
 
 
@@ -163,10 +169,15 @@ public class Steve : McUnit
 
    
     
-    public void FixWeapon(int value)
+    public void FixWeapon(int value,bool percentage)
     {
         var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
-        (liveWeapon as HandWeapon).AddEndurance(value);
+        var handWeapon = (liveWeapon as HandWeapon);
+        if (handWeapon)
+        {
+            handWeapon.AddEndurance(percentage?(int)(handWeapon.maxEndurance*0.01*value):value);
+        }
+       
     }
 
     public Weapon ChangeWeapon(int weaponId)

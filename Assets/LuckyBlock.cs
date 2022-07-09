@@ -57,6 +57,7 @@ public class LuckyBlock : MonoBehaviour
 
         }
 
+        timer?.Cancel();//解决多人同时触发连续注册Timer问题
         timer=UnityTimer.Timer.Register(180, () =>
         {
             ReSpawn();

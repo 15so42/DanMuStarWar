@@ -397,8 +397,18 @@ public class McRoundManager : RoundManager
     {
         
         var validSteve = steveCommander.FindFirstValidSteve();
+
+
         if (!validSteve)
-            return;
+        {
+           steveCommander.toDoAfterRespawn.Add(() =>
+           {
+               ParseRandomSpell(steveCommander,rare,byGift);
+               
+           });
+           return;
+        }
+            //return;
         
         if (steveCommander.point < 8 )
         {
@@ -490,7 +500,7 @@ public class McRoundManager : RoundManager
             return;
         }
 
-        validSteve.FixWeapon(20);
+        validSteve.FixWeapon(25,true);
         steveCommander.AddPoint(-5);
         
     }

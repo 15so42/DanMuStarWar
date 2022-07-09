@@ -40,6 +40,9 @@ public class SteveCommander : PlanetCommander
     //兑换礼物武器次数
     public int giftWeaponCount = 0;
     
+    //延迟Action，当玩家死亡时投喂打call，无法正确附魔，因此在死亡时把对应Action传过来，等待玩家复活后再执行这些命令
+    public List<Action> toDoAfterRespawn=new List<Action>();
+    
     public SteveCommander(int uid, Player player) : base(uid, player)
     {
     }
@@ -51,7 +54,20 @@ public class SteveCommander : PlanetCommander
     public void SetMaxSpellCount()
     {
         var steve = FindFirstValidSteve();
-        steve.GetActiveWeapon().SetMaxSpellCount(desireSpellCount);
+        Action action = () =>
+        {
+            var steve1 = FindFirstValidSteve();
+            steve1.GetActiveWeapon().SetMaxSpellCount(desireSpellCount);
+        };
+        if (steve == null)
+        {
+            toDoAfterRespawn.Add(action);
+        }
+        else
+        {
+            action.Invoke();
+        }
+        //steve.GetActiveWeapon().SetMaxSpellCount(desireSpellCount);
     }
 
     public override void Init(Planet ownerPlanet)
@@ -148,8 +164,27 @@ public class SteveCommander : PlanetCommander
         }
 
        
-        ownerPlanet.AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_STEVE,1),this));
+        ownerPlanet.AddTask(new PlanetTask(new TaskParams(TaskType.Create,GameConst.BattleUnit_STEVE,1,OnRespawn),this));
         die = false;
+    }
+
+    
+    public void OnRespawn(GameObject gameObject)
+    {
+        UnityTimer.Timer.Register(1, () =>
+        {
+            Steve steve = FindFirstValidSteve();
+            if (steve)
+            {
+                for (int i = 0; i < toDoAfterRespawn.Count; i++)
+                {
+                    toDoAfterRespawn[i]?.Invoke();
+                }
+                toDoAfterRespawn.Clear();
+            }
+            
+        });
+
     }
 
     public Steve FindFirstValidSteve()

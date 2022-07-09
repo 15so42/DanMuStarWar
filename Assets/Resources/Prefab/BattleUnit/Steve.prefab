@@ -4869,7 +4869,6 @@ MonoBehaviour:
   - "\u706B\u7130"
   - "\u6BD2"
   - "\u56DE\u590D"
-  - "\u8346\u68D8"
   - "\u8010\u4E45"
   - "\u5438\u8840"
   - "\u8D22\u8FD0"
@@ -4877,8 +4876,8 @@ MonoBehaviour:
   - "\u5C16\u523A"
   mutexSpells: []
   rareRandomStrs: []
-  maxEndurance: 250
-  endurance: 250
+  maxEndurance: 200
+  endurance: 200
   pushBackHeight: 4
   pushBackStrength: 1
 --- !u!1 &826501388

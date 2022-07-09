@@ -43784,8 +43784,8 @@ MonoBehaviour:
     price: 4
   - weaponName: "\u91D1\u5251"
     price: 4
-  - weaponName: "\u94C1\u525110"
-    price: 0
+  - weaponName: "\u94C1\u5251"
+    price: 10
   - weaponName: "\u94BB\u77F3\u5251"
     price: 16
   - weaponName: "\u94BB\u77F3\u65A7"
@@ -43801,7 +43801,7 @@ MonoBehaviour:
   rareWeaponPrices:
   - weaponName: TNT
     price: 1
-  - weaponName: "\u4E0B\u5C4A\u5408\u91D1\u5251"
+  - weaponName: "\u4E0B\u754C\u5408\u91D1\u5251"
     price: 1
   - weaponName: "\u9493\u7AFF"
     price: 1

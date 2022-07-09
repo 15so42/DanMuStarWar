@@ -782,6 +782,7 @@ public class HandWeapon : Weapon,IDamageAble
                 
                 owner.AddShield((int)shieldValue);
                 lastSpiritualShieldTime = Time.time;
+                FlyText.Instance.ShowDamageText(owner.transform.position-Vector3.up*3 ,"灵盾("+(int)shieldValue+")");
             }
         }
         
