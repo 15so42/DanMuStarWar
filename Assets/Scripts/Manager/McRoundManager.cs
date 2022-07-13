@@ -202,14 +202,16 @@ public class McRoundManager : RoundManager
             {
                 subStringCount = 2;
             }
-            int targetIndex = Int32.Parse(trim.Substring(trim.Length-subStringCount,subStringCount));
+            long targetIndex = long.Parse(trim.Substring(trim.Length-subStringCount,subStringCount));
             Debug.Log("解析去命令:"+targetIndex);
+            if(targetIndex>1000)
+                return;
             var uidPlanet = GetPlantByPlayerUid(uid);
             if(uidPlanet==null)
                 return;
             
             
-            uidPlanet.GoWhere(uid,targetIndex,escape);
+            uidPlanet.GoWhere(uid,(int)targetIndex,escape);
             
         }
     }

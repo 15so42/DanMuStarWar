@@ -20,6 +20,11 @@ public class McFightingManager : FightingManager
             return "McWarScene_Mine";
         }
 
+        if (chinese == "PVE")
+        {
+            return "McWarScene_Guard";
+        }
+
         return "McWarScene_Village";
     }
 
@@ -28,7 +33,7 @@ public class McFightingManager : FightingManager
         base.Start();
         //mcPosManager=MCPosManager.Instance;
         nextMap = "矿井";
-        SceneManager.LoadScene(GetSceneNameByChinese("矿井"), LoadSceneMode.Additive);
+        SceneManager.LoadScene(GetSceneNameByChinese("PVE"), LoadSceneMode.Additive);
     }
 
     // public void SetAdditiveScene(string name)

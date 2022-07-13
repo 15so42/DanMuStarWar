@@ -778,11 +778,11 @@ public class HandWeapon : Weapon,IDamageAble
             if (Time.time > lastSpiritualShieldTime + cd  && attackInfo.attackType!=AttackType.Heal)
             {
                 owner.props.maxShield = owner.props.maxHp;
-                float shieldValue = owner.props.maxHp * (0.09f+spiritualShieldLevel*0.01f);
+                //float shieldValue = owner.props.maxHp * (0.09f+spiritualShieldLevel*0.01f);
                 
-                owner.AddShield((int)shieldValue);
+                owner.AddShield((int)spiritualShieldLevel*2);
                 lastSpiritualShieldTime = Time.time;
-                FlyText.Instance.ShowDamageText(owner.transform.position-Vector3.up*3 ,"灵盾("+(int)shieldValue+")");
+                FlyText.Instance.ShowDamageText(owner.transform.position-Vector3.up*3 ,"灵盾("+(int)spiritualShieldLevel*2+")");
             }
         }
         
