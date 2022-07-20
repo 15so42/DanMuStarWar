@@ -84,6 +84,11 @@ public class RoundManager : MonoBehaviour
         players.Clear();
     }
 
+    private void OnDestroy()
+    {
+        Stop();
+    }
+
     private void OnDanMuReceived(string userName,int uid,string time,string text)
     {
         if (PhotonLauncher.playMode == PlayMode.Photon)

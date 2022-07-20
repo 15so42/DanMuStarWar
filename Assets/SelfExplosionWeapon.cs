@@ -23,6 +23,8 @@ public class SelfExplosionWeapon : HandWeapon
 
     void Explosion()
     {
+        if(owner.die)
+            return;
         var highExplosion=GetWeaponLevelByNbt("高爆");
         var attackInfo = new AttackInfo(owner, AttackType.Physics, 5+highExplosion*2);
         var position = transform.position;

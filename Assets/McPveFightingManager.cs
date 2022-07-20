@@ -29,6 +29,30 @@ public class McPveFightingManager : FightingManager
         return "McWarScene_Village";
     }
     
+    public override void OnJoinPlayingDanMuReceived(Player toJoinPlayer)
+    {
+        base.OnJoinPlayingDanMuReceived(toJoinPlayer);
+        var newPlayer1 = toJoinPlayer;
+
+        JoinGame(newPlayer1);
+
+        PlanetCommander commander = null;
+
+        commander = new SteveCommander(newPlayer1.uid, newPlayer1,
+            colorTable.colors[players.Count]);
+
+
+        BiliUserInfoQuerier.Instance.Query(newPlayer1.uid, newPlayer1);
+
+      
+        PlanetManager.Instance.allPlanets[firstPlanetIndex]
+            .AddCommander(commander,  0 );
+        if (exitPlayers.Contains(commander.player.uid) == false)
+        {
+            commander.AddPoint(roundManager.elapsedTime / 20);
+        }
+    }
+    
     protected override void SetOwnersAfter1Second()
     {
         base.SetOwnersAfter1Second();

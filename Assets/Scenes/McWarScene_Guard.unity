@@ -673,7 +673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176014e1031827646b270cf0d2b4d5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tip: "\u91CE\u602A"
+  tip: ---
   offset: {x: 0, y: 0, z: 0}
 --- !u!65 &79788262
 BoxCollider:
@@ -3438,7 +3438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176014e1031827646b270cf0d2b4d5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tip: "\u9632\u5FA1\u5854"
+  tip: ---
   offset: {x: 0, y: -20, z: 0}
 --- !u!65 &311450952
 BoxCollider:
@@ -6346,7 +6346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176014e1031827646b270cf0d2b4d5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tip: "\u9632\u5FA1\u5854"
+  tip: ---
   offset: {x: 0, y: 0, z: 0}
 --- !u!65 &622641352
 BoxCollider:
@@ -6549,7 +6549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176014e1031827646b270cf0d2b4d5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tip: "\u9632\u5FA1\u5854"
+  tip: ---
   offset: {x: 0, y: 0, z: 0}
 --- !u!65 &644287751
 BoxCollider:
@@ -9322,7 +9322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176014e1031827646b270cf0d2b4d5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tip: "\u9632\u5FA1\u5854"
+  tip: ---
   offset: {x: 0, y: -20, z: 0}
 --- !u!65 &808583951
 BoxCollider:
@@ -10146,7 +10146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176014e1031827646b270cf0d2b4d5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tip: "\u5E78\u8FD0\u65B9\u5757"
+  tip: ---
   offset: {x: 0, y: 0, z: 0}
 --- !u!65 &862001921
 BoxCollider:
@@ -13531,7 +13531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176014e1031827646b270cf0d2b4d5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tip: "\u9632\u5FA1\u5854"
+  tip: ---
   offset: {x: 0, y: -20, z: 0}
 --- !u!65 &1096866355
 BoxCollider:
@@ -14537,7 +14537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176014e1031827646b270cf0d2b4d5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tip: "\u57FA\u5730"
+  tip: ---
   offset: {x: 0, y: 0, z: 0}
 --- !u!65 &1144079585
 BoxCollider:
@@ -14842,7 +14842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176014e1031827646b270cf0d2b4d5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tip: "\u9632\u5FA1\u5854"
+  tip: ---
   offset: {x: 0, y: -20, z: 0}
 --- !u!65 &1169909534
 BoxCollider:
@@ -16214,7 +16214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176014e1031827646b270cf0d2b4d5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tip: "\u989D\u5916\u70B9\u6570"
+  tip: ---
   offset: {x: 0, y: 0, z: 0}
 --- !u!65 &1313482711
 BoxCollider:
@@ -19781,7 +19781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176014e1031827646b270cf0d2b4d5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tip: "\u91CE\u602A"
+  tip: ---
   offset: {x: 0, y: 0, z: 0}
 --- !u!65 &1656021458
 BoxCollider:
@@ -23626,7 +23626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176014e1031827646b270cf0d2b4d5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tip: "\u70B9\u6570"
+  tip: ---
   offset: {x: 0, y: 0, z: 0}
 --- !u!65 &1956620893
 BoxCollider:

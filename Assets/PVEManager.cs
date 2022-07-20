@@ -25,13 +25,28 @@ public class PVEManager : MonoBehaviour
         EventCenter.AddListener(EnumEventType.OnBattleOver,OnBattleOver);
         EventCenter.AddListener(EnumEventType.OnBattleStart,OnBattleStart);
         SceneManager.LoadScene("McWarScene_Guard", LoadSceneMode.Additive);
+        RenderSettings.ambientLight=new Color(0.65f,0.65f,0.65f);
     }
 
-    // Update is called once per frame
-    void Update()
+    private float timer5 = 0;
+    private void Update()
     {
-        
+        timer5 += Time.deltaTime;
+        if (timer5 > 5)
+        {
+            if (PlanetManager.Instance.allPlanets.Count > 0)
+            {
+                var planetComanders = PlanetManager.Instance.allPlanets[0].planetCommanders;
+                for (int i = 0; i < planetComanders.Count; i++)
+                {
+                    planetComanders[i].AddPoint(0.5f);
+                }
+            }
+            
+            timer5 = 0;
+        }
     }
+
 
     void OnBattleStart()
     {
@@ -71,9 +86,9 @@ public class PVEManager : MonoBehaviour
             mcUnit.GoMCPos(pos, false);
 
             var weapon = mcUnit.GetActiveWeapon();
-            var spellCount = GetElapsedTime() / 90 + 1;
+            var spellCount = (GetElapsedTime() / 180) + 1;
 
-            var maxSpellSlot = (int)GetElapsedTime() / 300 + 1;
+            var maxSpellSlot = ((int)GetElapsedTime() / 300) + 1;
             weapon.SetMaxSpellCount(maxSpellSlot);
             for (int i = 0; i < spellCount; i++)
             {
@@ -101,19 +116,19 @@ public class PVEManager : MonoBehaviour
         if (time < 300)
         {
             
-            SpawnByCount((int)time/90+1);
+            SpawnByCount((int)time/90);
         }
         else if (time < 900)
         {
-            SpawnByCount((int)time/90);
+            SpawnByCount((int)time/180);
         }
         else if (time < 1800)
         {
-            SpawnByCount((int)time/120);
+            SpawnByCount((int)time/360);
         }
         else
         {
-            SpawnByCount((int)time/150);
+            SpawnByCount((int)time/720);
         }
     }
     
