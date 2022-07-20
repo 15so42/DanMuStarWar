@@ -7,6 +7,7 @@ public class Zombie : McUnit
 {
 
     private DayLightManager dayLightManager;
+    
     protected override void Start()
     {
         base.Start();
@@ -37,7 +38,7 @@ public class Zombie : McUnit
     public override IVictimAble EnemyCheck(Collider collider)
     {
         
-        if (collider.GetComponent<Planet>())
+        if (collider.GetComponent<Planet>() && canSetPlanetEnemy==false)
             return null;
         return base.EnemyCheck(collider);
     }

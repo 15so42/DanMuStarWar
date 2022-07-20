@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,11 +55,20 @@ public class McPosMarkUi : MonoBehaviour
 
     void DestroySelf(Scene scene)
     {
+        
+        
+        
+            Destroy(gameObject);
+        
+    }
+
+    private void OnDestroy()
+    {
         EventCenter.RemoveListener(EnumEventType.OnPlanetsSpawned,Show);
         EventCenter.RemoveListener(EnumEventType.OnStartWaitingJoin,Hide);
-        Destroy(gameObject);
         SceneManager.sceneUnloaded -= DestroySelf;
     }
+
 
     void Show()
     {

@@ -1,18 +1,90 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class McPveFightingManager : MonoBehaviour
+public class McPveFightingManager : FightingManager
 {
-    // Start is called before the first frame update
-    void Start()
+    private string nextMap = "村庄";
+
+    public string GetSceneNameByChinese(string chinese)
     {
+        if (chinese == "村庄")
+        {
+            return "McWarScene_Village";
+        }
+
+        if (chinese == "矿井")
+        {
+            return "McWarScene_Mine";
+        }
+
+        if (chinese == "PVE")
+        {
+            
+            
+            return "McWarScene_Guard";
+        }
+
+        return "McWarScene_Village";
+    }
+    
+    protected override void SetOwnersAfter1Second()
+    {
+        base.SetOwnersAfter1Second();
+        for (int i = 0; i < players.Count; i++)
+        {
+            PlanetCommander commander = null;
+
+            commander = new SteveCommander(players[i].uid, players[i], colorTable.colors[i]);
+
+
+            //var index = ((planetNum / playersCount) * i) % planetNum;
+
+            PlanetManager.Instance.allPlanets[firstPlanetIndex].AddCommander(commander, 0);
+            if (i == 0)
+                PlanetManager.Instance.allPlanets[firstPlanetIndex].SetOwner(players[i], commander);
+
+        }
+    }
+    
+    protected override void OnGameOver()
+    {
+        base.OnGameOver();
         
+        StartCoroutine(NewMap());
+    }
+    
+    IEnumerator NewMap()
+    {
+        var mainMap = SceneManager.GetSceneAt(0).name;
+        if (nextMap == "PVE")
+        {
+            yield break;
+        }
+        if (mainMap == "McWarPveScene")
+        {
+            if (nextMap == "PVE")
+            {
+                
+                yield break;
+            }
+            else
+            {
+                SceneManager.LoadScene("McWarScene",LoadSceneMode.Single);
+            }
+            
+        }
+        else
+        {
+            
+        }
+        
+       
+        
+       
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   
 }

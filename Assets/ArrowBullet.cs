@@ -125,7 +125,7 @@ public class ArrowBullet : MonoBehaviour
             if (force > 2)
                 force = 2;
             navMeshMoveManager.PushBackByPos(victim.GetGameObject().transform.position,
-                owner.GetAttackerOwner().transform.position, upForce, pushForce, force);
+                owner.GetAttackEntity().transform.position, upForce, pushForce, force);
         }
 
         if (recycleAbleObject && recycleOnCollision)

@@ -87,7 +87,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
       props.shield += value;
       if (props.shield > props.maxShield)
          props.shield = props.maxShield;
-      onHpChanged.Invoke(props.hp,props.maxHp,props.shield,props.maxShield);
+      onHpChanged?.Invoke(props.hp,props.maxHp,props.shield,props.maxShield);
    }
 
    public GameObject GetGameObject()

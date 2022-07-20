@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: MCWar_Guard Map Pos Data
   m_EditorClassIdentifier: 
   posData:
-  - {x: 0, y: 32, z: 0}
+  - {x: 0, y: 35, z: 0}

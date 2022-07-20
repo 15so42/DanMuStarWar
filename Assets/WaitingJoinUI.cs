@@ -61,4 +61,10 @@ public class WaitingJoinUI : MonoBehaviour
    {
       return playerIconUis.Find(x => x.player.uid == uid);
    }
+
+   private void OnDestroy()
+   {
+      EventCenter.RemoveListener<Player>(EnumEventType.OnPlayerJoined,OnPlayerJoined);
+      EventCenter.RemoveListener(EnumEventType.OnBattleStart,OnBattleStarted);
+   }
 }

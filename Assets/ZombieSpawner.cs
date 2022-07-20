@@ -13,6 +13,10 @@ public class ZombieSpawner : MonoBehaviour,ITaskAble
 
     public float timeScale = 1;
     private float timer=90;
+
+    public bool autoRun=true;
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +24,7 @@ public class ZombieSpawner : MonoBehaviour,ITaskAble
         taskCenter.Init(this);
         dayLightManager=DayLightManager.Instance;
         fightingManager=FightingManager.Instance;
+        EventCenter.Broadcast(EnumEventType.OnMonsterSpawnerInit,this);
     }
     
     
@@ -28,22 +33,54 @@ public class ZombieSpawner : MonoBehaviour,ITaskAble
     void Update()
     {
         taskCenter.Run();
-        if (dayLightManager.IsDay()==false && FightingManager.Instance.gameStatus==GameStatus.Playing)
+        if(!autoRun)
+           return;
+        
+        if (dayLightManager.IsDay() == false && FightingManager.Instance.gameStatus == GameStatus.Playing)
         {
-            timer -= Time.deltaTime*timeScale;
+            timer -= Time.deltaTime * timeScale;
             if (timer <= 0)
             {
+                void GoToZeroPos(GameObject gameObject)
+                {
+                    UnityTimer.Timer.Register(1, () =>
+                    {
+                        if (gameObject)
+                        {
+                            var mcUnit = gameObject.GetComponent<McUnit>();
+                            EventCenter.Broadcast(EnumEventType.OnMonsterInit, mcUnit);
+                        }
+                    });
+                }
                 
-                
-                taskCenter.AddTask(new PlanetTask(new TaskParams(TaskType.Create,"BattleUnit_Zombie",1),null ));
+                taskCenter.AddTask(new PlanetTask(new TaskParams(TaskType.Create, "BattleUnit_Zombie", 1, GoToZeroPos),
+                    null));
                 timer = 90 - (fightingManager.roundManager.elapsedTime / 60);
-                Debug.Log("间隔时间"+timer);
+                Debug.Log("间隔时间" + timer);
                 if (timer < 45)
                 {
                     timer = 45;
                 }
             }
         }
+    }
+    
+    void GoToZeroPos(GameObject gameObject)
+    {
+        UnityTimer.Timer.Register(1, () =>
+        {
+            if (gameObject)
+            {
+                var mcUnit = gameObject.GetComponent<McUnit>();
+                EventCenter.Broadcast(EnumEventType.OnMonsterInit, mcUnit);
+            }
+        });
+    }
+
+    public void Spawn(string name)
+    {
+        taskCenter.AddTask(new PlanetTask(new TaskParams(TaskType.Create, name, 1, GoToZeroPos),
+            null));
     }
 
     public GameObject GetGameObject()

@@ -24,7 +24,11 @@ public class UnityObjectPoolManager
         {
             //Debug.LogError($"从{poolName}中取出一个东西，取出前数量为{pools[poolName].Count}");
             RecycleAbleObject recycleAbleObject=pools[poolName].Pop();
-            recycleAbleObject.ReUse();
+            if (recycleAbleObject != null)
+            {
+                recycleAbleObject.ReUse();
+            }
+            
             //Debug.LogError($"从{poolName}中取出一个东西，取出后数量为{pools[poolName].Count}");
             return recycleAbleObject;
             

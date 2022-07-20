@@ -16,8 +16,14 @@ public enum EnumEventType
     OnPlanetOccupied,//星球被驻守成功
     OnColonyLost,//驻守地失守
     OnSteveDied,
-    
+    OnBattleOver,
+
     //送礼
     OnMcBatteryReceived,
+    
+    //PVE模式
+    OnMonsterInit,
+    //MonsterSpawner生成
+    OnMonsterSpawnerInit,
 }
 

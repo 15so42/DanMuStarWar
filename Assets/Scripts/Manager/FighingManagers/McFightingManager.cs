@@ -22,6 +22,8 @@ public class McFightingManager : FightingManager
 
         if (chinese == "PVE")
         {
+            
+            
             return "McWarScene_Guard";
         }
 
@@ -32,8 +34,8 @@ public class McFightingManager : FightingManager
     {
         base.Start();
         //mcPosManager=MCPosManager.Instance;
-        nextMap = "矿井";
-        SceneManager.LoadScene(GetSceneNameByChinese("PVE"), LoadSceneMode.Additive);
+        nextMap = "村庄";
+        SceneManager.LoadScene(GetSceneNameByChinese(nextMap), LoadSceneMode.Additive);
     }
 
     // public void SetAdditiveScene(string name)
@@ -60,9 +62,26 @@ public class McFightingManager : FightingManager
 
     IEnumerator NewMap()
     {
-        var unload=SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
-        yield return unload.isDone;
-        SceneManager.LoadScene(GetSceneNameByChinese(nextMap), LoadSceneMode.Additive);
+        var mainMap = SceneManager.GetSceneAt(0).name;
+        if (mainMap == "McWarScene")
+        {
+            if (nextMap == "PVE")
+            {
+                SceneManager.LoadScene("McWarPveScene",LoadSceneMode.Single);
+                yield break;
+            }
+            var unload=SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
+            yield return unload.isDone;
+            SceneManager.LoadScene(GetSceneNameByChinese(nextMap), LoadSceneMode.Additive);
+        }
+        else
+        {
+            SceneManager.LoadScene("McWarScene",LoadSceneMode.Single);
+        }
+        
+       
+        
+       
 
     }
        

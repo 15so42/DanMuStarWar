@@ -34,6 +34,7 @@ public enum GameMode
     Normal,
     BattleGround,
     MCWar,
+    McPve,
     Marble
 }
 
@@ -218,8 +219,13 @@ public class FightingManager : MonoBehaviourPunCallbacks
         });
         EventCenter.Broadcast(EnumEventType.OnStartWaitingJoin);
     }
-    
-    
+
+    private void OnDestroy()
+    {
+        EventCenter.RemoveListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
+        EventCenter.RemoveListener<int,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
+        EventCenter.RemoveListener(EnumEventType.OnPlanetsSpawned,SetOwners);
+    }
 
     public void JoinGameByChoose(string teamName,int uid,string userName)
     {
@@ -415,10 +421,10 @@ public class FightingManager : MonoBehaviourPunCallbacks
             SongHime.Instance.NextSong();
         }
 
-        if (text.Equals("加入黄队") || text.Equals("加入绿队") && gameStatus==GameStatus.Playing)
-        {
-            JoinGameByChoose(text,uid,userName);
-        }
+        //if (text.Equals("加入黄队") || text.Equals("加入绿队") && gameStatus==GameStatus.Playing)
+        //{
+        //    JoinGameByChoose(text,uid,userName);
+        //}
         
         if (text.Split(' ')[0] == "加入"||text.Split(' ')[0] == "加入游戏")
         {
@@ -495,11 +501,15 @@ public class FightingManager : MonoBehaviourPunCallbacks
         gameStatus = GameStatus.WaitingNewFighting;
         MessageBox._instance.Hide();
 
-        for (int i = 0; i < winners.Count; i++)
+        if (winners!=null && winners.Count > 0)
         {
-            var player = winners[i].player;
-            AddPlayerDataValue(player.uid, "winCount", 1);
+            for (int i = 0; i < winners.Count; i++)
+            {
+                var player = winners[i].player;
+                AddPlayerDataValue(player.uid, "winCount", 1);
+            }
         }
+       
         for (int i = 0; i < losers.Count; i++)
         {
             var player = losers[i].player;
@@ -513,6 +523,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
                 StartNewBattle();
             });
         OnGameOver();
+        EventCenter.Broadcast(EnumEventType.OnBattleOver);
     }
 
     public void SaveAllPlayer()

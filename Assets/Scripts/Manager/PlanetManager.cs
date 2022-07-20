@@ -18,8 +18,12 @@ public class PlanetManager : MonoBehaviour
 
     //public List<Planet> ownerAblePlanets=new List<Planet>();
 
-    
-    
+
+    private void OnDestroy()
+    {
+        EventCenter.RemoveListener<Planet>(EnumEventType.OnPlanetCreated,OnPlanetCreated);
+        EventCenter.RemoveListener<Planet>(EnumEventType.OnPlanetDie,OnPlanetDie);
+    }
 
     void OnPlanetCreated(Planet planet)
     {
@@ -53,8 +57,10 @@ public class PlanetManager : MonoBehaviour
         }
         
        
-        if (count == 1)//如果存活的星球只剩最后一个
+        if (count == 1 || count==0)//如果存活的星球只剩最后一个
         {
+            if(FightingManager.Instance.gameStatus==GameStatus.WaitingNewFighting)
+                return;
             
             if (FightingManager.Instance.gameMode==GameMode.MCWar|| FightingManager.Instance.gameMode==GameMode.Marble)
             {

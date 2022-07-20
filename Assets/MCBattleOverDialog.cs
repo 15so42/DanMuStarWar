@@ -52,28 +52,36 @@ public class MCBattleOverDialog : Dialog<McBattleOverDialogContext>
         base.Show();
 
         StartCoroutine(CountDown(dialogContext.duration));
-       
-        dialogContext.winnerPlanetCommanders.Sort((x,y)=>x.attackedDamage>y.attackedDamage?-1:1);
-        dialogContext.lostPlanetCommanders.Sort((x,y)=>x.attackedDamage>y.attackedDamage?-1:1);
-        
-        for (int i = 0; i < ((dialogContext.winnerPlanetCommanders.Count>5) ? 5 :dialogContext.winnerPlanetCommanders.Count); i++)
+
+        dialogContext.lostPlanetCommanders.Sort((x, y) => x.attackedDamage > y.attackedDamage ? -1 : 1);
+
+        if (dialogContext.winnerPlanetCommanders != null)
         {
-            var planetCommander = dialogContext.winnerPlanetCommanders[i];
-            var playerStatisItemUi = GameObject.Instantiate(statisItemUiPfb, leftGridLayout).GetComponent<PlayerStatisItemUi>();
-            
-            playerStatisItemUi.Init(planetCommander);
-            
+            dialogContext.winnerPlanetCommanders.Sort((x, y) => x.attackedDamage > y.attackedDamage ? -1 : 1);
+
+            for (int i = 0;
+                i < ((dialogContext.winnerPlanetCommanders.Count > 5) ? 5 : dialogContext.winnerPlanetCommanders.Count);
+                i++)
+            {
+                var planetCommander = dialogContext.winnerPlanetCommanders[i];
+                var playerStatisItemUi = GameObject.Instantiate(statisItemUiPfb, leftGridLayout)
+                    .GetComponent<PlayerStatisItemUi>();
+
+                playerStatisItemUi.Init(planetCommander);
+            }
         }
-        
-        for (int i = 0; i < ((dialogContext.lostPlanetCommanders.Count>5) ? 5 :dialogContext.lostPlanetCommanders.Count); i++)
+
+
+        for (int i = 0;
+            i < ((dialogContext.lostPlanetCommanders.Count > 5) ? 5 : dialogContext.lostPlanetCommanders.Count);
+            i++)
         {
             var planetCommander = dialogContext.lostPlanetCommanders[i];
-            var playerStatisItemUi = GameObject.Instantiate(statisItemUiPfb, rightGridLayout).GetComponent<PlayerStatisItemUi>();
-            
+            var playerStatisItemUi = GameObject.Instantiate(statisItemUiPfb, rightGridLayout)
+                .GetComponent<PlayerStatisItemUi>();
+
             playerStatisItemUi.Init(planetCommander);
-            
         }
-        
     }
     
    

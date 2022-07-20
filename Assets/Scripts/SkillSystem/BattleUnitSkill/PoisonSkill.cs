@@ -37,7 +37,11 @@ public class PoisonSkill : SkillBase
     {
         base.Play();
         gameEntity.OnAttacked(new AttackInfo(attacker,AttackType.Poison, damageValue));
-        createCommander.attackOtherDamage += damageValue;
+        if (createCommander!=null)
+        {
+            createCommander.attackOtherDamage += damageValue;
+        }
+        
 
     }
 

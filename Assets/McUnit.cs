@@ -23,6 +23,8 @@ public class McUnit : WarPlane
     [Header("寻敌Trigger")] public SphereCollider trigger;
     [HideInInspector]public bool canPushBack=true;//是否可被击退,在箭塔时不可被击退哦
 
+    [Header("基地寻敌")] public bool canSetPlanetEnemy = true;
+
     protected override void Start()
     {
         base.Start();

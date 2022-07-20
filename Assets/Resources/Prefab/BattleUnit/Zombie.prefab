@@ -59,7 +59,17 @@ MonoBehaviour:
     endurance: 0
     maxEndurance: 0
     enhancementLevels: []
-  randomStrs: []
+  randomStrs:
+  - "\u4FDD\u62A4"
+  - "\u6BD2"
+  - "\u706B\u7130"
+  - "\u683C\u6321"
+  - "\u541E\u566C"
+  - "\u8346\u68D8"
+  - "\u7075\u76FE"
+  mutexSpells:
+  - "\u4FDD\u62A4"
+  - "\u683C\u6321"
   rareRandomStrs: []
   maxEndurance: 125
   endurance: 125
@@ -180,6 +190,7 @@ MonoBehaviour:
   poisonFx: {fileID: 0}
   trigger: {fileID: 698261040564462907}
   canPushBack: 1
+  canSetPlanetEnemy: 0
 --- !u!114 &2315315661470830110
 MonoBehaviour:
   m_ObjectHideFlags: 0

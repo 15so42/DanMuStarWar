@@ -60,5 +60,11 @@ public class LineRenderManager : MonoBehaviour
         var lr = lineRenderGo.GetComponent<LineRenderer>();
         lr.SetPositions(new[]{startPos,endPos});
         return lr;
+        
+    }
+
+    private void OnDisable()
+    {
+        EventCenter.RemoveListener(EnumEventType.OnStartWaitingJoin,ClearAllLine);
     }
 }

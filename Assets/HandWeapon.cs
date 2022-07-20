@@ -214,8 +214,12 @@ public class HandWeapon : Weapon,IDamageAble
         }
         while(!IsValidSpell(spellStr));
 
-
-        MessageBox._instance.AddMessage("系统", owner.planetCommander.player.userName + "附魔" + spellStr);
+        if (owner.planetCommander != null)
+        {
+            MessageBox._instance.AddMessage("系统", owner.planetCommander.player.userName + "附魔" + spellStr);
+        }
+            
+        
         SetWeaponLevel(spellStr, GetWeaponLevelByNbt(spellStr) + 1);
 
 
@@ -373,7 +377,11 @@ public class HandWeapon : Weapon,IDamageAble
             var fortuneLevel= GetWeaponLevelByNbt("财运");
             if (fortuneLevel > 0)
             {
-                (owner.planetCommander as SteveCommander).AddPoint(0.06f*fortuneLevel);
+                if (owner.planetCommander!=null)
+                {
+                    (owner.planetCommander as SteveCommander).AddPoint(0.06f*fortuneLevel);
+                }
+                
             }
 
 
@@ -470,7 +478,11 @@ public class HandWeapon : Weapon,IDamageAble
             if (random < rate * 100)
             {
                 owner.props.maxHp++;
-                (owner.planetCommander as SteveCommander).desireMaxHp = owner.props.maxHp;
+                if (owner.planetCommander != null)
+                {
+                    (owner.planetCommander as SteveCommander).desireMaxHp = owner.props.maxHp;
+                }
+                
                 owner.OnAttacked(new AttackInfo(owner, AttackType.Heal, 1));
                 FlyText.Instance.ShowDamageText(owner.transform.position-Vector3.up*2, "最大生命值+1");
             }
@@ -678,7 +690,11 @@ public class HandWeapon : Weapon,IDamageAble
             if (total > 0)
             {
                 owner.props.maxHp += total;
-                (owner.planetCommander as SteveCommander).desireMaxHp = owner.props.maxHp;
+                if (owner.planetCommander != null)
+                {
+                    (owner.planetCommander as SteveCommander).desireMaxHp = owner.props.maxHp;
+                    
+                }
                 FlyText.Instance.ShowDamageText( owner.transform.position-Vector3.up*2,"最大生命+"+total);
             }
             

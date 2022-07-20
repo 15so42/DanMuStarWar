@@ -17,7 +17,7 @@ public class McRoundManager : RoundManager
 
     public Dictionary<string,int> votedMap=new Dictionary<string, int>()
     {
-        {"村庄",0},{"矿井",0}
+        {"村庄",0},{"矿井",0},{"PVE",0}
     };
     
 
