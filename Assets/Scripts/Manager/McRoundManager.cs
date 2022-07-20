@@ -521,6 +521,12 @@ public class McRoundManager : RoundManager
     {
         steveCommander.AddPoint(1.5f);
     }
+
+
+    protected virtual void ParseGiftInMcMode(SteveCommander steveCommander,string giftName,int battery)
+    {
+        
+    }
     
     /******************解析礼物*********************/
     protected override void ParseGift(int uid, string giftName,int battery)
@@ -536,6 +542,7 @@ public class McRoundManager : RoundManager
         // {
         //     ParseCameraFocus(uid);
         // }
+        ParseGiftInMcMode(steveCommander,giftName,battery);
 
         if (giftName == "打call")
         {

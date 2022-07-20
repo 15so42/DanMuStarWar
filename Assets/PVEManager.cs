@@ -17,6 +17,9 @@ public class PVEManager : MonoBehaviour
 
     public List<ZombieSpawner> spawners=new List<ZombieSpawner>();
     private List<string> toSpawnList=new List<string>();
+
+    //测试用timeScale
+    public float timeScale = 1;
     private void Start()
     {
         fightingManager=FightingManager.Instance;
@@ -100,9 +103,21 @@ public class PVEManager : MonoBehaviour
         }
     }
 
+    void SpawnUnit(string unitName)
+    {
+        var spawner = spawners[UnityEngine.Random.Range(0, spawners.Count)];
+        spawner.Spawn(unitName);
+        
+    }
     void SpawnByCount(int count)
     {
-        for (int i = 0; i < count; i++)
+        var playerCount = fightingManager.players.Count;
+        var rate = ((float) playerCount / 6);
+        if (rate > 2f)
+            rate = 2f;
+        var realCount=Mathf.CeilToInt(count * rate );
+        Debug.Log("生成"+realCount+"个野怪");
+        for (int i = 0; i < realCount; i++)
         {
             var spawner = spawners[UnityEngine.Random.Range(0, spawners.Count)];
             spawner.Spawn(toSpawnList[UnityEngine.Random.Range(0, toSpawnList.Count)]);
@@ -113,22 +128,21 @@ public class PVEManager : MonoBehaviour
     void SpawnMonsterByTimeAndPopulation()
     {
         var time = GetElapsedTime();
-        if (time < 300)
+        if (time < 300)//5分钟
         {
-            
-            SpawnByCount((int)time/90);
+            SpawnByCount((int)time/90+1);
         }
         else if (time < 900)
         {
-            SpawnByCount((int)time/180);
+            SpawnByCount((int)time/120);
         }
-        else if (time < 1800)
+        else if (time < 1800)//30分钟
         {
-            SpawnByCount((int)time/360);
+            SpawnByCount((int)time/120);
         }
         else
         {
-            SpawnByCount((int)time/720);
+            SpawnByCount((int)time/120);
         }
     }
     
@@ -136,7 +150,18 @@ public class PVEManager : MonoBehaviour
     {
         toSpawnList.Add("BattleUnit_Zombie");
 
-        int count = 5;
+        
+        int count = 10;
+        while (count > 0)
+        {
+            yield return new WaitForSeconds(30);
+            SpawnMonsterByTimeAndPopulation();
+            count--;
+        }
+        
+        toSpawnList.Add("BattleUnit_Skeleton");
+        
+        count = 10;
         while (count > 0)
         {
             yield return new WaitForSeconds(45);
@@ -144,26 +169,33 @@ public class PVEManager : MonoBehaviour
             count--;
         }
         
-        toSpawnList.Add("BattleUnit_Skeleton");
-        
-        count = 5;
+        toSpawnList.Add("BattleUnit_Creeper");
+
+        count = 10;
         while (count > 0)
         {
-            yield return new WaitForSeconds(60);
+            yield return new WaitForSeconds(45);
             SpawnMonsterByTimeAndPopulation();
             count--;
         }
-        
-        toSpawnList.Add("BattleUnit_Creeper");
 
-        int cd = 60;
+        StartCoroutine(SpawnGolems());
+        
+        count = 10;
+        while (count > 0)
+        {
+            yield return new WaitForSeconds(30);
+            SpawnMonsterByTimeAndPopulation();
+            
+        }
+    }
+
+    IEnumerator SpawnGolems()
+    {
         while (true)
         {
-            yield return new WaitForSeconds(cd);
-            SpawnMonsterByTimeAndPopulation();
-            cd -= 5;
-            if (cd < 10)
-                cd = 10;
+            SpawnUnit("BattleUnit_EvilIronGolem");
+            yield return 300;
         }
     }
 

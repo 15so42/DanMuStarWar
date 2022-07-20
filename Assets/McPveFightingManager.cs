@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class McPveFightingManager : FightingManager
 {
-    private string nextMap = "村庄";
+    private string nextMap = "PVE";
 
     public string GetSceneNameByChinese(string chinese)
     {

@@ -75,13 +75,25 @@ public class RoundManager : MonoBehaviour
     /// </summary>
     public virtual void Stop()
     {
-        EventCenter.RemoveListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
-        EventCenter.RemoveListener<int,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
-        // 清除所有协程StopAllCoru();
-        fightingManager.StopAllCoroutines();
-        elapsedTime = 0;
-        voted.Clear();
-        players.Clear();
+        try
+        {
+            EventCenter.RemoveListener<string, int, string, string>(EnumEventType.OnDanMuReceived, OnDanMuReceived);
+            EventCenter.RemoveListener<int, string, int, string, int>(EnumEventType.OnGiftReceived, OnGiftReceived);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("异常" + e.Message);
+        }
+        finally
+        {
+            // 清除所有协程StopAllCoru();
+            fightingManager.StopAllCoroutines();
+            elapsedTime = 0;
+            voted.Clear();
+            players.Clear();
+        }
+
+       
     }
 
     private void OnDestroy()

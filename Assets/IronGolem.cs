@@ -12,14 +12,24 @@ public class IronGolem : McUnit
     public int maxRebootPoint = 2;
 
     private bool rebooted = false;
+
+    public bool isEvil = false;
     
     protected override void Start()
     {
         base.Start();
         var liveWeapon = GetComponentInChildren<HandWeapon>();
         liveWeapon.Init(this);
-        EventCenter.AddListener<Steve>(EnumEventType.OnSteveDied,OnSteveDie);
-        EventCenter.AddListener<Planet,int>(EnumEventType.OnMcBatteryReceived,OnMcBatteryReceived);
+        if (!isEvil)
+        {
+            EventCenter.AddListener<Steve>(EnumEventType.OnSteveDied,OnSteveDie);
+            EventCenter.AddListener<Planet,int>(EnumEventType.OnMcBatteryReceived,OnMcBatteryReceived);
+        }
+        else
+        {
+            Reboot();
+        }
+        
         canPushBack = false;
         //hpUI.OpenHPTile();
         //hpUI.OpenHpNumText();
@@ -81,7 +91,7 @@ public class IronGolem : McUnit
         animator.SetTrigger("ReBoot");
 
         
-        int addHp=fightingManager.players.Count * (Mathf.CeilToInt(fightingManager.roundManager.elapsedTime/300)* 15);
+        int addHp=fightingManager.players.Count * (Mathf.CeilToInt(fightingManager.roundManager.elapsedTime/300)* 5);
         props.maxHp += addHp;
         var liveWeapon = GetActiveWeapon();
         liveWeapon.attackValue += (int)(fightingManager.roundManager.elapsedTime / 300);
@@ -92,8 +102,12 @@ public class IronGolem : McUnit
 
     private void OnDisable()
     {
-        EventCenter.RemoveListener<Steve>(EnumEventType.OnSteveDied,OnSteveDie);
-        EventCenter.RemoveListener<Planet,int>(EnumEventType.OnMcBatteryReceived,OnMcBatteryReceived);
+        if (!isEvil)
+        {
+            EventCenter.RemoveListener<Steve>(EnumEventType.OnSteveDied, OnSteveDie);
+            EventCenter.RemoveListener<Planet, int>(EnumEventType.OnMcBatteryReceived, OnMcBatteryReceived);
+        }
+
         onHpChanged -= UpdateHpUIByNameText;
     }
 
@@ -134,6 +148,10 @@ public class IronGolem : McUnit
     public override void Die()
     {
         base.Die();
-        ownerPlanet.RefreshIronGolem();
+        if (ownerPlanet)
+        {
+            ownerPlanet.RefreshIronGolem();
+        }
+        
     }
 }

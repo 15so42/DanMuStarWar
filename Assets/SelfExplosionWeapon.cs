@@ -28,7 +28,7 @@ public class SelfExplosionWeapon : HandWeapon
         var highExplosion=GetWeaponLevelByNbt("高爆");
         var attackInfo = new AttackInfo(owner, AttackType.Physics, 5+highExplosion*2);
         var position = transform.position;
-        AttackManager.Instance.Explosion(attackInfo,this, position, 15,"MCExplosionFx");
+        AttackManager.Instance.Explosion(attackInfo,this, position, 10,"MCExplosionFx");
         owner.Die();
     }
 }
