@@ -41,9 +41,9 @@ public class BoomerangBullet : ArrowBullet
         timer += Time.deltaTime;
         if(owner==null || owner.GetAttackEntity()==null)
             return;
-        if (timer > 3)
+        if (timer > 2)
         {
-            if (lastTimer <= 3 && timer > 3)
+            if (lastTimer <= 2 && timer > 2)
             {
                 OnStartBack();
             }
@@ -54,7 +54,7 @@ public class BoomerangBullet : ArrowBullet
 
             Vector3 distanceDir = transform.position - owner.GetAttackEntity().transform.position;
             distanceDir.y = 0;
-            if (distanceDir.magnitude < 3f||timer>10)
+            if (distanceDir.magnitude < 3f||timer>7)
             {
                 timer = 0;
                 recycleAbleObject.Recycle();

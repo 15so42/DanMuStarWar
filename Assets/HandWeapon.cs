@@ -730,7 +730,7 @@ public class HandWeapon : Weapon,IDamageAble
             return attackInfo;
         
         var thronLevel = GetWeaponLevelByNbt("荆棘");
-        var ignoreDamageType = new List<AttackType>() {AttackType.Reflect,AttackType.Heal};
+        var ignoreDamageType = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Fire,AttackType.Poison};
         if (thronLevel > 0 && !ignoreDamageType.Contains(attackInfo.attackType))
         {
             var value = Mathf.CeilToInt(attackInfo.value * ((float)thronLevel / (thronLevel + 10)));

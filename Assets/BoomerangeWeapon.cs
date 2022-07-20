@@ -11,7 +11,7 @@ public class BoomerangeWeapon : BowWeapon
     private float leftTimer = 0;
 
     [Header("大于几秒后强制收回")] public bool backByWeapon = true;
-    public float maxLeftTimer = 6;
+    public float maxLeftTimer = 4;
     
     public override bool FireCheck()
     {

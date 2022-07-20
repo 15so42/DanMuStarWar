@@ -5128,7 +5128,7 @@ MonoBehaviour:
   maxHeight: 5
   back: 1
   backByWeapon: 1
-  maxLeftTimer: 6
+  maxLeftTimer: 5
 --- !u!1 &1799835515
 GameObject:
   m_ObjectHideFlags: 0
@@ -5499,6 +5499,7 @@ MonoBehaviour:
   poisonFx: {fileID: 0}
   trigger: {fileID: 904162018}
   canPushBack: 1
+  canSetPlanetEnemy: 1
   cs64Code: 
   skinMeshRenderers:
   - {fileID: 1630794973563722278}
