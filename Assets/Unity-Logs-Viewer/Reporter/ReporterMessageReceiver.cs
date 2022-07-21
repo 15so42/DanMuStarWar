@@ -7,6 +7,7 @@ public class ReporterMessageReceiver : MonoBehaviour
 	void Start()
 	{
 		reporter = gameObject.GetComponent<Reporter>();
+		DontDestroyOnLoad(gameObject);
 	}
 
 	void OnPreStart()

@@ -92,6 +92,10 @@ public class PVEManager : MonoBehaviour
             var spellCount = (GetElapsedTime() / 180) + 1;
 
             var maxSpellSlot = ((int)GetElapsedTime() / 300) + 1;
+            if (GetElapsedTime() < 360)
+            {
+                spellCount = 0;
+            }
             weapon.SetMaxSpellCount(maxSpellSlot);
             for (int i = 0; i < spellCount; i++)
             {
@@ -112,7 +116,9 @@ public class PVEManager : MonoBehaviour
     void SpawnByCount(int count)
     {
         var playerCount = fightingManager.players.Count;
-        var rate = ((float) playerCount / 6);
+        var rate = ((float) playerCount / 5);
+        if (rate < 0.5f)
+            rate = 0.5f;
         if (rate > 2f)
             rate = 2f;
         var realCount=Mathf.CeilToInt(count * rate );
@@ -130,7 +136,7 @@ public class PVEManager : MonoBehaviour
         var time = GetElapsedTime();
         if (time < 300)//5分钟
         {
-            SpawnByCount((int)time/90+1);
+            SpawnByCount(((int)time/90)+2);
         }
         else if (time < 900)
         {
@@ -142,7 +148,7 @@ public class PVEManager : MonoBehaviour
         }
         else
         {
-            SpawnByCount((int)time/120);
+            SpawnByCount((int)time/240);
         }
     }
     
@@ -184,7 +190,7 @@ public class PVEManager : MonoBehaviour
         count = 10;
         while (count > 0)
         {
-            yield return new WaitForSeconds(30);
+            yield return new WaitForSeconds(45);
             SpawnMonsterByTimeAndPopulation();
             
         }
@@ -195,7 +201,7 @@ public class PVEManager : MonoBehaviour
         while (true)
         {
             SpawnUnit("BattleUnit_EvilIronGolem");
-            yield return 300;
+            yield return new WaitForSeconds(300);
         }
     }
 

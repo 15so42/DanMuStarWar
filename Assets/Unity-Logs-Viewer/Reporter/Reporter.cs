@@ -597,6 +597,7 @@ public class Reporter : MonoBehaviour
 	{
 		logDate = System.DateTime.Now.ToString();
 		StartCoroutine("readInfo");
+		//DontDestroyOnLoad(this.gameObject);
 	}
 
 	//clear all logs

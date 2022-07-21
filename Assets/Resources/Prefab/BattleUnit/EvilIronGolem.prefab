@@ -5468,13 +5468,7 @@ MonoBehaviour:
     maxEndurance: 0
     enhancementLevels: []
   randomStrs:
-  - "\u8346\u68D8"
-  - "\u706B\u7130"
-  - "\u6BD2"
-  - "\u683C\u6321"
-  - "\u4FDD\u62A4"
   - "\u8010\u4E45"
-  - "\u541E\u566C"
   mutexSpells: []
   rareRandomStrs: []
   maxEndurance: 500

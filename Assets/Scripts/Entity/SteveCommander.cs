@@ -13,6 +13,7 @@ public class SteveCommander : PlanetCommander
     //记录自己控制的单位
     public List<McUnit> battleUnits=new List<McUnit>();
 
+    public float respawnTimRate = 1;
 
     public SteveWeaponNbt steveWeaponNbt;
     //武器耐久
@@ -33,6 +34,8 @@ public class SteveCommander : PlanetCommander
 
     //每局任意礼物可获得一次额外次数
     public bool flowerSpell = false;
+
+    public int summonGolemCount = 1;
     
     //复活timer
     public UnityTimer.Timer unityTimer;
@@ -49,6 +52,17 @@ public class SteveCommander : PlanetCommander
 
     public SteveCommander(int uid, Player player, Color color) : base(uid, player, color)
     {
+    }
+
+    public void SummonGolem()
+    {
+        if (summonGolemCount > 0)
+        {
+            ownerPlanet.AddTask(new PlanetTask(new TaskParams(TaskType.Create, "BattleUnit_IronGolem", 5), null));
+            summonGolemCount--;
+            if (summonGolemCount < 0)
+                summonGolemCount = 0;
+        }
     }
 
     public void SetMaxSpellCount()
@@ -219,6 +233,8 @@ public class SteveCommander : PlanetCommander
             time *= 0.6f;
             if (time > 90)
                 time = 90;
+
+            time *= respawnTimRate;
             if(commanderUi!=null)
                 (commanderUi as SteveCommanderUi)?.StartCountDown((int)time);
             unityTimer?.Cancel();

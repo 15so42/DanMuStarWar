@@ -10,7 +10,7 @@ public class McPveRoundManager : McRoundManager
     protected override void ParseGiftInMcMode(SteveCommander steveCommander, string giftName, int battery)
     {
         base.ParseGiftInMcMode(steveCommander, giftName, battery);
-        if (giftName == "白银宝盒")
+        if (giftName == "情书")
         {
             fireWall=GameObject.FindGameObjectWithTag("FireWall");
 
@@ -19,13 +19,18 @@ public class McPveRoundManager : McRoundManager
                 fireWall.transform.GetChild(i).gameObject.SetActive(true);
             }
             fireWall.gameObject.SetActive(true);
-            fireWallTimer = UnityTimer.Timer.Register(90, () =>
+            fireWallTimer = UnityTimer.Timer.Register(180, () =>
             {
                 for (int i = 0; i < fireWall.transform.childCount; i++)
                 {
                     fireWall.transform.GetChild(i).gameObject.SetActive(false);
                 }
             });
+        }
+
+        if (giftName == "小花花")
+        {
+            steveCommander.SummonGolem();
         }
     }
 

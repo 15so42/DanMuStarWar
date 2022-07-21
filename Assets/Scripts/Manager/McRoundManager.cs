@@ -164,7 +164,17 @@ public class McRoundManager : RoundManager
                             maxKv = kv;
                         }
                     }
-                    (FightingManager.Instance  as McFightingManager)?.SetNextMap(maxKv.Key);
+
+                    if (FightingManager.Instance as McFightingManager)
+                    {
+                        (FightingManager.Instance  as McFightingManager)?.SetNextMap(maxKv.Key);
+                    }
+
+                    if (FightingManager.Instance as McPveFightingManager)
+                    {
+                        (FightingManager.Instance  as McPveFightingManager)?.SetNextMap(maxKv.Key);
+                    }
+                    
                     
                     
                     MessageBox._instance.AddMessage("经过投票决定下一局地图为："+maxKv.Key);

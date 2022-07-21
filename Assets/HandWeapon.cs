@@ -257,8 +257,15 @@ public class HandWeapon : Weapon,IDamageAble
                 str += "|" + weaponNbt.enhancementLevels[i].enhancementName+weaponNbt.enhancementLevels[i].level;
             }
         }
-        
-        owner.hpUI.SetWeaponText(weaponName+str);
+
+        try
+        {
+            owner.hpUI.SetWeaponText(weaponName + str);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("特效报错原因"+e.Message);
+        }
     }
 
 

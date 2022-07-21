@@ -7,6 +7,11 @@ public class McPveFightingManager : FightingManager
 {
     private string nextMap = "PVE";
 
+    public void SetNextMap(string key)
+    {
+        nextMap = key;
+    }
+    
     public string GetSceneNameByChinese(string chinese)
     {
         if (chinese == "村庄")
@@ -36,11 +41,12 @@ public class McPveFightingManager : FightingManager
 
         JoinGame(newPlayer1);
 
-        PlanetCommander commander = null;
+        SteveCommander commander = null;
 
         commander = new SteveCommander(newPlayer1.uid, newPlayer1,
             colorTable.colors[players.Count]);
 
+        commander.respawnTimRate = 0.6f;
 
         BiliUserInfoQuerier.Instance.Query(newPlayer1.uid, newPlayer1);
 
@@ -58,10 +64,11 @@ public class McPveFightingManager : FightingManager
         base.SetOwnersAfter1Second();
         for (int i = 0; i < players.Count; i++)
         {
-            PlanetCommander commander = null;
+            SteveCommander commander = null;
 
             commander = new SteveCommander(players[i].uid, players[i], colorTable.colors[i]);
 
+            commander.respawnTimRate *= 0.6f;
 
             //var index = ((planetNum / playersCount) * i) % planetNum;
 
