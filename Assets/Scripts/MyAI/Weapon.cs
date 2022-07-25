@@ -26,13 +26,18 @@ public class Weapon : MonoBehaviour
     public int attackValue = 1;
 
     [Header("可通过防御点增加攻击距离")] public bool addAtkDistanceByDP=false;
+
+    public virtual float GetAttackSpeed()
+    {
+        return attackSpeed;
+    }
    
     public virtual void Init(BattleUnit owner)
     {
         this.owner = owner;
 
         
-        timer = 1 / attackSpeed;
+        timer = 1 / GetAttackSpeed();
         
     }
 
@@ -55,7 +60,7 @@ public class Weapon : MonoBehaviour
             {
                 Fire();
                 ready = false;
-                timer=1 / attackSpeed;
+                timer=1 / GetAttackSpeed();
             }
             
         }

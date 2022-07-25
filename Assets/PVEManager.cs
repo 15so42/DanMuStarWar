@@ -89,17 +89,17 @@ public class PVEManager : MonoBehaviour
             mcUnit.GoMCPos(pos, false);
 
             var weapon = mcUnit.GetActiveWeapon();
-            var spellCount = (GetElapsedTime() / 180) + 1;
+            var spellCount = (GetElapsedTime() / 120) + 1;
 
-            var maxSpellSlot = ((int)GetElapsedTime() / 300) + 1;
-            if (GetElapsedTime() < 360)
+            var maxSpellSlot = ((int)GetElapsedTime() / (30*60)) +3;
+            if (GetElapsedTime() < 300)
             {
                 spellCount = 0;
             }
             weapon.SetMaxSpellCount(maxSpellSlot);
             for (int i = 0; i < spellCount; i++)
             {
-                weapon.RandomSpell(false);
+                weapon.RandomSpellBySpellCount();
             }
 
             mcUnit.canSetPlanetEnemy = true;
@@ -116,7 +116,7 @@ public class PVEManager : MonoBehaviour
     void SpawnByCount(int count)
     {
         var playerCount = fightingManager.players.Count;
-        var rate = ((float) playerCount / 5);
+        var rate = ((float) playerCount / 6);
         if (rate < 0.5f)
             rate = 0.5f;
         if (rate > 2f)
@@ -148,14 +148,14 @@ public class PVEManager : MonoBehaviour
         }
         else
         {
-            SpawnByCount((int)time/240);
+            SpawnByCount((int)time/180);
         }
     }
     
     IEnumerator SpawnMonster()
     {
         toSpawnList.Add("BattleUnit_Zombie");
-
+        //toSpawnList.Add("BattleUnit_Blaze");
         
         int count = 10;
         while (count > 0)
@@ -166,6 +166,7 @@ public class PVEManager : MonoBehaviour
         }
         
         toSpawnList.Add("BattleUnit_Skeleton");
+        
         
         count = 10;
         while (count > 0)
@@ -184,8 +185,9 @@ public class PVEManager : MonoBehaviour
             SpawnMonsterByTimeAndPopulation();
             count--;
         }
-
+        
         StartCoroutine(SpawnGolems());
+        toSpawnList.Add("BattleUnit_Blaze");
         
         count = 10;
         while (count > 0)

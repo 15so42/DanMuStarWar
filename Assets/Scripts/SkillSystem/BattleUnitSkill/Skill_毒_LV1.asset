@@ -19,7 +19,7 @@ MonoBehaviour:
   skillName: "Skill_\u6BD2_LV1"
   icon: {fileID: 0}
   isBuff: 0
-  cd: 3
+  cd: 2
   timer: 0
   life: 3
   autoLife: 1

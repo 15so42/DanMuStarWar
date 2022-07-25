@@ -19,7 +19,11 @@ public class BowWeapon : HandWeapon
     public int minHeight = 3;
     public int maxHeight = 7;
 
-
+    public override float GetAttackSpeed()
+    {
+        var attackSpeedLevel = GetWeaponLevelByNbt("速射");
+        return attackSpeed + attackSpeedLevel * 0.07f;
+    }
  
     
     public override void FireAnim()

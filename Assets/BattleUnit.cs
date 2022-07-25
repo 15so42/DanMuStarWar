@@ -281,6 +281,8 @@ public class BattleUnit : GameEntity,IAttackAble,IVictimAble
 
     public void SetChaseTarget(IVictimAble target)
     {
+        if(target==null || target.GetVictimEntity()==null)
+            return;
         if(target.GetVictimEntity().canBeTarget==false)
             return;
         

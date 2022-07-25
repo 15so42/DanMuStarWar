@@ -203,6 +203,18 @@ public class HandWeapon : Weapon,IDamageAble
 
         return true;
     }
+
+    public void RandomSpellBySpellCount()
+    {
+        if (weaponNbt.enhancementLevels.Count < weaponNbt.maxSpellCount)
+        {
+            RandomSpell(false);
+        }
+        else
+        {
+            OnlyUpdateSpell();
+        }
+    }
     
     //随机附魔
     public void RandomSpell(bool rare)
@@ -580,12 +592,16 @@ public class HandWeapon : Weapon,IDamageAble
     {
         return gameObject;
     }
+
+
     
 
     public void OnDamageOther(IVictimAble victimAble, BattleUnitProps.HpAndShield realDamage)
     {
         if (gameObject.activeSelf == false)
             return;
+        
+        
         
         var fireLevel = GetWeaponLevelByNbt("火焰");
         if (fireLevel > 0)
@@ -714,16 +730,8 @@ public class HandWeapon : Weapon,IDamageAble
         if (expFixLevel > 0)
         {
             
-            float total = maxEndurance * (0.05f + expFixLevel * 0.05f);//能回的
-            float need = maxEndurance-endurance;//该回的
-            float overflow = total - need;
-           
-            if (overflow > 0)
-            {
-                maxEndurance += (int)overflow;
-                
-            }
-            AddEndurance((int)total);
+            maxEndurance += Mathf.CeilToInt(expFixLevel * 0.2f);
+            AddEndurance((int)expFixLevel*2);
             //FlyText.Instance.ShowDamageText(owner.transform.position,"经验修补");
         }
     }
@@ -815,7 +823,7 @@ public class HandWeapon : Weapon,IDamageAble
         return attackInfo;
     }
 
-    public int GetWeaponLevelByNbt(string key)
+    public virtual int GetWeaponLevelByNbt(string key)
     {
         EnhancementLevel ret = null;
         ret = weaponNbt.enhancementLevels.Find(x => x.enhancementName == key);

@@ -78,6 +78,11 @@ public class HpBar : MonoBehaviour
 
     public void SetWeaponText(string weaponName)
     {
+        if (weaponName == null || weaponNameText.gameObject == null)
+        {
+            Debug.LogError("weaponNameText真的是空的诶");
+            return;
+        }
         weaponNameText.gameObject.SetActive(true);
         weaponNameText.text = "[" + weaponName + "]";
     }
