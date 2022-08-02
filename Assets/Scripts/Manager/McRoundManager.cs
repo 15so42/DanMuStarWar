@@ -498,7 +498,7 @@ public class McRoundManager : RoundManager
         }
     }
     
-    void ParseFixWeapon(SteveCommander steveCommander)
+    public void ParseFixWeapon(SteveCommander steveCommander)
     {
         
         var validSteve = steveCommander.FindFirstValidSteve();

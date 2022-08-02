@@ -34,6 +34,12 @@ public class Zombie : McUnit
         }
     }
 
+    public override void Die()
+    {
+        base.Die();
+        Destroy(gameObject,10);
+    }
+
 
     public override IVictimAble EnemyCheck(Collider collider)
     {

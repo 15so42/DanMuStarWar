@@ -196,11 +196,7 @@ public class McUnit : WarPlane
         
     }
 
-    public override void Die()
-    {
-        base.Die();
-        Destroy(gameObject,10);
-    }
+    
 
     /// <summary>
     /// 受击特效

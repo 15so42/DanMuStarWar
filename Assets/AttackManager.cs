@@ -3,14 +3,80 @@ using System.Collections;
 using System.Collections.Generic;
 using GameCode.Tools;
 using UnityEngine;
+using Random = System.Random;
 
 public class AttackManager : MonoBehaviour
 {
     public static AttackManager Instance;
+    [Header("落雷")] public GameObject thunderPfb;
 
     private void Awake()
     {
         Instance = this;
+    }
+
+    //落泪
+    public void Thunder(IAttackAble attacker,AttackInfo damage,HandWeapon weapon,Vector3 startPoint,float randomRadius,Vector3 targetPos,float findradius,int count)
+    {
+        List<IVictimAble> enemys = GetEnemyInRadius(attacker, targetPos, findradius, count);
+        for (int i = 0; i < enemys.Count; i++)
+        {
+            var circle = UnityEngine.Random.insideUnitCircle * randomRadius;
+            Vector3 randomPos = startPoint + new Vector3(circle.x, 0, circle.y);
+            //var go = GameObject.Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere));
+            //go.transform.position = hit.point;
+            //Destroy(go,2);
+            Vector3 end = enemys[i].GetVictimPosition();
+
+            ThunderFx(randomPos, enemys[i].GetVictimPosition(), 1 + Vector3.Distance(startPoint, end) / 60);
+
+
+            //Debug.LogError("这不有吗！！！");
+            //FlyText.Instance.ShowDamageText(end - Vector3.up * 3, "落雷(" + damage.value + ")");
+            
+            var hpAndShield=enemys[i].OnAttacked(damage);
+            if(weapon!=null)
+                weapon.OnDamageOther(enemys[i],hpAndShield);
+            
+        }
+          
+        
+    }
+    
+    protected virtual void ThunderFx(Vector3 start,Vector3 end,float width=1)
+    {
+        var line = LineRenderManager.Instance.SetLineRender(start,end,thunderPfb
+        );
+        line.positionCount = 5;
+        // line.startWidth = width;
+        // line.endWidth = width;
+        line.SetPosition(0,start);
+        for (int i = 1; i < 4; i++)
+        {
+            line.SetPosition(i,GetRandomPos(start,end));
+        }
+        line.SetPosition(4,end);
+        Destroy(line.gameObject,0.6f);
+    }
+    Vector3 GetRandomPos(Vector3 start,Vector3 end)
+    {
+        return new Vector3(UnityEngine.Random.Range(start.x,end.x),UnityEngine.Random.Range(start.y,end.y),UnityEngine.Random.Range(start.z,end.z) );
+    }
+
+    public List<IVictimAble> GetEnemyInRadius(IAttackAble able,Vector3 center, float radius,int needCount)
+    {
+        List<IVictimAble> victimAbles=new List<IVictimAble>();
+        var colliders = Physics.OverlapSphere(center,radius);
+        foreach (var collider in colliders)
+        {
+            var victim = (able as McUnit).EnemyCheck(collider);
+            if((able as McUnit).EnemyCheck(collider)!=null)
+                victimAbles.Add(victim);
+            if(victimAbles.Count>=needCount)
+                break;
+        }
+
+        return victimAbles;
     }
 
     public void Explosion(AttackInfo attackInfo,IDamageAble damageAble,Vector3 center,float radius,string fxName="")

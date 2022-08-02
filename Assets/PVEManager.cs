@@ -8,7 +8,12 @@ using Random = System.Random;
 
 public class PVEManager : MonoBehaviour
 {
-   
+
+    public static PVEManager Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private FightingManager fightingManager;
  
@@ -113,7 +118,7 @@ public class PVEManager : MonoBehaviour
         spawner.Spawn(unitName);
         
     }
-    void SpawnByCount(int count)
+    public void SpawnByCount(int count)
     {
         var playerCount = fightingManager.players.Count;
         var rate = ((float) playerCount / 6);
@@ -129,6 +134,8 @@ public class PVEManager : MonoBehaviour
             spawner.Spawn(toSpawnList[UnityEngine.Random.Range(0, toSpawnList.Count)]);
         }
     }
+    
+    
 
     //决定从哪里生成，能生成什么，生成几个
     void SpawnMonsterByTimeAndPopulation()

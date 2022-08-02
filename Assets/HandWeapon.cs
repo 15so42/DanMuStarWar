@@ -73,6 +73,18 @@ public class HandWeapon : Weapon,IDamageAble
         endurance += value;
         if (endurance > maxEndurance)
             endurance = maxEndurance;
+        if (endurance <= maxEndurance * 0.1)
+        {
+            //(owner.planetCommander as SteveCommander).
+            var steveCommander = owner.planetCommander as SteveCommander;
+            var roundManager = FightingManager.Instance.roundManager as McRoundManager;
+            if (steveCommander!=null && roundManager!=null)
+            {
+                roundManager.ParseFixWeapon(steveCommander);
+            }
+            
+        }
+        
         if (endurance < 0)
             endurance = 0;
         OnEnduranceChange(endurance,maxEndurance);
@@ -328,8 +340,9 @@ public class HandWeapon : Weapon,IDamageAble
         //     endurance--;
         //     OnEnduranceChange(endurance,maxEndurance);
         // }
-        endurance--;
+        
         OnEnduranceChange(endurance,maxEndurance);
+        AddEndurance(-1);
     
     }
 
@@ -486,7 +499,8 @@ public class HandWeapon : Weapon,IDamageAble
             }
             
         }
-        
+
+       
 
         var eatLevel = GetWeaponLevelByNbt("吞噬");
         if (eatLevel > 0)
@@ -754,7 +768,7 @@ public class HandWeapon : Weapon,IDamageAble
         }
         
         var protectionLevel=GetWeaponLevelByNbt("保护");
-        var ignoreDamageType1 = new List<AttackType>() {AttackType.Reflect,AttackType.Heal};
+        var ignoreDamageType1 = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Real,AttackType.Thunder};
         if (protectionLevel>0 && !ignoreDamageType1.Contains(attackInfo.attackType))
         {
             attackInfo.value = (int) (attackInfo.value * (1 - (float) protectionLevel / (protectionLevel + 10)));
@@ -766,7 +780,7 @@ public class HandWeapon : Weapon,IDamageAble
         // }
         
         var parryLevel = GetWeaponLevelByNbt("格挡");
-        var ignoreDamageType2 = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Poison,AttackType.Real};
+        var ignoreDamageType2 = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Poison,AttackType.Real,AttackType.Thunder};
         if (parryLevel > 0 && !ignoreDamageType2.Contains(attackInfo.attackType))
         {
             // var targetValue = (0.15 + 0.1 * parryLevel)*100;

@@ -60,7 +60,7 @@ public class BattleUnitProps : MonoBehaviour
             damage = attackInfo.value ;
         }
 
-        if (attackInfo.attackType == AttackType.Real)
+        if (attackInfo.attackType == AttackType.Real || attackInfo.attackType==AttackType.Thunder)
         {
             damage = attackInfo.value;
         }

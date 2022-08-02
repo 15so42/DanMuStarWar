@@ -37,6 +37,14 @@ public class DebugManager : MonoBehaviour
         {
             Time.timeScale = 5;
         }
+        
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (PVEManager.Instance)
+            {
+                PVEManager.Instance.SpawnByCount(3);
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.T))
         {

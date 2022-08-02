@@ -4722,6 +4722,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d69acf1668a6d0b438f5f177c0a5b730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thunderPfb: {fileID: 2911532761280341683, guid: 64dc07f26f1be994cb8a2fd0ca267ebe,
+    type: 3}
 --- !u!224 &1789555634 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3041268841218521310, guid: 881c5f7d509a57b4d85fc3b70ee10275,
@@ -5109,6 +5111,8 @@ MonoBehaviour:
   - weaponName: "\u541E\u566C\u8005"
     price: 16
   - weaponName: "\u6728\u76FE"
+    price: 16
+  - weaponName: "\u96F7\u7535\u6CD5\u6756"
     price: 16
   rareWeaponPrices:
   - weaponName: TNT

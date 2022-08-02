@@ -7,7 +7,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [IncludeInSettings(true)]
-public class BattleUnit : GameEntity,IAttackAble,IVictimAble
+public class BattleUnit : GameEntity
 {
    
     public Planet ownerPlanet;

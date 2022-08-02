@@ -10,6 +10,7 @@ public enum AttackType{
     Reflect,
     Fire,
     Poison,
+    Thunder,
     
     
 }

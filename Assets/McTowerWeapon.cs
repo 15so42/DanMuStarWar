@@ -6,16 +6,26 @@ using Random = System.Random;
 public class McTowerWeapon : HandWeapon
 {
     public GameObject linePfb;
+    public Transform shootPoint;
+    public string animStr = "Attack";
+    public float fxDelay = 0;
+    
     public override void FireAnim()
     {
-        animator.SetTrigger("Attack");
+        animator.SetTrigger(animStr);
         
-        Invoke(nameof(Damage),0f);
-        var start = transform.position;
+       
+        Invoke(nameof(Fx),fxDelay);
+        Invoke(nameof(Damage),fxDelay);
+    }
+
+    protected virtual void Fx()
+    {
+        var start = shootPoint==null?transform.position:shootPoint.transform.position;
         var end = owner.chaseTarget.GetVictimEntity().GetVictimPosition();
         var line = LineRenderManager.Instance.SetLineRender(start,end,linePfb
-            );
-        line.SetPosition(0,transform.position);
+        );
+        line.SetPosition(0,start);
         for (int i = 1; i < 4; i++)
         {
             line.SetPosition(i,GetRandomPos(start,end));
