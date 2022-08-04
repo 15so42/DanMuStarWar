@@ -1179,11 +1179,33 @@ public class Planet : GameEntity,ITaskAble
                 if (battleUnits[i] != null && battleUnits[i].die == false &&
                     battleUnits[i].planetCommander == commander)
                 {
-                        
+                    (battleUnits[i] as McUnit).SetGuardStats(false);
                     battleUnits[i].GoMCPos(pos,escape);
+                    //(battleUnits[i] as McUnit).isGuard = false;
+                    
 
                     //var targetPos = fightingManager.mcPosManager.GetPosByIndex(targetIndex);
                     //battleUnits[i].LogTip(commander.player.userName);
+                }
+            }
+        }
+    }
+
+    public void Guard(int uid)
+    {
+        var commander = GetCommanderByUid(uid);
+        if (commander != null)
+        {
+            for (int i = 0; i < battleUnits.Count; i++)
+            {
+                if (battleUnits[i] != null && battleUnits[i].die == false &&
+                    battleUnits[i].planetCommander == commander)
+                {
+                    
+                    (battleUnits[i] as McUnit).SetGuardStats(true);
+                    
+                    (battleUnits[i] as McUnit).guardPos = battleUnits[i].transform.position;
+
                 }
             }
         }

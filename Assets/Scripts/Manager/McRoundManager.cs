@@ -34,6 +34,11 @@ public class McRoundManager : RoundManager
                 ParseGoWhere(uid, trim,false);
             }
 
+            if (trim.Equals("驻守"))
+            {
+                ParseGuard(uid);
+            }
+
             if (trim.StartsWith("溜") || trim.StartsWith("l")||trim.StartsWith("L"))
             {
                 ParseGoWhere(uid,trim,true);
@@ -224,6 +229,16 @@ public class McRoundManager : RoundManager
             uidPlanet.GoWhere(uid,(int)targetIndex,escape);
             
         }
+    }
+
+    protected void ParseGuard(int uid)
+    {
+        var uidPlanet = GetPlantByPlayerUid(uid);
+        if(uidPlanet==null)
+            return;
+            
+            
+        uidPlanet.Guard(uid);
     }
     
     void ParseCameraFocus(int uid)

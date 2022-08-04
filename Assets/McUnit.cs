@@ -25,6 +25,9 @@ public class McUnit : WarPlane
 
     [Header("基地寻敌")] public bool canSetPlanetEnemy = true;
 
+    [Header("驻守")] public bool isGuard;
+    public Vector3 guardPos;
+
     protected override void Start()
     {
         base.Start();
@@ -43,8 +46,26 @@ public class McUnit : WarPlane
        
         return newDest;
     }
-    
-    
+
+    public bool SelfOutGuardRange()
+    {
+        if (Vector3.Distance(transform.position , guardPos) >25)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool InGuardRange(BattleUnit battleUnit)
+    {
+        if (Vector3.Distance(transform.position , guardPos) <25)
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     public bool NearTargetPos()
     {
@@ -57,7 +78,11 @@ public class McUnit : WarPlane
         var liveWeapon = weapons.Find(x => x.gameObject.activeSelf);
         return liveWeapon as HandWeapon;
     }
-    
+
+    public virtual void SetGuardStats(bool status)
+    {
+        isGuard = status;
+    }
     
     public virtual GameEntity OverLapEnemyInMc()
     {

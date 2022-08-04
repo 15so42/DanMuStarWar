@@ -25,6 +25,8 @@ public class Steve : McUnit
 
     public Action onStartComplete = null;
 
+    [Header("驻守标识")] public GameObject guardFlag;
+
     protected override void Start()
     {
         base.Start();
@@ -90,6 +92,11 @@ public class Steve : McUnit
         onStartComplete?.Invoke();
     }
 
+    public override void SetGuardStats(bool status)
+    {
+        base.SetGuardStats(status);
+        guardFlag.SetActive(status);
+    }
 
     public HandWeapon GetActiveWeapon()
     {
