@@ -5506,6 +5506,8 @@ MonoBehaviour:
   canSetPlanetEnemy: 1
   isGuard: 0
   guardPos: {x: 0, y: 0, z: 0}
+  dieRangePfb: {fileID: 1885590075030236391, guid: 15f80316e70869744b974271b4051acd,
+    type: 3}
   cs64Code: 
   skinMeshRenderers:
   - {fileID: 1630794973563722278}
@@ -5731,7 +5733,7 @@ MonoBehaviour:
   scatteringAngel: 5
   rayDistance: 20
   attackType: 0
-  attackValue: 5
+  attackValue: 3
   addAtkDistanceByDP: 0
   mcWeaponId: 14
   animator: {fileID: 0}
@@ -5754,7 +5756,6 @@ MonoBehaviour:
   - "\u56DE\u590D"
   - "\u96F7\u4E91"
   - "\u5438\u8840"
-  - zheng
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"

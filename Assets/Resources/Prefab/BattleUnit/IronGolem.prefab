@@ -5139,6 +5139,9 @@ MonoBehaviour:
   trigger: {fileID: 6082696280813376532}
   canPushBack: 1
   canSetPlanetEnemy: 1
+  isGuard: 0
+  guardPos: {x: 0, y: 0, z: 0}
+  dieRangePfb: {fileID: 0}
   rebootPoint: 0
   maxRebootPoint: 50
   isEvil: 1
@@ -5468,7 +5471,9 @@ MonoBehaviour:
     maxEndurance: 0
     enhancementLevels: []
   randomStrs:
-  - "\u4FDD\u62A4"
+  - "\u8010\u4E45"
+  - "\u683C\u6321"
+  - "\u5438\u8840"
   mutexSpells: []
   rareRandomStrs: []
   maxEndurance: 500

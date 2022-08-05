@@ -27,6 +27,12 @@ public class McUnit : WarPlane
 
     [Header("驻守")] public bool isGuard;
     public Vector3 guardPos;
+    [Header("驻守Trigger")]
+    public GameObject dieRangePfb;
+
+    private SteveGuardRange dieRangeGo;
+    
+    
 
     protected override void Start()
     {
@@ -49,7 +55,7 @@ public class McUnit : WarPlane
 
     public bool SelfOutGuardRange()
     {
-        if (Vector3.Distance(transform.position , guardPos) >25)
+        if (Vector3.Distance(transform.position , guardPos) >findEnemyDistance)
         {
             return true;
         }
@@ -57,9 +63,12 @@ public class McUnit : WarPlane
         return false;
     }
 
-    public bool InGuardRange(BattleUnit battleUnit)
+    public bool InGuardRange()
     {
-        if (Vector3.Distance(transform.position , guardPos) <25)
+        
+        if (chaseTarget == null|| chaseTarget.GetVictimEntity()==null)
+            return false;
+        if (Vector3.Distance(chaseTarget.GetVictimEntity().transform.position , guardPos) <findEnemyDistance)
         {
             return true;
         }
@@ -82,6 +91,20 @@ public class McUnit : WarPlane
     public virtual void SetGuardStats(bool status)
     {
         isGuard = status;
+        if (status )
+        {
+            if(dieRangeGo!=null)
+                Destroy(dieRangeGo.gameObject);
+            dieRangeGo = Instantiate(dieRangePfb).GetComponent<SteveGuardRange>();
+            dieRangeGo.Init(this,trigger.radius);
+            dieRangeGo.transform.position = transform.position;
+        }
+        else
+        {
+            if(dieRangeGo!=null)
+                Destroy(dieRangeGo.gameObject);
+        }
+       
     }
     
     public virtual GameEntity OverLapEnemyInMc()
@@ -150,7 +173,7 @@ public class McUnit : WarPlane
             return true;
         return false;
     }
-
+    
 
     #region 耐久
     public void UpdateWeaponEndurance(int endurance,int maxEndurance)

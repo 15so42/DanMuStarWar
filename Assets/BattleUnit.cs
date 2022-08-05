@@ -38,6 +38,8 @@ public class BattleUnit : GameEntity
     
     //动画
     [HideInInspector]public Animator animator;
+    
+    public Action dieAction;
 
 
     private bool awaked = false;
@@ -281,8 +283,12 @@ public class BattleUnit : GameEntity
 
     public void SetChaseTarget(IVictimAble target)
     {
-        if(target==null || target.GetVictimEntity()==null)
+        if (target == null || target.GetVictimEntity() == null)
+        {
+            chaseTarget = null;
             return;
+        }
+            
         if(target.GetVictimEntity().canBeTarget==false)
             return;
         
@@ -399,6 +405,7 @@ public class BattleUnit : GameEntity
 
         lastAttacker?.GetAttackEntity().OnSlainOther(this);
         DieFx();
+        dieAction?.Invoke();
         //Destroy(gameObject);
 
         if (showHpUI && hpUI)

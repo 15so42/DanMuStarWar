@@ -9624,4 +9624,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
-  attackCd: 1.6
+  attackCd: 2.6

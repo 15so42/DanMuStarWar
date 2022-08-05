@@ -23,6 +23,7 @@ public class BowWeapon : HandWeapon
     {
         var attackSpeedLevel = GetWeaponLevelByNbt("速射");
         return attackSpeed + attackSpeedLevel * 0.07f;
+        
     }
  
     
