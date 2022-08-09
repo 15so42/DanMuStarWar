@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,23 +16,32 @@ public class ShieldWeapon : HandWeapon
         var ignoreDamageType = new List<AttackType>() {AttackType.Poison,AttackType.Fire,AttackType.Reflect,AttackType.Heal};
         if (attacker != null &&  !ignoreDamageType.Contains(attackInfo.attackType))
         {
+            var toReduceEndurance = attackInfo1.value;
+            
+            //在前方，伤害由盾牌承受
             if (Vector3.Dot(owner.transform.forward, attacker.transform.position-owner.transform.position) > 0)
             {
-                //在前方，伤害由盾牌承受
-                if (endurance >= attackInfo1.value)
-                {
-                    var hardLevel = GetWeaponLevelByNbt("坚硬");
-
-                    var toReduceEndurance = attackInfo1.value;
-                    if (hardLevel > 0)
-                    {
-                        toReduceEndurance = Mathf.CeilToInt(toReduceEndurance * ((float)hardLevel / (hardLevel + 10)));
-                    }
-                    AddEndurance(-1*toReduceEndurance);
-                    //FlyText.Instance.ShowDamageText(owner.transform.position-Vector3.up*3,"耐久-"+attackInfo1.value);
-                    return new AttackInfo(attackInfo.attacker,attackInfo.attackType,0);
-                }
+               
                 
+            }
+            else
+            {
+                toReduceEndurance = (int)(toReduceEndurance * 1.5f);
+            }
+            
+           
+            if (endurance >= attackInfo1.value)
+            {
+                var hardLevel = GetWeaponLevelByNbt("坚硬");
+
+                
+                if (hardLevel > 0)
+                {
+                    toReduceEndurance = Mathf.CeilToInt(toReduceEndurance * (1-(float)hardLevel / (hardLevel + 10)));
+                }
+                AddEndurance(-1*toReduceEndurance);
+                FlyText.Instance.ShowDamageText(owner.transform.position-Vector3.up*3,"耐久-"+toReduceEndurance);
+                return new AttackInfo(attackInfo.attacker,attackInfo.attackType,0);
             }
         }
 

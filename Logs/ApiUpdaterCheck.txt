@@ -2804,3 +2804,23 @@ C# parse time         : 167ms
 candidates check time : 25ms
 console write time    : 0ms
 
+[api-updater (non-obsolete-error-filter)] 2022/8/10 4:06:44 : Starting D:/Software/2020.3.31f1c1/Editor/Data/Tools/ScriptUpdater/APIUpdater.NonObsoleteApiUpdaterDetector.exe
+[api-updater (non-obsolete-error-filter)] 
+----------------------------------
+jit/startup time      : 746.7938ms
+moved types parse time: 50ms
+candidates parse time : 1ms
+C# parse time         : 210ms
+candidates check time : 43ms
+console write time    : 0ms
+
+[api-updater (non-obsolete-error-filter)] 2022/8/10 4:06:56 : Starting D:/Software/2020.3.31f1c1/Editor/Data/Tools/ScriptUpdater/APIUpdater.NonObsoleteApiUpdaterDetector.exe
+[api-updater (non-obsolete-error-filter)] 
+----------------------------------
+jit/startup time      : 68.0144ms
+moved types parse time: 45ms
+candidates parse time : 1ms
+C# parse time         : 180ms
+candidates check time : 38ms
+console write time    : 0ms
+

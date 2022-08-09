@@ -4877,6 +4877,8 @@ MonoBehaviour:
   - "\u4EA1\u7075\u6740\u624B"
   - "\u7ECF\u9A8C\u4FEE\u8865"
   - "\u51EF\u65CB"
+  - "\u955C\u76FE"
+  - "\u91CD\u51FB"
   mutexSpells: []
   rareRandomStrs: []
   maxEndurance: 200
@@ -5030,6 +5032,7 @@ MonoBehaviour:
   - "\u4FDD\u62A4"
   - "\u7075\u76FE"
   - "\u901F\u5C04"
+  - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -5116,6 +5119,7 @@ MonoBehaviour:
   - "\u6BD2"
   - "\u4FDD\u62A4"
   - "\u7075\u76FE"
+  - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -5208,6 +5212,7 @@ MonoBehaviour:
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
   - "\u7075\u76FE"
+  - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -5290,6 +5295,7 @@ MonoBehaviour:
   - "\u683C\u6321"
   - "\u8346\u68D8"
   - "\u7075\u76FE"
+  - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -5674,6 +5680,7 @@ MonoBehaviour:
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
   - "\u7075\u76FE"
+  - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -5756,6 +5763,7 @@ MonoBehaviour:
   - "\u56DE\u590D"
   - "\u96F7\u4E91"
   - "\u5438\u8840"
+  - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -5846,6 +5854,7 @@ MonoBehaviour:
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
   - "\u7075\u76FE"
+  - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -5987,6 +5996,7 @@ MonoBehaviour:
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
   - "\u7075\u76FE"
+  - "\u91CD\u51FB"
   mutexSpells:
   - "\u683C\u6321"
   - "\u4FDD\u62A4"
@@ -6133,6 +6143,7 @@ MonoBehaviour:
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
   - "\u7075\u76FE"
+  - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -6279,6 +6290,7 @@ MonoBehaviour:
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
   - "\u7075\u76FE"
+  - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -6500,6 +6512,7 @@ MonoBehaviour:
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
   - "\u7075\u76FE"
+  - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -6957,6 +6970,7 @@ MonoBehaviour:
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
   - "\u7075\u76FE"
+  - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -7103,6 +7117,7 @@ MonoBehaviour:
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
   - "\u7075\u76FE"
+  - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -8397,6 +8412,7 @@ MonoBehaviour:
   - "\u6BD2"
   - "\u4FDD\u62A4"
   - "\u7075\u76FE"
+  - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"

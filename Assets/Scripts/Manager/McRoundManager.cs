@@ -79,6 +79,11 @@ public class McRoundManager : RoundManager
             if (trim.Equals("查询统计"))
             {
                 var player = steveCommander.player;
+                if (player.userSaveData == null)
+                {
+                    MessageBox._instance.AddMessage("系统", "查询统计失败，数据服务器暂时不可用");
+                    return;
+                }
                 MessageBox._instance.AddMessage("系统", player.userName+
                                                       "统计信息为：\n"+"胜/败:"+player.userSaveData.winCount+"/"+player.userSaveData.loseCount+
                                                       "\n击杀/死亡:"+player.userSaveData.killCount+"/"+player.userSaveData.dieCount);
@@ -129,6 +134,25 @@ public class McRoundManager : RoundManager
             if (trim == "维修")
             {
                 ParseFixWeapon(steveCommander);
+            }
+
+            if (trim == "关闭自动维修")
+            {
+                steveCommander.autoFixWeapon = false;
+            }
+
+            if (trim == "开启自动维修")
+            {
+                steveCommander.autoFixWeapon = true;
+            }
+
+            if (trim == "查询角色状态")
+            {
+                var steve = steveCommander.FindFirstValidSteve();
+                if (steve)
+                {
+                    MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"状态：\n血量:"+steve.props.hp+"/"+steve.props.maxHp);
+                }
             }
 
             if (trim.StartsWith("多次兑换生命"))

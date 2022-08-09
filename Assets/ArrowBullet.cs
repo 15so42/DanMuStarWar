@@ -30,6 +30,7 @@ public class ArrowBullet : MonoBehaviour
     [Header("击退")] public float upForce = 3;
     public float pushForce = 2;
 
+    public int quickShoot = 0;
 
     //弓箭伤害=3+力量等级*2,力量等级也带有更强的击退效果
     public void Awake()
@@ -51,6 +52,11 @@ public class ArrowBullet : MonoBehaviour
     public void SetStrength(int strength)
     {
         this.strength = strength;
+    }
+
+    public void SetQuickShoot(int quickShoot)
+    {
+        this.quickShoot = quickShoot;
     }
 
 
@@ -124,6 +130,8 @@ public class ArrowBullet : MonoBehaviour
             float force = 1 + strength * 0.1f;
             if (force > 2)
                 force = 2;
+            if (quickShoot>0)
+                force = 0;
             navMeshMoveManager.PushBackByPos(victim.GetGameObject().transform.position,
                 owner.GetAttackEntity().transform.position, upForce, pushForce, force);
         }

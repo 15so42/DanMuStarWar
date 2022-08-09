@@ -89,6 +89,7 @@ public class BowWeapon : HandWeapon
         var bowStrength = GetWeaponLevelByNbt("力量");
         arrowComp.Init(owner, dir,this);
         arrowComp.SetStrength(bowStrength);
+        arrowComp.SetQuickShoot(GetWeaponLevelByNbt("速射"));
     }
 
   

@@ -78,7 +78,7 @@ public class HandWeapon : Weapon,IDamageAble
             //(owner.planetCommander as SteveCommander).
             var steveCommander = owner.planetCommander as SteveCommander;
             var roundManager = FightingManager.Instance.roundManager as McRoundManager;
-            if (steveCommander!=null && roundManager!=null)
+            if (steveCommander!=null && roundManager!=null && steveCommander.autoFixWeapon)
             {
                 roundManager.ParseFixWeapon(steveCommander);
             }
@@ -483,6 +483,8 @@ public class HandWeapon : Weapon,IDamageAble
         {
             attackInfo.value=Mathf.CeilToInt(attackInfo.value*(1+ (0.25f+sharpLevel*0.1f)));
         }
+
+       
         
         var spineLevel = GetWeaponLevelByNbt("尖刺");
         if (spineLevel > 0)
@@ -615,7 +617,18 @@ public class HandWeapon : Weapon,IDamageAble
         if (gameObject.activeSelf == false)
             return;
         
-        
+        var heavyAttackLevel = GetWeaponLevelByNbt("重击");
+        if (heavyAttackLevel > 0)
+        {
+            var rand = UnityEngine.Random.Range(0, 10);
+            if (rand < 2)
+            {
+                victimAble.OnAttacked(new AttackInfo(owner, AttackType.Physics,
+                    Mathf.CeilToInt(victimAble.GetVictimEntity().props.maxHp * 0.01f * heavyAttackLevel),Color.red));
+                
+            }
+           
+        }
         
         var fireLevel = GetWeaponLevelByNbt("火焰");
         if (fireLevel > 0)
@@ -763,6 +776,15 @@ public class HandWeapon : Weapon,IDamageAble
         if (thronLevel > 0 && !ignoreDamageType.Contains(attackInfo.attackType))
         {
             var value = Mathf.CeilToInt(attackInfo.value * ((float)thronLevel / (thronLevel + 10)));
+            attackInfo.attacker.GetAttackEntity()
+                .OnAttacked(new AttackInfo(owner, AttackType.Reflect, value));
+        }
+        
+        var mirrorShield=GetWeaponLevelByNbt("镜盾");
+        var msIgnoreDamageType= new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Fire,AttackType.Poison};
+        if (mirrorShield > 0 && !msIgnoreDamageType.Contains(attackInfo.attackType))
+        {
+            var value = Mathf.CeilToInt(0.7f*mirrorShield);
             attackInfo.attacker.GetAttackEntity()
                 .OnAttacked(new AttackInfo(owner, AttackType.Reflect, value));
         }

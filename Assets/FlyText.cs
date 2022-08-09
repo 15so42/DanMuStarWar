@@ -55,10 +55,14 @@ public class FlyText : MonoBehaviour
             go.Recycle();
         });
     }
-
     public void ShowDamageText(Vector3 worldPos,string msg)
     {
         Show(worldPos,msg,new Color(1,1,1));
+    }
+    
+    public void ShowDamageText(Vector3 worldPos,string msg,Color color)
+    {
+        Show(worldPos,msg,color);
     }
     
     //public void ShowTipText()

@@ -63,7 +63,7 @@ public class ThunderStaffWeapon : McTowerWeapon
                 var cloud = GameObject.Instantiate(cloudPfb).GetComponent<ThunderCloud>();
                 cloud.transform.position = owner.chaseTarget.GetVictimPosition() + Vector3.up * 15;
                 //固定攻速1，冷却缩减计算公式为（等级/等级+15），持续时间为10+等级,每次可攻击目标每10级增加一次
-                cloud.Init(owner,GetBaseAttackInfo(),1,10+cloudLevel,1+cloudLevel/10);
+                cloud.Init(owner,GetBaseAttackInfo(),1.8f,10+cloudLevel,1+cloudLevel/10);
                 lastCloudTime = Time.time;
             }
         }

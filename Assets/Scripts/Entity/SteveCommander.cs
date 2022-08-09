@@ -46,6 +46,9 @@ public class SteveCommander : PlanetCommander
     //延迟Action，当玩家死亡时投喂打call，无法正确附魔，因此在死亡时把对应Action传过来，等待玩家复活后再执行这些命令
     public List<Action> toDoAfterRespawn=new List<Action>();
     
+    //自动维修
+    public bool autoFixWeapon = true;
+    
     public SteveCommander(int uid, Player player) : base(uid, player)
     {
     }

@@ -74,8 +74,19 @@ public class PhpTester : MonoBehaviour
                 //说明获取玩家失败了
                 return;
             }
-            UserSaveData jsonUserSaveData = JsonUtility.FromJson<UserSaveData>(json);
-            onParseJson.Invoke(jsonUserSaveData);
+
+            UserSaveData jsonUserSaveData = null;
+            try
+            {
+                jsonUserSaveData = JsonUtility.FromJson<UserSaveData>(json);
+            }
+            catch (Exception e)
+            {
+                Debug.Log("转换玩家存档数据Json失败"+e.Message);
+            }
+            
+            if(jsonUserSaveData!=null)
+                onParseJson.Invoke(jsonUserSaveData);
         }
 
         StartCoroutine(GetUserByUidC(uid, userName,OnGetUserJson));
