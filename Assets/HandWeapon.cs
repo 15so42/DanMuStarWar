@@ -673,8 +673,7 @@ public class HandWeapon : Weapon,IDamageAble
 
         if (vampireLevel > 0)
         {
-            
-            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,Mathf.CeilToInt(realDamage.calAttackInfo.value * (0.2f+0.1f*vampireLevel))));
+            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,Mathf.CeilToInt(realDamage.calAttackInfo.value * (0.1f+0.05f*vampireLevel))));
         }
     }
 
@@ -784,7 +783,7 @@ public class HandWeapon : Weapon,IDamageAble
         var msIgnoreDamageType= new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Fire,AttackType.Poison};
         if (mirrorShield > 0 && !msIgnoreDamageType.Contains(attackInfo.attackType))
         {
-            var value = Mathf.CeilToInt(0.7f*mirrorShield);
+            var value = Mathf.CeilToInt(0.4f*mirrorShield);
             attackInfo.attacker.GetAttackEntity()
                 .OnAttacked(new AttackInfo(owner, AttackType.Reflect, value));
         }
