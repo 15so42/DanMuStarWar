@@ -779,6 +779,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 312ce20e54f76094cad5b5b73517d7ac, type: 2}
   - {fileID: 11400000, guid: 8328e99e2efc5744694509b57b6301f0, type: 2}
   - {fileID: 11400000, guid: 9abbf1a6359157c4b9d092dc56c7140c, type: 2}
+  - {fileID: 11400000, guid: e496bd65795d5c546bcd6f9ca7221258, type: 2}
   allSkill: []
   allBuff: []
   lv1Skill:
@@ -1027,6 +1028,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thunderPfb: {fileID: 2911532761280341683, guid: 64dc07f26f1be994cb8a2fd0ca267ebe,
+    type: 3}
+  rainAttack: {fileID: 6126001958371304047, guid: 98092dfbc3fb13f4f86401fb8834cb76,
     type: 3}
 --- !u!1001 &584450740
 PrefabInstance:

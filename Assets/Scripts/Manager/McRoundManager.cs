@@ -151,7 +151,10 @@ public class McRoundManager : RoundManager
                 var steve = steveCommander.FindFirstValidSteve();
                 if (steve)
                 {
-                    MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"状态：\n血量:"+steve.props.hp+"/"+steve.props.maxHp);
+                    var weapon = steve.GetActiveWeapon();
+                    MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"状态：\n血量:"+steve.props.hp+"/"+steve.props.maxHp+"\n"+
+                                                         "护盾："+steve.props.shield+"/"+steve.props.maxShield+"\n"+
+                                                         "武器耐久："+weapon.endurance+"/"+weapon.maxEndurance+"\n");
                 }
             }
 

@@ -18,6 +18,9 @@ public class McUnit : WarPlane
     
     [Header("火焰特效")] public Transform fireFx;
     [Header("毒特效")] public Transform poisonFx;
+    public Transform phoenixFx;
+    public Transform angryFx;
+    public Transform searingSunFx;
 
 
     [Header("寻敌Trigger")] public SphereCollider trigger;
@@ -218,6 +221,30 @@ public class McUnit : WarPlane
         CustomEvent.Trigger(gameObject, "OnDestinationSet",escape);
     }
 
+
+    public IVictimAble EnemyCheck(IVictimAble victim)
+    {
+        var gameEntity = victim.GetVictimEntity();
+        if (!gameEntity)//不是单位
+            return null;
+
+        var gameEntityOwner = gameEntity.GetVictimOwner();
+        if (gameEntity==null || gameEntityOwner == GetAttackerOwner()) //同星球
+            return null;
+        if (gameEntity.die)//已经死亡
+            return null;
+
+        var targetPlanet = gameEntityOwner as Planet;
+        if(targetPlanet==null )//只要不是自己星球的，都算作敌人
+            return gameEntity;
+        
+        if (ownerPlanet==null || ownerPlanet.enemyPlanets.Contains(targetPlanet) )
+        {
+            return gameEntity;
+        }
+
+        return null;
+    }
     
     public override IVictimAble EnemyCheck(Collider collider)
     {
@@ -320,6 +347,52 @@ public class McUnit : WarPlane
     public void CloseFireFx()
     {
         fireFx.gameObject.SetActive(false);
+    }
+
+    public void OpenPhoenixFx()
+    {
+        if(phoenixFx &&!phoenixFx.gameObject.activeSelf)
+            phoenixFx.gameObject.SetActive(true);
+    }
+
+    public void ClosePhoenixFx()
+    {
+        if(phoenixFx && phoenixFx.gameObject.activeSelf)
+            phoenixFx.gameObject.SetActive(false);
+    }
+
+    public void OpenAngryFx()
+    {
+        if(angryFx && !angryFx.gameObject.activeSelf)
+            angryFx.gameObject.SetActive(true);
+    }
+
+    public void CloseAngryFx()
+    {
+        if(angryFx && angryFx.gameObject.activeSelf)
+            angryFx.gameObject.SetActive(false);
+    }
+
+    public void OpenSunFx()
+    {
+        if(searingSunFx && !searingSunFx.gameObject.activeSelf)
+            searingSunFx.gameObject.SetActive(true);
+    }
+
+    public void CloseSunFx()
+    {
+        if(searingSunFx && searingSunFx.gameObject.activeSelf)
+            searingSunFx.gameObject.SetActive(false);
+    }
+
+    public void OpenDrawFx()
+    {
+        
+    }
+
+    public void CloseDrawFx()
+    {
+        
     }
 
     public void OpenPoisonFx()

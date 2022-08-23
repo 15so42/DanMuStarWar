@@ -9,6 +9,7 @@ public class AttackManager : MonoBehaviour
 {
     public static AttackManager Instance;
     [Header("落雷")] public GameObject thunderPfb;
+    [Header("雨裁")] public GameObject rainAttack;
 
     private void Awake()
     {
@@ -35,8 +36,8 @@ public class AttackManager : MonoBehaviour
             //FlyText.Instance.ShowDamageText(end - Vector3.up * 3, "落雷(" + damage.value + ")");
             
             var hpAndShield=enemys[i].OnAttacked(damage);
-            if(weapon!=null)
-                weapon.OnDamageOther(enemys[i],hpAndShield);
+            // if(weapon!=null)
+            //     weapon.OnDamageOther(enemys[i],hpAndShield);
             
         }
           
@@ -77,6 +78,37 @@ public class AttackManager : MonoBehaviour
         }
 
         return victimAbles;
+    }
+
+    
+    //碰撞体范围碰撞后得到的单位传入，返回敌人
+    protected List<IVictimAble> FilterEnemies(List<IVictimAble> victimAbles,IAttackAble attacker)
+    {
+        List<IVictimAble> result=new List<IVictimAble>();
+        foreach (var e in victimAbles)
+        {
+            var victim = (attacker as McUnit).EnemyCheck(e);
+            if(victim!=null)
+                result.Add(victim);
+            
+        }
+
+        return result;
+    }
+
+
+    public void RainAttackFx(Vector3 pos)
+    {
+        var rainAttackGo=GameObject.Instantiate(rainAttack);
+        rainAttackGo.transform.position = pos;
+    }
+
+    public void AttackEnemies(List<IVictimAble> enemies,AttackInfo attackInfo)
+    {
+        foreach (var e in enemies)
+        {
+            e.OnAttacked(attackInfo);
+        }
     }
 
     public void Explosion(AttackInfo attackInfo,IDamageAble damageAble,Vector3 center,float radius,string fxName="")

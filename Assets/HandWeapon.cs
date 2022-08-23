@@ -30,8 +30,12 @@ public class HandWeapon : Weapon,IDamageAble
     [Header("击飞高度和力度")]
     public int pushBackHeight=4;
     public int pushBackStrength=1;
-
-
+    
+    //特定附魔计时
+    private float lastThundersTime = 0;//落雷
+    private float lastPhoenixTime = 0;
+    private float lastRainAttackTime = 0;
+    
     public void SetMaxSpellCount(int value)
     {
         weaponNbt.maxSpellCount = value;
@@ -47,6 +51,14 @@ public class HandWeapon : Weapon,IDamageAble
         (owner as McUnit).SetAttackDistance(attackDistance);
         
         weaponNbt=new SteveWeaponNbt();
+        
+        randomStrs.Add("落雷");
+        randomStrs.Add("雨裁");
+        randomStrs.Add("汲取");
+        randomStrs.Add("烈阳");
+        randomStrs.Add("愤怒");
+        randomStrs.Add("不死鸟");
+        
         
         endurance = maxEndurance;
         OnEnduranceChange(endurance,maxEndurance);
@@ -404,8 +416,10 @@ public class HandWeapon : Weapon,IDamageAble
                 
             }
 
-           
             
+
+
+
             var fortuneLevel= GetWeaponLevelByNbt("财运");
             if (fortuneLevel > 0)
             {
@@ -416,6 +430,21 @@ public class HandWeapon : Weapon,IDamageAble
                 
             }
 
+            var searingSun = GetWeaponLevelByNbt("烈阳");
+            if (searingSun > 0)
+            {
+                (owner as McUnit).OpenSunFx();
+                var enemies = AttackManager.Instance.GetEnemyInRadius(owner, owner.transform.position, 15, 90);
+                foreach (var e in enemies)
+                {
+                    e.OnAttacked(new AttackInfo(owner, AttackType.Real,
+                        Mathf.CeilToInt(owner.props.maxHp * 0.004f * searingSun)));
+                }
+            }
+            else
+            {
+                (owner as McUnit).CloseSunFx();
+            }
 
             var healLevel = GetWeaponLevelByNbt("回复");
             if (healLevel > 0)
@@ -478,12 +507,40 @@ public class HandWeapon : Weapon,IDamageAble
         var victim = owner.chaseTarget.GetVictimEntity();
 
         var attackInfo = GetBaseAttackInfo();
+
+        var angry = GetWeaponLevelByNbt("愤怒");
+        if (angry > 0)
+        {
+            if (owner.props.hp > 0)
+            {
+                var count = (1 - (float)owner.props.hp / owner.props.maxHp)/10;
+                if(count>5)
+                    (owner as McUnit).OpenAngryFx();
+                else
+                {
+                    (owner as McUnit).CloseAngryFx();
+                }
+                attackInfo.value += Mathf.CeilToInt(0.15f * angry * count);
+            }
+            
+        }
+        
         var sharpLevel = GetWeaponLevelByNbt("锋利");
         if (sharpLevel > 0)
         {
             attackInfo.value=Mathf.CeilToInt(attackInfo.value*(1+ (0.25f+sharpLevel*0.1f)));
         }
 
+        var swordKing = GetWeaponLevelByNbt("剑圣");
+        if (swordKing > 0)
+        {
+            var cost = Mathf.CeilToInt(swordKing * ( 1 - (float)swordKing/(swordKing+20) ));
+            if (endurance > cost)
+            {
+                attackInfo.value=Mathf.CeilToInt(attackInfo.value + cost);
+                AddEndurance(-1*cost);
+            }
+        }
        
         
         var spineLevel = GetWeaponLevelByNbt("尖刺");
@@ -621,13 +678,36 @@ public class HandWeapon : Weapon,IDamageAble
         if (heavyAttackLevel > 0)
         {
             var rand = UnityEngine.Random.Range(0, 10);
-            if (rand < 2)
+            if (rand < 3)
             {
                 victimAble.OnAttacked(new AttackInfo(owner, AttackType.Physics,
                     Mathf.CeilToInt(victimAble.GetVictimEntity().props.maxHp * 0.01f * heavyAttackLevel),Color.red));
                 
             }
            
+        }
+        
+        //落雷
+        var thunderLevel = GetWeaponLevelByNbt("落雷");
+        if (thunderLevel > 0 && Time.time>lastThundersTime+6)
+        {
+            float radius = 5+ thunderLevel ;
+            var count = 1+thunderLevel / 4;
+            var attackInfo = GetBaseAttackInfo();
+            //var damage = new AttackInfo(attackInfo.attacker, attackInfo.attackType, attackInfo.value * 5);
+            Vector3 targetPos = owner.chaseTarget.GetVictimEntity().GetVictimPosition();
+            AttackManager.Instance.Thunder(owner,attackInfo,this,targetPos+Vector3.up*60,6,targetPos,radius,count);
+            lastThundersTime = Time.time;
+        }
+
+        var rainAttack = GetWeaponLevelByNbt("雨裁");
+        if (rainAttack > 0 && Time.time>lastRainAttackTime+2)
+        {
+            var enemies = AttackManager.Instance.GetEnemyInRadius(owner, victimAble.GetVictimPosition(), 15, 90);
+            AttackManager.Instance.AttackEnemies(enemies,new AttackInfo(owner,AttackType.Real,rainAttack));
+            AttackManager.Instance.RainAttackFx(victimAble.GetVictimPosition());
+            lastRainAttackTime = Time.time;
+
         }
         
         var fireLevel = GetWeaponLevelByNbt("火焰");
@@ -640,13 +720,27 @@ public class HandWeapon : Weapon,IDamageAble
                 {
                     (skill as FireSkill).SetAttacker(owner); 
                     (skill as FireSkill).life = 4 + fireLevel*2;
-                    (skill as FireSkill).damage = Mathf.CeilToInt((float)fireLevel/5);
+                    (skill as FireSkill).damage = Mathf.CeilToInt((float)fireLevel*0.33f);
                 }
                 
             }
             
         }
-       
+
+        var drawLevel = GetWeaponLevelByNbt("汲取");
+        if (drawLevel > 0)
+        {
+            if (victimAble.GetVictimEntity())
+            {
+                var skill=SkillManager.Instance.AddSkill("Skill_汲取_LV1", victimAble.GetVictimEntity(), owner.planetCommander);
+                if (skill as DrawSkill)//第一次附加火焰没问题，但是之后无法再附加火焰而是刷新火焰Buff
+                {
+                    (skill as DrawSkill).SetAttacker(owner);
+                    (skill as DrawSkill).damage = Mathf.CeilToInt((float)drawLevel*0.2f);
+                }
+                
+            }
+        }
         
         
        
@@ -661,7 +755,7 @@ public class HandWeapon : Weapon,IDamageAble
                 {
                     (skill as PoisonSkill).SetAttacker(owner);
                     var maxHp = victimAble.GetVictimEntity().props.maxHp;
-                    (skill as PoisonSkill).SetAttackDamage(1+Mathf.CeilToInt (0.0055f*poisonLevel*maxHp)); 
+                    (skill as PoisonSkill).SetAttackDamage(1+Mathf.CeilToInt (0.008f*poisonLevel*maxHp)); 
                     (skill as PoisonSkill).life = 3;
                 }
                 
@@ -783,7 +877,7 @@ public class HandWeapon : Weapon,IDamageAble
         var msIgnoreDamageType= new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Fire,AttackType.Poison};
         if (mirrorShield > 0 && !msIgnoreDamageType.Contains(attackInfo.attackType))
         {
-            var value = Mathf.CeilToInt(0.4f*mirrorShield);
+            var value = Mathf.CeilToInt(0.23f*mirrorShield);
             attackInfo.attacker.GetAttackEntity()
                 .OnAttacked(new AttackInfo(owner, AttackType.Reflect, value));
         }
@@ -799,6 +893,36 @@ public class HandWeapon : Weapon,IDamageAble
         // {
         //     
         // }
+
+        var phoenix = GetWeaponLevelByNbt("不死鸟");
+        if (phoenix > 0)
+        {
+            if (owner.props.hp > 0)
+            {
+                var hpRate = (float)owner.props.hp / owner.props.maxHp;
+                if (hpRate < 0.3 && attackInfo.attackType!=AttackType.Heal)
+                {
+                    if (Time.time > lastPhoenixTime + 120)
+                    {
+                        lastPhoenixTime = Time.time;
+                        (owner as McUnit).OpenPhoenixFx();
+                    }
+
+                    else if (Time.time < lastPhoenixTime + 10)
+                    {
+                        //持续10秒
+                        var value = Mathf.CeilToInt(attackInfo.value * ((float) phoenix / (phoenix + 10)));
+                        owner.OnAttacked(new AttackInfo(owner, AttackType.Heal, value,Color.yellow));
+
+                        Debug.Log("不死鸟回血"+value);
+                    }
+                    else
+                    {
+                        (owner as McUnit).ClosePhoenixFx();
+                    }
+                }
+            }
+        }
         
         var parryLevel = GetWeaponLevelByNbt("格挡");
         var ignoreDamageType2 = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Poison,AttackType.Real,AttackType.Thunder};

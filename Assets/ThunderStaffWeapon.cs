@@ -7,7 +7,7 @@ public class ThunderStaffWeapon : McTowerWeapon
 {
     private float lastCloudTime = 0;
     private float lastLinkTime = 0;
-    private float lastThundersTime = 0;//落雷
+    
     
     //List<UnityTimer.Timer> timers=new List<Timer>();
     public GameObject cloudPfb;
@@ -28,6 +28,7 @@ public class ThunderStaffWeapon : McTowerWeapon
            
             var count = Mathf.CeilToInt(linkLevel/4f);
             float radius = 20+linkLevel;
+            radius = Mathf.Clamp(radius, 20, 45);
             
                 var list=AttackManager.Instance.GetEnemyInRadius(owner, mainTargetPos,
                     radius, count+1);
@@ -40,18 +41,7 @@ public class ThunderStaffWeapon : McTowerWeapon
 
         }
 
-        //落雷
-        var thunderLevel = GetWeaponLevelByNbt("落雷");
-        if (thunderLevel > 0 && Time.time>lastThundersTime+6)
-        {
-            float radius = 5+ thunderLevel ;
-            var count = 1+thunderLevel / 4;
-            var attackInfo = GetBaseAttackInfo();
-            //var damage = new AttackInfo(attackInfo.attacker, attackInfo.attackType, attackInfo.value * 5);
-            Vector3 targetPos = owner.chaseTarget.GetVictimEntity().GetVictimPosition();
-            AttackManager.Instance.Thunder(owner,attackInfo,this,targetPos+Vector3.up*60,6,targetPos,radius,count);
-            lastThundersTime = Time.time;
-        }
+        
         
         //雷云
         var cloudLevel = GetWeaponLevelByNbt("雷云");

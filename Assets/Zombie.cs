@@ -37,7 +37,7 @@ public class Zombie : McUnit
     public override void Die()
     {
         base.Die();
-        Destroy(gameObject,10);
+        Destroy(gameObject,120);
     }
 
 
