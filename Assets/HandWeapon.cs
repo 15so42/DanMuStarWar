@@ -35,7 +35,17 @@ public class HandWeapon : Weapon,IDamageAble
     private float lastThundersTime = 0;//落雷
     private float lastPhoenixTime = 0;
     private float lastRainAttackTime = 0;
-    
+
+    private void Awake()
+    {
+        randomStrs.Add("落雷");
+        randomStrs.Add("雨裁");
+        randomStrs.Add("汲取");
+        randomStrs.Add("烈阳");
+        randomStrs.Add("愤怒");
+        randomStrs.Add("不死鸟");
+    }
+
     public void SetMaxSpellCount(int value)
     {
         weaponNbt.maxSpellCount = value;
@@ -51,15 +61,7 @@ public class HandWeapon : Weapon,IDamageAble
         (owner as McUnit).SetAttackDistance(attackDistance);
         
         weaponNbt=new SteveWeaponNbt();
-        
-        randomStrs.Add("落雷");
-        randomStrs.Add("雨裁");
-        randomStrs.Add("汲取");
-        randomStrs.Add("烈阳");
-        randomStrs.Add("愤怒");
-        randomStrs.Add("不死鸟");
-        
-        
+
         endurance = maxEndurance;
         OnEnduranceChange(endurance,maxEndurance);
 
@@ -302,6 +304,29 @@ public class HandWeapon : Weapon,IDamageAble
         {
             Debug.LogError("特效报错原因"+e.Message);
         }
+        
+        //特效
+        var angry = GetWeaponLevelByNbt("愤怒");
+        if (angry > 0)
+        {
+            
+           (owner as McUnit).OpenAngryFx();
+            
+        }
+        else
+        { 
+            (owner as McUnit).CloseAngryFx();
+        }
+        
+        var searingSun = GetWeaponLevelByNbt("烈阳");
+        if (searingSun > 0)
+        {
+            (owner as McUnit).OpenSunFx();
+        }
+        else
+        {
+            (owner as McUnit).CloseSunFx();
+        }
     }
 
 
@@ -434,7 +459,7 @@ public class HandWeapon : Weapon,IDamageAble
             if (searingSun > 0)
             {
                 (owner as McUnit).OpenSunFx();
-                var enemies = AttackManager.Instance.GetEnemyInRadius(owner, owner.transform.position, 15, 90);
+                var enemies = AttackManager.Instance.GetEnemyInRadius(owner, owner.transform.position, owner.findEnemyDistance, 90);
                 foreach (var e in enemies)
                 {
                     e.OnAttacked(new AttackInfo(owner, AttackType.Real,
@@ -513,13 +538,15 @@ public class HandWeapon : Weapon,IDamageAble
         {
             if (owner.props.hp > 0)
             {
-                var count = (1 - (float)owner.props.hp / owner.props.maxHp)/10;
-                if(count>5)
-                    (owner as McUnit).OpenAngryFx();
-                else
-                {
-                    (owner as McUnit).CloseAngryFx();
-                }
+                var count = (1 - (float)owner.props.hp / owner.props.maxHp)/0.1f;
+                // if (count > 5)
+                // {
+                //     (owner as McUnit).OpenAngryFx();
+                // }
+                // else
+                // {
+                //     (owner as McUnit).CloseAngryFx();
+                // }
                 attackInfo.value += Mathf.CeilToInt(0.15f * angry * count);
             }
             
@@ -692,8 +719,12 @@ public class HandWeapon : Weapon,IDamageAble
         if (thunderLevel > 0 && Time.time>lastThundersTime+6)
         {
             float radius = 5+ thunderLevel ;
-            var count = 1+thunderLevel / 4;
+            if (radius > 30)
+                radius = 30;
+            var count = 1+thunderLevel / 5;
             var attackInfo = GetBaseAttackInfo();
+            attackInfo.value += thunderLevel;
+            attackInfo.attackType =  AttackType.Real;
             //var damage = new AttackInfo(attackInfo.attacker, attackInfo.attackType, attackInfo.value * 5);
             Vector3 targetPos = owner.chaseTarget.GetVictimEntity().GetVictimPosition();
             AttackManager.Instance.Thunder(owner,attackInfo,this,targetPos+Vector3.up*60,6,targetPos,radius,count);
@@ -704,7 +735,7 @@ public class HandWeapon : Weapon,IDamageAble
         if (rainAttack > 0 && Time.time>lastRainAttackTime+2)
         {
             var enemies = AttackManager.Instance.GetEnemyInRadius(owner, victimAble.GetVictimPosition(), 15, 90);
-            AttackManager.Instance.AttackEnemies(enemies,new AttackInfo(owner,AttackType.Real,rainAttack));
+            AttackManager.Instance.AttackEnemies(enemies,new AttackInfo(owner,AttackType.Physics,rainAttack));
             AttackManager.Instance.RainAttackFx(victimAble.GetVictimPosition());
             lastRainAttackTime = Time.time;
 
@@ -755,7 +786,7 @@ public class HandWeapon : Weapon,IDamageAble
                 {
                     (skill as PoisonSkill).SetAttacker(owner);
                     var maxHp = victimAble.GetVictimEntity().props.maxHp;
-                    (skill as PoisonSkill).SetAttackDamage(1+Mathf.CeilToInt (0.008f*poisonLevel*maxHp)); 
+                    (skill as PoisonSkill).SetAttackDamage(1+Mathf.CeilToInt (0.006f*poisonLevel*maxHp)); 
                     (skill as PoisonSkill).life = 3;
                 }
                 
@@ -900,9 +931,9 @@ public class HandWeapon : Weapon,IDamageAble
             if (owner.props.hp > 0)
             {
                 var hpRate = (float)owner.props.hp / owner.props.maxHp;
-                if (hpRate < 0.3 && attackInfo.attackType!=AttackType.Heal)
+                if (hpRate <= 0.4 && attackInfo.attackType!=AttackType.Heal)
                 {
-                    if (Time.time > lastPhoenixTime + 120)
+                    if (Time.time > lastPhoenixTime + 45)
                     {
                         lastPhoenixTime = Time.time;
                         (owner as McUnit).OpenPhoenixFx();
@@ -911,7 +942,7 @@ public class HandWeapon : Weapon,IDamageAble
                     else if (Time.time < lastPhoenixTime + 10)
                     {
                         //持续10秒
-                        var value = Mathf.CeilToInt(attackInfo.value * ((float) phoenix / (phoenix + 10)));
+                        var value = Mathf.CeilToInt(phoenix*0.5f);
                         owner.OnAttacked(new AttackInfo(owner, AttackType.Heal, value,Color.yellow));
 
                         Debug.Log("不死鸟回血"+value);

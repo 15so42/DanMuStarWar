@@ -27,8 +27,8 @@ public class ThunderStaffWeapon : McTowerWeapon
             Vector3 mainTargetPos = owner.chaseTarget.GetVictimEntity().transform.position;
            
             var count = Mathf.CeilToInt(linkLevel/4f);
-            float radius = 20+linkLevel;
-            radius = Mathf.Clamp(radius, 20, 45);
+            float radius = 15+linkLevel;
+            radius = Mathf.Clamp(radius, 15, 27);
             
                 var list=AttackManager.Instance.GetEnemyInRadius(owner, mainTargetPos,
                     radius, count+1);

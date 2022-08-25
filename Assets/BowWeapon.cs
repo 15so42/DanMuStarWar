@@ -22,7 +22,7 @@ public class BowWeapon : HandWeapon
     public override float GetAttackSpeed()
     {
         var attackSpeedLevel = GetWeaponLevelByNbt("速射");
-        return attackSpeed + attackSpeedLevel * 0.07f;
+        return attackSpeed + attackSpeedLevel * 0.055f;
         
     }
  

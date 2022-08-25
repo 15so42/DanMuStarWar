@@ -209,7 +209,26 @@ public class PVEManager : MonoBehaviour
     {
         while (true)
         {
-            SpawnUnit("BattleUnit_EvilIronGolem");
+            var count = 1;
+            if (GetElapsedTime() > 3 * 600)
+            {
+                count = 2;
+            }
+
+            if (GetElapsedTime() > 4 * 600)
+            {
+                count = 4;
+            }
+
+            if (GetElapsedTime() > 5 * 600)
+            {
+                count = 6;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                SpawnUnit("BattleUnit_EvilIronGolem");
+            }
+            
             yield return new WaitForSeconds(300);
         }
     }

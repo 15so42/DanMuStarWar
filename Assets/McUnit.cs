@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Bolt;
+using GameCode.Tools;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -45,8 +46,33 @@ public class McUnit : WarPlane
         fightingManager = GameManager.Instance.fightingManager;
        
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        LoadFx();
     }
 
+    void LoadFx()
+    {
+        var position = transform.position;
+        angryFx = ResFactory.Instance.CreateFx("AngryFx", position).transform;
+        poisonFx = ResFactory.Instance.CreateFx("PoisonFx", position).transform;
+        fireFx = ResFactory.Instance.CreateFx("FireFx", position).transform;
+        searingSunFx = ResFactory.Instance.CreateFx("SearingSunFx", position).transform;
+        phoenixFx = ResFactory.Instance.CreateFx("PhoenixFx", position).transform;
+
+        angryFx.SetParent(transform);
+        poisonFx.SetParent(transform);
+        fireFx.SetParent(transform);
+        searingSunFx.SetParent(transform);
+        phoenixFx.SetParent(transform);
+        
+        angryFx.gameObject.SetActive(false);
+        poisonFx.gameObject.SetActive(false);
+        fireFx.gameObject.SetActive(false);
+        searingSunFx.gameObject.SetActive(false);
+        phoenixFx.gameObject.SetActive(false);
+        
+    }
+    
     public Vector3 RandomDestination()
     {
         Vector3 newDest = UnityEngine.Random.insideUnitSphere * 25 ; //半径为500的球形随机点
@@ -397,12 +423,12 @@ public class McUnit : WarPlane
 
     public void OpenPoisonFx()
     {
-        
+        poisonFx.gameObject.SetActive(true);
     }
     
     public void ClosePoisonFx()
     {
-        
+        poisonFx.gameObject.SetActive(false);
     }
     
 }

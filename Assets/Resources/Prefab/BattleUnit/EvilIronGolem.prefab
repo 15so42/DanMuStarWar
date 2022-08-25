@@ -5136,6 +5136,9 @@ MonoBehaviour:
   meshRenderers: []
   fireFx: {fileID: 7153072656814403719}
   poisonFx: {fileID: 0}
+  phoenixFx: {fileID: 0}
+  angryFx: {fileID: 0}
+  searingSunFx: {fileID: 0}
   trigger: {fileID: 6082696280813376532}
   canPushBack: 1
   canSetPlanetEnemy: 1
@@ -5454,7 +5457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fbae9b11d3bbfe4f9a96df83fd57a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDistance: 5
+  attackDistance: 8
   owner: {fileID: 0}
   weaponName: "\u7A7A\u624B"
   attackSpeed: 0.5

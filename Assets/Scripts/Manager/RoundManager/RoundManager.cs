@@ -63,7 +63,7 @@ public class RoundManager : MonoBehaviour
         elapsedTime += Time.deltaTime;
         if (timer >600)
         {
-            GameEnvEventManager.Instance.PlayRandomEvent();
+            //GameEnvEventManager.Instance.PlayRandomEvent();
             
 
             timer = 0;
