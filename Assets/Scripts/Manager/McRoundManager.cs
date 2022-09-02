@@ -67,6 +67,11 @@ public class McRoundManager : RoundManager
             if (trim.Equals("查询礼物点数"))
             {
                 var player = steveCommander.player;
+                if (player.userSaveData == null)
+                {
+                    MessageBox._instance.AddMessage("系统", "查询礼物点数失败，数据服务器暂时不可用");
+                    return;
+                }
                 MessageBox._instance.AddMessage("系统", player.userName+"的礼物点数为"+player.userSaveData.giftPoint);
             }
 

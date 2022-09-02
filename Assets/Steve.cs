@@ -5,6 +5,7 @@ using Bolt;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
+using Random = System.Random;
 
 public class Steve : McUnit
 {
@@ -125,13 +126,15 @@ public class Steve : McUnit
         var steveCommander = planetCommander as SteveCommander;
         if(steveCommander.player.userSaveData==null)
             return;
+        
         if (steveCommander.player.userSaveData.skinId == -1)
         {
             SetSkin(steveCommander.player.userSaveData.customSkin64Code);
         }
         else
         {
-            SetSkinById(steveCommander.player.userSaveData.skinId);
+            var rand = UnityEngine.Random.Range(0, 3);
+            SetSkinById(rand);
         }
         
         

@@ -496,26 +496,33 @@ public class FightingManager : MonoBehaviourPunCallbacks
         
     }
 
-    public void GameOverByMc(List<PlanetCommander> winners,List<PlanetCommander> losers)
+    public void GameOverByMc(List<PlanetCommander> winners,List<PlanetCommander> losers,bool upload)
     {
         gameStatus = GameStatus.WaitingNewFighting;
         MessageBox._instance.Hide();
 
-        if (winners!=null && winners.Count > 0)
+        if (upload)
         {
-            for (int i = 0; i < winners.Count; i++)
+            if (winners!=null && winners.Count > 0)
             {
-                var player = winners[i].player;
-                AddPlayerDataValue(player.uid, "winCount", 1);
+                for (int i = 0; i < winners.Count; i++)
+                {
+                    var player = winners[i].player;
+                    AddPlayerDataValue(player.uid, "winCount", 1);
+                }
+            }
+
+            
+                
+            
+            for (int i = 0; i < losers.Count; i++)
+            {
+                var player = losers[i].player;
+                AddPlayerDataValue(player.uid, "loseCount", 1);
             }
         }
-       
-        for (int i = 0; i < losers.Count; i++)
-        {
-            var player = losers[i].player;
-            AddPlayerDataValue(player.uid, "loseCount", 1);
-        }
         exitPlayers.Clear();
+        
         SaveAllPlayer();
         MCBattleOverDialog.ShowDialog(15,GameMode.MCWar,winners,losers,
             ()=>

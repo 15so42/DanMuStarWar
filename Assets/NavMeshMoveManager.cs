@@ -50,6 +50,13 @@ public class NavMeshMoveManager : MoveManager
         if(steve.canPushBack==false)
             return;
 
+        
+        var angryLevel=steve.GetActiveWeapon().GetWeaponLevelByNbt("愤怒");
+        if (angryLevel > 0)
+        {
+            multiplier -= 0.03f * angryLevel;
+        }
+        
         Vector3 retDir=Vector3.zero;
         Vector3 horDir = (victimPos - attackerPos).normalized;
         horDir.y = 0;

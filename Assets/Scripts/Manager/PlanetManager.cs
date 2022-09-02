@@ -78,7 +78,12 @@ public class PlanetManager : MonoBehaviour
                         winners = allPlanets[i].planetCommanders;
                     }
                 }
-                FightingManager.Instance.GameOverByMc(winners,losers);
+
+                var upload = true;
+                if (FightingManager.Instance.roundManager as McPveRoundManager)
+                    upload = false;
+                //PVE模式不上传胜场和败场数据，其他照传不误
+                FightingManager.Instance.GameOverByMc(winners,losers,upload);
             }
             else
             {

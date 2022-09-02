@@ -35,6 +35,7 @@ public class HandWeapon : Weapon,IDamageAble
     private float lastThundersTime = 0;//落雷
     private float lastPhoenixTime = 0;
     private float lastRainAttackTime = 0;
+    private float lastDrawTime = 0;
 
     private void Awake()
     {
@@ -751,7 +752,7 @@ public class HandWeapon : Weapon,IDamageAble
                 {
                     (skill as FireSkill).SetAttacker(owner); 
                     (skill as FireSkill).life = 4 + fireLevel*2;
-                    (skill as FireSkill).damage = Mathf.CeilToInt((float)fireLevel*0.33f);
+                    (skill as FireSkill).damage = Mathf.CeilToInt((float)fireLevel*0.2f);
                 }
                 
             }
@@ -761,7 +762,7 @@ public class HandWeapon : Weapon,IDamageAble
         var drawLevel = GetWeaponLevelByNbt("汲取");
         if (drawLevel > 0)
         {
-            if (victimAble.GetVictimEntity())
+            if (victimAble.GetVictimEntity() && Time.time>lastDrawTime+2.5f)
             {
                 var skill=SkillManager.Instance.AddSkill("Skill_汲取_LV1", victimAble.GetVictimEntity(), owner.planetCommander);
                 if (skill as DrawSkill)//第一次附加火焰没问题，但是之后无法再附加火焰而是刷新火焰Buff
@@ -769,7 +770,9 @@ public class HandWeapon : Weapon,IDamageAble
                     (skill as DrawSkill).SetAttacker(owner);
                     (skill as DrawSkill).damage = Mathf.CeilToInt((float)drawLevel*0.2f);
                 }
-                
+
+                lastDrawTime = Time.time;
+
             }
         }
         
@@ -786,7 +789,7 @@ public class HandWeapon : Weapon,IDamageAble
                 {
                     (skill as PoisonSkill).SetAttacker(owner);
                     var maxHp = victimAble.GetVictimEntity().props.maxHp;
-                    (skill as PoisonSkill).SetAttackDamage(1+Mathf.CeilToInt (0.006f*poisonLevel*maxHp)); 
+                    (skill as PoisonSkill).SetAttackDamage(1+Mathf.CeilToInt (0.0045f*poisonLevel*maxHp)); 
                     (skill as PoisonSkill).life = 3;
                 }
                 
@@ -908,7 +911,7 @@ public class HandWeapon : Weapon,IDamageAble
         var msIgnoreDamageType= new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Fire,AttackType.Poison};
         if (mirrorShield > 0 && !msIgnoreDamageType.Contains(attackInfo.attackType))
         {
-            var value = Mathf.CeilToInt(0.23f*mirrorShield);
+            var value = Mathf.CeilToInt(0.16f*mirrorShield);
             attackInfo.attacker.GetAttackEntity()
                 .OnAttacked(new AttackInfo(owner, AttackType.Reflect, value));
         }
@@ -996,9 +999,9 @@ public class HandWeapon : Weapon,IDamageAble
         if (spiritualShieldLevel > 0)
         {
             var cd = 60 - 60 * ((float) spiritualShieldLevel / (spiritualShieldLevel + 10));
-            if (Time.time > lastSpiritualShieldTime + cd  && attackInfo.attackType!=AttackType.Heal)
+            if (Time.time > lastSpiritualShieldTime + cd)
             {
-                owner.props.maxShield = owner.props.maxHp;
+                owner.props.maxShield = (int)(owner.props.maxHp* (1+0.05*spiritualShieldLevel));
                 //float shieldValue = owner.props.maxHp * (0.09f+spiritualShieldLevel*0.01f);
                 
                 owner.AddShield((int)spiritualShieldLevel*2);

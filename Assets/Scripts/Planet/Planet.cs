@@ -743,6 +743,8 @@ public class Planet : GameEntity,ITaskAble
                 float teamPoint = playerCount / (fightingManager.gameMode==GameMode.Normal?playerCount:2f);//混战模式每次拿一点
                 int hangUpPlayerCount = 0;
                 var totalPoint = teamPoint;
+                //点数增加
+                totalPoint *= 2;
             
                 //挂机处理
                 for (int i = 0; i < planetCommanders.Count; i++)
@@ -775,7 +777,7 @@ public class Planet : GameEntity,ITaskAble
         }
 
         autoCUTimer += Time.deltaTime;
-        if (autoCUTimer > 6 && autoCreateUnit)
+        if (autoCUTimer > 6 && autoCreateUnit)//废弃的星球大战AI模块
         {
             int sum = 0;
             

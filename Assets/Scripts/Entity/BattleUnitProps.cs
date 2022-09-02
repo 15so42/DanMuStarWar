@@ -60,7 +60,7 @@ public class BattleUnitProps : MonoBehaviour
             damage = attackInfo.value ;
         }
 
-        if (attackInfo.attackType == AttackType.Real || attackInfo.attackType==AttackType.Thunder || attackInfo.attackType==AttackType.Poison)
+        if (attackInfo.attackType == AttackType.Real || attackInfo.attackType==AttackType.Thunder || attackInfo.attackType==AttackType.Poison || attackInfo.attackType== AttackType.Fire)
         {
             damage = attackInfo.value;
         }
@@ -71,7 +71,7 @@ public class BattleUnitProps : MonoBehaviour
         }
 
 
-        if (shield > 0)
+        if (shield > 0 && attackInfo.attackType!=AttackType.Heal)
         {
             if (damage >= shield)
             {
