@@ -147,6 +147,7 @@ MonoBehaviour:
   endurance: 65
   pushBackHeight: 4
   pushBackStrength: 1
+  summons: []
   shootPoint: {fileID: 8312579070464758517}
   bulletName: FireBallBullet
   animTriggerName: Throw
@@ -5070,9 +5071,16 @@ MonoBehaviour:
   meshRenderers: []
   fireFx: {fileID: 6129919431048103647}
   poisonFx: {fileID: 0}
+  phoenixFx: {fileID: 0}
+  angryFx: {fileID: 0}
+  searingSunFx: {fileID: 0}
   trigger: {fileID: 7341003824302268023}
   canPushBack: 1
   canSetPlanetEnemy: 0
+  isGuard: 0
+  guardPos: {x: 0, y: 0, z: 0}
+  dieRangePfb: {fileID: 0}
+  selfFire: 0
 --- !u!114 &5508293707093964114
 MonoBehaviour:
   m_ObjectHideFlags: 0

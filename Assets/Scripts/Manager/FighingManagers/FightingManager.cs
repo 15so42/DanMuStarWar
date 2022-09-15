@@ -344,7 +344,12 @@ public class FightingManager : MonoBehaviourPunCallbacks
     //玩家占领星球
     void SetOwners()
     {
-        UnityTimer.Timer.Register(1, SetOwnersAfter1Second);
+        UnityTimer.Timer.Register(1, ()=>
+        {
+            SetOwnersAfter1Second();
+            McRankDialog.ShowDialog();
+        });
+       
     }
     
     

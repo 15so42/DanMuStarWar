@@ -16,6 +16,7 @@ public enum EnumEventType
     OnPlanetOccupied,//星球被驻守成功
     OnColonyLost,//驻守地失守
     OnSteveDied,
+    OnMcUnitDied,
     OnBattleOver,
 
     //送礼

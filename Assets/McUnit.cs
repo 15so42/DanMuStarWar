@@ -430,5 +430,11 @@ public class McUnit : WarPlane
     {
         poisonFx.gameObject.SetActive(false);
     }
-    
+
+
+    public override void Die()
+    {
+        base.Die();
+        EventCenter.Broadcast(EnumEventType.OnMcUnitDied,this);
+    }
 }

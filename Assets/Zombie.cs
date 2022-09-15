@@ -7,6 +7,7 @@ public class Zombie : McUnit
 {
 
     private DayLightManager dayLightManager;
+    public bool selfFire = true;
     
     protected override void Start()
     {
@@ -17,18 +18,18 @@ public class Zombie : McUnit
         hpUI.OpenHPTile();
         
         var elapsedTime = FightingManager.Instance.roundManager.elapsedTime;
-        props.maxHp += (int)(elapsedTime * 0.01);
-        OnAttacked(new AttackInfo(this, AttackType.Heal, (int)(elapsedTime * 0.01)));
+        props.maxHp += (int)(elapsedTime * 0.015);
+        OnAttacked(new AttackInfo(this, AttackType.Heal, (int)(elapsedTime * 0.015)));
        
         dayLightManager=DayLightManager.Instance;
 
-        liveWeapon.attackValue += (int) (elapsedTime / 450);
-        LogTip("血量+"+(int)(elapsedTime * 0.01)+",攻击力+"+(int) (elapsedTime / 450));
+        liveWeapon.attackValue += (int) (elapsedTime / 350);
+        LogTip("血量+"+(int)(elapsedTime * 0.015)+",攻击力+"+(int) (elapsedTime / 350));
     }
 
     private void Update()
     {
-        if (dayLightManager.IsDay())
+        if (selfFire && dayLightManager.IsDay())
         {
             SkillManager.Instance.AddSkill("Skill_着火_LV1", this, null);
         }

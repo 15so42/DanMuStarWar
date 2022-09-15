@@ -342,8 +342,8 @@ public class Planet : GameEntity,ITaskAble
 
         if (fightingManager.gameMode == GameMode.MCWar || fightingManager.gameMode==GameMode.Marble)
         {
-            props.maxHp = 225;
-            props.hp = 225;
+            props.maxHp = 450;
+            props.hp = 450;
         }
             
 

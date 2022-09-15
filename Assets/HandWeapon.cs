@@ -36,6 +36,9 @@ public class HandWeapon : Weapon,IDamageAble
     private float lastPhoenixTime = 0;
     private float lastRainAttackTime = 0;
     private float lastDrawTime = 0;
+    
+    //记录召唤列表
+    public List<McUnit> summons=new List<McUnit>();
 
     private void Awake()
     {
@@ -45,6 +48,8 @@ public class HandWeapon : Weapon,IDamageAble
         randomStrs.Add("烈阳");
         randomStrs.Add("愤怒");
         randomStrs.Add("不死鸟");
+        randomStrs.Add("坚韧");
+        randomStrs.Add("噬魂");
     }
 
     public void SetMaxSpellCount(int value)
@@ -80,7 +85,23 @@ public class HandWeapon : Weapon,IDamageAble
 
         owner.onAttacked += OnAttacked;
         owner.onSlainOther += OnSlainOther;
+        
+       
 
+    }
+
+    //记录噬魂的事件监听
+    private bool addedSourCatch = false;
+    void OnMcUnitDie(McUnit mcUnit)
+    {
+        var sourCatchLevel = GetWeaponLevelByNbt("噬魂");
+        //距离够近的话噬魂
+        if (sourCatchLevel>0 && Vector3.Distance(owner.transform.position, mcUnit.transform.position) < 18)
+        {
+            var value = Mathf.CeilToInt(sourCatchLevel * 0.2f);
+            owner.AddMaxHp(value);
+            FlyText.Instance.ShowDamageText(owner.transform.position-Vector3.up*3,"噬魂("+value+")");
+        }
     }
 
     public void AddEndurance(int value)
@@ -328,6 +349,18 @@ public class HandWeapon : Weapon,IDamageAble
         {
             (owner as McUnit).CloseSunFx();
         }
+
+        var sourCatch = GetWeaponLevelByNbt("噬魂");
+        if (sourCatch > 0)
+        {
+            //噬魂附魔
+            if (!addedSourCatch)
+            {
+                EventCenter.AddListener<McUnit>(EnumEventType.OnMcUnitDied,OnMcUnitDie);
+                addedSourCatch = true;
+            }
+            
+        }
     }
 
 
@@ -390,6 +423,49 @@ public class HandWeapon : Weapon,IDamageAble
         weaponNbt.endurance = endurance;
         weaponNbt.maxEndurance = maxEndurance;
     }
+    
+    
+    /// <summary>
+    /// 召唤兽
+    /// </summary>
+    /// <param name="gameObject"></param>
+    void GoToZeroPos(GameObject gameObject)
+    {
+        UnityTimer.Timer.Register(1, () =>
+        {
+            if (gameObject)
+            {
+                var mcUnit = gameObject.GetComponent<McUnit>();
+                //EventCenter.Broadcast(EnumEventType.OnMonsterInit, mcUnit);
+                mcUnit.GoMCPos(owner.transform.position,false);
+                summons.Add(mcUnit);
+                
+                if (mcUnit as Zombie)
+                {
+                    (mcUnit as Zombie).selfFire=false;
+                }
+
+                mcUnit.planetCommander = owner.planetCommander;
+                //附魔
+                var weapon = mcUnit.GetActiveWeapon();
+
+                var summonLevel = GetWeaponLevelByNbt("召唤");
+                var spellCount = Mathf.CeilToInt((summonLevel / 3f) +1);
+
+                var maxSpellSlot = summonLevel/7 +1;
+                
+                weapon.SetMaxSpellCount(maxSpellSlot);
+                for (int i = 0; i < spellCount; i++)
+                {
+                    weapon.RandomSpellBySpellCount();
+                }
+
+                mcUnit.canSetPlanetEnemy = true;
+            }
+            
+        });
+    }
+    
 
     private float spellTimer = 0;
     private float lastTimer = 0;//每秒执行
@@ -470,6 +546,55 @@ public class HandWeapon : Weapon,IDamageAble
             else
             {
                 (owner as McUnit).CloseSunFx();
+            }
+
+            var summonLevel = GetWeaponLevelByNbt("召唤");
+            if (summonLevel > 0)
+            {
+                //召唤物集中过来
+                for (int i = 0; i < summons.Count; i++)
+                {
+                    if (summons[i] == null || summons[i].IsAlive() == false)
+                    {
+                        summons.RemoveAt(i);
+                        i--;
+                        continue;
+                    }
+                    
+                    summons[i].GoMCPos(owner.transform.position,false);
+                }
+
+                bool canSummon = !(summons.Count > summonLevel / 7 + 1);
+
+                //能否召唤的概率判断
+                var rand = UnityEngine.Random.Range(0, 100);
+                if (rand > 100 * ((float) summonLevel / (summonLevel + 20)))
+                {
+                    canSummon = false;
+                }
+
+                if (canSummon)
+                {
+                    var summonList = new List<string>();
+                    if(summonLevel>0)
+                        summonList.Add("BattleUnit_Zombie");
+                    if(summonLevel>7)
+                        summonList.Add("BattleUnit_Skeleton");
+                    if(summonLevel>14)
+                        summonList.Add("BattleUnit_Creeper");
+                    if(summonLevel>21)
+                        summonList.Add("BattleUnit_Blaze");
+                    if(summonLevel>35)
+                        summonList.Add("BattleUnit_IronGolem");
+
+                    var randomMonster = summonList[UnityEngine.Random.Range(0, summonList.Count)];
+                
+                    var planet = owner.GetAttackerOwner() as Planet;
+                    if (planet != null)
+                        planet.AddTask(new PlanetTask(new TaskParams(TaskType.Create, randomMonster, 1, GoToZeroPos),
+                            null));
+                }
+                
             }
 
             var healLevel = GetWeaponLevelByNbt("回复");
@@ -724,7 +849,7 @@ public class HandWeapon : Weapon,IDamageAble
                 radius = 30;
             var count = 1+thunderLevel / 5;
             var attackInfo = GetBaseAttackInfo();
-            attackInfo.value += thunderLevel;
+            attackInfo.value += Mathf.CeilToInt( thunderLevel*0.7f);
             attackInfo.attackType =  AttackType.Real;
             //var damage = new AttackInfo(attackInfo.attacker, attackInfo.attackType, attackInfo.value * 5);
             Vector3 targetPos = owner.chaseTarget.GetVictimEntity().GetVictimPosition();
@@ -958,6 +1083,37 @@ public class HandWeapon : Weapon,IDamageAble
             }
         }
         
+        var toughLevel = GetWeaponLevelByNbt("坚韧");
+        var toughIgnoreDamageType = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Poison,AttackType.Real,AttackType.Thunder};
+        if (toughLevel > 0 && !toughIgnoreDamageType.Contains(attackInfo.attackType))
+        {
+            attackInfo.value -= Mathf.CeilToInt(0.5f*toughLevel);
+            if (attackInfo.value < 0)
+                attackInfo.value = 0;
+        }
+
+        var sourChain = GetWeaponLevelByNbt("魂链");
+        var sourChainIgnoreDamageType = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Poison,AttackType.Real,AttackType.Thunder};
+        if (sourChain > 0 && !sourChainIgnoreDamageType.Contains(attackInfo.attackType))
+        {
+            for (int i = 0; i < summons.Count; i++)
+            {
+                if (summons[i] != null && summons[i].IsAlive())
+                {
+                    var value = attackInfo.value < sourChain ? attackInfo.value : sourChain;
+                    summons[i].OnAttacked(new AttackInfo(attackInfo.attacker, attackInfo.attackType, value));
+                    FlyText.Instance.ShowDamageText(summons[i].transform.position-Vector3.up*3,"魂链("+value+")");
+                    attackInfo.value -= value;
+                    if (attackInfo.value <= 0)
+                    {
+                        attackInfo.value = 0;
+                        break;
+                    }
+                        
+                }
+            }
+        }
+
         var parryLevel = GetWeaponLevelByNbt("格挡");
         var ignoreDamageType2 = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Poison,AttackType.Real,AttackType.Thunder};
         if (parryLevel > 0 && !ignoreDamageType2.Contains(attackInfo.attackType))
@@ -1053,6 +1209,13 @@ public class HandWeapon : Weapon,IDamageAble
         owner.onSlainOther -= OnSlainOther;
         owner.onAttackOther -= OnAttackOther ;
         owner.onBeforeAttacked -= OnBeforeAttacked;
-
+        try
+        {
+            EventCenter.RemoveListener<McUnit>(EnumEventType.OnMcUnitDied, OnMcUnitDie);
+        }
+        catch (Exception e)
+        {
+            
+        }
     }
 }

@@ -94,7 +94,7 @@ public class PVEManager : MonoBehaviour
             mcUnit.GoMCPos(pos, false);
 
             var weapon = mcUnit.GetActiveWeapon();
-            var spellCount = (GetElapsedTime() / 120) + 1;
+            var spellCount = (GetElapsedTime() / 70) + 1;
 
             var maxSpellSlot = ((int)GetElapsedTime() / (30*60)) +3;
             if (GetElapsedTime() < 300)

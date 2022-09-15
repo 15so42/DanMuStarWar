@@ -20,6 +20,7 @@ public class IronGolem : McUnit
         base.Start();
         var liveWeapon = GetComponentInChildren<HandWeapon>();
         liveWeapon.Init(this);
+        liveWeapon.randomStrs.Remove("烈阳");
         if (!isEvil)
         {
             EventCenter.AddListener<Steve>(EnumEventType.OnSteveDied,OnSteveDie);

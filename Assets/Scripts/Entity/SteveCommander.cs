@@ -25,10 +25,10 @@ public class SteveCommander : PlanetCommander
     // public int parry = 0;
     // public int triumph = 0;
 
-    public int desireSpellCount=3;
+    public int desireSpellCount=4;
 
 
-    public int leftSpecificSpell = 2;
+    public int leftSpecificSpell = 3;
 
     private bool surrendered = false;
 
@@ -93,7 +93,7 @@ public class SteveCommander : PlanetCommander
         EventCenter.AddListener<Steve>(EnumEventType.OnSteveDied,OnSteveDie);
         point = 0;
         AddPoint(0);
-        desireSpellCount = 3;
+        desireSpellCount = 4;
 
         if (player.userSaveData != null)
         {

@@ -113,9 +113,16 @@ MonoBehaviour:
   meshRenderers: []
   fireFx: {fileID: 1922463033342810968}
   poisonFx: {fileID: 0}
+  phoenixFx: {fileID: 0}
+  angryFx: {fileID: 0}
+  searingSunFx: {fileID: 0}
   trigger: {fileID: 1377342026579566484}
   canPushBack: 1
   canSetPlanetEnemy: 0
+  isGuard: 0
+  guardPos: {x: 0, y: 0, z: 0}
+  dieRangePfb: {fileID: 0}
+  selfFire: 0
 --- !u!114 &4218837809629574321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,6 +299,7 @@ MonoBehaviour:
   endurance: 15
   pushBackHeight: 5
   pushBackStrength: 2
+  summons: []
 --- !u!1 &1922463033342810969
 GameObject:
   m_ObjectHideFlags: 0

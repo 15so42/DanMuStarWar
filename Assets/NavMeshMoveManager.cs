@@ -52,9 +52,15 @@ public class NavMeshMoveManager : MoveManager
 
         
         var angryLevel=steve.GetActiveWeapon().GetWeaponLevelByNbt("愤怒");
+        var toughLevel=steve.GetActiveWeapon().GetWeaponLevelByNbt("坚韧");
+        
         if (angryLevel > 0)
         {
             multiplier -= 0.03f * angryLevel;
+        }
+        if (toughLevel > 0)
+        {
+            multiplier -= 0.02f * toughLevel;
         }
         
         Vector3 retDir=Vector3.zero;

@@ -6300,12 +6300,16 @@ MonoBehaviour:
     price: 16
   - weaponName: "\u96F7\u7535\u6CD5\u6756"
     price: 16
+  - weaponName: "\u4E0B\u754C\u5408\u91D1\u5251"
+    price: 20
   rareWeaponPrices:
   - weaponName: TNT
     price: 1
   - weaponName: "\u4E0B\u754C\u5408\u91D1\u5251"
     price: 1
   - weaponName: "\u9493\u7AFF"
+    price: 1
+  - weaponName: "\u53EC\u5524\u6CD5\u6756"
     price: 1
 --- !u!1 &707925621
 GameObject:

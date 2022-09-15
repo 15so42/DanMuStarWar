@@ -34,7 +34,9 @@ public class FireSkill : SkillBase
         gameEntity.OnAttacked(new AttackInfo(attacker,AttackType.Fire, damage));
         if (createCommander != null)
         {
-            createCommander.attackOtherDamage += damage;
+            if((gameEntity as BattleUnit)?.planetCommander!=createCommander)//僵尸燃烧不能算到上海里去
+                createCommander.attackOtherDamage += damage;
+           
         }
         
         (gameEntity as Steve)?.GetActiveWeapon()?.AddEndurance(-1);
