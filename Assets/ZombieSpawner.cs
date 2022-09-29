@@ -11,6 +11,8 @@ public class ZombieSpawner : MonoBehaviour,ITaskAble
 
     private FightingManager fightingManager;
 
+    
+    public List<string> spawnList=new List<string>();
     public float timeScale = 1;
     private float timer=90;
 
@@ -25,6 +27,7 @@ public class ZombieSpawner : MonoBehaviour,ITaskAble
         dayLightManager=DayLightManager.Instance;
         fightingManager=FightingManager.Instance;
         EventCenter.Broadcast(EnumEventType.OnMonsterSpawnerInit,this);
+        spawnList.Add("BattleUnit_Zombie");
     }
     
     
@@ -53,7 +56,7 @@ public class ZombieSpawner : MonoBehaviour,ITaskAble
                     });
                 }
                 
-                taskCenter.AddTask(new PlanetTask(new TaskParams(TaskType.Create, "BattleUnit_Zombie", 1, GoToZeroPos),
+                taskCenter.AddTask(new PlanetTask(new TaskParams(TaskType.Create, spawnList[UnityEngine.Random.Range(0,spawnList.Count)], 1, GoToZeroPos),
                     null));
                 timer = 90 - (fightingManager.roundManager.elapsedTime / 60);
                 Debug.Log("间隔时间" + timer);

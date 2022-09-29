@@ -114,15 +114,17 @@ public class ArrowBullet : MonoBehaviour
     {
         return Mathf.CeilToInt(3 + strength * 1.6f);
     }
-    protected void DamageVictim(IVictimAble victim)
+    protected virtual void DamageVictim(IVictimAble victim)
     {
+        if(victim==null)
+            return;
         var hpAndShield = victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,CalDamage()));
         handWeapon.OnDamageOther(victim,hpAndShield);
         if(damageOnce)
             attacked.Add(victim);
     }
 
-    protected void DamageFx(IVictimAble victim)
+    protected virtual void DamageFx(IVictimAble victim)
     {
         var navMeshMoveManager = victim.GetGameObject().GetComponent<NavMeshMoveManager>();
         if (navMeshMoveManager)

@@ -8,7 +8,14 @@ public class Zombie : McUnit
 
     private DayLightManager dayLightManager;
     public bool selfFire = true;
-    
+
+    /// <summary>
+    /// 删除不要的附魔，如凋零不能附魔烈阳
+    /// </summary>
+    protected virtual void RemoveSpell(HandWeapon handWeapon)
+    {
+        
+    }
     protected override void Start()
     {
         base.Start();
@@ -27,7 +34,7 @@ public class Zombie : McUnit
         LogTip("血量+"+(int)(elapsedTime * 0.015)+",攻击力+"+(int) (elapsedTime / 350));
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (selfFire && dayLightManager.IsDay())
         {

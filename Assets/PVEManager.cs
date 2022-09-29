@@ -94,7 +94,7 @@ public class PVEManager : MonoBehaviour
             mcUnit.GoMCPos(pos, false);
 
             var weapon = mcUnit.GetActiveWeapon();
-            var spellCount = (GetElapsedTime() / 70) + 1;
+            var spellCount = (GetElapsedTime() / 85) + 1;
 
             var maxSpellSlot = ((int)GetElapsedTime() / (30*60)) +3;
             if (GetElapsedTime() < 300)
@@ -132,6 +132,7 @@ public class PVEManager : MonoBehaviour
         {
             var spawner = spawners[UnityEngine.Random.Range(0, spawners.Count)];
             spawner.Spawn(toSpawnList[UnityEngine.Random.Range(0, toSpawnList.Count)]);
+           
         }
     }
     
@@ -161,6 +162,8 @@ public class PVEManager : MonoBehaviour
     
     IEnumerator SpawnMonster()
     {
+       
+        
         toSpawnList.Add("BattleUnit_Zombie");
         //toSpawnList.Add("BattleUnit_Blaze");
         
@@ -204,6 +207,8 @@ public class PVEManager : MonoBehaviour
             
         }
     }
+    
+    
 
     IEnumerator SpawnGolems()
     {
@@ -224,9 +229,27 @@ public class PVEManager : MonoBehaviour
             {
                 count = 6;
             }
+
+            if (GetElapsedTime() > 6 * 600)
+            {
+                count = 8;
+            }
+
+            //1/3概率生成凋零而不是铁傀儡，生成的数量为铁傀儡的1/3,最少为1
+            var rand = UnityEngine.Random.Range(0, 3);
+            
+            
+            var toSpawn = "BattleUnit_EvilIronGolem";
+            if (rand == 0)
+            {
+                count = Mathf.CeilToInt (count / 3f);
+                toSpawn = "BattleUnit_Wither";
+
+            }
+           
             for (int i = 0; i < count; i++)
             {
-                SpawnUnit("BattleUnit_EvilIronGolem");
+                SpawnUnit(toSpawn);
             }
             
             yield return new WaitForSeconds(300);

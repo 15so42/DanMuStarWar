@@ -95,6 +95,11 @@ public class HandWeapon : Weapon,IDamageAble
     void OnMcUnitDie(McUnit mcUnit)
     {
         var sourCatchLevel = GetWeaponLevelByNbt("噬魂");
+        if (mcUnit == null)
+        {
+            Debug.LogError("噬魂异常，mcunit为null");
+            return;
+        }
         //距离够近的话噬魂
         if (sourCatchLevel>0 && Vector3.Distance(owner.transform.position, mcUnit.transform.position) < 18)
         {
@@ -638,6 +643,23 @@ public class HandWeapon : Weapon,IDamageAble
 
                 }
             }
+            
+            
+            var spiritualShieldLevel = GetWeaponLevelByNbt("灵盾");
+            if (spiritualShieldLevel > 0)
+            {
+               
+              
+                    owner.props.maxShield = (int)(owner.props.maxHp* (1+0.05*spiritualShieldLevel));
+                    //float shieldValue = owner.props.maxHp * (0.09f+spiritualShieldLevel*0.01f);
+
+                    var value = (int) (spiritualShieldLevel * 0.5f);
+                    owner.AddShield(value);
+                    
+                    FlyText.Instance.ShowDamageText(owner.transform.position-Vector3.up*3 ,"灵盾("+value+")");
+                
+            }
+
            
 
 
@@ -1151,21 +1173,6 @@ public class HandWeapon : Weapon,IDamageAble
             
         }
 
-        var spiritualShieldLevel = GetWeaponLevelByNbt("灵盾");
-        if (spiritualShieldLevel > 0)
-        {
-            var cd = 60 - 60 * ((float) spiritualShieldLevel / (spiritualShieldLevel + 10));
-            if (Time.time > lastSpiritualShieldTime + cd)
-            {
-                owner.props.maxShield = (int)(owner.props.maxHp* (1+0.05*spiritualShieldLevel));
-                //float shieldValue = owner.props.maxHp * (0.09f+spiritualShieldLevel*0.01f);
-                
-                owner.AddShield((int)spiritualShieldLevel*2);
-                lastSpiritualShieldTime = Time.time;
-                FlyText.Instance.ShowDamageText(owner.transform.position-Vector3.up*3 ,"灵盾("+(int)spiritualShieldLevel*2+")");
-            }
-        }
-        
         
 
         
@@ -1209,8 +1216,9 @@ public class HandWeapon : Weapon,IDamageAble
         owner.onSlainOther -= OnSlainOther;
         owner.onAttackOther -= OnAttackOther ;
         owner.onBeforeAttacked -= OnBeforeAttacked;
-        try
+        try//可能之前没有噬魂附魔，因此可能移除不掉导致报错，忽略这次报错
         {
+            
             EventCenter.RemoveListener<McUnit>(EnumEventType.OnMcUnitDied, OnMcUnitDie);
         }
         catch (Exception e)

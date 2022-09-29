@@ -46,24 +46,33 @@ public class BiliBiliLive : MonoBehaviour
     //定时重连
     private TcpDanmakuClientV2 client;
     private float timerAfterDisconnect;
-    
-    
-    
+
+
+    public static BiliBiliLive instance;
  
     
     
 
     private void Awake()
     {
+        
         //读取房间Id
         RoomSettings roomSettings = LoadJson.LoadJsonFromFile<RoomSettings>("RoomSettings");
         Debug.Log("房间信息"+roomSettings);
         roomId = roomSettings.roomId;
+        DontDestroyOnLoad(transform.root.gameObject);
+        
     }
 
     // Start is called before the first frame update
     async void Start()
     {
+        if (instance != null)
+        {
+            Destroy(transform.root.gameObject);
+            return;
+        }
+        instance = this;//全局唯一实例
         if (PhotonLauncher.playMode == PlayMode.Photon)
         {
             gameObject.SetActive(false);
@@ -75,6 +84,8 @@ public class BiliBiliLive : MonoBehaviour
         await client.ConnectAsync(roomId);
         
         client.HeartbeatInterval = TimeSpan.FromSeconds(25);
+        
+        Debug.Log("BIliLive重新注册事件！！！！！！！！！！！！");
         
         client.ReceivedMessageEvt += OnReceivedMessage;
         client.ReceivedPopularityEvt += OnReceivedPopularity;
@@ -235,4 +246,12 @@ public class BiliBiliLive : MonoBehaviour
             lastGiftCount = giftMsgsCount;
         }
     }
+
+    // private void OnDisable()
+    // {
+    //     client.ReceivedMessageEvt -= OnReceivedMessage;
+    //     client.ReceivedPopularityEvt -= OnReceivedPopularity;
+    //     client.DisconnectedEvt -= OnDisconnect;
+    //     client.Disconnect();
+    // }
 }

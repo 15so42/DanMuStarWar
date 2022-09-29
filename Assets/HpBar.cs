@@ -16,7 +16,9 @@ public class HpBar : MonoBehaviour
     public Vector3 offset=Vector3.up;
     //血条刻度线
     [Header("血条刻度线")]
-    public Transform hpTile;
+    
+
+    public TicksUi hpTickUi;
 
     public Text hpNumText;
 
@@ -41,7 +43,7 @@ public class HpBar : MonoBehaviour
     {
         mainCamera=Camera.main;
         tipText.gameObject.SetActive(false);
-        hpTile.gameObject.SetActive(false);
+        
         weaponNameText.gameObject.SetActive(false);
         weaponEnduranceBg.gameObject.SetActive(false);
         hpNumText.gameObject.SetActive(false);
@@ -68,7 +70,6 @@ public class HpBar : MonoBehaviour
 
     public void OpenHPTile()
     {
-        hpTile.gameObject.SetActive(true);
         UpdateHp(owner.props.hp,owner.props.maxHp,owner.props.shield,owner.props.maxShield);
     }
     public void SetNameText(string name)
@@ -110,25 +111,26 @@ public class HpBar : MonoBehaviour
         shieldFill.fillAmount = (float) shield / maxHP;
 
         //hpTile.pixelsPerUnitMultiplier =maxHP/160f;
-        var targetCount = maxHP / 5;
-        var childCount = hpTile.childCount;
-        var sub = targetCount - childCount;
-        if (sub < 0)//减少最大生命值
-        {
-            for (int i = 0; i < sub*-1; i++)
-            {
-               
-                hpTile.GetChild(i).gameObject.SetActive(false);
-            }
-        }
-        if (sub > 0)
-        {
-            for (int i = 0; i < sub; i++)
-            {
-                var t=GameObject.Instantiate(tileLine, hpTile);
-                t.gameObject.SetActive(true);
-            }
-        }
+        // var targetCount = maxHP / 5;
+        // var childCount = hpTile.childCount;
+        // var sub = targetCount - childCount;
+        // if (sub < 0)//减少最大生命值
+        // {
+        //     for (int i = 0; i < sub*-1; i++)
+        //     {
+        //        
+        //         hpTile.GetChild(i).gameObject.SetActive(false);
+        //     }
+        // }
+        // if (sub > 0)
+        // {
+        //     for (int i = 0; i < sub; i++)
+        //     {
+        //         var t=GameObject.Instantiate(tileLine, hpTile);
+        //         t.gameObject.SetActive(true);
+        //     }
+        // }
+        hpTickUi.RefreshUi(maxHP,5);
 
         hpNumText.text = hp + "/" + maxHP;
     }

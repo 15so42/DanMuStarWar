@@ -48,6 +48,7 @@ public class McUnit : WarPlane
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
 
         LoadFx();
+        OnHpChanged(props.hp,props.maxHp,props.shield,props.maxShield);
     }
 
     void LoadFx()

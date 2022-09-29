@@ -254,8 +254,15 @@ MonoBehaviour:
   meshRenderers: []
   fireFx: {fileID: 461170555}
   poisonFx: {fileID: 0}
+  phoenixFx: {fileID: 0}
+  angryFx: {fileID: 0}
+  searingSunFx: {fileID: 0}
   trigger: {fileID: 381593586}
   canPushBack: 1
+  canSetPlanetEnemy: 1
+  isGuard: 0
+  guardPos: {x: 0, y: 0, z: 0}
+  dieRangePfb: {fileID: 0}
   height: 2
   canBeAttack: 1
 --- !u!114 &3081138844181444183
@@ -322,8 +329,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855df10198e6d344ca4723cbfdadc92c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
-  hp: 100
+  maxHp: 225
+  hp: 225
   maxShield: 100
   shield: 0
   pDef: 50
@@ -430,7 +437,11 @@ MonoBehaviour:
   endurance: 2000
   pushBackHeight: 5
   pushBackStrength: 2
+  summons: []
   linePfb: {fileID: 2911532761280341683, guid: 2589d157fc859d142a3eba7f3b76fc56, type: 3}
+  shootPoint: {fileID: 0}
+  animStr: Attack
+  fxDelay: 0
 --- !u!1 &4011596464881061154
 GameObject:
   m_ObjectHideFlags: 0

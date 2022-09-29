@@ -332,6 +332,7 @@ public class Planet : GameEntity,ITaskAble
     {
         base.Start();
         hpUI.SetColor(planetColor);
+        OnHpChanged(props.hp,props.maxHp,props.shield,props.maxShield);
         fightingManager = GameManager.Instance.fightingManager;
         
         ringUi = GameManager.Instance.uiManager.CreateRingUi(this);
@@ -1196,21 +1197,28 @@ public class Planet : GameEntity,ITaskAble
     public void Guard(int uid)
     {
         var commander = GetCommanderByUid(uid);
-        if (commander != null)
-        {
-            for (int i = 0; i < battleUnits.Count; i++)
-            {
-                if (battleUnits[i] != null && battleUnits[i].die == false &&
-                    battleUnits[i].planetCommander == commander)
-                {
-                    
-                    (battleUnits[i] as McUnit).SetGuardStats(true);
-                    
-                    (battleUnits[i] as McUnit).guardPos = battleUnits[i].transform.position;
 
-                }
-            }
+        var steve = (commander as SteveCommander).FindFirstValidSteve();
+        if (steve)
+        {
+            steve.SetGuardStats(true);
+            steve.guardPos = steve.transform.position;
         }
+        // if (commander != null)
+        // {
+        //     for (int i = 0; i < battleUnits.Count; i++)
+        //     {
+        //         if (battleUnits[i] != null && battleUnits[i].die == false &&
+        //             battleUnits[i].planetCommander == commander)
+        //         {
+        //             
+        //             (battleUnits[i] as McUnit).SetGuardStats(true);
+        //             
+        //             (battleUnits[i] as McUnit).guardPos = battleUnits[i].transform.position;
+        //
+        //         }
+        //     }
+        // }
     }
     
     

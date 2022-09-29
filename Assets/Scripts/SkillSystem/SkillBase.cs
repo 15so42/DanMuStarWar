@@ -22,7 +22,7 @@ public abstract class SkillBase : ScriptableObject
     public Sprite icon;
     [Header("是否是Buff[暂未使用]")] public bool isBuff;
     
-    public int cd;//冷却时间
+    public float cd;//冷却时间
     [HideInInspector]public float timer = 0;
 
     [Header("可使用次数,-1表示无限次")]

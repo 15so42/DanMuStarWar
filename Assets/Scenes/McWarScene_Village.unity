@@ -281,7 +281,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beafd311ca6343949b60da96ba2c0f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnList:
+  - BattleUnit_Zombie
+  - BattleUnit_Skeleton
+  - BattleUnit_Creeper
+  - BattleUnit_Blaze
   timeScale: 1
+  autoRun: 1
 --- !u!65 &181514088
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1968,7 +1974,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beafd311ca6343949b60da96ba2c0f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnList:
+  - BattleUnit_Zombie
+  - BattleUnit_Skeleton
+  - BattleUnit_Creeper
+  - BattleUnit_Blaze
   timeScale: 1
+  autoRun: 1
 --- !u!65 &1058468952
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2090,7 +2102,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beafd311ca6343949b60da96ba2c0f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnList:
+  - BattleUnit_Zombie
+  - BattleUnit_Skeleton
+  - BattleUnit_Creeper
+  - BattleUnit_Blaze
   timeScale: 1
+  autoRun: 1
 --- !u!65 &1078279335
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2559,7 +2577,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beafd311ca6343949b60da96ba2c0f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnList:
+  - BattleUnit_Zombie
+  - BattleUnit_Skeleton
+  - BattleUnit_Creeper
+  - BattleUnit_Blaze
   timeScale: 1
+  autoRun: 1
 --- !u!65 &1230140839
 BoxCollider:
   m_ObjectHideFlags: 0

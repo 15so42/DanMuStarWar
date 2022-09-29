@@ -77,17 +77,19 @@ public class RoundManager : MonoBehaviour
     {
         try
         {
+            //如果切换游戏场景后游戏尚未开始，就不会绑定事件，因此强行结束或换场景会报错
             EventCenter.RemoveListener<string, int, string, string>(EnumEventType.OnDanMuReceived, OnDanMuReceived);
             EventCenter.RemoveListener<int, string, int, string, int>(EnumEventType.OnGiftReceived, OnGiftReceived);
         }
         catch (Exception e)
         {
-            Debug.LogError("异常" + e.Message);
+            Debug.Log("异常" + e.Message);
         }
         finally
         {
             // 清除所有协程StopAllCoru();
-            fightingManager.StopAllCoroutines();
+            if(fightingManager!=null)//如果切换游戏场景后游戏尚未开始，就没有初始化fightingManger，所以这里会报错
+                fightingManager.StopAllCoroutines();
             elapsedTime = 0;
             voted.Clear();
             players.Clear();
