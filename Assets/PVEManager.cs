@@ -94,7 +94,7 @@ public class PVEManager : MonoBehaviour
             mcUnit.GoMCPos(pos, false);
 
             var weapon = mcUnit.GetActiveWeapon();
-            var spellCount = (GetElapsedTime() / 85) + 1;
+            var spellCount = (GetElapsedTime() / 100) + 1;
 
             var maxSpellSlot = ((int)GetElapsedTime() / (30*60)) +3;
             if (GetElapsedTime() < 300)
@@ -240,7 +240,7 @@ public class PVEManager : MonoBehaviour
             
             
             var toSpawn = "BattleUnit_EvilIronGolem";
-            if (rand == 0)
+            if (rand == 0 && GetElapsedTime()>=3*600)
             {
                 count = Mathf.CeilToInt (count / 3f);
                 toSpawn = "BattleUnit_Wither";

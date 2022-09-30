@@ -5914,7 +5914,7 @@ MonoBehaviour:
   scatteringAngel: 5
   rayDistance: 20
   attackType: 0
-  attackValue: 7
+  attackValue: 3
   addAtkDistanceByDP: 0
   mcWeaponId: 0
   animator: {fileID: 0}
@@ -6577,8 +6577,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855df10198e6d344ca4723cbfdadc92c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 1000
-  hp: 1000
+  maxHp: 600
+  hp: 600
   maxShield: 2000
   shield: 0
   pDef: 50
