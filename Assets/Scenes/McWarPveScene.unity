@@ -182,7 +182,7 @@ MonoBehaviour:
   lastPlanetIndex: 1
   mcPosManager: {fileID: 0}
   photonPlayMode: 0
-  minPlayer: 2
+  minPlayer: 1
 --- !u!1 &124636687
 GameObject:
   m_ObjectHideFlags: 0

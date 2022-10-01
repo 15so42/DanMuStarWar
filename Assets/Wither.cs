@@ -10,7 +10,7 @@ public class Wither : Zombie
    {
       base.Update();
       timer += Time.deltaTime;
-      if (timer > 1)
+      if (timer > 4)
       {
          OnAttacked(new AttackInfo(this, AttackType.Heal, (int) (props.maxHp * 0.01f)));
          timer = 0;

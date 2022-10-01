@@ -26,9 +26,9 @@ public class BiliUserInfoQuerier : MonoBehaviour
     }
     IEnumerator QueryAccount(int uid,Player player)
     {
-            
-        string baseUrl = "http://api.bilibili.com/x/space/acc/info";
-        var url = baseUrl + "?" + "mid=" + uid;
+        //https://tenapi.cn/bilibili/?uid=350692333
+        string baseUrl = "https://tenapi.cn/bilibili/?uid=";
+        var url = baseUrl  + uid;
             
         UnityWebRequest request = UnityWebRequest.Get(url);
         
@@ -43,8 +43,9 @@ public class BiliUserInfoQuerier : MonoBehaviour
             var json = request.downloadHandler.text;
                
             AccountInfo ret = JsonMapper.ToObject<AccountInfo>(json);
-            player.faceUrl = ret.data.face;
-            player.top_photo = ret.data.top_photo;
+            player.faceUrl = ret.data.avatar;
+            //player.top_photo = ret.data.top_photo;
+            player.top_photo = "";//用不到获取头图了
             player.onGetUrl?.Invoke();
                 
             PhpTester.Instance.GetUserByUid(uid,player.userName, player.SetUserData);
@@ -58,7 +59,7 @@ public class BiliUserInfoQuerier : MonoBehaviour
 
 public class AccountInfo{
     public int code;
-    public string message;
+    //public string message;
     
     public Data data;
     
@@ -66,7 +67,11 @@ public class AccountInfo{
 
 public class Data
 {
+    public string uid;
     public string name;
-    public string face;
-    public string top_photo;
+    public int level;
+    public string sex;
+    public string description;
+    public string avatar;
+    //public string top_photo;
 }

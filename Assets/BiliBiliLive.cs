@@ -67,7 +67,7 @@ public class BiliBiliLive : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
-        if (instance != null)
+        if (instance != null && instance!=this)
         {
             Destroy(transform.root.gameObject);
             return;
@@ -83,9 +83,10 @@ public class BiliBiliLive : MonoBehaviour
         client=new TcpDanmakuClientV2();
         await client.ConnectAsync(roomId);
         
-        client.HeartbeatInterval = TimeSpan.FromSeconds(25);
+        client.HeartbeatInterval = TimeSpan.FromSeconds(15);
         
         Debug.Log("BIliLive重新注册事件！！！！！！！！！！！！");
+        TipsDialog.ShowDialog("网络链接成功",null);
         
         client.ReceivedMessageEvt += OnReceivedMessage;
         client.ReceivedPopularityEvt += OnReceivedPopularity;
@@ -130,7 +131,7 @@ public class BiliBiliLive : MonoBehaviour
     public Task OnDisconnect(IDanmakuClient client, DisconnectedEventArgs args)
     {
         Debug.LogError("断连"+args.ToString());
-        
+        TipsDialog.ShowDialog("网络断连"+args.ToString(),null);
         Start();
         Debug.Log("重连");
         timerAfterDisconnect = 0;
@@ -193,6 +194,7 @@ public class BiliBiliLive : MonoBehaviour
                 timerAfterDisconnect = 0;
                 if (client.Connected == false)
                 {
+                    TipsDialog.ShowDialog("尝试重连",null);
                     Start();
                 }
                 
@@ -246,6 +248,8 @@ public class BiliBiliLive : MonoBehaviour
             lastGiftCount = giftMsgsCount;
         }
     }
+
+    
 
     // private void OnDisable()
     // {
