@@ -45,6 +45,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
    public Action<IVictimAble,int> onAttackOther;
    public Action<AttackInfo> onAttacked;
    public Action<GameEntity> onSlainOther;
+   public Action onDie;
    
    //能否被作为受击者的反击目标，防御塔不可以"
    [HideInInspector]public bool canBeTarget=true;
@@ -178,6 +179,8 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
          return;
       die = true;
       ResFactory.Instance.CreateFx(GameConst.FX_BULLET_HIT, transform.position);
+      
+      onDie?.Invoke();
       //Destroy(gameObject);不销毁，销毁可能导致各种引用丢失的问题
    }
 

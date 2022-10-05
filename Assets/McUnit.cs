@@ -437,5 +437,6 @@ public class McUnit : WarPlane
     {
         base.Die();
         EventCenter.Broadcast(EnumEventType.OnMcUnitDied,this);
+        
     }
 }

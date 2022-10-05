@@ -32,6 +32,8 @@ public class Zombie : McUnit
 
         liveWeapon.attackValue += (int) (elapsedTime / 350);
         LogTip("血量+"+(int)(elapsedTime * 0.015)+",攻击力+"+(int) (elapsedTime / 350));
+        
+        RemoveSpell(liveWeapon);
     }
 
     protected virtual void Update()
@@ -45,7 +47,7 @@ public class Zombie : McUnit
     public override void Die()
     {
         base.Die();
-        Destroy(gameObject,120);
+        Destroy(gameObject,600);
     }
 
 

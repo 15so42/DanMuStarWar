@@ -56,11 +56,11 @@ public class NavMeshMoveManager : MoveManager
         
         if (angryLevel > 0)
         {
-            multiplier -= 0.03f * angryLevel;
+            multiplier -= 0.05f * angryLevel;
         }
         if (toughLevel > 0)
         {
-            multiplier -= 0.02f * toughLevel;
+            multiplier -= 0.05f * toughLevel;
         }
         
         Vector3 retDir=Vector3.zero;

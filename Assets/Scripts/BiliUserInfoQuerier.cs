@@ -27,12 +27,12 @@ public class BiliUserInfoQuerier : MonoBehaviour
     IEnumerator QueryAccount(int uid,Player player)
     {
         //https://tenapi.cn/bilibili/?uid=350692333
-        string baseUrl = "https://tenapi.cn/bilibili/?uid=";
+        string baseUrl = "https://api.bilibili.com/x/space/app/index?mid=";
         var url = baseUrl  + uid;
             
         UnityWebRequest request = UnityWebRequest.Get(url);
         
-        request.timeout = 15;
+        request.timeout = 30;
         yield return request.SendWebRequest();
             
         if(request.isNetworkError || request.isHttpError) {
@@ -43,7 +43,7 @@ public class BiliUserInfoQuerier : MonoBehaviour
             var json = request.downloadHandler.text;
                
             AccountInfo ret = JsonMapper.ToObject<AccountInfo>(json);
-            player.faceUrl = ret.data.avatar;
+            player.faceUrl = ret.data.info.face;
             //player.top_photo = ret.data.top_photo;
             player.top_photo = "";//用不到获取头图了
             player.onGetUrl?.Invoke();
@@ -59,19 +59,23 @@ public class BiliUserInfoQuerier : MonoBehaviour
 
 public class AccountInfo{
     public int code;
-    //public string message;
-    
+    public string message;
+    public int ttl;
     public Data data;
     
 }
 
 public class Data
 {
-    public string uid;
+    public Info info;
+   
+}
+public class Info{
+    public int mid;
     public string name;
     public int level;
     public string sex;
-    public string description;
-    public string avatar;
+    //public string description;
+    public string face;
     //public string top_photo;
 }

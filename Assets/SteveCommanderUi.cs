@@ -30,9 +30,15 @@ public class SteveCommanderUi : CommanderUI
         StartCoroutine(RespawnCountDown(time));
     }
 
+    public void ReduceRespawnTime(int value)
+    {
+        count -= value;
+    }
+    
+    int count = 10;
     IEnumerator RespawnCountDown(int time)
     {
-        int count = time;
+         count = time;
         fill.gameObject.SetActive(true);
         countDownText.text = time+"";
         while (true)

@@ -50,6 +50,7 @@ public class HandWeapon : Weapon,IDamageAble
         randomStrs.Add("不死鸟");
         randomStrs.Add("坚韧");
         randomStrs.Add("噬魂");
+        randomStrs.Add("自爆");
     }
 
     public void SetMaxSpellCount(int value)
@@ -85,9 +86,22 @@ public class HandWeapon : Weapon,IDamageAble
 
         owner.onAttacked += OnAttacked;
         owner.onSlainOther += OnSlainOther;
-        
-       
+        owner.onDie += OnOwnerDie;
 
+
+
+    }
+
+    void OnOwnerDie()
+    {
+        var selfExplosionLevel = GetWeaponLevelByNbt("自爆");
+        if (selfExplosionLevel > 0)
+        {
+            AttackManager.Instance.Explosion(new AttackInfo(owner,AttackType.Physics,selfExplosionLevel*3),this,owner.transform.position,15+selfExplosionLevel*0.6f );
+            (owner.planetCommander as SteveCommander)?.ReduceRespawnTime(
+                UnityEngine.Random.Range(1, selfExplosionLevel));
+            //(owner.planetCommander as SteveCommander).unityTimer.ReduceDuration(UnityEngine.Random.Range(1,selfExplosionLevel));
+        }
     }
 
     //记录噬魂的事件监听
@@ -1208,6 +1222,7 @@ public class HandWeapon : Weapon,IDamageAble
     }
 
 
+    
     private void OnDisable()
     {
         //清除所有事件绑定
@@ -1216,6 +1231,7 @@ public class HandWeapon : Weapon,IDamageAble
         owner.onSlainOther -= OnSlainOther;
         owner.onAttackOther -= OnAttackOther ;
         owner.onBeforeAttacked -= OnBeforeAttacked;
+        owner.onDie -= OnOwnerDie;
         try//可能之前没有噬魂附魔，因此可能移除不掉导致报错，忽略这次报错
         {
             

@@ -139,6 +139,14 @@ public class Timer
         }
     }
 
+    public static void ReduceDuration(Timer timer,float toReduce)
+    {
+        if (timer != null)
+        {
+            timer.ReduceDuration(toReduce);
+        }
+    }
+
     /// <summary>
     /// Resume a timer. The main benefit of this over the method on the instance is that you will not get
     /// a <see cref="NullReferenceException"/> if the timer is null.
@@ -215,6 +223,7 @@ public class Timer
 
         this._timeElapsedBeforePause = this.GetTimeElapsed();
     }
+    
 
     /// <summary>
     /// Continue a paused timer. Does nothing if the timer has not been paused.
@@ -262,6 +271,16 @@ public class Timer
         return this.duration - this.GetTimeElapsed();
     }
 
+    public float ReduceDuration(float value)
+    {
+        // float ret= Mathf.Clamp(duration + value,_startTime,_startTime+duration);
+         Debug.Log("原duration为："+duration+"减少"+value+"，duration"+(this.duration -value));
+        // duration = ret;
+        //_startTime += value;
+        this.duration -= value;
+        return duration;
+
+    }
     /// <summary>
     /// Get how much progress the timer has made from start to finish as a ratio.
     /// </summary>

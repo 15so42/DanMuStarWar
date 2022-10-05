@@ -223,6 +223,13 @@ public class SteveCommander : PlanetCommander
         
     }
 
+    public void ReduceRespawnTime(float value)
+    {
+        unityTimer.ReduceDuration(value);
+        if(commanderUi!=null)
+            (commanderUi as SteveCommanderUi)?.ReduceRespawnTime((int)value);
+    }
+
     public void OnSteveDie(Steve steve)
     {
         if(hangUp)

@@ -88,7 +88,7 @@ public class PVEManager : MonoBehaviour
     {
         var pos = fightingManager.mcPosManager.GetPosByIndex(0);
         
-        if (mcUnit)
+        if (mcUnit!=null)
         {
             
             mcUnit.GoMCPos(pos, false);
