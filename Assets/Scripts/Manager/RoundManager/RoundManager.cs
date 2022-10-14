@@ -24,7 +24,7 @@ public class RoundManager : MonoBehaviour
     private float timer = 0;
     
     private GameManager gameManager;
-    private FightingManager fightingManager;
+    protected FightingManager fightingManager;
     private List<Player> players=new List<Player>();
 
     public GameMode desireMode;//下一句玩什么模式

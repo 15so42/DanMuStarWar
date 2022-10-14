@@ -18,14 +18,20 @@ public class WarPlane : BattleUnit,ISupportAble
 
    public WarPlaneType warPlaneType=WarPlaneType.None;
    [Header("被攻击时设置攻击者为新敌人")] public bool setAttackerTarget = true;
-   protected virtual void Start()
+
+   protected override  void Awake()
    {
-      base.Start();
+      base.Awake();
       weapons = GetComponentsInChildren<Weapon>().ToList();
       foreach (var w in weapons)
       {
          w.Init(this);
       }
+   }
+   protected virtual void Start()
+   {
+      base.Start();
+     
    }
    
    public override void Attack()

@@ -10,6 +10,7 @@ public class AttackManager : MonoBehaviour
     public static AttackManager Instance;
     [Header("落雷")] public GameObject thunderPfb;
     [Header("雨裁")] public GameObject rainAttack;
+    [Header("召唤法杖攻击特效")] public GameObject summonWandAttack;
 
     private void Awake()
     {
@@ -102,6 +103,8 @@ public class AttackManager : MonoBehaviour
         var rainAttackGo=GameObject.Instantiate(rainAttack);
         rainAttackGo.transform.position = pos;
     }
+
+   
 
     public void AttackEnemies(List<IVictimAble> enemies,AttackInfo attackInfo)
     {

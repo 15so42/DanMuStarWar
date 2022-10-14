@@ -240,9 +240,9 @@ public class McUnit : WarPlane
         return fightingManager.mcPosManager.GetPosByIndex(index);
     }
     
-    public override void GoMCPos(Vector3 pos,bool escape)
+    public override void GoMCWorldPos(Vector3 pos,bool escape)
     {
-        base.GoMCPos(pos,escape);
+        base.GoMCWorldPos(pos,escape);
 
         this.targetMcPos = pos;
         CustomEvent.Trigger(gameObject, "OnDestinationSet",escape);

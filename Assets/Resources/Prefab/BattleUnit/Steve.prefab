@@ -14936,7 +14936,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5093728769059896107}
-  - component: {fileID: 7295994248256629106}
+  - component: {fileID: 6747346383387009168}
   m_Layer: 0
   m_Name: "\u53EC\u5524\u6CD5\u6756"
   m_TagString: Untagged
@@ -14959,7 +14959,7 @@ Transform:
   m_Father: {fileID: 1328123575461429352}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7295994248256629106
+--- !u!114 &6747346383387009168
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14968,18 +14968,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 4109332932337993609}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fbae9b11d3bbfe4f9a96df83fd57a5c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2bb5114cfa3b9d340b8b013d29a567e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDistance: 4
+  attackDistance: 25
   owner: {fileID: 0}
   weaponName: "\u53EC\u5524\u6CD5\u6756"
-  attackSpeed: 0.5
+  attackSpeed: 0.3
   scatteringAngel: 5
   rayDistance: 20
   attackType: 0
   attackValue: 1
-  addAtkDistanceByDP: 0
+  addAtkDistanceByDP: 1
   mcWeaponId: 15
   animator: {fileID: 0}
   weaponNbt:
@@ -15009,6 +15009,8 @@ MonoBehaviour:
   pushBackHeight: 4
   pushBackStrength: 1
   summons: []
+  summonWandAttack: {fileID: 1652874822883875248, guid: adeb0f3b06ec18a46bb301eccf22dbc6,
+    type: 3}
 --- !u!1 &6049223276326285475
 GameObject:
   m_ObjectHideFlags: 0

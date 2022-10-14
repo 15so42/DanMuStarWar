@@ -43,7 +43,7 @@ public class BattleUnit : GameEntity
 
 
     private bool awaked = false;
-    protected void Awake()
+    protected virtual void Awake()
     {
         base.Awake();
         moveManager = GetComponent<MoveManager>();
@@ -89,7 +89,7 @@ public class BattleUnit : GameEntity
     /// <summary>
     /// MC模式表示前往某地
     /// </summary>
-    public virtual void GoMCPos(Vector3 pos,bool escape)
+    public virtual void GoMCWorldPos(Vector3 pos,bool escape)
     {
         
     }
@@ -422,7 +422,7 @@ public class BattleUnit : GameEntity
     public virtual void AddMaxHp(int value)
     {
         props.AddMaxHp(value);
-        onHpChanged.Invoke(props.hp,props.maxHp,props.shield,props.maxShield);
+        onHpChanged?.Invoke(props.hp,props.maxHp,props.shield,props.maxShield);
     }
     
     

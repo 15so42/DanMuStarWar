@@ -91,7 +91,7 @@ public class PVEManager : MonoBehaviour
         if (mcUnit!=null)
         {
             
-            mcUnit.GoMCPos(pos, false);
+            mcUnit.GoMCWorldPos(pos, false);
 
             var weapon = mcUnit.GetActiveWeapon();
             var spellCount = (GetElapsedTime() / 120) + 1;

@@ -36,6 +36,7 @@ public class HandWeapon : Weapon,IDamageAble
     private float lastPhoenixTime = 0;
     private float lastRainAttackTime = 0;
     private float lastDrawTime = 0;
+    private float lastSummonTime = 0;
     
     //记录召唤列表
     public List<McUnit> summons=new List<McUnit>();
@@ -97,6 +98,8 @@ public class HandWeapon : Weapon,IDamageAble
         var selfExplosionLevel = GetWeaponLevelByNbt("自爆");
         if (selfExplosionLevel > 0)
         {
+            if(owner==null)
+                Debug.LogError("自爆，owner为null");
             AttackManager.Instance.Explosion(new AttackInfo(owner,AttackType.Physics,selfExplosionLevel*3),this,owner.transform.position,15+selfExplosionLevel*0.6f );
             (owner.planetCommander as SteveCommander)?.ReduceRespawnTime(
                 UnityEngine.Random.Range(1, selfExplosionLevel));
@@ -109,11 +112,18 @@ public class HandWeapon : Weapon,IDamageAble
     void OnMcUnitDie(McUnit mcUnit)
     {
         var sourCatchLevel = GetWeaponLevelByNbt("噬魂");
-        if (mcUnit == null)
+        if (mcUnit == null )
         {
             Debug.LogError("噬魂异常，mcunit为null");
             return;
         }
+
+        if (owner == null)
+        {
+            Debug.LogError("噬魂异常,owner为null");
+            return;
+        }
+        
         //距离够近的话噬魂
         if (sourCatchLevel>0 && Vector3.Distance(owner.transform.position, mcUnit.transform.position) < 18)
         {
@@ -326,7 +336,7 @@ public class HandWeapon : Weapon,IDamageAble
 
     }
     
-    public void OnSpellChange()
+    public void OnSpellChange()        
     {
         var str = "";
         for (int i = 0; i < weaponNbt.enhancementLevels.Count; i++)
@@ -339,7 +349,8 @@ public class HandWeapon : Weapon,IDamageAble
 
         try
         {
-            owner.hpUI.SetWeaponText(weaponName + str);
+            if(owner.hpUI)
+                owner.hpUI.SetWeaponText(weaponName + str);
         }
         catch (Exception e)
         {
@@ -456,7 +467,7 @@ public class HandWeapon : Weapon,IDamageAble
             {
                 var mcUnit = gameObject.GetComponent<McUnit>();
                 //EventCenter.Broadcast(EnumEventType.OnMonsterInit, mcUnit);
-                mcUnit.GoMCPos(owner.transform.position,false);
+                mcUnit.GoMCWorldPos(owner.transform.position,false);
                 summons.Add(mcUnit);
                 
                 if (mcUnit as Zombie)
@@ -469,7 +480,7 @@ public class HandWeapon : Weapon,IDamageAble
                 var weapon = mcUnit.GetActiveWeapon();
 
                 var summonLevel = GetWeaponLevelByNbt("召唤");
-                var spellCount = Mathf.CeilToInt((summonLevel / 3f) +1);
+                var spellCount = Mathf.CeilToInt((summonLevel / 2f) +1);
 
                 var maxSpellSlot = summonLevel/7 +1;
                 
@@ -580,17 +591,17 @@ public class HandWeapon : Weapon,IDamageAble
                         continue;
                     }
                     
-                    summons[i].GoMCPos(owner.transform.position,false);
+                    //summons[i].GoMCWorldPos(owner.transform.position,false);
                 }
 
-                bool canSummon = !(summons.Count > summonLevel / 7 + 1);
+                bool canSummon = !(summons.Count > summonLevel / 7 + 1) && Time.time>lastSummonTime+20;
 
                 //能否召唤的概率判断
-                var rand = UnityEngine.Random.Range(0, 100);
-                if (rand > 100 * ((float) summonLevel / (summonLevel + 20)))
-                {
-                    canSummon = false;
-                }
+                // var rand = UnityEngine.Random.Range(0, 100);
+                // if (rand > 100 * ((float) summonLevel / (summonLevel + 20)))
+                // {
+                //     canSummon = false;
+                // }
 
                 if (canSummon)
                 {
@@ -612,6 +623,7 @@ public class HandWeapon : Weapon,IDamageAble
                     if (planet != null)
                         planet.AddTask(new PlanetTask(new TaskParams(TaskType.Create, randomMonster, 1, GoToZeroPos),
                             null));
+                    lastSummonTime = Time.time;
                 }
                 
             }
@@ -856,12 +868,16 @@ public class HandWeapon : Weapon,IDamageAble
     }
 
 
-    
+    public virtual void DamageOtherFx(IVictimAble victimAble)
+    {
+        
+    }
 
     public void OnDamageOther(IVictimAble victimAble, BattleUnitProps.HpAndShield realDamage)
     {
         if (gameObject.activeSelf == false)
             return;
+        DamageOtherFx(victimAble);
         
         var heavyAttackLevel = GetWeaponLevelByNbt("重击");
         if (heavyAttackLevel > 0)
@@ -888,9 +904,13 @@ public class HandWeapon : Weapon,IDamageAble
             attackInfo.value += Mathf.CeilToInt( thunderLevel*0.7f);
             attackInfo.attackType =  AttackType.Real;
             //var damage = new AttackInfo(attackInfo.attacker, attackInfo.attackType, attackInfo.value * 5);
-            Vector3 targetPos = owner.chaseTarget.GetVictimEntity().GetVictimPosition();
-            AttackManager.Instance.Thunder(owner,attackInfo,this,targetPos+Vector3.up*60,6,targetPos,radius,count);
-            lastThundersTime = Time.time;
+            if (owner.chaseTarget != null)
+            {
+                Vector3 targetPos = owner.chaseTarget.GetVictimEntity().GetVictimPosition();
+                AttackManager.Instance.Thunder(owner,attackInfo,this,targetPos+Vector3.up*60,6,targetPos,radius,count);
+                lastThundersTime = Time.time;
+            }
+           
         }
 
         var rainAttack = GetWeaponLevelByNbt("雨裁");

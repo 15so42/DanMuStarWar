@@ -87,6 +87,8 @@ public class BiliBiliLive : MonoBehaviour
         
         Debug.Log("BIliLive重新注册事件！！！！！！！！！！！！");
         TipsDialog.ShowDialog("网络链接成功",null);
+
+        
         
         client.ReceivedMessageEvt += OnReceivedMessage;
         client.ReceivedPopularityEvt += OnReceivedPopularity;

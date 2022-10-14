@@ -54,6 +54,11 @@ public class McRoundManager : RoundManager
                 ParseRandomWeapon(steveCommander);
             }
 
+            if (trim.StartsWith("律令"))
+            {
+                ParseGatherSummons(steveCommander,trim);
+            }
+
             if (trim.StartsWith("购买"))
             {
                 ParseBuyMcWeapon(steveCommander,trim);
@@ -329,6 +334,31 @@ public class McRoundManager : RoundManager
             
     }
 
+    void ParseGatherSummons(SteveCommander steveCommander,string trim)
+    {
+        var validSteve = steveCommander.FindFirstValidSteve();
+        if (!validSteve)
+            return;
+
+        var weapon = validSteve.GetActiveWeapon();
+        if (weapon!=null && weapon.weaponName == "召唤法杖")
+        {
+            try
+            {
+                int logicPos = Int32.Parse(trim.Substring(2));
+                if (logicPos > 100 || logicPos < 0)
+                    return;
+
+                var worldPos = fightingManager.mcPosManager.GetPosByIndex(logicPos);
+                (weapon as SummonStaffWeapon)?.Gather(worldPos);
+            }
+            catch (Exception e)
+            {
+                Debug.Log("律令命令异常"+e.Message);
+            }
+        }
+    }
+    
     void ParseBuyMcWeapon(SteveCommander steveCommander,string trim)
     {
         var validSteve = steveCommander.FindFirstValidSteve();

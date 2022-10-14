@@ -1180,10 +1180,10 @@ public class Planet : GameEntity,ITaskAble
             for (int i = 0; i < battleUnits.Count; i++)
             {
                 if (battleUnits[i] != null && battleUnits[i].die == false &&
-                    battleUnits[i].planetCommander == commander)
+                    battleUnits[i].planetCommander == commander && battleUnits[i].GetType()==typeof(Steve))
                 {
                     (battleUnits[i] as McUnit).SetGuardStats(false);
-                    battleUnits[i].GoMCPos(pos,escape);
+                    battleUnits[i].GoMCWorldPos(pos,escape);
                     //(battleUnits[i] as McUnit).isGuard = false;
                     
 

@@ -35,6 +35,7 @@ public class MCPosManager : MonoBehaviour
 
     public Vector3 GetPosByIndex(int index)
     {
+        
         return positions[index];
     }
 }

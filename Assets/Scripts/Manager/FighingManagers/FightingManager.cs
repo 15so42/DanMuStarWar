@@ -421,10 +421,10 @@ public class FightingManager : MonoBehaviourPunCallbacks
 
         }
 
-        if (text=="切歌" && uid==23204263)
-        {
-            SongHime.Instance.NextSong();
-        }
+        // if (text=="切歌" && uid==23204263)
+        // {
+        //     SongHime.Instance.NextSong();
+        // }
 
         //if (text.Equals("加入黄队") || text.Equals("加入绿队") && gameStatus==GameStatus.Playing)
         //{
