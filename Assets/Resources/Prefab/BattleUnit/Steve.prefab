@@ -5149,7 +5149,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1799835516}
-  - component: {fileID: 1799835517}
+  - component: {fileID: 5209602765739548069}
   m_Layer: 0
   m_Name: Diamond_Axe
   m_TagString: Untagged
@@ -5172,7 +5172,7 @@ Transform:
   m_Father: {fileID: 1328123575461429352}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 3.748, y: -7.239, z: 10.471}
---- !u!114 &1799835517
+--- !u!114 &5209602765739548069
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5181,13 +5181,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1799835515}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fbae9b11d3bbfe4f9a96df83fd57a5c, type: 3}
+  m_Script: {fileID: 11500000, guid: 72be42e95c3034846b51258a2c3510b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackDistance: 3
   owner: {fileID: 0}
   weaponName: "\u94BB\u77F3\u65A7"
-  attackSpeed: 0.64
+  attackSpeed: 0.5
   scatteringAngel: 5
   rayDistance: 20
   attackType: 0
@@ -5225,6 +5225,8 @@ MonoBehaviour:
   pushBackHeight: 6
   pushBackStrength: 3
   summons: []
+  axeBulletPfb: {fileID: 5428831536415131091, guid: 7656f2f042052bd468bde340bbd960fe,
+    type: 3}
 --- !u!1 &2005318438
 GameObject:
   m_ObjectHideFlags: 0
@@ -15237,7 +15239,7 @@ MonoBehaviour:
   - {fileID: 7803108549210900515}
   - {fileID: 5196666267320263148}
   - {fileID: 1012542143}
-  - {fileID: 1799835517}
+  - {fileID: 0}
   - {fileID: 3160901585147511013}
   - {fileID: 5139485282197534922}
   rareWeapons:

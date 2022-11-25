@@ -29,6 +29,12 @@ public class McPveFightingManager : FightingManager
             
             
             return "McWarScene_Guard";
+            
+        }
+
+        if (chinese == "PVE1")
+        {
+            return "McWarScene_Sea";
         }
 
         return "McWarScene_Village";

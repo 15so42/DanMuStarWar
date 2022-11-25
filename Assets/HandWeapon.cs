@@ -507,9 +507,6 @@ public class HandWeapon : Weapon,IDamageAble
 
         if (lastTimer > 1)
         {
-            
-
-
             lastTimer = 0;
         }
         

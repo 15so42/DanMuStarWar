@@ -339,6 +339,7 @@ public class Steve : McUnit
         trigger.radius += findDistance;
         findEnemyDistance += findDistance;
         canPushBack = false;
+        LogTip("箭塔模式！");
         
         float minDistance = 10000;
         foreach (var w in weapons)
@@ -362,7 +363,7 @@ public class Steve : McUnit
         trigger.radius -= findDistance;
         findEnemyDistance -= findDistance;
         canPushBack = true;
-        
+        LogTip("退出箭塔模式！");
         float minDistance = 10000;
         foreach (var w in weapons)
         {
