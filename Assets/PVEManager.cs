@@ -32,7 +32,7 @@ public class PVEManager : MonoBehaviour
         //EventCenter.AddListener<ZombieSpawner>(EnumEventType.OnMonsterSpawnerInit,OnMonsterSpawnerInit);
         EventCenter.AddListener(EnumEventType.OnBattleOver,OnBattleOver);
         EventCenter.AddListener(EnumEventType.OnBattleStart,OnBattleStart);
-        SceneManager.LoadScene("McWarScene_Sea", LoadSceneMode.Additive);
+        //SceneManager.LoadScene("McWarScene_Sea", LoadSceneMode.Additive);
         RenderSettings.ambientLight=new Color(0.65f,0.65f,0.65f);
     }
 

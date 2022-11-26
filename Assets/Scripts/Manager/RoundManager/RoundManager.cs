@@ -33,7 +33,7 @@ public class RoundManager : MonoBehaviour
     private int battleGroundModeCounter = 0;
     public int mcModeCount = 0;
     public int marbleModeCount = 0;
-    public List<int> voted=new List<int>();//只能投票一次
+    //public List<int> voted=new List<int>();//只能投票一次
     
     //游戏时间
     public float elapsedTime=0;
@@ -91,7 +91,7 @@ public class RoundManager : MonoBehaviour
             if(fightingManager!=null)//如果切换游戏场景后游戏尚未开始，就没有初始化fightingManger，所以这里会报错
                 fightingManager.StopAllCoroutines();
             elapsedTime = 0;
-            voted.Clear();
+            //voted.Clear();
             players.Clear();
         }
 
@@ -149,19 +149,20 @@ public class RoundManager : MonoBehaviour
 
     void MapVote(int uid,GameMode gameMode)
     {
-        if(voted.Contains(uid))
-            return;
-        if (gameMode == GameMode.Normal)
-            normalModeCounter++;
-        if (gameMode == GameMode.BattleGround)
-            battleGroundModeCounter++;
-        if (normalModeCounter > battleGroundModeCounter)
-            desireMode = GameMode.Normal;
-        else
-        {
-            desireMode = GameMode.BattleGround;
-        }
-        voted.Add(uid);
+        
+        // if(voted.Contains(uid))
+        //     return;
+        // if (gameMode == GameMode.Normal)
+        //     normalModeCounter++;
+        // if (gameMode == GameMode.BattleGround)
+        //     battleGroundModeCounter++;
+        // if (normalModeCounter > battleGroundModeCounter)
+        //     desireMode = GameMode.Normal;
+        // else
+        // {
+        //     desireMode = GameMode.BattleGround;
+        // }
+        // voted.Add(uid);
 
         gameManager.uiManager.UpdateMapVoteUi(normalModeCounter,battleGroundModeCounter);
     }

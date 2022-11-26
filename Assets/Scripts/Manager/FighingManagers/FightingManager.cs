@@ -362,8 +362,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
 
     protected void Start()
     {
-
-       
+        //MapChanger.Instance.ChangeMap(MapChanger.Instance.desireMap);
     }
 
     
@@ -498,7 +497,8 @@ public class FightingManager : MonoBehaviourPunCallbacks
 
     protected virtual void OnGameOver()
     {
-        
+        MapChanger.Instance.ChangeMap(MapChanger.Instance.desireMap);
+        MapChanger.Instance.ClearVoted();
     }
 
     public void GameOverByMc(List<PlanetCommander> winners,List<PlanetCommander> losers,bool upload)

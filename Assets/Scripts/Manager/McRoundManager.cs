@@ -192,36 +192,36 @@ public class McRoundManager : RoundManager
                 ParseAddMaxHp(steveCommander,false);
             }
 
-            if (trim.StartsWith("换地图"))
-            {
-                var sceneName = trim.Substring(3);
-                if (votedMap.ContainsKey(sceneName))
-                {
-                    votedMap[sceneName]++;
-                    var maxKv = votedMap.ElementAt(0);
-                    foreach (var kv in votedMap)
-                    {
-                        if (kv.Value > maxKv.Value)
-                        {
-                            maxKv = kv;
-                        }
-                    }
-
-                    if (FightingManager.Instance as McFightingManager)
-                    {
-                        (FightingManager.Instance  as McFightingManager)?.SetNextMap(maxKv.Key);
-                    }
-
-                    if (FightingManager.Instance as McPveFightingManager)
-                    {
-                        (FightingManager.Instance  as McPveFightingManager)?.SetNextMap(maxKv.Key);
-                    }
-                    
-                    
-                    
-                    MessageBox._instance.AddMessage("经过投票决定下一局地图为："+maxKv.Key);
-                }
-            }
+            // if (trim.StartsWith("换地图"))
+            // {
+            //     var sceneName = trim.Substring(3);
+            //     if (votedMap.ContainsKey(sceneName))
+            //     {
+            //         votedMap[sceneName]++;
+            //         var maxKv = votedMap.ElementAt(0);
+            //         foreach (var kv in votedMap)
+            //         {
+            //             if (kv.Value > maxKv.Value)
+            //             {
+            //                 maxKv = kv;
+            //             }
+            //         }
+            //
+            //         if (FightingManager.Instance as McFightingManager)
+            //         {
+            //             (FightingManager.Instance  as McFightingManager)?.SetNextMap(maxKv.Key);
+            //         }
+            //
+            //         if (FightingManager.Instance as McPveFightingManager)
+            //         {
+            //             (FightingManager.Instance  as McPveFightingManager)?.SetNextMap(maxKv.Key);
+            //         }
+            //         
+            //         
+            //         
+            //         MessageBox._instance.AddMessage("经过投票决定下一局地图为："+maxKv.Key);
+            //     }
+            // }
             
             
             //MessageBox._instance.AddMessage("["+user.userName+"]:"+trim);

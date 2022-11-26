@@ -5,40 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class McPveFightingManager : FightingManager
 {
-    private string nextMap = "PVE";
-
-    public void SetNextMap(string key)
-    {
-        nextMap = key;
-    }
     
-    public string GetSceneNameByChinese(string chinese)
-    {
-        if (chinese == "村庄")
-        {
-            return "McWarScene_Village";
-        }
-
-        if (chinese == "矿井")
-        {
-            return "McWarScene_Mine";
-        }
-
-        if (chinese == "PVE")
-        {
-            
-            
-            return "McWarScene_Guard";
-            
-        }
-
-        if (chinese == "PVE1")
-        {
-            return "McWarScene_Sea";
-        }
-
-        return "McWarScene_Village";
-    }
+   
+   
+    
     
     public override void OnJoinPlayingDanMuReceived(Player toJoinPlayer)
     {
@@ -85,43 +55,9 @@ public class McPveFightingManager : FightingManager
         }
     }
     
-    protected override void OnGameOver()
-    {
-        base.OnGameOver();
-        
-        StartCoroutine(NewMap());
-    }
     
-    IEnumerator NewMap()
-    {
-        var mainMap = SceneManager.GetSceneAt(0).name;
-        if (nextMap == "PVE")
-        {
-            yield break;
-        }
-        if (mainMap == "McWarPveScene")
-        {
-            if (nextMap == "PVE")
-            {
-                
-                yield break;
-            }
-            else
-            {
-                SceneManager.LoadScene("McWarScene",LoadSceneMode.Single);
-            }
-            
-        }
-        else
-        {
-            
-        }
-        
-       
-        
-       
-
-    }
+    
+    
 
    
 }

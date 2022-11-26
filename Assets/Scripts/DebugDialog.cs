@@ -92,9 +92,10 @@ public class DebugDialog : Dialog
         });
     }
 
-    public override void Close()
+    
+
+    private void OnDestroy()
     {
-        base.Close();
         count--;
     }
 }
