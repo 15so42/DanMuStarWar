@@ -9,6 +9,7 @@ TagManager:
   - Main Canvas
   - ZombieSpawner
   - FireWall
+  - PlayableDirector
   layers:
   - Default
   - TransparentFX

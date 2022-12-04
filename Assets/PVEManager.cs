@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 using Random = System.Random;
 
@@ -22,6 +23,9 @@ public class PVEManager : MonoBehaviour
 
     public List<ZombieSpawner> spawners=new List<ZombieSpawner>();
     private List<string> toSpawnList=new List<string>();
+
+    [Header("生成逻辑")]
+    public PveSpawnConfig spawnConfig;
 
     //测试用timeScale
     public float timeScale = 1;
@@ -55,7 +59,7 @@ public class PVEManager : MonoBehaviour
         }
     }
 
-
+    private PlayableDirector director;
     void OnBattleStart()
     {
         var spawnersGo = GameObject.FindGameObjectsWithTag("ZombieSpawner");
@@ -65,6 +69,8 @@ public class PVEManager : MonoBehaviour
         }
         StopAllCoroutines();
         StartCoroutine(SpawnMonster());
+        director= GameObject.FindWithTag("PlayableDirector").GetComponent<PlayableDirector>();
+        director.Play();
     }
    
     void OnMonsterSpawnerInit(ZombieSpawner zombieSpawner)
@@ -118,7 +124,7 @@ public class PVEManager : MonoBehaviour
         spawner.Spawn(unitName);
         
     }
-    public void SpawnByCount(int count)
+    public void SpawnByPlayerCount(int count)
     {
         var playerCount = fightingManager.players.Count;
         var rate = ((float) playerCount / 6);
@@ -144,25 +150,53 @@ public class PVEManager : MonoBehaviour
         var time = GetElapsedTime();
         if (time < 300)//5分钟
         {
-            SpawnByCount(((int)time/90)+2);
+            SpawnByPlayerCount(((int)time/90)+2);
         }
         else if (time < 900)
         {
-            SpawnByCount((int)time/120);
+            SpawnByPlayerCount((int)time/120);
         }
         else if (time < 1800)//30分钟
         {
-            SpawnByCount((int)time/120);
+            SpawnByPlayerCount((int)time/120);
         }
         else
         {
-            SpawnByCount((int)time/180);
+            SpawnByPlayerCount((int)time/180);
         }
+    }
+
+    private float spawnInterval = 30;
+
+    public void ChangeSpawnInterval(int value)
+    {
+        spawnInterval = value;
+    }
+
+
+    public void AddMonsterToList(string monsterName)
+    {
+        toSpawnList.Add(monsterName);
+    }
+
+    public void SetMonsterList(List<string> newList)
+    {
+        toSpawnList = newList;
+    }
+
+    public void RemoveMonsterToList(string monsterName)
+    {
+        toSpawnList.Remove(monsterName);
     }
     
     IEnumerator SpawnMonster()
     {
-       
+
+        while (true)
+        {
+            yield return new WaitForSeconds(spawnInterval);
+        }
+
         
         toSpawnList.Add("BattleUnit_Zombie");
         //toSpawnList.Add("BattleUnit_Blaze");
@@ -259,6 +293,7 @@ public class PVEManager : MonoBehaviour
     void OnBattleOver()
     {
         StopAllCoroutines();
+        director.Stop();
         spawners.Clear();
         toSpawnList.Clear();
         

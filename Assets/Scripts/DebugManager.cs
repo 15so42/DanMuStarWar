@@ -42,7 +42,7 @@ public class DebugManager : MonoBehaviour
         {
             if (PVEManager.Instance)
             {
-                PVEManager.Instance.SpawnByCount(3);
+                PVEManager.Instance.SpawnByPlayerCount(3);
             }
         }
 

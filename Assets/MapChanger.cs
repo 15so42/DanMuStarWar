@@ -51,7 +51,7 @@ public class MapChanger : MonoBehaviour
         
         int index = UnityEngine.Random.Range(0, mapPairs.Count);
         //desireMap = mapPairs[index].logicName;
-        desireMap = "PVP";
+        desireMap = "PVE";
         Debug.Log("随机地图名："+desireMap);
         ChangeMap(desireMap);
     }
