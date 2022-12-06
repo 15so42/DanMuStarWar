@@ -53,7 +53,7 @@ public class MCBattleOverDialog : Dialog<McBattleOverDialogContext>
 
         StartCoroutine(CountDown(dialogContext.duration));
 
-        dialogContext.lostPlanetCommanders.Sort((x, y) => x.attackedDamage > y.attackedDamage ? -1 : 1);
+       
 
         if (dialogContext.winnerPlanetCommanders != null)
         {
@@ -71,17 +71,23 @@ public class MCBattleOverDialog : Dialog<McBattleOverDialogContext>
             }
         }
 
-
-        for (int i = 0;
-            i < ((dialogContext.lostPlanetCommanders.Count > 5) ? 5 : dialogContext.lostPlanetCommanders.Count);
-            i++)
+        if (dialogContext.lostPlanetCommanders != null)
         {
-            var planetCommander = dialogContext.lostPlanetCommanders[i];
-            var playerStatisItemUi = GameObject.Instantiate(statisItemUiPfb, rightGridLayout)
-                .GetComponent<PlayerStatisItemUi>();
+            dialogContext.lostPlanetCommanders.Sort((x, y) => x.attackedDamage > y.attackedDamage ? -1 : 1);
+            
+            for (int i = 0;
+                i < ((dialogContext.lostPlanetCommanders.Count > 5) ? 5 : dialogContext.lostPlanetCommanders.Count);
+                i++)
+            {
+                var planetCommander = dialogContext.lostPlanetCommanders[i];
+                var playerStatisItemUi = GameObject.Instantiate(statisItemUiPfb, rightGridLayout)
+                    .GetComponent<PlayerStatisItemUi>();
 
-            playerStatisItemUi.Init(planetCommander);
+                playerStatisItemUi.Init(planetCommander);
+            }
         }
+
+        
     }
     
    

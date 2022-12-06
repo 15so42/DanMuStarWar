@@ -17,18 +17,15 @@ public class PVEManager : MonoBehaviour
     }
 
     private FightingManager fightingManager;
- 
-    //public List<ZombieSpawner> zombieSpawners=new List<ZombieSpawner>();
-  
 
-    public List<ZombieSpawner> spawners=new List<ZombieSpawner>();
+    [Header("难度等级")] public int difficulty;
+    
+
+    private List<ZombieSpawner> spawners=new List<ZombieSpawner>();
     private List<string> toSpawnList=new List<string>();
 
-    [Header("生成逻辑")]
-    public PveSpawnConfig spawnConfig;
-
-    //测试用timeScale
-    public float timeScale = 1;
+    private UnityTimer.Timer addDiffTimer;
+    
     private void Start()
     {
         fightingManager=FightingManager.Instance;
@@ -36,7 +33,7 @@ public class PVEManager : MonoBehaviour
         //EventCenter.AddListener<ZombieSpawner>(EnumEventType.OnMonsterSpawnerInit,OnMonsterSpawnerInit);
         EventCenter.AddListener(EnumEventType.OnBattleOver,OnBattleOver);
         EventCenter.AddListener(EnumEventType.OnBattleStart,OnBattleStart);
-        //SceneManager.LoadScene("McWarScene_Sea", LoadSceneMode.Additive);
+        
         RenderSettings.ambientLight=new Color(0.65f,0.65f,0.65f);
     }
 
@@ -48,10 +45,10 @@ public class PVEManager : MonoBehaviour
         {
             if (PlanetManager.Instance.allPlanets.Count > 0)
             {
-                var planetComanders = PlanetManager.Instance.allPlanets[0].planetCommanders;
-                for (int i = 0; i < planetComanders.Count; i++)
+                var planetCommanders = PlanetManager.Instance.allPlanets[0].planetCommanders;
+                for (int i = 0; i < planetCommanders.Count; i++)
                 {
-                    planetComanders[i].AddPoint(0.5f);
+                    planetCommanders[i].AddPoint(0.5f);
                 }
             }
             
@@ -68,20 +65,23 @@ public class PVEManager : MonoBehaviour
             spawners.Add(spawnersGo[i].GetComponent<ZombieSpawner>());
         }
         StopAllCoroutines();
-        StartCoroutine(SpawnMonster());
+        
         director= GameObject.FindWithTag("PlayableDirector").GetComponent<PlayableDirector>();
         director.Play();
-    }
-   
-    void OnMonsterSpawnerInit(ZombieSpawner zombieSpawner)
-    {
-        if (spawners .Count==0)
-        {
-            spawners.Add(zombieSpawner);
-        }
 
-        StopAllCoroutines();
-        StartCoroutine(SpawnMonster());
+        addDiffTimer = UnityTimer.Timer.Register(60, () =>
+        {
+            AddDifficulty(1);
+        }, null, true);
+    }
+
+    /// <summary>
+    /// 用于战胜末影龙或者达到一个半小时后强行结束
+    /// </summary>
+    public void GameWin()
+    {
+        var winners = PlanetManager.Instance.allPlanets[0].planetCommanders;
+        FightingManager.Instance.GameOverByMc(winners,null,true);
     }
 
     float GetElapsedTime()
@@ -100,10 +100,10 @@ public class PVEManager : MonoBehaviour
             mcUnit.GoMCWorldPos(pos, false);
 
             var weapon = mcUnit.GetActiveWeapon();
-            var spellCount = (GetElapsedTime() / 120) + 1;
+            var spellCount = Mathf.CeilToInt(difficulty/2f);//附魔数量为难度等级/3
 
-            var maxSpellSlot = ((int)GetElapsedTime() / (30*60)) +3;
-            if (GetElapsedTime() < 300)
+            var maxSpellSlot =Mathf.CeilToInt(difficulty/15f)+2;//每15分钟增加一个槽位
+            if (difficulty < 5)
             {
                 spellCount = 0;
             }
@@ -124,16 +124,26 @@ public class PVEManager : MonoBehaviour
         spawner.Spawn(unitName);
         
     }
+
+    //增加难度等级，怪物附魔数量根据难度等级确定
+    public void AddDifficulty(int value)
+    {
+        difficulty += value;
+    }
+    
+    //新增难度等级，难度只增加怪物强度,附魔数量和附魔槽数
+    //怪物数量在TimeLine中手动指定
     public void SpawnByPlayerCount(int count)
     {
         var playerCount = fightingManager.players.Count;
         var rate = ((float) playerCount / 6);
-        if (rate < 0.5f)
-            rate = 0.5f;
+        if (rate < 0.2f)
+            rate = 0.2f;
         if (rate > 2f)
             rate = 2f;
+        
         var realCount=Mathf.CeilToInt(count * rate );
-        Debug.Log("生成"+realCount+"个野怪");
+        //Debug.Log("生成"+realCount+"个野怪");
         for (int i = 0; i < realCount; i++)
         {
             var spawner = spawners[UnityEngine.Random.Range(0, spawners.Count)];
@@ -142,37 +152,6 @@ public class PVEManager : MonoBehaviour
         }
     }
     
-    
-
-    //决定从哪里生成，能生成什么，生成几个
-    void SpawnMonsterByTimeAndPopulation()
-    {
-        var time = GetElapsedTime();
-        if (time < 300)//5分钟
-        {
-            SpawnByPlayerCount(((int)time/90)+2);
-        }
-        else if (time < 900)
-        {
-            SpawnByPlayerCount((int)time/120);
-        }
-        else if (time < 1800)//30分钟
-        {
-            SpawnByPlayerCount((int)time/120);
-        }
-        else
-        {
-            SpawnByPlayerCount((int)time/180);
-        }
-    }
-
-    private float spawnInterval = 30;
-
-    public void ChangeSpawnInterval(int value)
-    {
-        spawnInterval = value;
-    }
-
 
     public void AddMonsterToList(string monsterName)
     {
@@ -189,106 +168,7 @@ public class PVEManager : MonoBehaviour
         toSpawnList.Remove(monsterName);
     }
     
-    IEnumerator SpawnMonster()
-    {
-
-        while (true)
-        {
-            yield return new WaitForSeconds(spawnInterval);
-        }
-
-        
-        toSpawnList.Add("BattleUnit_Zombie");
-        //toSpawnList.Add("BattleUnit_Blaze");
-        
-        int count = 10;
-        while (count > 0)
-        {
-            yield return new WaitForSeconds(30);
-            SpawnMonsterByTimeAndPopulation();
-            count--;
-        }
-        
-        toSpawnList.Add("BattleUnit_Skeleton");
-        
-        
-        count = 10;
-        while (count > 0)
-        {
-            yield return new WaitForSeconds(45);
-            SpawnMonsterByTimeAndPopulation();
-            count--;
-        }
-        
-        toSpawnList.Add("BattleUnit_Creeper");
-
-        count = 10;
-        while (count > 0)
-        {
-            yield return new WaitForSeconds(45);
-            SpawnMonsterByTimeAndPopulation();
-            count--;
-        }
-        
-        StartCoroutine(SpawnGolems());
-        toSpawnList.Add("BattleUnit_Blaze");
-        
-        count = 10;
-        while (count > 0)
-        {
-            yield return new WaitForSeconds(45);
-            SpawnMonsterByTimeAndPopulation();
-            
-        }
-    }
     
-    
-
-    IEnumerator SpawnGolems()
-    {
-        while (true)
-        {
-            var count = 1;
-            if (GetElapsedTime() > 3 * 600)
-            {
-                count = 2;
-            }
-
-            if (GetElapsedTime() > 4 * 600)
-            {
-                count = 4;
-            }
-
-            if (GetElapsedTime() > 5 * 600)
-            {
-                count = 6;
-            }
-
-            if (GetElapsedTime() > 6 * 600)
-            {
-                count = 8;
-            }
-
-            //1/3概率生成凋零而不是铁傀儡，生成的数量为铁傀儡的1/3,最少为1
-            var rand = UnityEngine.Random.Range(0, 3);
-            
-            
-            var toSpawn = "BattleUnit_EvilIronGolem";
-            if (rand == 0 && GetElapsedTime()>=3*600)
-            {
-                count = Mathf.CeilToInt (count / 3f);
-                toSpawn = "BattleUnit_Wither";
-
-            }
-           
-            for (int i = 0; i < count; i++)
-            {
-                SpawnUnit(toSpawn);
-            }
-            
-            yield return new WaitForSeconds(300);
-        }
-    }
 
     void OnBattleOver()
     {
@@ -296,7 +176,7 @@ public class PVEManager : MonoBehaviour
         director.Stop();
         spawners.Clear();
         toSpawnList.Clear();
-        
+        addDiffTimer?.Cancel();
     }
 
     private void OnDestroy()

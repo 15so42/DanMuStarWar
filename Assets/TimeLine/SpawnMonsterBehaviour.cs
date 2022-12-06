@@ -11,6 +11,7 @@ public class SpawnMonsterBehaviour : PlayableBehaviour
     public int interval = 30;
     public List<string> list=new List<string>();
     public int count;
+    public bool loop;
 
     private UnityTimer.Timer spawnTimer;
     // Called when the owning graph starts playing
@@ -28,12 +29,13 @@ public class SpawnMonsterBehaviour : PlayableBehaviour
     // Called when the state of the playable is set to Play
     public override void OnBehaviourPlay(Playable playable, FrameData info)
     {
-        Debug.LogError("OnBehaviorPlay");
-        PVEManager.Instance.SetMonsterList(list);
+        //Debug.LogError("OnBehaviorPlay");
+        
         spawnTimer = UnityTimer.Timer.Register(interval, () =>
         {
+            PVEManager.Instance.SetMonsterList(list);
             PVEManager.Instance.SpawnByPlayerCount(count);
-        }, null, true);
+        }, null, loop);
     }
 
     // Called when the state of the playable is set to Paused

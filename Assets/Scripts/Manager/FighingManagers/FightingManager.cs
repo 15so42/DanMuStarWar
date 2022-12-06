@@ -517,14 +517,15 @@ public class FightingManager : MonoBehaviourPunCallbacks
                 }
             }
 
-            
-                
-            
-            for (int i = 0; i < losers.Count; i++)
+            if (losers != null && losers.Count > 0)
             {
-                var player = losers[i].player;
-                AddPlayerDataValue(player.uid, "loseCount", 1);
+                for (int i = 0; i < losers.Count; i++)
+                {
+                    var player = losers[i].player;
+                    AddPlayerDataValue(player.uid, "loseCount", 1);
+                }
             }
+            
         }
         exitPlayers.Clear();
         
