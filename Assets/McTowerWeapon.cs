@@ -16,7 +16,7 @@ public class McTowerWeapon : HandWeapon
         
        
         Invoke(nameof(Fx),fxDelay);
-        Invoke(nameof(Damage),fxDelay);
+        Invoke(nameof(DamageChaseTarget),fxDelay);
     }
 
     protected virtual void Fx()

@@ -415,32 +415,14 @@ public class HandWeapon : Weapon,IDamageAble
     {
         animator.SetTrigger("Attack");
         
-        Invoke(nameof(Damage),0.3f);
+        Invoke(nameof(DamageChaseTarget),0.3f);
     }
 
     public override void Fire()
     {
         FireAnim();
 
-        // var enduranceLevel = GetWeaponLevelByNbt("耐久");
-        // if (enduranceLevel > 0)
-        // {
-        //     var random=UnityEngine.Random.Range(0, 100);
-        //     if (random < (0.2+0.1*enduranceLevel)*100)
-        //     {
-        //         //不扣除耐久
-        //     }
-        //     else
-        //     {
-        //         endurance--;
-        //         OnEnduranceChange(endurance,maxEndurance);
-        //     }
-        // }
-        // else
-        // {
-        //     endurance--;
-        //     OnEnduranceChange(endurance,maxEndurance);
-        // }
+        
         
         OnEnduranceChange(endurance,maxEndurance);
         AddEndurance(-1);
@@ -694,15 +676,15 @@ public class HandWeapon : Weapon,IDamageAble
     {
         return new AttackInfo(this.owner, AttackType.Physics, attackValue);
     }
+
     
-
-    public void Damage()
+    public void DamageOther(IVictimAble victimAble,AttackInfo attackInfo)
     {
-        if(owner.chaseTarget==null)
+        if(victimAble==null)
             return;
-        var victim = owner.chaseTarget.GetVictimEntity();
 
-        var attackInfo = GetBaseAttackInfo();
+        var victim = victimAble.GetVictimEntity();
+        
 
         var angry = GetWeaponLevelByNbt("愤怒");
         if (angry > 0)
@@ -811,6 +793,15 @@ public class HandWeapon : Weapon,IDamageAble
         
         
         OnDamageOther(victim,realDamage);
+    }
+
+    public void DamageChaseTarget()
+    {
+        if(owner.chaseTarget==null)
+            return;
+        //var victim = owner.chaseTarget.GetVictimEntity();
+        var attackInfo = GetBaseAttackInfo();
+        DamageOther(owner.chaseTarget,attackInfo);
     }
 
 
@@ -936,6 +927,7 @@ public class HandWeapon : Weapon,IDamageAble
             }
             
         }
+        
 
         var drawLevel = GetWeaponLevelByNbt("汲取");
         if (drawLevel > 0)

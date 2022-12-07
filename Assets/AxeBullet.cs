@@ -26,6 +26,6 @@ public class AxeBullet : ArrowBullet
     protected override void DamageFx(IVictimAble victim)
     {
         base.DamageFx(victim);
-        handWeapon.Damage();
+        handWeapon.DamageChaseTarget();
     }
 }

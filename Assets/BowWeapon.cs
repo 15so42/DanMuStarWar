@@ -34,15 +34,7 @@ public class BowWeapon : HandWeapon
         Invoke(nameof(ShootArrow),invokeDelay);
     }
 
-    // public override void Fire()
-    // {
-    //     animator.SetTrigger(animTriggerName);
-    //
-    //     Invoke(nameof(ShootArrow),invokeDelay);
-    //     endurance--;
-    //     OnEnduranceChange(endurance,maxEndurance);
-    //     
-    // }
+    
 
     public virtual T InitBullet<T>(string bulletName) where T:Component
     {

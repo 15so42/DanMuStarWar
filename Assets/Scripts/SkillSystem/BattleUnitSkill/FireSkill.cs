@@ -9,6 +9,7 @@ public class FireSkill : SkillBase
 
     public GameEntity attacker;
     public int damage = 1;
+    
 
     public void SetAttacker(GameEntity gameEntity)
     {

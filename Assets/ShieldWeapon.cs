@@ -53,7 +53,7 @@ public class ShieldWeapon : HandWeapon
     {
         animator.SetTrigger("ShieldAttack");
         
-        Invoke(nameof(Damage),0.3f);
+        Invoke(nameof(DamageChaseTarget),0.3f);
     }
 
 
