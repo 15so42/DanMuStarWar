@@ -15,10 +15,10 @@ public class DragonBreath : MonoBehaviour
         var victimAble = other.GetComponentInChildren<IVictimAble>();
         
         //忽略和FETrigger的碰撞。
-        if (victimAble != null && other.gameObject.layer!=LayerMask.NameToLayer("FETrigger") )
+        if (victimAble != null  )
         {
-            weapon.DamageOther(victimAble,new AttackInfo(owner,AttackType.Real,Mathf.CeilToInt(victimAble.GetVictimEntity().props.hp*0.05f)));
-            
+            weapon.DamageOther(victimAble,new AttackInfo(owner,AttackType.Real,Mathf.CeilToInt(victimAble.GetVictimEntity().props.hp*0.01f)));
+            //Debug.Log(other.gameObject.name + "|||"+other.gameObject.layer);
         }
     }
 }

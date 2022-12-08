@@ -3918,7 +3918,79 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df4fa921bb10d8545a2c3adaa23ba359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficulty: 60
+  difficulty: 0
+  curve0:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 3
+      inSlope: -1.7822436
+      outSlope: -1.7822436
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.028295316
+    - serializedVersion: 3
+      time: 6
+      value: 0.1
+      inSlope: -0.15098305
+      outSlope: -0.15098305
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.052293938
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curve1:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 3
+      inSlope: -0.2979671
+      outSlope: -0.2979671
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.045042966
+    - serializedVersion: 3
+      time: 30
+      value: 0.1
+      inSlope: -0.005849035
+      outSlope: -0.005849035
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06934204
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curve2:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 3
+      inSlope: -0.20950355
+      outSlope: -0.20950355
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.03119585
+    - serializedVersion: 3
+      time: 45
+      value: 0.1
+      inSlope: -0.010738664
+      outSlope: -0.010738664
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.042460717
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1455102333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5295,6 +5367,8 @@ PlayableDirector:
     value: {fileID: 1455102332}
   - key: {fileID: 3705741570950204064, guid: 72f2cf6d0abf0da429e9d7ef55ec8ff3, type: 2}
     value: {fileID: 1455102332}
+  - key: {fileID: -8556887582243142932, guid: 72f2cf6d0abf0da429e9d7ef55ec8ff3, type: 2}
+    value: {fileID: 1455102333}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1899585815

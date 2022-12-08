@@ -19,6 +19,11 @@ public class EnderDragon : McUnit
         onHpChanged += UpdateHpUIByNameText;
         UpdateHpUIByNameText(props.hp,props.maxHp,props.shield,props.maxShield);
         lastHp = props.maxHp;
+
+        //liveWeapon.TrySpecificSpell("龙鳞");
+        liveWeapon.weaponNbt.enhancementLevels.Add(new EnhancementLevel("龙鳞",1));
+        var diff = PVEManager.Instance.difficulty;
+        AddMaxHp(50*(int)diff);
     }
     
     void UpdateHpUIByNameText(int hp,int maxHp,int shield,int maxShield)
@@ -54,6 +59,7 @@ public class EnderDragon : McUnit
             var navMove = victimEntity.GetComponent<NavMeshMoveManager>();
             if (navMove)
             {
+                Debug.Log("击飞");
                 navMove.PushBackByPos( victimEntity.transform.position,transform.position,12,9,1);
             }
 

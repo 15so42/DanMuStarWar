@@ -35,8 +35,9 @@ public class McUnit : WarPlane
     public GameObject dieRangePfb;
 
     private SteveGuardRange dieRangeGo;
-    
-    
+
+    //记录战斗时间，死亡时根据战斗时间调整难度
+    public float battleTime;
 
     protected override void Start()
     {
@@ -203,7 +204,15 @@ public class McUnit : WarPlane
             return true;
         return false;
     }
-    
+
+
+    protected virtual void Update()
+    {
+        if (IsTargetAlive())
+        {
+            battleTime += Time.deltaTime;
+        }
+    }
 
     #region 耐久
     public void UpdateWeaponEndurance(int endurance,int maxEndurance)

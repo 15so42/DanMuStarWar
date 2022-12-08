@@ -18,13 +18,20 @@ public class PVEManager : MonoBehaviour
 
     private FightingManager fightingManager;
 
-    [Header("难度等级")] public int difficulty;
+    [Header("难度等级")] public float difficulty=1;
     
 
     private List<ZombieSpawner> spawners=new List<ZombieSpawner>();
     private List<string> toSpawnList=new List<string>();
 
     private UnityTimer.Timer addDiffTimer;
+    [Header("小怪曲线")]
+    public AnimationCurve curve0;
+    [Header("铁傀儡曲线")]
+    public AnimationCurve curve1;
+    [Header("凋零曲线")]
+    public AnimationCurve curve2;
+    
     
     private void Start()
     {
@@ -34,7 +41,53 @@ public class PVEManager : MonoBehaviour
         EventCenter.AddListener(EnumEventType.OnBattleOver,OnBattleOver);
         EventCenter.AddListener(EnumEventType.OnBattleStart,OnBattleStart);
         
+        EventCenter.AddListener<Steve>(EnumEventType.OnSteveDied,OnSteveDie);
+        EventCenter.AddListener<McUnit>(EnumEventType.OnMcUnitDied,OnMcUnitDie);
+        
         RenderSettings.ambientLight=new Color(0.65f,0.65f,0.65f);
+    }
+
+
+    public void ReduceDifficulty(float value)
+    {
+        difficulty -= value;
+        if (difficulty < 1)
+            difficulty = 1;
+    }
+
+    void OnSteveDie(Steve steve)
+    {
+        Debug.Log("玩家死亡，难度减0.3");
+        ReduceDifficulty(0.3f);
+    }
+
+    float GetYByCurve(AnimationCurve curve,float x)
+    {
+        return curve.Evaluate(x);
+    }
+    void OnMcUnitDie(McUnit mcUnit)
+    {
+        var battleTime = mcUnit.battleTime;
+       
+        if (mcUnit as Zombie)
+        {
+            var toAdd = GetYByCurve(curve0, battleTime)*0.5f;
+            difficulty += toAdd;
+            Debug.Log("小怪死亡，战斗时间"+battleTime+"难度加"+toAdd);
+            
+        }else if (mcUnit as IronGolem)
+        {
+            var toAdd=GetYByCurve(curve1, battleTime)*2.5f;
+            difficulty += toAdd;
+            Debug.Log("腐化铁傀儡死亡，战斗时间"+battleTime+"难度加"+toAdd);
+            
+        }else if (mcUnit as Wither)
+        {
+            var toAdd=GetYByCurve(curve2, battleTime)*5f;
+            difficulty += toAdd;
+            Debug.Log("凋零死亡，战斗时间"+battleTime+"难度加"+toAdd);
+        }
+        
     }
 
     private float timer5 = 0;
@@ -69,6 +122,8 @@ public class PVEManager : MonoBehaviour
         director= GameObject.FindWithTag("PlayableDirector").GetComponent<PlayableDirector>();
         director.Play();
 
+        difficulty = 0;
+        
         addDiffTimer = UnityTimer.Timer.Register(60, () =>
         {
             AddDifficulty(1);
@@ -100,9 +155,9 @@ public class PVEManager : MonoBehaviour
             mcUnit.GoMCWorldPos(pos, false);
 
             var weapon = mcUnit.GetActiveWeapon();
-            var spellCount = Mathf.CeilToInt(difficulty/2f);//附魔数量为难度等级/3
+            var spellCount = Mathf.CeilToInt(difficulty/1.5f);//附魔数量为难度等级/3
 
-            var maxSpellSlot =Mathf.CeilToInt(difficulty/15f)+2;//每15分钟增加一个槽位
+            var maxSpellSlot =Mathf.CeilToInt(difficulty/20f)+2;//每15分钟增加一个槽位
             if (difficulty < 5)
             {
                 spellCount = 0;
@@ -133,7 +188,8 @@ public class PVEManager : MonoBehaviour
     
     //新增难度等级，难度只增加怪物强度,附魔数量和附魔槽数
     //怪物数量在TimeLine中手动指定
-    public void SpawnByPlayerCount(int count)
+    public void SpawnByPlayerCount(int count,bool overrideCount=false
+    )
     {
         var playerCount = fightingManager.players.Count;
         var rate = ((float) playerCount / 6);
@@ -143,6 +199,8 @@ public class PVEManager : MonoBehaviour
             rate = 2f;
         
         var realCount=Mathf.CeilToInt(count * rate );
+        if (overrideCount)
+            realCount = count;
         //Debug.Log("生成"+realCount+"个野怪");
         for (int i = 0; i < realCount; i++)
         {

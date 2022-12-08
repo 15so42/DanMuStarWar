@@ -37,12 +37,22 @@ public class DebugManager : MonoBehaviour
         {
             Time.timeScale = 5;
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            if (PVEManager.Instance)
+            {
+                
+            }
+        }
         if (Input.GetKeyDown(KeyCode.I))
         {
             if (PVEManager.Instance)
             {
-                PVEManager.Instance.SpawnByPlayerCount(3);
+                PVEManager.Instance.difficulty = 60;
+                //PVEManager.Instance.SpawnByPlayerCount(3);
+                PVEManager.Instance.SetMonsterList(new List<string>(){"BattleUnit_EnderDragon"});
+                PVEManager.Instance.SpawnByPlayerCount(1,true);
             }
         }
 

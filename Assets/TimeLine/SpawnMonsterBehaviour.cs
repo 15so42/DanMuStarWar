@@ -10,6 +10,7 @@ public class SpawnMonsterBehaviour : PlayableBehaviour
 
     public int interval = 30;
     public List<string> list=new List<string>();
+    public bool overrideCount;
     public int count;
     public bool loop;
 
@@ -34,7 +35,7 @@ public class SpawnMonsterBehaviour : PlayableBehaviour
         spawnTimer = UnityTimer.Timer.Register(interval, () =>
         {
             PVEManager.Instance.SetMonsterList(list);
-            PVEManager.Instance.SpawnByPlayerCount(count);
+            PVEManager.Instance.SpawnByPlayerCount(count,overrideCount);
         }, null, loop);
     }
 

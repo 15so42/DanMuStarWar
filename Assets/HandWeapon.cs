@@ -104,6 +104,7 @@ public class HandWeapon : Weapon,IDamageAble
             (owner.planetCommander as SteveCommander)?.ReduceRespawnTime(
                 UnityEngine.Random.Range(1, selfExplosionLevel));
             //(owner.planetCommander as SteveCommander).unityTimer.ReduceDuration(UnityEngine.Random.Range(1,selfExplosionLevel));
+            PVEManager.Instance.difficulty += 0.15f;
         }
     }
 
@@ -1092,7 +1093,14 @@ public class HandWeapon : Weapon,IDamageAble
         {
             attackInfo.value = (int) (attackInfo.value * (1 - (float) protectionLevel / (protectionLevel + 10)));
         }
-        
+
+        var squamaLevel = GetWeaponLevelByNbt("龙鳞");
+        if (squamaLevel > 0)
+        {
+            if(attackInfo.attackType!=AttackType.Physics)
+                attackInfo.value = (int) (attackInfo.value * 0.5f);
+        }
+
         // var arrowProteLevel=GetWeaponLevelByNbt("弹射物保护")
         // {
         //     
@@ -1118,7 +1126,7 @@ public class HandWeapon : Weapon,IDamageAble
                         var value = Mathf.CeilToInt(phoenix*0.5f);
                         owner.OnAttacked(new AttackInfo(owner, AttackType.Heal, value,Color.yellow));
 
-                        Debug.Log("不死鸟回血"+value);
+                        //Debug.Log("不死鸟回血"+value);
                     }
                     else
                     {

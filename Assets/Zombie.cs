@@ -36,8 +36,9 @@ public class Zombie : McUnit
         RemoveSpell(liveWeapon);
     }
 
-    protected virtual void Update()
+    protected override void Update()
     {
+        base.Update();
         if (selfFire && dayLightManager.IsDay())
         {
             SkillManager.Instance.AddSkill("Skill_着火_LV1", this, null);

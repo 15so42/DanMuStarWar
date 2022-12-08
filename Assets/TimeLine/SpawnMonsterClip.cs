@@ -15,6 +15,7 @@ public class SpawnMonsterClip : PlayableAsset,ITimelineClipAsset
     [Header("用于复制粘贴怪物名称")]
     public string clipBoard;
     public List<string> list;
+    public bool overrideCount;
     public int count;
     public int interval;
     public bool loop = true;
@@ -30,6 +31,7 @@ public class SpawnMonsterClip : PlayableAsset,ITimelineClipAsset
         var playable = ScriptPlayable<SpawnMonsterBehaviour>.Create(graph,template);
  
         SpawnMonsterBehaviour behaviour = playable.GetBehaviour();
+        behaviour.overrideCount = overrideCount;
         behaviour.count = count;
         behaviour.list = list;
         behaviour.interval = interval;
