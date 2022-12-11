@@ -135,6 +135,8 @@ public class PVEManager : MonoBehaviour
     /// </summary>
     public void GameWin()
     {
+        if(fightingManager.gameStatus!=GameStatus.Playing)
+            return;
         var winners = PlanetManager.Instance.allPlanets[0].planetCommanders;
         FightingManager.Instance.GameOverByMc(winners,null,true);
     }

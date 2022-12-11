@@ -25,11 +25,11 @@ public class TicksUi : MaskableGraphic
             color=Color.red;
         }
         
-        // if (maxHp > 500)
-        // {
-        //     interval = 50;
-        //     color=Color.red;
-        // }
+        if (maxHp > 1000)
+        {
+            interval = 500;
+            color=Color.magenta;
+        }
         SetVerticesDirty();
     }
     protected override void OnPopulateMesh(VertexHelper vh)
@@ -43,7 +43,7 @@ public class TicksUi : MaskableGraphic
         var count = maxHp / interval;
 
         Rect rect = GetPixelAdjustedRect();
-        for (int i = 0; i < count; i++)
+        for (int i = 1; i < count; i++)
         {
             float x = rect.xMin + (rect.width / count) * i + offsetX;
             float y = rect.yMin + offsetY;

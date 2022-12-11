@@ -4,37 +4,28 @@ using UnityEngine;
 
 public class DragonWeapon : HandWeapon
 {
+    
+    
     public override void FireAnim()
     {
         var distance =
-            Vector3.SqrMagnitude(owner.chaseTarget.GetVictimEntity().transform.position - transform.position);
+            Vector3.SqrMagnitude(owner.chaseTarget.GetVictimEntity().transform.position - owner.transform.position);
 
-        if (distance < 10)
+        if (distance < 100)
         {
             animator.SetTrigger("Attack");
-            Invoke(nameof(MeleeAttack),0.5f);
+           
+            
+            //Debug.LogError("Attack");
         }
         else
         {
             animator.SetTrigger("DragonBreath");
+            //Debug.LogError("DragonBreath");
+            
         }
         
     }
 
-    public void MeleeAttack()
-    {
-        var enemys = AttackManager.Instance.GetEnemyInRadius(owner, transform.position, 10,9);
-        foreach (var victim in enemys)
-        {
-            DamageOther(victim,new AttackInfo(owner,AttackType.Real,Mathf.CeilToInt(victim.GetVictimEntity().props.hp*0.15f)));
-
-            var victimEntity = victim.GetVictimEntity();
-            var navMove = victimEntity.GetComponent<NavMeshMoveManager>();
-            if (navMove)
-            {
-                navMove.PushBackByPos( victimEntity.transform.position,transform.position,12,9,1);
-            }
-
-        }
-    }
+    
 }

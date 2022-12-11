@@ -24,6 +24,7 @@ public class EnderDragon : McUnit
         liveWeapon.weaponNbt.enhancementLevels.Add(new EnhancementLevel("龙鳞",1));
         var diff = PVEManager.Instance.difficulty;
         AddMaxHp(50*(int)diff);
+        lastHp = props.hp;
     }
     
     void UpdateHpUIByNameText(int hp,int maxHp,int shield,int maxShield)
@@ -45,28 +46,42 @@ public class EnderDragon : McUnit
         
     }
 
+   
+
+
+    public void MeleeAttack()
+    {
+        liveWeapon.pushBackHeight = 9;
+        liveWeapon.pushBackStrength = 9;
+        var enemys = AttackManager.Instance.GetEnemyInRadius(this, transform.position, 15,9);
+        foreach (var victim in enemys)
+        {
+            liveWeapon.DamageOther(victim,new AttackInfo(this,AttackType.Real,Mathf.CeilToInt(victim.GetVictimEntity().props.maxHp*0.25f)));
+        }
+    }
+    
     public void ImpactFx()
     {
         
         //Debug.LogError("Impact");
-
+        liveWeapon.pushBackHeight = 9;
+        liveWeapon.pushBackStrength = 9;
         var enemys = AttackManager.Instance.GetEnemyInRadius(this, transform.position, 25,9);
         foreach (var victim in enemys)
         {
-            liveWeapon.DamageOther(victim,new AttackInfo(this,AttackType.Real,Mathf.CeilToInt(victim.GetVictimEntity().props.hp*0.5f)));
-
-            var victimEntity = victim.GetVictimEntity();
-            var navMove = victimEntity.GetComponent<NavMeshMoveManager>();
-            if (navMove)
-            {
-                Debug.Log("击飞");
-                navMove.PushBackByPos( victimEntity.transform.position,transform.position,12,9,1);
-            }
+            
+            liveWeapon.DamageOther(victim,new AttackInfo(this,AttackType.Physics,Mathf.CeilToInt(victim.GetVictimEntity().props.hp*0.25f)));
 
         }
     }
     private void OnDisable()
     {
         onHpChanged -= UpdateHpUIByNameText;
+    }
+
+    public override void Die()
+    {
+        base.Die();
+        PVEManager.Instance.GameWin();
     }
 }

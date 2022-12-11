@@ -52,6 +52,9 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
 
    private float lastDamageTime = 0;//受伤间隔
 
+   [Header("弓箭瞄准高度")]
+   public float offsetY = 6;
+
    public void Awake()
    {
       stateMachine = GetComponent<StateMachine>();
@@ -98,7 +101,7 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
 
    public Vector3 GetVictimPosition()
    {
-      return transform.position + Vector3.up * 6;
+      return transform.position + Vector3.up * offsetY;
    }
 
    public virtual AttackInfo OnBeforeAttacked(AttackInfo attackInfo)

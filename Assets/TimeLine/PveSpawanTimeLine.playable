@@ -53,40 +53,7 @@ MonoBehaviour:
   m_Children: []
   m_Clips: []
   m_Markers:
-    m_Objects:
-    - {fileID: 3706625659680232806}
---- !u!114 &-8200058774456980667
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 046af0ba02d2fcf4495cb0c7dd7aeda1, type: 3}
-  m_Name: SpawnMonsterClip(Clone)(Clone)
-  m_EditorClassIdentifier: 
-  clipBoard: 'BattleUnit_Zombie
-
-    BattleUnit_Skeleton
-
-    BattleUnit_Creeper
-
-    BattleUnit_BattleUnit_Blaze
-
-    BattleUnit_EvilIronGolem
-
-    BattleUnit_Wither
-
-    BattleUnit_EnderDragon'
-  list:
-  - BattleUnit_EvilIronGolem
-  - BattleUnit_Wither
-  overrideCount: 0
-  count: 4
-  interval: 120
-  loop: 1
+    m_Objects: []
 --- !u!114 &-7488589120510044060
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -180,40 +147,6 @@ MonoBehaviour:
   overrideCount: 0
   count: 7
   interval: 24
-  loop: 1
---- !u!114 &-2257160394885451415
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 046af0ba02d2fcf4495cb0c7dd7aeda1, type: 3}
-  m_Name: SpawnMonsterClip(Clone)
-  m_EditorClassIdentifier: 
-  clipBoard: 'BattleUnit_Zombie
-
-    BattleUnit_Skeleton
-
-    BattleUnit_Creeper
-
-    BattleUnit_BattleUnit_Blaze
-
-    BattleUnit_EvilIronGolem
-
-    BattleUnit_Wither
-
-    BattleUnit_EnderDragon'
-  list:
-  - BattleUnit_Zombie
-  - BattleUnit_Skeleton
-  - BattleUnit_Creeper
-  - BattleUnit_Blaze
-  overrideCount: 0
-  count: 8
-  interval: 22
   loop: 1
 --- !u!114 &-1715594648812924408
 MonoBehaviour:
@@ -719,93 +652,8 @@ MonoBehaviour:
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
     m_DisplayName: EvilIronGolem
-  - m_Version: 1
-    m_Start: 3600
-    m_ClipIn: 0
-    m_Asset: {fileID: -8200058774456980667}
-    m_Duration: 1800
-    m_TimeScale: 1
-    m_ParentTrack: {fileID: 3705741570950204064}
-    m_EaseInDuration: 0
-    m_EaseOutDuration: 0
-    m_BlendInDuration: 0
-    m_BlendOutDuration: 0
-    m_MixInCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_MixOutCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_BlendInCurveMode: 0
-    m_BlendOutCurveMode: 0
-    m_ExposedParameterNames: []
-    m_AnimationCurves: {fileID: 0}
-    m_Recordable: 0
-    m_PostExtrapolationMode: 0
-    m_PreExtrapolationMode: 0
-    m_PostExtrapolationTime: 0
-    m_PreExtrapolationTime: 0
-    m_DisplayName: Golem&Wither
   m_Markers:
     m_Objects: []
---- !u!114 &3706625659680232806
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
-  m_Name: Signal Emitter
-  m_EditorClassIdentifier: 
-  m_Time: 5400
-  m_Retroactive: 0
-  m_EmitOnce: 0
-  m_Asset: {fileID: 11400000, guid: 13c14b5599a93e74d88113d34307ecdd, type: 2}
 --- !u!114 &3794744007515678409
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1066,75 +914,6 @@ MonoBehaviour:
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
     m_DisplayName: Creeper
-  - m_Version: 1
-    m_Start: 3594.4666666666667
-    m_ClipIn: 0
-    m_Asset: {fileID: -2257160394885451415}
-    m_Duration: 1805.5333333333333
-    m_TimeScale: 1
-    m_ParentTrack: {fileID: 4525050277214779101}
-    m_EaseInDuration: 0
-    m_EaseOutDuration: 0
-    m_BlendInDuration: 0
-    m_BlendOutDuration: 0
-    m_MixInCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_MixOutCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_BlendInCurveMode: 0
-    m_BlendOutCurveMode: 0
-    m_ExposedParameterNames: []
-    m_AnimationCurves: {fileID: 0}
-    m_Recordable: 0
-    m_PostExtrapolationMode: 0
-    m_PreExtrapolationMode: 0
-    m_PostExtrapolationTime: 0
-    m_PreExtrapolationTime: 0
-    m_DisplayName: All
   - m_Version: 1
     m_Start: 900
     m_ClipIn: 0

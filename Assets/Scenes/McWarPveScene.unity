@@ -1300,8 +1300,6 @@ MonoBehaviour:
   rareWeaponPrices:
   - weaponName: TNT
     price: 1
-  - weaponName: "\u4E0B\u754C\u5408\u91D1\u5251"
-    price: 1
   - weaponName: "\u9493\u7AFF"
     price: 1
   - weaponName: "\u53EC\u5524\u6CD5\u6756"
@@ -5464,7 +5462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapPairs:
-  - logicName: PVP
+  - logicName: "\u6751\u5E84"
     baseSceneName: McWarScene
     realSceneName: McWarScene_Village
   - logicName: PVE
@@ -5477,7 +5475,7 @@ MonoBehaviour:
     baseSceneName: McWarPveScene
     realSceneName: McWarScene_Sea
   votedUid: 00000000
-  desireMap: 
+  desireMap: PVE
 --- !u!1 &2021024776
 GameObject:
   m_ObjectHideFlags: 0

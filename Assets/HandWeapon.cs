@@ -789,7 +789,7 @@ public class HandWeapon : Weapon,IDamageAble
         // if(navMeshMoveManager)
         //     navMeshMoveManager.PushBack(victim.transform.position-transform.position+Vector3.up*pushBackHeight,pushBackStrength);
         if(navMeshMoveManager)
-            navMeshMoveManager.PushBackByPos(victim.transform.position,transform.position,pushBackHeight,pushBackStrength);
+            navMeshMoveManager.PushBackByPos(victim.transform.position,owner.GetAttackEntity().transform.position,pushBackHeight,pushBackStrength);
         
         
         
@@ -1097,7 +1097,7 @@ public class HandWeapon : Weapon,IDamageAble
         var squamaLevel = GetWeaponLevelByNbt("龙鳞");
         if (squamaLevel > 0)
         {
-            if(attackInfo.attackType!=AttackType.Physics)
+            if(attackInfo.attackType!=AttackType.Physics && attackInfo.attackType!=AttackType.Heal)
                 attackInfo.value = (int) (attackInfo.value * 0.5f);
         }
 
