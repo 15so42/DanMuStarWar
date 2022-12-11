@@ -874,8 +874,11 @@ public class HandWeapon : Weapon,IDamageAble
             var rand = UnityEngine.Random.Range(0, 10);
             if (rand < 3)
             {
+                var value = Mathf.CeilToInt(victimAble.GetVictimEntity().props.maxHp * 0.01f * heavyAttackLevel);
+                if (value > owner.props.maxHp * 2)
+                    value = owner.props.maxHp * 2;
                 victimAble.OnAttacked(new AttackInfo(owner, AttackType.Physics,
-                    Mathf.CeilToInt(victimAble.GetVictimEntity().props.maxHp * 0.01f * heavyAttackLevel),Color.red));
+                    value,Color.red));
                 
             }
            

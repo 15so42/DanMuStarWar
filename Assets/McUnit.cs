@@ -336,12 +336,15 @@ public class McUnit : WarPlane
         base.OnSlainOther(victim);
         if (planetCommander!=null)
         {
+            
             planetCommander.AddPoint(2);
             ownerPlanet.OnAttacked(new AttackInfo(this, AttackType.Heal, 5));
             if (victim as Steve)
             {
                 fightingManager.AddPlayerDataValue(planetCommander.player.uid,"killCount",1);
             }
+            
+            
 
             if (victim as McPlanetTower)
             {

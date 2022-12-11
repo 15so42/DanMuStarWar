@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = System.Random;
 
 public class PVEManager : MonoBehaviour
@@ -31,6 +32,10 @@ public class PVEManager : MonoBehaviour
     public AnimationCurve curve1;
     [Header("凋零曲线")]
     public AnimationCurve curve2;
+
+    public GameObject recoveryBasePfb;
+
+    public Text diffText;
     
     
     private void Start()
@@ -104,7 +109,8 @@ public class PVEManager : MonoBehaviour
                     planetCommanders[i].AddPoint(0.5f);
                 }
             }
-            
+
+            diffText.text = difficulty.ToString();
             timer5 = 0;
         }
     }
@@ -141,6 +147,25 @@ public class PVEManager : MonoBehaviour
         FightingManager.Instance.GameOverByMc(winners,null,true);
     }
 
+
+    /// <summary>
+    /// 后背隐藏能源，为planet添加回血效果
+    /// </summary>
+    /// <returns></returns>
+
+    private GameObject rec;
+    public void AddRecoveryToBase()
+    {
+        var planet = PlanetManager.Instance.allPlanets[0];
+        if (planet != null)
+        {
+            SkillManager.Instance.AddSkill("Skill_圣泉_LV4", planet, null);
+            TipsDialog.ShowDialog("准备对抗末影龙！",null);
+            rec=GameObject.Instantiate(recoveryBasePfb);
+            rec.transform.position = fightingManager.mcPosManager.GetPosByIndex(0);
+        }
+    }
+        
     float GetElapsedTime()
     {
         return fightingManager.roundManager.elapsedTime;
@@ -237,6 +262,8 @@ public class PVEManager : MonoBehaviour
         spawners.Clear();
         toSpawnList.Clear();
         addDiffTimer?.Cancel();
+        if(rec)
+            Destroy(rec);
     }
 
     private void OnDestroy()
