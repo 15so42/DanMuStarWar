@@ -58,16 +58,19 @@ public class MapChanger : MonoBehaviour
 
     private void OnDanMuReceived(string userName, int uid, string time, string text)
     {
-        //如果uid已经投过票
-        if (votedUid.Contains(uid))
-        {
-            MessageBox._instance.AddMessage("系统",userName+"已经投票过了，请不要再投票了");
-            return;
-        }
+        
         
         text = text.Trim();
         if (text.StartsWith("换地图"))
         {
+            
+            //如果uid已经投过票
+            if (votedUid.Contains(uid))
+            {
+                MessageBox._instance.AddMessage("系统",userName+"已经投票过了，请不要再投票了");
+                return;
+            }
+            
             var logicName = text.Substring(3);
             if (!IsValidMapName(logicName))
             {

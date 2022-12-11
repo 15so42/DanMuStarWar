@@ -5574,7 +5574,7 @@ MonoBehaviour:
     baseSceneName: McWarPveScene
     realSceneName: McWarScene_Sea
   votedUid: 00000000
-  desireMap: PVE
+  desireMap: "\u6D77\u6D0B"
 --- !u!1 &2021024776
 GameObject:
   m_ObjectHideFlags: 0

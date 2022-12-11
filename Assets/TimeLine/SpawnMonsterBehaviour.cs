@@ -9,7 +9,7 @@ public class SpawnMonsterBehaviour : PlayableBehaviour
 {
 
     public int interval = 30;
-    public List<string> list=new List<string>();
+    public List<string> list;
     public bool overrideCount;
     public int count;
     public bool loop;
@@ -42,7 +42,7 @@ public class SpawnMonsterBehaviour : PlayableBehaviour
     // Called when the state of the playable is set to Paused
     public override void OnBehaviourPause(Playable playable, FrameData info)
     {
-        
+       
         spawnTimer?.Cancel();
     }
     

@@ -106,8 +106,7 @@ public class SteveCommander : PlanetCommander
 
         
 
-        //绑定事件检测自己的单位得产生
-        //EventCenter.AddListener(EnumEventType.OnBattleUnitCreated,OnSteveCreated);
+        
     }
 
     public void ParseSurrenderInMc()
@@ -147,10 +146,10 @@ public class SteveCommander : PlanetCommander
         leftSpecificSpell += Mathf.CeilToInt((float)userSaveData.giftPoint / 300);
         
         
-        if (player.uid==402554900)//绝言功能，额外附魔槽位，额外初始点数
+        if (userSaveData.jianzhang==1)//舰长开局额外30点数和免费使用氪金道具
         {
-            desireSpellCount++;
             AddPoint(30);
+            giftWeaponCount++;
         }
 
         #if UNITY_EDITOR
@@ -160,15 +159,7 @@ public class SteveCommander : PlanetCommander
         }
         #endif
 
-        // if (player.uid == 1460630713  )//阿斯达10滴血
-        // {
-        //     desireMaxHp = 10;
-        // }
-
-        // if (player.uid == 1834685283)//小梦荒野5滴血
-        // {
-        //     desireMaxHp = 10;
-        // }
+        
         
         
     }

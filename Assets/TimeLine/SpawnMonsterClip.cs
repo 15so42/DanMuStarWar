@@ -20,9 +20,12 @@ public class SpawnMonsterClip : PlayableAsset,ITimelineClipAsset
     public int interval;
     public bool loop = true;
     public SpawnMonsterBehaviour template = new SpawnMonsterBehaviour();
- 
-    
- 
+
+    public SpawnMonsterClip(ClipCaps clipCaps)
+    {
+        this.clipCaps = clipCaps;
+    }
+
 
     //重写这个工厂方法，播放轨道的时候就会创建ScriptPlayable<T>，由一小节关于playable，ScriptPlayable是由
     //playablebehaviour驱动的一种特殊的playable（同时也是个接口体）

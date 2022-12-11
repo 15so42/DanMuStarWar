@@ -50,18 +50,7 @@ public class PhpTester : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
-        //StartCoroutine(Download());
-        //StartCoroutine(GetUserByUid(4,"名字"));
-        //StartCoroutine(InsertNewUser(2,"ss"));
-        //StartCoroutine(UpdateUser(2,"yyyy",2,3,1,1,1,1,1,""));
-
-        // GetUserByUid(7, "默认名称", (user) =>
-        // {
-        //     Debug.Log(user.uid+","+user.userName);
-        // });
-    }
+    
 
 
 
