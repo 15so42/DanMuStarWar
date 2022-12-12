@@ -99,6 +99,9 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
       return gameObject;
    }
 
+   public bool isSummoned = false;
+   
+
    public Vector3 GetVictimPosition()
    {
       return transform.position + Vector3.up * offsetY;

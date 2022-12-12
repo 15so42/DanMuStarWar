@@ -14,7 +14,9 @@ public class SpawnMonsterClip : PlayableAsset,ITimelineClipAsset
     [Multiline(12)]
     [Header("用于复制粘贴怪物名称")]
     public string clipBoard;
-    public List<string> list;
+    //public List<string> list;
+    [TextArea]
+    public string spawnList;
     public bool overrideCount;
     public int count;
     public int interval;
@@ -36,7 +38,8 @@ public class SpawnMonsterClip : PlayableAsset,ITimelineClipAsset
         SpawnMonsterBehaviour behaviour = playable.GetBehaviour();
         behaviour.overrideCount = overrideCount;
         behaviour.count = count;
-        behaviour.list = list;
+        //behaviour.list = list;
+        behaviour.spawnList = spawnList;
         behaviour.interval = interval;
         behaviour.loop = loop;
         clipBoard = "BattleUnit_Zombie\nBattleUnit_Skeleton\nBattleUnit_Creeper\nBattleUnit_BattleUnit_Blaze\n" +

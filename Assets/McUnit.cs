@@ -22,6 +22,7 @@ public class McUnit : WarPlane
     public Transform phoenixFx;
     public Transform angryFx;
     public Transform searingSunFx;
+    public Transform immortalFx;
 
 
     [Header("寻敌Trigger")] public SphereCollider trigger;
@@ -60,19 +61,21 @@ public class McUnit : WarPlane
         fireFx = ResFactory.Instance.CreateFx("FireFx", position).transform;
         searingSunFx = ResFactory.Instance.CreateFx("SearingSunFx", position).transform;
         phoenixFx = ResFactory.Instance.CreateFx("PhoenixFx", position).transform;
+        immortalFx = ResFactory.Instance.CreateFx("ImmortalFx", position).transform;
 
         angryFx.SetParent(transform);
         poisonFx.SetParent(transform);
         fireFx.SetParent(transform);
         searingSunFx.SetParent(transform);
         phoenixFx.SetParent(transform);
+        immortalFx.SetParent(transform);
         
         angryFx.gameObject.SetActive(false);
         poisonFx.gameObject.SetActive(false);
         fireFx.gameObject.SetActive(false);
         searingSunFx.gameObject.SetActive(false);
         phoenixFx.gameObject.SetActive(false);
-        
+        immortalFx.gameObject.SetActive(false);
     }
     
     public Vector3 RandomDestination()
@@ -336,8 +339,17 @@ public class McUnit : WarPlane
         base.OnSlainOther(victim);
         if (planetCommander!=null)
         {
+
+            if (victim.isSummoned)
+            {
+                planetCommander.AddPoint(0.5f);
+                
+            }
+            else
+            {
+                planetCommander.AddPoint(2);
+            }
             
-            planetCommander.AddPoint(2);
             ownerPlanet.OnAttacked(new AttackInfo(this, AttackType.Heal, 5));
             if (victim as Steve)
             {
@@ -444,6 +456,16 @@ public class McUnit : WarPlane
         poisonFx.gameObject.SetActive(false);
     }
 
+    public void PlayImmortalFx()
+    {
+        immortalFx.gameObject.SetActive(true);
+        Invoke(nameof(CloseImmortalFx),0.8f);
+    }
+
+    private void CloseImmortalFx()
+    {
+        immortalFx.gameObject.SetActive(false);
+    }
 
     public override void Die()
     {

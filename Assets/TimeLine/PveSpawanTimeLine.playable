@@ -25,8 +25,7 @@ MonoBehaviour:
     BattleUnit_Wither
 
     BattleUnit_EnderDragon'
-  list:
-  - BattleUnit_EvilIronGolem
+  spawnList: BattleUnit_EvilIronGolem
   overrideCount: 0
   count: 1
   interval: 90
@@ -81,11 +80,9 @@ MonoBehaviour:
     BattleUnit_Wither
 
     BattleUnit_EnderDragon'
-  list:
-  - BattleUnit_Zombie
-  - BattleUnit_Skeleton
+  spawnList: BattleUnit_Zombie,BattleUnit_Skeleton
   overrideCount: 0
-  count: 4
+  count: 3
   interval: 30
   loop: 1
 --- !u!114 &-6531312444692155089
@@ -129,9 +126,7 @@ MonoBehaviour:
     BattleUnit_Wither
 
     BattleUnit_EnderDragon'
-  list:
-  - BattleUnit_EvilIronGolem
-  - BattleUnit_Wither
+  spawnList: BattleUnit_EvilIronGolem,BattleUnit_Wither
   overrideCount: 0
   count: 3
   interval: 120
@@ -161,13 +156,9 @@ MonoBehaviour:
     BattleUnit_Wither
 
     BattleUnit_EnderDragon'
-  list:
-  - BattleUnit_Zombie
-  - BattleUnit_Skeleton
-  - BattleUnit_Creeper
-  - BattleUnit_Blaze
+  spawnList: BattleUnit_Zombie,BattleUnit_Skeleton,BattleUnit_Creeper,BattleUnit_Blaze
   overrideCount: 0
-  count: 6
+  count: 4
   interval: 24
   loop: 1
 --- !u!114 &-1715594648812924408
@@ -195,13 +186,9 @@ MonoBehaviour:
     BattleUnit_Wither
 
     BattleUnit_EnderDragon'
-  list:
-  - BattleUnit_Zombie
-  - BattleUnit_Skeleton
-  - BattleUnit_Creeper
-  - BattleUnit_Blaze
+  spawnList: BattleUnit_Zombie,BattleUnit_Skeleton,BattleUnit_Creeper,BattleUnit_Blaze
   overrideCount: 0
-  count: 5
+  count: 4
   interval: 26
   loop: 1
 --- !u!114 &-1248820590090722186
@@ -245,8 +232,7 @@ MonoBehaviour:
     BattleUnit_Wither
 
     BattleUnit_EnderDragon'
-  list:
-  - BattleUnit_EnderDragon
+  spawnList: BattleUnit_EnderDragon
   overrideCount: 1
   count: 1
   interval: 1
@@ -276,13 +262,9 @@ MonoBehaviour:
     BattleUnit_Wither
 
     BattleUnit_EnderDragon'
-  list:
-  - BattleUnit_Zombie
-  - BattleUnit_Skeleton
-  - BattleUnit_Creeper
-  - BattleUnit_Blaze
+  spawnList: BattleUnit_Zombie,BattleUnit_Skeleton,BattleUnit_Creeper,BattleUnit_Blaze
   overrideCount: 0
-  count: 7
+  count: 5
   interval: 22
   loop: 1
 --- !u!114 &11400000
@@ -770,11 +752,9 @@ MonoBehaviour:
     BattleUnit_Wither
 
     BattleUnit_EnderDragon'
-  list:
-  - BattleUnit_EvilIronGolem
-  - BattleUnit_Wither
+  spawnList: BattleUnit_EvilIronGolem,BattleUnit_Wither
   overrideCount: 0
-  count: 4
+  count: 3
   interval: 120
   loop: 1
 --- !u!114 &4525050277214779101
@@ -1308,10 +1288,7 @@ MonoBehaviour:
     BattleUnit_Wither
 
     BattleUnit_EnderDragon'
-  list:
-  - BattleUnit_Zombie
-  - BattleUnit_Skeleton
-  - BattleUnit_Creeper
+  spawnList: BattleUnit_Zombie,BattleUnit_Skeleton,BattleUnit_Creeper
   overrideCount: 0
   count: 3
   interval: 28
@@ -1341,10 +1318,9 @@ MonoBehaviour:
     BattleUnit_Wither
 
     BattleUnit_EnderDragon'
-  list:
-  - BattleUnit_Zombie
+  spawnList: BattleUnit_Zombie
   overrideCount: 0
-  count: 3
+  count: 2
   interval: 30
   loop: 1
 --- !u!114 &6408892427337656605
@@ -1395,8 +1371,7 @@ MonoBehaviour:
     BattleUnit_Wither
 
     BattleUnit_EnderDragon'
-  list:
-  - BattleUnit_EvilIronGolem
+  spawnList: BattleUnit_EvilIronGolem
   overrideCount: 0
   count: 2
   interval: 90
@@ -1426,9 +1401,7 @@ MonoBehaviour:
     BattleUnit_Wither
 
     BattleUnit_EnderDragon'
-  list:
-  - BattleUnit_EvilIronGolem
-  - BattleUnit_Wither
+  spawnList: BattleUnit_EvilIronGolem,BattleUnit_Wither
   overrideCount: 0
   count: 4
   interval: 120
@@ -1474,12 +1447,8 @@ MonoBehaviour:
     BattleUnit_Wither
 
     BattleUnit_EnderDragon'
-  list:
-  - BattleUnit_Zombie
-  - BattleUnit_Skeleton
-  - BattleUnit_Creeper
-  - BattleUnit_Blaze
+  spawnList: BattleUnit_Zombie,BattleUnit_Skeleton,BattleUnit_Creeper,BattleUnit_Blaze
   overrideCount: 0
-  count: 8
+  count: 6
   interval: 22
   loop: 1

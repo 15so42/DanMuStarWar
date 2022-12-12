@@ -5,6 +5,7 @@ using Ludiq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityTimer;
 using Random = System.Random;
 
 [Serializable]
@@ -37,6 +38,7 @@ public class HandWeapon : Weapon,IDamageAble
     private float lastRainAttackTime = 0;
     private float lastDrawTime = 0;
     private float lastSummonTime = 0;
+    private float lastImmortalTime = 0;
     
     //记录召唤列表
     public List<McUnit> summons=new List<McUnit>();
@@ -52,12 +54,16 @@ public class HandWeapon : Weapon,IDamageAble
         randomStrs.Add("坚韧");
         randomStrs.Add("噬魂");
         randomStrs.Add("自爆");
+        randomStrs.Add("灵盾");
+        randomStrs.Add("不灭");
     }
 
     public void SetMaxSpellCount(int value)
     {
         weaponNbt.maxSpellCount = value;
     }
+    
+    
     
     public override void Init(BattleUnit owner)
     {
@@ -91,6 +97,12 @@ public class HandWeapon : Weapon,IDamageAble
 
 
 
+    }
+
+    public float GetAttackDistance()
+    {
+        var attackDistanceLevel = GetWeaponLevelByNbt("空间斩");
+        return attackDistance + attackDistanceLevel*0.15f;
     }
 
     void OnOwnerDie()
@@ -358,6 +370,8 @@ public class HandWeapon : Weapon,IDamageAble
             Debug.LogError("特效报错原因"+e.Message);
         }
         
+        (owner as McUnit)?.SetAttackDistance(GetAttackDistance());
+        
         //特效
         var angry = GetWeaponLevelByNbt("愤怒");
         if (angry > 0)
@@ -404,7 +418,7 @@ public class HandWeapon : Weapon,IDamageAble
         
         var distance =
             Vector3.Distance(root.transform.position, owner.chaseTarget.GetVictimEntity().transform.position);
-        if (distance < attackDistance)
+        if (distance < GetAttackDistance())
         {
             return true;
         }
@@ -455,7 +469,8 @@ public class HandWeapon : Weapon,IDamageAble
                 
                 if (mcUnit as Zombie)
                 {
-                    (mcUnit as Zombie).selfFire=false;
+                    ((Zombie) mcUnit).selfFire=false;
+                    ((GameEntity) mcUnit).isSummoned=true;
                 }
 
                 mcUnit.planetCommander = owner.planetCommander;
@@ -883,6 +898,29 @@ public class HandWeapon : Weapon,IDamageAble
             }
            
         }
+
+        var spaceChopperLevel = GetWeaponLevelByNbt("空间斩");
+        if (spaceChopperLevel > 0)
+        {
+            var rand = UnityEngine.Random.Range(0, 100);
+            if (rand < spaceChopperLevel)
+            {
+                victimAble.OnAttacked(new AttackInfo(owner, AttackType.Real, spaceChopperLevel));
+                AttackManager.Instance.SpaceChopperFx(victimAble.GetVictimEntity().transform.position);
+            }
+        }
+        
+        var immortalLevel = GetWeaponLevelByNbt("不灭");
+        if (immortalLevel > 0 && Time.time>lastImmortalTime+7)
+        {
+
+            var value = Mathf.CeilToInt(owner.props.maxHp * immortalLevel * 0.01f);
+            victimAble.OnAttacked(new AttackInfo(owner, AttackType.Physics, value));
+            owner.OnAttacked(new AttackInfo(owner, AttackType.Heal, value));
+            
+            (owner as McUnit)?.PlayImmortalFx();
+            lastImmortalTime = Time.time;
+        }
         
         //落雷
         var thunderLevel = GetWeaponLevelByNbt("落雷");
@@ -1029,7 +1067,7 @@ public class HandWeapon : Weapon,IDamageAble
                 Debug.Log("凯旋非玩家，效能减半");
             }
 
-            if (attackDistance > 10)
+            if (GetAttackDistance() > 10)
             {
                 multiplier *=0.5f;
                 Debug.Log("远程，效能减半");

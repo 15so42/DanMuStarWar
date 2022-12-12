@@ -4872,7 +4872,6 @@ MonoBehaviour:
   - "\u8010\u4E45"
   - "\u5438\u8840"
   - "\u8D22\u8FD0"
-  - "\u7075\u76FE"
   - "\u5C16\u523A"
   - "\u4EA1\u7075\u6740\u624B"
   - "\u7ECF\u9A8C\u4FEE\u8865"
@@ -5031,7 +5030,6 @@ MonoBehaviour:
   - "\u8D22\u8FD0"
   - "\u6BD2"
   - "\u4FDD\u62A4"
-  - "\u7075\u76FE"
   - "\u901F\u5C04"
   - "\u91CD\u51FB"
   mutexSpells:
@@ -5120,7 +5118,6 @@ MonoBehaviour:
   - "\u8D22\u8FD0"
   - "\u6BD2"
   - "\u4FDD\u62A4"
-  - "\u7075\u76FE"
   - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
@@ -5214,8 +5211,8 @@ MonoBehaviour:
   - "\u6BD2"
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
-  - "\u7075\u76FE"
   - "\u91CD\u51FB"
+  - "\u7A7A\u95F4\u65A9"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -5300,7 +5297,6 @@ MonoBehaviour:
   - "\u529B\u91CF"
   - "\u683C\u6321"
   - "\u8346\u68D8"
-  - "\u7075\u76FE"
   - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
@@ -15190,6 +15186,8 @@ MonoBehaviour:
   hpUIOffse: {x: 0, y: -17.71, z: 0}
   hpUIScale: {x: 2, y: 4, z: 1}
   canBeTarget: 1
+  offsetY: 6
+  isSummoned: 0
   ownerPlanet: {fileID: 0}
   gameManager: {fileID: 0}
   battleUnitManager: {fileID: 0}
@@ -15219,6 +15217,7 @@ MonoBehaviour:
   guardPos: {x: 0, y: 0, z: 0}
   dieRangePfb: {fileID: 1885590075030236391, guid: 15f80316e70869744b974271b4051acd,
     type: 3}
+  battleTime: 0
   cs64Code: 
   skinMeshRenderers:
   - {fileID: 1630794973563722278}
@@ -15384,7 +15383,6 @@ MonoBehaviour:
   - "\u8D22\u8FD0"
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
-  - "\u7075\u76FE"
   - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
@@ -15560,8 +15558,8 @@ MonoBehaviour:
   - "\u541E\u566C"
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
-  - "\u7075\u76FE"
   - "\u91CD\u51FB"
+  - "\u7A7A\u95F4\u65A9"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -20507,9 +20505,9 @@ MonoBehaviour:
   - "\u6BD2"
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
-  - "\u7075\u76FE"
   - "\u91CD\u51FB"
   - "\u5251\u5723"
+  - "\u7A7A\u95F4\u65A9"
   mutexSpells:
   - "\u683C\u6321"
   - "\u4FDD\u62A4"
@@ -20656,9 +20654,9 @@ MonoBehaviour:
   - "\u6BD2"
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
-  - "\u7075\u76FE"
   - "\u91CD\u51FB"
   - "\u5251\u5723"
+  - "\u7A7A\u95F4\u65A9"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -20805,9 +20803,9 @@ MonoBehaviour:
   - "\u6BD2"
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
-  - "\u7075\u76FE"
   - "\u91CD\u51FB"
   - "\u5251\u5723"
+  - "\u7A7A\u95F4\u65A9"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -21029,9 +21027,9 @@ MonoBehaviour:
   - "\u6BD2"
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
-  - "\u7075\u76FE"
   - "\u91CD\u51FB"
   - "\u5251\u5723"
+  - "\u7A7A\u95F4\u65A9"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -21489,9 +21487,9 @@ MonoBehaviour:
   - "\u6BD2"
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
-  - "\u7075\u76FE"
   - "\u91CD\u51FB"
   - "\u5251\u5723"
+  - "\u7A7A\u95F4\u65A9"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"
@@ -21638,9 +21636,9 @@ MonoBehaviour:
   - "\u6BD2"
   - "\u4EA1\u7075\u6740\u624B"
   - "\u4FDD\u62A4"
-  - "\u7075\u76FE"
   - "\u91CD\u51FB"
   - "\u5251\u5723"
+  - "\u7A7A\u95F4\u65A9"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"

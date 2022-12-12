@@ -10,6 +10,7 @@ public class AttackManager : MonoBehaviour
     public static AttackManager Instance;
     [Header("落雷")] public GameObject thunderPfb;
     [Header("雨裁")] public GameObject rainAttack;
+    [Header("空间斩")] public GameObject spaceChopperPfb;
     [Header("召唤法杖攻击特效")] public GameObject summonWandAttack;
 
     private void Awake()
@@ -102,6 +103,12 @@ public class AttackManager : MonoBehaviour
     {
         var rainAttackGo=GameObject.Instantiate(rainAttack);
         rainAttackGo.transform.position = pos;
+    }
+
+    public void SpaceChopperFx(Vector3 pos)
+    {
+        var spaceGo=GameObject.Instantiate(spaceChopperPfb);
+        spaceGo.transform.position = pos;
     }
 
    
