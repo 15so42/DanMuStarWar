@@ -16,7 +16,7 @@ public class McTowerWeapon : HandWeapon
         
        
         Invoke(nameof(Fx),fxDelay);
-        Invoke(nameof(DamageChaseTarget),fxDelay);
+        Invoke(nameof(DamageTargetByReal),fxDelay);
     }
 
     protected virtual void Fx()
@@ -34,6 +34,12 @@ public class McTowerWeapon : HandWeapon
         Destroy(line.gameObject,0.6f);
     }
 
+    public void DamageTargetByReal()
+    {
+        DamageOther(owner.chaseTarget,new AttackInfo(owner,AttackType.Real,Mathf.CeilToInt(owner.chaseTarget.GetVictimEntity().props.maxHp*0.07f)));
+    }
+    
+    
     public override AttackInfo GetBaseAttackInfo()
     {
         return new AttackInfo(owner,AttackType.Real,attackValue);

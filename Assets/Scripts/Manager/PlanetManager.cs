@@ -83,7 +83,11 @@ public class PlanetManager : MonoBehaviour
                 if (FightingManager.Instance.roundManager as McPveRoundManager)
                     upload = false;
                 //PVE模式不上传胜场和败场数据，其他照传不误
-                FightingManager.Instance.GameOverByMc(winners,losers,upload);
+                if (FightingManager.Instance.gameStatus == GameStatus.Playing)
+                {
+                    FightingManager.Instance.GameOverByMc(winners,losers,upload);
+                }
+                
             }
             else
             {

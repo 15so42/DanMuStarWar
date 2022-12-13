@@ -4904,6 +4904,8 @@ MonoBehaviour:
     type: 3}
   rainAttack: {fileID: 6126001958371304047, guid: 98092dfbc3fb13f4f86401fb8834cb76,
     type: 3}
+  spaceChopperPfb: {fileID: 4640645777366631581, guid: 5455cc6b88e07a84282fc7ca4726b911,
+    type: 3}
   summonWandAttack: {fileID: 0}
 --- !u!224 &1789555634 stripped
 RectTransform:
@@ -5270,7 +5272,6 @@ MonoBehaviour:
   desireMode: 0
   mcModeCount: 0
   marbleModeCount: 0
-  voted: 
   elapsedTime: 0
   mcWeaponsPrices:
   - weaponName: "\u6728\u5251"

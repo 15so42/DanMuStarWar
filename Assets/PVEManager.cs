@@ -66,8 +66,13 @@ public class PVEManager : MonoBehaviour
         ReduceDifficulty(0.3f);
     }
 
-    float GetYByCurve(AnimationCurve curve,float x)
+    float GetYByCurve(AnimationCurve curve,float x,McUnit mcUnit)
     {
+        if (mcUnit.lastAttacker == null) 
+        {
+            return 0;
+        }
+        
         return curve.Evaluate(x);
     }
     void OnMcUnitDie(McUnit mcUnit)
@@ -76,19 +81,19 @@ public class PVEManager : MonoBehaviour
        
         if (mcUnit as Zombie)
         {
-            var toAdd = GetYByCurve(curve0, battleTime)*0.5f;
+            var toAdd = GetYByCurve(curve0, battleTime,mcUnit)*0.5f;
             difficulty += toAdd;
             Debug.Log("小怪死亡，战斗时间"+battleTime+"难度加"+toAdd);
             
         }else if (mcUnit as IronGolem)
         {
-            var toAdd=GetYByCurve(curve1, battleTime)*2.5f;
+            var toAdd=GetYByCurve(curve1, battleTime,mcUnit)*2.5f;
             difficulty += toAdd;
             Debug.Log("腐化铁傀儡死亡，战斗时间"+battleTime+"难度加"+toAdd);
             
         }else if (mcUnit as Wither)
         {
-            var toAdd=GetYByCurve(curve2, battleTime)*5f;
+            var toAdd=GetYByCurve(curve2, battleTime,mcUnit)*5f;
             difficulty += toAdd;
             Debug.Log("凋零死亡，战斗时间"+battleTime+"难度加"+toAdd);
         }

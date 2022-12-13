@@ -102,7 +102,7 @@ public class HandWeapon : Weapon,IDamageAble
     public float GetAttackDistance()
     {
         var attackDistanceLevel = GetWeaponLevelByNbt("空间斩");
-        return attackDistance + attackDistanceLevel*0.15f;
+        return attackDistance + attackDistanceLevel*0.24f;
     }
 
     void OnOwnerDie()
