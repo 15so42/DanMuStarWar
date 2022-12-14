@@ -36,7 +36,10 @@ public class McTowerWeapon : HandWeapon
 
     public void DamageTargetByReal()
     {
-        DamageOther(owner.chaseTarget,new AttackInfo(owner,AttackType.Real,Mathf.CeilToInt(owner.chaseTarget.GetVictimEntity().props.maxHp*0.07f)));
+        var value = Mathf.CeilToInt(owner.chaseTarget.GetVictimEntity().props.maxHp * 0.07f);
+        if (value > 100)
+            value = 100;
+        DamageOther(owner.chaseTarget,new AttackInfo(owner,AttackType.Real,value));
     }
     
     

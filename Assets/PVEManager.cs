@@ -158,7 +158,7 @@ public class PVEManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
 
-    private GameObject rec;
+    private GameObject rec;//recoveryBase
     public void AddRecoveryToBase()
     {
         var planet = PlanetManager.Instance.allPlanets[0];
@@ -269,6 +269,7 @@ public class PVEManager : MonoBehaviour
         addDiffTimer?.Cancel();
         if(rec)
             Destroy(rec);
+        difficulty = 0;
     }
 
     private void OnDestroy()

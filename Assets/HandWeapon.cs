@@ -572,6 +572,28 @@ public class HandWeapon : Weapon,IDamageAble
             {
                 (owner as McUnit).CloseSunFx();
             }
+            
+            
+            /**加*/
+            //rate:几率数组（%），  total：几率总和（100%）
+            // Debug.Log(rand(new int[] { 10, 5, 15, 20, 30, 5, 5,10 }, 100));
+            int Rand(int[] rate, int total)
+            {
+                int r = UnityEngine.Random.Range(1, total+1);
+                int t = 0;
+                for (int i = 0; i < rate.Length; i++)
+                {
+                    t += rate[i];
+                    if (r < t)
+                    {
+                        return i;
+                    }
+                }
+                return 0;
+            }
+            // ————————————————
+            // 版权声明：本文为CSDN博主「幻世界」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+            // 原文链接：https://blog.csdn.net/qq_37310110/article/details/86139130
 
             var summonLevel = GetWeaponLevelByNbt("召唤");
             if (summonLevel > 0)
@@ -583,7 +605,6 @@ public class HandWeapon : Weapon,IDamageAble
                     {
                         summons.RemoveAt(i);
                         i--;
-                        continue;
                     }
                     
                     //summons[i].GoMCWorldPos(owner.transform.position,false);
@@ -591,28 +612,17 @@ public class HandWeapon : Weapon,IDamageAble
 
                 bool canSummon = !(summons.Count > summonLevel / 7 + 1) && Time.time>lastSummonTime+20;
 
-                //能否召唤的概率判断
-                // var rand = UnityEngine.Random.Range(0, 100);
-                // if (rand > 100 * ((float) summonLevel / (summonLevel + 20)))
-                // {
-                //     canSummon = false;
-                // }
-
                 if (canSummon)
                 {
-                    var summonList = new List<string>();
-                    if(summonLevel>0)
-                        summonList.Add("BattleUnit_Zombie");
-                    if(summonLevel>7)
-                        summonList.Add("BattleUnit_Skeleton");
-                    if(summonLevel>14)
-                        summonList.Add("BattleUnit_Creeper");
-                    if(summonLevel>21)
-                        summonList.Add("BattleUnit_Blaze");
-                    if(summonLevel>35)
-                        summonList.Add("BattleUnit_IronGolem");
+                    var summonList = new List<string>()
+                    {
+                        "BattleUnit_Zombie","BattleUnit_Skeleton","BattleUnit_Creeper",
+                        "BattleUnit_Blaze","BattleUnit_IronGolem"
+                    };
 
-                    var randomMonster = summonList[UnityEngine.Random.Range(0, summonList.Count)];
+                    var randIndex = Rand(new int[] {35, 25, 20, 15,5 }, 100);
+
+                    var randomMonster = summonList[randIndex];
                 
                     var planet = owner.GetAttackerOwner() as Planet;
                     if (planet != null)
@@ -1114,7 +1124,7 @@ public class HandWeapon : Weapon,IDamageAble
         var ignoreDamageType = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Fire,AttackType.Poison};
         if (thronLevel > 0 && !ignoreDamageType.Contains(attackInfo.attackType))
         {
-            var value = Mathf.CeilToInt(attackInfo.value * ((float)thronLevel / (thronLevel + 10)));
+            var value = Mathf.CeilToInt(attackInfo.value * ((float)thronLevel / (thronLevel + 20)));
             attackInfo.attacker.GetAttackEntity()
                 .OnAttacked(new AttackInfo(owner, AttackType.Reflect, value));
         }

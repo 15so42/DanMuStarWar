@@ -23,7 +23,7 @@ public class EnderDragon : McUnit
         //liveWeapon.TrySpecificSpell("龙鳞");
         liveWeapon.weaponNbt.enhancementLevels.Add(new EnhancementLevel("龙鳞",1));
         var diff = PVEManager.Instance.difficulty;
-        AddMaxHp(50*(int)diff);
+        AddMaxHp(100*(int)diff);
         lastHp = props.hp;
     }
     
@@ -56,7 +56,14 @@ public class EnderDragon : McUnit
         var enemys = AttackManager.Instance.GetEnemyInRadius(this, transform.position, 15,9);
         foreach (var victim in enemys)
         {
-            liveWeapon.DamageOther(victim,new AttackInfo(this,AttackType.Real,Mathf.CeilToInt(victim.GetVictimEntity().props.maxHp*0.25f)));
+            var value = Mathf.CeilToInt(victim.GetVictimEntity().props.maxHp * 0.4f);
+            if (victim as Planet)
+            {
+                Debug.Log("攻击基地，伤害减半");
+                value = Mathf.CeilToInt(value * 0.5f);
+            }
+                
+            liveWeapon.DamageOther(victim,new AttackInfo(this,AttackType.Physics,value));
         }
     }
     
@@ -66,11 +73,18 @@ public class EnderDragon : McUnit
         //Debug.LogError("Impact");
         liveWeapon.pushBackHeight = 9;
         liveWeapon.pushBackStrength = 9;
-        var enemys = AttackManager.Instance.GetEnemyInRadius(this, transform.position, 25,9);
+        var enemys = AttackManager.Instance.GetEnemyInRadius(this, transform.position, 35,9);
         foreach (var victim in enemys)
         {
+            var value = Mathf.CeilToInt(victim.GetVictimEntity().props.hp * 0.25f);
+            if (victim as Planet)
+            {
+                Debug.Log("攻击基地，伤害减半");
+                value = Mathf.CeilToInt(value * 0.5f);
+            }
+
             
-            liveWeapon.DamageOther(victim,new AttackInfo(this,AttackType.Physics,Mathf.CeilToInt(victim.GetVictimEntity().props.hp*0.25f)));
+            liveWeapon.DamageOther(victim,new AttackInfo(this,AttackType.Real,value));
 
         }
     }

@@ -23,9 +23,18 @@ public class Zombie : McUnit
         liveWeapon.Init(this);
        
         hpUI.OpenHPTile();
+
+
+        float diff = 0;
+        if (PVEManager.Instance != null)
+        {
+            diff = PVEManager.Instance.difficulty;
+        }
+        else
+        {
+            diff=fightingManager.roundManager.elapsedTime/60;
+        }
         
-        
-        var diff = PVEManager.Instance.difficulty;
         var addHp = (int) diff;
         AddMaxHp((int)diff);
         
