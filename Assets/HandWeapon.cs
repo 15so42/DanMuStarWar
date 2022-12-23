@@ -112,7 +112,7 @@ public class HandWeapon : Weapon,IDamageAble
         {
             if(owner==null)
                 Debug.LogError("自爆，owner为null");
-            AttackManager.Instance.Explosion(new AttackInfo(owner,AttackType.Physics,selfExplosionLevel*3),this,owner.transform.position,15+selfExplosionLevel*0.6f );
+            AttackManager.Instance.Explosion(new AttackInfo(owner,AttackType.Physics,selfExplosionLevel*3),this,owner.transform.position,15+selfExplosionLevel*0.3f );
             (owner.planetCommander as SteveCommander)?.ReduceRespawnTime(
                 UnityEngine.Random.Range(1, selfExplosionLevel));
             //(owner.planetCommander as SteveCommander).unityTimer.ReduceDuration(UnityEngine.Random.Range(1,selfExplosionLevel));

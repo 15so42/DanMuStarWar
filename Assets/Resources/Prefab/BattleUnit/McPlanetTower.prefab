@@ -235,6 +235,8 @@ MonoBehaviour:
   hpUIOffse: {x: 0, y: 0, z: 0}
   hpUIScale: {x: 1, y: 1, z: 1}
   canBeTarget: 1
+  offsetY: 6
+  isSummoned: 0
   ownerPlanet: {fileID: 0}
   gameManager: {fileID: 0}
   battleUnitManager: {fileID: 0}
@@ -257,12 +259,14 @@ MonoBehaviour:
   phoenixFx: {fileID: 0}
   angryFx: {fileID: 0}
   searingSunFx: {fileID: 0}
+  immortalFx: {fileID: 0}
   trigger: {fileID: 381593586}
   canPushBack: 1
   canSetPlanetEnemy: 1
   isGuard: 0
   guardPos: {x: 0, y: 0, z: 0}
   dieRangePfb: {fileID: 0}
+  battleTime: 0
   height: 10
   canBeAttack: 0
 --- !u!114 &3081138844181444183
@@ -442,6 +446,7 @@ MonoBehaviour:
   shootPoint: {fileID: 0}
   animStr: Attack
   fxDelay: 0
+  minValue: 8
 --- !u!1 &4011596464881061154
 GameObject:
   m_ObjectHideFlags: 0

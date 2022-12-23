@@ -76,7 +76,7 @@ public class EnderDragon : McUnit
         var enemys = AttackManager.Instance.GetEnemyInRadius(this, transform.position, 35,9);
         foreach (var victim in enemys)
         {
-            var value = Mathf.CeilToInt(victim.GetVictimEntity().props.hp * 0.25f);
+            var value = Mathf.CeilToInt(victim.GetVictimEntity().props.hp * 0.5f);
             if (victim as Planet)
             {
                 Debug.Log("攻击基地，伤害减半");

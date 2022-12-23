@@ -9,6 +9,7 @@ public class McTowerWeapon : HandWeapon
     public Transform shootPoint;
     public string animStr = "Attack";
     public float fxDelay = 0;
+    [Header("最低伤害")] public int minValue = 7;
     
     public override void FireAnim()
     {
@@ -37,6 +38,10 @@ public class McTowerWeapon : HandWeapon
     public void DamageTargetByReal()
     {
         var value = Mathf.CeilToInt(owner.chaseTarget.GetVictimEntity().props.maxHp * 0.07f);
+        if (value < minValue)
+        {
+            value = minValue;
+        }
         if (value > 100)
             value = 100;
         DamageOther(owner.chaseTarget,new AttackInfo(owner,AttackType.Real,value));
