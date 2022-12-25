@@ -66,6 +66,22 @@ public class AttackManager : MonoBehaviour
         return new Vector3(UnityEngine.Random.Range(start.x,end.x),UnityEngine.Random.Range(start.y,end.y),UnityEngine.Random.Range(start.z,end.z) );
     }
 
+
+    public List<IVictimAble> GetVictimsInRadius(Vector3 center, float radius)
+    {
+        List<IVictimAble> victimAbles=new List<IVictimAble>();
+        var colliders = Physics.OverlapSphere(center,radius);
+        foreach (var collider in colliders)
+        {
+            var mcUnit = collider.GetComponent<McUnit>();
+            if (mcUnit!=null)
+            {
+                victimAbles.Add(mcUnit);
+            }
+        }
+        return victimAbles;
+        
+    }
     public List<IVictimAble> GetEnemyInRadius(IAttackAble able,Vector3 center, float radius,int needCount)
     {
         List<IVictimAble> victimAbles=new List<IVictimAble>();

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using GameCode.Tools;
 using Photon.Pun;
 using UnityEngine;
 
@@ -78,6 +79,17 @@ public class McRoundManager : RoundManager
                     return;
                 }
                 MessageBox._instance.AddMessage("系统", player.userName+"的礼物点数为"+player.userSaveData.giftPoint);
+            }
+            
+            if (trim.Equals("查询绿宝石"))
+            {
+                var player = steveCommander.player;
+                if (player.userSaveData == null)
+                {
+                    MessageBox._instance.AddMessage("系统", "查询绿宝石失败，数据服务器暂时不可用");
+                    return;
+                }
+                MessageBox._instance.AddMessage("系统", player.userName+"的绿宝石点数为"+player.userSaveData.coin);
             }
 
             if (trim.Equals("查询指定附魔次数"))
@@ -497,7 +509,7 @@ public class McRoundManager : RoundManager
            });
            return;
         }
-            //return;
+            
         
         if (steveCommander.point < 8 )
         {
@@ -521,6 +533,24 @@ public class McRoundManager : RoundManager
         }
             
       
+    }
+
+    void ParseChristmasTree(SteveCommander steveCommander)
+    {
+        var validSteve = steveCommander.FindFirstValidSteve();
+
+
+        if (!validSteve)
+        {
+            steveCommander.toDoAfterRespawn.Add(() =>
+            {
+                ParseChristmasTree(steveCommander);
+               
+            });
+            return;
+        }
+
+        ResFactory.Instance.CreateChristmasTree(validSteve.transform.position);
     }
 
     void ParseRemoveSpell(SteveCommander steveCommander,string trim)
@@ -636,6 +666,11 @@ public class McRoundManager : RoundManager
             //ParseRespawn(uid,true);
             //ParseAddMaxHp(steveCommander,true);
             ParseRandomSpell(steveCommander,false,true);
+        }
+
+        if (giftName == "圣诞精灵")
+        {
+            ParseChristmasTree(steveCommander);
         }
 
         if (giftName == "这个好诶")

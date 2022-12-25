@@ -112,11 +112,12 @@ public class HandWeapon : Weapon,IDamageAble
         {
             if(owner==null)
                 Debug.LogError("自爆，owner为null");
-            AttackManager.Instance.Explosion(new AttackInfo(owner,AttackType.Physics,selfExplosionLevel*3),this,owner.transform.position,15+selfExplosionLevel*0.3f );
+            AttackManager.Instance.Explosion(new AttackInfo(owner,AttackType.Physics,Mathf.CeilToInt(selfExplosionLevel*2.5f)),this,owner.transform.position,15+selfExplosionLevel*0.3f );
             (owner.planetCommander as SteveCommander)?.ReduceRespawnTime(
                 UnityEngine.Random.Range(1, selfExplosionLevel));
             //(owner.planetCommander as SteveCommander).unityTimer.ReduceDuration(UnityEngine.Random.Range(1,selfExplosionLevel));
-            PVEManager.Instance.difficulty += 0.15f;
+            if(PVEManager.Instance)
+                PVEManager.Instance.difficulty += 0.15f;
         }
     }
 
@@ -478,9 +479,9 @@ public class HandWeapon : Weapon,IDamageAble
                 var weapon = mcUnit.GetActiveWeapon();
 
                 var summonLevel = GetWeaponLevelByNbt("召唤");
-                var spellCount = Mathf.CeilToInt((summonLevel / 2f) +1);
+                var spellCount = Mathf.CeilToInt((summonLevel / 2.5f) +1);
 
-                var maxSpellSlot = summonLevel/7 +1;
+                var maxSpellSlot = summonLevel/14 +1;
                 
                 weapon.SetMaxSpellCount(maxSpellSlot);
                 for (int i = 0; i < spellCount; i++)
@@ -934,7 +935,7 @@ public class HandWeapon : Weapon,IDamageAble
         
         //落雷
         var thunderLevel = GetWeaponLevelByNbt("落雷");
-        if (thunderLevel > 0 && Time.time>lastThundersTime+6)
+        if (thunderLevel > 0 && Time.time>lastThundersTime+9)
         {
             float radius = 5+ thunderLevel ;
             if (radius > 30)

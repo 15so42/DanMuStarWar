@@ -147,6 +147,13 @@ public class MapManager : MonoBehaviour
 
         //var targetPosData =  realMapFile[0].posData;
 
+
+        if (SceneManager.sceneCount < 2)
+        {
+            Debug.LogError("加载场景出问题了，直接游戏重启!");
+            System.Diagnostics.Process.Start(Application.dataPath.Replace("_Data", ".exe")); //new program
+            Application.Quit(); //kill current process
+        }
         
         var activeSceneName = SceneManager.GetSceneAt(1).name;
         ScenePosDataPair pair = scenePosDataPairs.Find(x => x.sceneName ==activeSceneName );

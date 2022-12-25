@@ -1,0 +1,96 @@
+Wavefront OBJ material file
+# Contains 7 materials
+
+newmtl Oak_Log
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka Mineways2Skfb-RGBA.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd Mineways2Skfb-RGBA.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl Oak_Leaves
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka Mineways2Skfb-RGBA.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd Mineways2Skfb-RGBA.png
+map_d Mineways2Skfb-RGBA.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl Wool
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka Mineways2Skfb-RGBA.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd Mineways2Skfb-RGBA.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl Block_of_Gold
+Ns 229.5
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.18 0.18 0.18
+map_Ka Mineways2Skfb-RGBA.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd Mineways2Skfb-RGBA.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl Snow
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka Mineways2Skfb-RGBA.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd Mineways2Skfb-RGBA.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl Stained_Glass_Pane
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.03 0.03 0.03
+map_Ka Mineways2Skfb-RGBA.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd Mineways2Skfb-RGBA.png
+map_d Mineways2Skfb-RGBA.png
+illum 4
+# d 0.5
+# Tr 0.5
+Tf 0.5 0.5 0.5
+
+newmtl Spruce_Fence
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka Mineways2Skfb-RGBA.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd Mineways2Skfb-RGBA.png
+illum 2
+# d 1
+# Tr 0

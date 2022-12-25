@@ -11,6 +11,7 @@ namespace GameCode.Tools
         public string battleUnitPath="Prefab/BattleUnit/";
         public string bulletPath="Prefab/Bullet/";
         public string fxPath = "Prefab/Fx/";
+        public string propsPath = "Prefab/Props/";
 
         GameObject InsByResLoad(string path, string name)
         {
@@ -62,6 +63,13 @@ namespace GameCode.Tools
             GameObject go = InsByResLoad(fxPath, name);
             go.transform.position = pos;
             return go;
+        }
+
+        public GameObject CreateChristmasTree(Vector3 pos)
+        {
+            GameObject xMasTree = InsByResLoad(propsPath, "ChristmasTree");
+            xMasTree.transform.position = pos;
+            return xMasTree;
         }
     }
 }

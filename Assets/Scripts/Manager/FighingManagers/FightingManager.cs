@@ -505,19 +505,29 @@ public class FightingManager : MonoBehaviourPunCallbacks
 
     }
 
-    public void GameOverByMc(List<PlanetCommander> winners,List<PlanetCommander> losers,bool upload)
+    public void GameOverByMc(List<PlanetCommander> winners,List<PlanetCommander> losers,bool uploadRank,bool pveMode=false)
     {
         gameStatus = GameStatus.WaitingNewFighting;
         MessageBox._instance.Hide();
 
-        if (upload)
-        {
+
+        var emeraldCount = 0f;
             if (winners!=null && winners.Count > 0)
             {
                 for (int i = 0; i < winners.Count; i++)
                 {
                     var player = winners[i].player;
-                    AddPlayerDataValue(player.uid, "winCount", 1);
+                    if (uploadRank)
+                    {
+                        AddPlayerDataValue(player.uid, "winCount", 1);
+                    }
+
+                    if (pveMode)
+                    {
+                        AddPlayerDataValue(player.uid, "coin", PVEManager.Instance.difficulty);
+                        
+                        emeraldCount = PVEManager.Instance.difficulty;
+                    }
                 }
             }
 
@@ -526,11 +536,21 @@ public class FightingManager : MonoBehaviourPunCallbacks
                 for (int i = 0; i < losers.Count; i++)
                 {
                     var player = losers[i].player;
-                    AddPlayerDataValue(player.uid, "loseCount", 1);
+                    if (uploadRank)
+                    {
+                        AddPlayerDataValue(player.uid, "loseCount", 1);
+                    }
+
+                    if (pveMode)
+                    {
+                        AddPlayerDataValue(player.uid, "coin", (int) (PVEManager.Instance.difficulty / 2));
+                        
+                        emeraldCount = (int) (PVEManager.Instance.difficulty / 2);
+                    }
                 }
             }
             
-        }
+        
         exitPlayers.Clear();
         
         SaveAllPlayer();
@@ -539,6 +559,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
             {
                 StartNewBattle();
             });
+        EmeraldGiftDialog.ShowDialog((int) emeraldCount);
         OnGameOver();
         EventCenter.Broadcast(EnumEventType.OnBattleOver);
     }

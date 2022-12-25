@@ -16,6 +16,15 @@ public class ThunderStaffWeapon : McTowerWeapon
     {
         return new AttackInfo(owner,AttackType.Physics,attackValue+(int)(GetWeaponLevelByNbt("高压")*1.5f));
     }
+    
+    public override void FireAnim()
+    {
+        animator.SetTrigger(animStr);
+        
+       
+        Invoke(nameof(Fx),fxDelay);
+        Invoke(nameof(DamageChaseTarget),fxDelay);
+    }
 
     protected override void Fx()
     {

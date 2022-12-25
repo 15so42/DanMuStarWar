@@ -446,7 +446,7 @@ MonoBehaviour:
   shootPoint: {fileID: 0}
   animStr: Attack
   fxDelay: 0
-  minValue: 5
+  minValue: 4
 --- !u!1 &4011596464881061154
 GameObject:
   m_ObjectHideFlags: 0

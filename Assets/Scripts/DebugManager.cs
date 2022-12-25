@@ -38,12 +38,10 @@ public class DebugManager : MonoBehaviour
             Time.timeScale = 5;
         }
 
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            if (PVEManager.Instance)
-            {
-                
-            }
+            System.Diagnostics.Process.Start(Application.dataPath.Replace("_Data", ".exe")); //new program
+            Application.Quit(); //kill current process
         }
         if (Input.GetKeyDown(KeyCode.I))
         {

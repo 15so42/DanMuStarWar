@@ -23,7 +23,7 @@ public class EnderDragon : McUnit
         //liveWeapon.TrySpecificSpell("龙鳞");
         liveWeapon.weaponNbt.enhancementLevels.Add(new EnhancementLevel("龙鳞",1));
         var diff = PVEManager.Instance.difficulty;
-        AddMaxHp(100*(int)diff);
+        AddMaxHp(150*(int)diff);
         lastHp = props.hp;
     }
     
@@ -76,7 +76,7 @@ public class EnderDragon : McUnit
         var enemys = AttackManager.Instance.GetEnemyInRadius(this, transform.position, 35,9);
         foreach (var victim in enemys)
         {
-            var value = Mathf.CeilToInt(victim.GetVictimEntity().props.hp * 0.5f);
+            var value = Mathf.CeilToInt(victim.GetVictimEntity().props.hp * 0.6f);
             if (victim as Planet)
             {
                 Debug.Log("攻击基地，伤害减半");

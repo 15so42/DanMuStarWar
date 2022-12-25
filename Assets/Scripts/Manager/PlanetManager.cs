@@ -85,7 +85,8 @@ public class PlanetManager : MonoBehaviour
                 //PVE模式不上传胜场和败场数据，其他照传不误
                 if (FightingManager.Instance.gameStatus == GameStatus.Playing)
                 {
-                    FightingManager.Instance.GameOverByMc(winners,losers,upload);
+                    bool pveMode = PVEManager.Instance != null;
+                    FightingManager.Instance.GameOverByMc(winners,losers,upload,pveMode);
                 }
                 
             }
