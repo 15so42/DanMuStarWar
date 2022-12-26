@@ -20,7 +20,12 @@ public class McRoundManager : RoundManager
     {
         {"村庄",0},{"矿井",0},{"PVE",0}
     };
-    
+
+
+    void ShowShopList()
+    {
+        MessageBox._instance.AddMessage("系统","当前可交易物品有圣诞树(180绿宝石)，更多物品请等待后续版本添加");
+    }
 
     protected override void ParseTrim(int uid, string text, string trim)
     {
@@ -55,6 +60,10 @@ public class McRoundManager : RoundManager
                 ParseRandomWeapon(steveCommander);
             }
 
+            if (trim.StartsWith("召唤"))
+            {
+                ParseSummon(steveCommander,trim);
+            }
             if (trim.StartsWith("律令"))
             {
                 ParseGatherSummons(steveCommander,trim);
@@ -65,6 +74,20 @@ public class McRoundManager : RoundManager
                 ParseBuyMcWeapon(steveCommander,trim);
             }
 
+
+            
+            if (trim.StartsWith("交易"))
+            {
+                if (trim.Equals("交易列表"))
+                {
+                    MessageBox._instance.AddMessage("系统","当前可交易物品有圣诞树(180绿宝石)，更多物品请等待后续版本添加");
+                }
+                else
+                {
+                    ParseShop(steveCommander,trim);
+                }
+            }
+            
             if (trim.StartsWith("兑换") && trim.StartsWith("兑换生命")==false)
             {
                 ParseGiftWeapon(steveCommander, trim);
@@ -310,6 +333,44 @@ public class McRoundManager : RoundManager
                 break;
             }
         }
+    }
+
+
+    void ParseSummon(SteveCommander steveCommander, string trim)
+    {
+        var steve = steveCommander.FindFirstValidSteve();
+        if (!steve)
+        {
+            return;
+        }
+
+        var handWeapon = steve.GetActiveWeapon();
+        if (handWeapon!=null && handWeapon.weaponName == "召唤法杖")
+        {
+            var monsterName = trim.Substring(2);
+            handWeapon.Summon(monsterName);
+        }
+    }
+    void ParseShop(SteveCommander steveCommander, string trim)
+    {
+        if (trim == "交易圣诞树")
+        {
+            if (steveCommander.player.userSaveData.coin > 180)
+            {
+                ParseChristmasTree(steveCommander);
+                steveCommander.player.userSaveData.coin -= 180;
+            }
+            else
+            {
+                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易圣诞树失败，需要180点数");
+            }
+            
+        }
+        else
+        {
+            ShowShopList();
+        }
+        
     }
 
     void ParseGiftWeapon(SteveCommander steveCommander, string trim)
@@ -710,10 +771,10 @@ public class McRoundManager : RoundManager
         if (steveCommander.flowerSpell == false && battery>0)
         {
             steveCommander.leftSpecificSpell++;
-            MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"通过电池礼物获得1次额外指定附魔次数和额外栏位（每局任意电池礼物可获得一次额外指定附魔次数和1个额外栏位，每局限一次）");
+            MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"通过电池礼物获得1次额外指定附魔次数（每局任意电池礼物可获得一次额外指定附魔次数，每局限一次）");
             steveCommander.flowerSpell = true;
-            steveCommander.desireSpellCount++;
-            steveCommander.SetMaxSpellCount();
+            //steveCommander.desireSpellCount++;
+            //steveCommander.SetMaxSpellCount();
         }
         
         EventCenter.Broadcast(EnumEventType.OnMcBatteryReceived,planet,battery==0? 0:battery/100);

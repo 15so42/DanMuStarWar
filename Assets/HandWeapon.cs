@@ -43,6 +43,10 @@ public class HandWeapon : Weapon,IDamageAble
     //记录召唤列表
     public List<McUnit> summons=new List<McUnit>();
 
+    
+    //鬼火数量
+    public int ignisFatuus = 0;
+    
     private void Awake()
     {
         randomStrs.Add("落雷");
@@ -495,6 +499,85 @@ public class HandWeapon : Weapon,IDamageAble
         });
     }
     
+    //更新鬼火
+    void AddIgnisFatuus(int value)
+    {
+        ignisFatuus += value;
+        UpdateIgnisFatuus();
+    }
+
+    private SummonPointUi summonPointUi;
+    private void UpdateIgnisFatuus()
+    {
+        if (summonPointUi == null)
+        {
+            summonPointUi = GameManager.Instance.uiManager.CreateSummonPointUi(owner);
+            
+            summonPointUi.offset=new Vector3(-70,8.7f,0);
+            summonPointUi.UpdateUi(ignisFatuus);
+        }
+        else
+        {
+            summonPointUi.UpdateUi(ignisFatuus);
+        }
+        
+        
+        //owner.hpUI.SetNameText(owner.planetCommander.player.userName +"🔥"+ignisFatuus);
+    }
+
+    public void Summon(string name)
+    {
+        int summonLevel = GetWeaponLevelByNbt("召唤");
+        bool canSummon = summons.Count <= (summonLevel / 7 + 1);
+
+        if (canSummon)
+        {
+            var chineseSummonList=new List<string>()
+            {
+                "僵尸","骷髅","苦力怕",
+                "烈焰人","铁傀儡"
+            };
+            
+            var summonList = new List<string>()
+            {
+                "BattleUnit_Zombie","BattleUnit_Skeleton","BattleUnit_Creeper",
+                "BattleUnit_Blaze","BattleUnit_IronGolem"
+            };
+
+            var costList = new List<int>()
+            {
+                2, 3, 2, 4, 8
+            };
+
+            if (!chineseSummonList.Contains(name))
+            {
+                MessageBox._instance.AddMessage("系统","召唤名称错误");
+                return;
+            }
+
+            var index = chineseSummonList.IndexOf(name);
+            var cost = costList[index];
+            if (ignisFatuus >= cost)
+            {
+                var summonName = summonList[index];
+                var planet = owner.GetAttackerOwner() as Planet;
+                if (planet != null)
+                    planet.AddTask(new PlanetTask(new TaskParams(TaskType.Create, summonName, 1, GoToZeroPos),
+                        null));
+                AddIgnisFatuus(-1*cost);
+            }
+            else
+            {
+                MessageBox._instance.AddMessage("系统", "召唤"+name+"所需鬼火不足");
+            }
+
+        }
+        else
+        {
+            MessageBox._instance.AddMessage("系统","达到召唤限制");
+        }
+    }
+    
 
     private float spellTimer = 0;
     private float lastTimer = 0;//每秒执行
@@ -532,6 +615,9 @@ public class HandWeapon : Weapon,IDamageAble
                 
             }
 
+            
+           
+                
             
             
             var sharpLevel = GetWeaponLevelByNbt("锋利");
@@ -611,26 +697,13 @@ public class HandWeapon : Weapon,IDamageAble
                     //summons[i].GoMCWorldPos(owner.transform.position,false);
                 }
 
-                bool canSummon = !(summons.Count > summonLevel / 7 + 1) && Time.time>lastSummonTime+20;
-
-                if (canSummon)
-                {
-                    var summonList = new List<string>()
-                    {
-                        "BattleUnit_Zombie","BattleUnit_Skeleton","BattleUnit_Creeper",
-                        "BattleUnit_Blaze","BattleUnit_IronGolem"
-                    };
-
-                    var randIndex = Rand(new int[] {35, 25, 20, 15,5 }, 100);
-
-                    var randomMonster = summonList[randIndex];
+                var rand = UnityEngine.Random.Range(0, 5);
                 
-                    var planet = owner.GetAttackerOwner() as Planet;
-                    if (planet != null)
-                        planet.AddTask(new PlanetTask(new TaskParams(TaskType.Create, randomMonster, 1, GoToZeroPos),
-                            null));
-                    lastSummonTime = Time.time;
+                if (rand < 1)
+                {
+                    AddIgnisFatuus(1);
                 }
+                
                 
             }
 
@@ -832,35 +905,10 @@ public class HandWeapon : Weapon,IDamageAble
     }
 
 
-    //吸血
+    
     public void OnAttackOther(IVictimAble victimAble,int damage)
     {
-        // if (gameObject.activeSelf == false)
-        //     return;
-        //
-        // var fireLevel = GetWeaponLevelByNbt("火焰");
-        // if (fireLevel > 0)
-        // {
-        //     if (victimAble.GetVictimEntity())
-        //     {
-        //         var skill=SkillManager.Instance.AddSkill("Skill_着火_LV1", victimAble.GetVictimEntity(), owner.planetCommander);
-        //         if (skill as FireSkill)//第一次附加火焰没问题，但是之后无法再附加火焰而是刷新火焰Buff
-        //         {
-        //             (skill as FireSkill).SetAttacker(owner); 
-        //             (skill as FireSkill).life = 4 + fireLevel;
-        //         }
-        //         
-        //     }
-        //     
-        // }
-        //
-        // var vampireLevel = GetWeaponLevelByNbt("吸血");
-        //
-        // if (vampireLevel > 0)
-        // {
-        //     owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,(int)(damage* (0.2f+0.05*fireLevel)  )));
-        // }
-        //     
+        
 
         
     }
@@ -1139,6 +1187,16 @@ public class HandWeapon : Weapon,IDamageAble
                 .OnAttacked(new AttackInfo(owner, AttackType.Reflect, value));
         }
         
+        
+        var toughLevel = GetWeaponLevelByNbt("坚韧");
+        var toughIgnoreDamageType = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Poison,AttackType.Real,AttackType.Thunder};
+        if (toughLevel > 0 && !toughIgnoreDamageType.Contains(attackInfo.attackType))
+        {
+            attackInfo.value -= Mathf.CeilToInt(0.5f*toughLevel);
+            if (attackInfo.value < 0)
+                attackInfo.value = 0;
+        }
+        
         var protectionLevel=GetWeaponLevelByNbt("保护");
         var ignoreDamageType1 = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Real,AttackType.Thunder};
         if (protectionLevel>0 && !ignoreDamageType1.Contains(attackInfo.attackType))
@@ -1188,14 +1246,7 @@ public class HandWeapon : Weapon,IDamageAble
             }
         }
         
-        var toughLevel = GetWeaponLevelByNbt("坚韧");
-        var toughIgnoreDamageType = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Poison,AttackType.Real,AttackType.Thunder};
-        if (toughLevel > 0 && !toughIgnoreDamageType.Contains(attackInfo.attackType))
-        {
-            attackInfo.value -= Mathf.CeilToInt(0.5f*toughLevel);
-            if (attackInfo.value < 0)
-                attackInfo.value = 0;
-        }
+        
 
         var sourChain = GetWeaponLevelByNbt("魂链");
         var sourChainIgnoreDamageType = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Poison,AttackType.Real,AttackType.Thunder};
@@ -1301,6 +1352,9 @@ public class HandWeapon : Weapon,IDamageAble
         owner.onAttackOther -= OnAttackOther ;
         owner.onBeforeAttacked -= OnBeforeAttacked;
         owner.onDie -= OnOwnerDie;
+        
+        if(summonPointUi)
+            Destroy(summonPointUi.gameObject);
         try//可能之前没有噬魂附魔，因此可能移除不掉导致报错，忽略这次报错
         {
             

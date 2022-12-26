@@ -24,7 +24,7 @@ public class HpBar : MonoBehaviour
 
     
 
-    public Transform tileLine;
+    
 
     public Transform skillUiGroup;
     private GameEntity owner;

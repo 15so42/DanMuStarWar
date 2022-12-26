@@ -524,9 +524,9 @@ public class FightingManager : MonoBehaviourPunCallbacks
 
                     if (pveMode)
                     {
-                        AddPlayerDataValue(player.uid, "coin", PVEManager.Instance.difficulty);
+                        AddPlayerDataValue(player.uid, "coin", (int)PVEManager.Instance.difficulty);
                         
-                        emeraldCount = PVEManager.Instance.difficulty;
+                        emeraldCount = (int)PVEManager.Instance.difficulty;
                     }
                 }
             }

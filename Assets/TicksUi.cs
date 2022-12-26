@@ -30,6 +30,12 @@ public class TicksUi : MaskableGraphic
             interval = 500;
             color=Color.magenta;
         }
+
+        if (maxHp > 10000)
+        {
+            interval = 2500;
+            color = Color.green;
+        }
         SetVerticesDirty();
     }
     protected override void OnPopulateMesh(VertexHelper vh)

@@ -14,6 +14,8 @@ public class EnderDragon : McUnit
         liveWeapon = GetComponentInChildren<HandWeapon>();
         liveWeapon.Init(this);
         liveWeapon.randomStrs.Remove("烈阳");
+        liveWeapon.randomStrs.Remove("坚韧");
+        
         canPushBack = false;
         
         onHpChanged += UpdateHpUIByNameText;

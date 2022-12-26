@@ -51,8 +51,26 @@ public class DebugManager : MonoBehaviour
                 //PVEManager.Instance.SpawnByPlayerCount(3);
                 PVEManager.Instance.SetMonsterList(new List<string>(){"BattleUnit_EnderDragon"});
                 PVEManager.Instance.SpawnByPlayerCount(1,true);
+
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            var steve = (PlanetManager.Instance.allPlanets[0].planetCommanders[0] as SteveCommander)
+                .FindFirstValidSteve();
+            steve.ChangeWeapon(5);
+            for (int i = 0; i < 1000; i++)
+            {
+                steve.SpecificSpell(false, "空间斩");
+                steve.SpecificSpell(false, "吸血");
+                steve.SpecificSpell(false, "保护");
+                steve.SpecificSpell(false, "灵盾");
+                
+            }
+        }
+        
+        
 
         if (Input.GetKeyDown(KeyCode.T))
         {

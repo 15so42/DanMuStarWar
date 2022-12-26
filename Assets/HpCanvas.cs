@@ -28,10 +28,20 @@ public class HpCanvas : MonoBehaviour
 
     [Header("SkillUI")] public GameObject skillUIPfb;
     public Transform skillUIParent;
+
+    [Header("召唤点数Ui")] public GameObject summonPointUi;
+    public Transform summonPointUiParent;
     public HpBar CreateHpBar(GameEntity gameEntity)
     {
         return  GameObject.Instantiate(hpBarPfb, hpBarParent).GetComponent<HpBar>();
         
+    }
+
+    public SummonPointUi CreateSummonPointUi(GameEntity gameEntity)
+    {
+        var ui = GameObject.Instantiate(summonPointUi, summonPointUiParent).GetComponent<SummonPointUi>();
+        ui.Init(gameEntity.gameObject);
+        return ui;
     }
     
     public ColonyRingUi CreateRingUi(Planet planet)

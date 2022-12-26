@@ -50,6 +50,11 @@ public class UIManager : MonoBehaviour
       return planetUis.Find(x => x.player == player);
    }
 
+   public SummonPointUi CreateSummonPointUi(GameEntity gameEntity)
+   {
+      return hpCanvas.CreateSummonPointUi(gameEntity);
+   }
+   
    public HpBar CreateHpBar(GameEntity gameEntity)
    {
       return hpCanvas.CreateHpBar(gameEntity);

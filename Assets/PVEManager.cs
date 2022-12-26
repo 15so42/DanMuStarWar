@@ -164,6 +164,7 @@ public class PVEManager : MonoBehaviour
         var planet = PlanetManager.Instance.allPlanets[0];
         if (planet != null)
         {
+            
             SkillManager.Instance.AddSkill("Skill_圣泉_LV4", planet, null);
             TipsDialog.ShowDialog("准备对抗末影龙！",null);
             rec=GameObject.Instantiate(recoveryBasePfb);
@@ -190,6 +191,10 @@ public class PVEManager : MonoBehaviour
             var spellCount = Mathf.CeilToInt(difficulty/1.5f);//附魔数量为难度等级/3
 
             var maxSpellSlot =Mathf.CeilToInt(difficulty/20f)+2;//每15分钟增加一个槽位
+            if (maxSpellSlot > 7)
+            {
+                maxSpellSlot = 7;
+            }
             if (difficulty < 5)
             {
                 spellCount = 0;
