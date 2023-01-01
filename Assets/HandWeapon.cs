@@ -814,12 +814,20 @@ public class HandWeapon : Weapon,IDamageAble
         var swordKing = GetWeaponLevelByNbt("剑圣");
         if (swordKing > 0)
         {
-            var cost = Mathf.CeilToInt(swordKing * ( 1 - (float)swordKing/(swordKing+20) ));
-            if (endurance > cost)
+            // var cost = Mathf.CeilToInt(swordKing * ( 1 - (float)swordKing/(swordKing+20) ));
+            // if (endurance > cost)
+            // {
+            //     attackInfo.value=Mathf.CeilToInt(attackInfo.value + cost);
+            //     AddEndurance(-1*cost);
+            // }
+            
+            if (endurance == maxEndurance-1)
             {
-                attackInfo.value=Mathf.CeilToInt(attackInfo.value + cost);
-                AddEndurance(-1*cost);
+                attackInfo.value += endurance;
+                AddEndurance(-1*endurance);
+                AddEndurance(Mathf.CeilToInt(0.01f*swordKing*maxEndurance));
             }
+            
         }
        
         
@@ -990,7 +998,7 @@ public class HandWeapon : Weapon,IDamageAble
                 radius = 30;
             var count = 1+thunderLevel / 5;
             var attackInfo = GetBaseAttackInfo();
-            attackInfo.value += Mathf.CeilToInt( thunderLevel*0.7f);
+            attackInfo.value += Mathf.CeilToInt( thunderLevel*0.55f);
             attackInfo.attackType =  AttackType.Real;
             //var damage = new AttackInfo(attackInfo.attacker, attackInfo.attackType, attackInfo.value * 5);
             if (owner.chaseTarget != null)

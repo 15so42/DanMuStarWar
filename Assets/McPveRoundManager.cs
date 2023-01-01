@@ -32,6 +32,15 @@ public class McPveRoundManager : McRoundManager
         {
             steveCommander.SummonGolem();
         }
+
+        if (giftName == "干杯")
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                steveCommander.ownerPlanet.AddTask(new PlanetTask(new TaskParams(TaskType.Create, "BattleUnit_ExplosionSheep",0.1f),steveCommander ));
+
+            }
+        }
     }
 
     private void OnDisable()

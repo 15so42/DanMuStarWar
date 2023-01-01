@@ -220,7 +220,7 @@ public class BiliBiliLive : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             //"收到来自[23204263]云ぃ空的1个牛哇牛哇"
-            giftMsgs.Add(new GiftMsg(){userId = 23204263,userName = "云空",num=1,giftName = "圣诞精灵",totalCoin = 100});
+            giftMsgs.Add(new GiftMsg(){userId = 23204263,userName = "云空",num=1,giftName = "干杯",totalCoin = 100});
         }
 
         if (Input.GetKeyDown(KeyCode.M))
