@@ -40,4 +40,5 @@ public  class GameConst
    public const string FX_PACMAN_EXPLOSION = "ExplosionFx";
    public const string FX_HEAL_TERRIORITORY = "HealTerritoryFx";
    public const string FX_POINT_TERRIORITORY = "PointTerritoryFx";
+   public const string FX_HEAL = "HealFx";
 }

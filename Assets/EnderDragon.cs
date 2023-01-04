@@ -15,6 +15,7 @@ public class EnderDragon : McUnit
         liveWeapon.Init(this);
         liveWeapon.randomStrs.Remove("烈阳");
         liveWeapon.randomStrs.Remove("坚韧");
+        liveWeapon.immortalCd = 18;
         
         canPushBack = false;
         

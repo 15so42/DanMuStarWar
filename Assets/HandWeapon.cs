@@ -39,6 +39,7 @@ public class HandWeapon : Weapon,IDamageAble
     private float lastDrawTime = 0;
     private float lastSummonTime = 0;
     private float lastImmortalTime = 0;
+    public float immortalCd = 5;
     
     //记录召唤列表
     public List<McUnit> summons=new List<McUnit>();
@@ -60,6 +61,7 @@ public class HandWeapon : Weapon,IDamageAble
         randomStrs.Add("自爆");
         randomStrs.Add("灵盾");
         randomStrs.Add("不灭");
+        randomStrs.Add("过量治疗");
     }
 
     public void SetMaxSpellCount(int value)
@@ -615,9 +617,9 @@ public class HandWeapon : Weapon,IDamageAble
                 
             }
 
-            
-           
-                
+
+
+
             
             
             var sharpLevel = GetWeaponLevelByNbt("锋利");
@@ -755,7 +757,7 @@ public class HandWeapon : Weapon,IDamageAble
             {
                
               
-                    owner.props.maxShield = (int)(owner.props.maxHp* (1+0.05*spiritualShieldLevel));
+                    owner.props.maxShield = (int)(spiritualShieldLevel*12);
                     //float shieldValue = owner.props.maxHp * (0.09f+spiritualShieldLevel*0.01f);
 
                     var value = (int) (spiritualShieldLevel * 0.5f);
@@ -821,11 +823,12 @@ public class HandWeapon : Weapon,IDamageAble
             //     AddEndurance(-1*cost);
             // }
             
-            if (endurance == maxEndurance-1)
+            if (endurance >= maxEndurance*0.5f)
             {
                 attackInfo.value += endurance;
                 AddEndurance(-1*endurance);
                 AddEndurance(Mathf.CeilToInt(0.01f*swordKing*maxEndurance));
+                owner.OnAttacked(new AttackInfo(owner, AttackType.Heal, Mathf.CeilToInt(0.01f*swordKing*maxEndurance)));
             }
             
         }
@@ -978,7 +981,7 @@ public class HandWeapon : Weapon,IDamageAble
         }
         
         var immortalLevel = GetWeaponLevelByNbt("不灭");
-        if (immortalLevel > 0 && Time.time>lastImmortalTime+7)
+        if (immortalLevel > 0 && Time.time>lastImmortalTime+immortalCd)
         {
 
             var value = Mathf.CeilToInt(owner.props.maxHp * immortalLevel * 0.01f);
@@ -1176,6 +1179,15 @@ public class HandWeapon : Weapon,IDamageAble
     {
         if (gameObject.activeSelf == false)
             return attackInfo;
+
+        var overHealLevel = GetWeaponLevelByNbt("过量治疗");
+        if (overHealLevel > 0 && attackInfo.attackType == AttackType.Heal)
+        {
+            var sub = owner.props.maxHp - owner.props.hp;
+            var shield = Mathf.CeilToInt((attackInfo.value - sub)*0.08f*overHealLevel);
+            owner.AddShield(shield>0?shield:0);
+        }
+        
         
         var thronLevel = GetWeaponLevelByNbt("荆棘");
         var ignoreDamageType = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Fire,AttackType.Poison};
