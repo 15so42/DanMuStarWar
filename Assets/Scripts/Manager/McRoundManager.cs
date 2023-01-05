@@ -24,7 +24,7 @@ public class McRoundManager : RoundManager
 
     void ShowShopList()
     {
-        MessageBox._instance.AddMessage("系统","当前可交易物品有圣诞树(180绿宝石)，第五附魔槽位(100绿宝石)，更多物品请等待后续版本添加");
+        MessageBox._instance.AddMessage("系统","当前可交易物品有圣诞树(180绿宝石)，附魔槽位(100绿宝石)，更多物品请等待后续版本添加");
     }
 
     protected override void ParseTrim(int uid, string text, string trim)
@@ -348,6 +348,7 @@ public class McRoundManager : RoundManager
         if (handWeapon!=null && handWeapon.weaponName == "召唤法杖")
         {
             var monsterName = trim.Substring(2);
+            
             handWeapon.Summon(monsterName);
         }
     }
@@ -365,18 +366,18 @@ public class McRoundManager : RoundManager
                 MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易圣诞树失败，需要180点数");
             }
             
-        }else if (trim == "交易第五附魔槽位" || trim=="交易第五槽")
+        }else if (trim == "交易附魔槽位" || trim=="交易附魔槽位")
         {
             if (steveCommander.player.userSaveData.coin > 100)
             {
                 steveCommander.desireSpellCount++;
                 steveCommander.SetMaxSpellCount();
                 steveCommander.player.userSaveData.coin -= 100;
-                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易第五槽成功");
+                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易附魔槽位成功");
             }
             else
             {
-                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易第五附魔槽位失败，需要100点数");
+                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易附魔槽位失败，需要100点数");
             }
         }
         else
@@ -742,7 +743,7 @@ public class McRoundManager : RoundManager
             ParseRandomSpell(steveCommander,false,true);
         }
 
-        if (giftName == "圣诞精灵")
+        if (giftName == "粉丝团灯牌")
         {
             ParseChristmasTree(steveCommander);
         }

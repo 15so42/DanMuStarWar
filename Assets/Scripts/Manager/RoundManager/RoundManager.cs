@@ -37,8 +37,9 @@ public class RoundManager : MonoBehaviour
     
     //游戏时间
     public float elapsedTime=0;
-    
-   
+
+
+    private Coroutine playEnvEvent = null;
     public void Init(GameManager gameManager, List<Player> players)
     {
         this.gameManager = gameManager;
@@ -46,28 +47,43 @@ public class RoundManager : MonoBehaviour
         this.players = players;
         EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
         EventCenter.AddListener<int,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
-       
-        
+
+        timer = 0;
         elapsedTime = 0;
         UnityTimer.Timer.Register(30, () =>
         {
             fightingManager.StartCoroutine(ParseGiftList());
         });
+        playEnvEvent = StartCoroutine(PlayEnvEvent());
     }
 
+
+    IEnumerator PlayEnvEvent()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(90);
+            GameEnvEventManager.Instance.PlayRandomEvent();
+        }
+        
+    }
     
 
     public void Update()
     {
+        
         timer += Time.deltaTime;
-        elapsedTime += Time.deltaTime;
-        if (timer >600)
+        if (timer >6 )
         {
-            //GameEnvEventManager.Instance.PlayRandomEvent();
             
+        
 
             timer = 0;
         }
+        
+            
+        elapsedTime += Time.deltaTime;
+        
     }
 
     /// <summary>
@@ -80,6 +96,8 @@ public class RoundManager : MonoBehaviour
             //如果切换游戏场景后游戏尚未开始，就不会绑定事件，因此强行结束或换场景会报错
             EventCenter.RemoveListener<string, int, string, string>(EnumEventType.OnDanMuReceived, OnDanMuReceived);
             EventCenter.RemoveListener<int, string, int, string, int>(EnumEventType.OnGiftReceived, OnGiftReceived);
+            if(playEnvEvent!=null)
+                StopCoroutine(playEnvEvent);
         }
         catch (Exception e)
         {

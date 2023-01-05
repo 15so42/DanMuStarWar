@@ -35,7 +35,7 @@ public class McPveRoundManager : McRoundManager
 
         if (giftName == "干杯")
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 20; i++)
             {
                 steveCommander.ownerPlanet.AddTask(new PlanetTask(new TaskParams(TaskType.Create, "BattleUnit_ExplosionSheep",0.1f),steveCommander ));
 

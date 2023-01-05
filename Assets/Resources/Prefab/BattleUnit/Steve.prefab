@@ -4884,6 +4884,7 @@ MonoBehaviour:
   endurance: 200
   pushBackHeight: 4
   pushBackStrength: 1
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
 --- !u!1 &826501388
@@ -5041,6 +5042,7 @@ MonoBehaviour:
   endurance: 45
   pushBackHeight: 4
   pushBackStrength: 1
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
   shootPoint: {fileID: 826501389}
@@ -5129,6 +5131,7 @@ MonoBehaviour:
   endurance: 45
   pushBackHeight: 4
   pushBackStrength: 1
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
   shootPoint: {fileID: 1410991090}
@@ -5224,6 +5227,7 @@ MonoBehaviour:
   endurance: 60
   pushBackHeight: 6
   pushBackStrength: 3
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
   axeBulletPfb: {fileID: 5428831536415131091, guid: 7656f2f042052bd468bde340bbd960fe,
@@ -5310,6 +5314,7 @@ MonoBehaviour:
   endurance: 45
   pushBackHeight: 4
   pushBackStrength: 1
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
   shootPoint: {fileID: 2005318439}
@@ -15011,6 +15016,7 @@ MonoBehaviour:
   endurance: 30
   pushBackHeight: 4
   pushBackStrength: 1
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
   summonWandAttack: {fileID: 1652874822883875248, guid: adeb0f3b06ec18a46bb301eccf22dbc6,
@@ -15097,6 +15103,7 @@ MonoBehaviour:
   endurance: 45
   pushBackHeight: 4
   pushBackStrength: 1
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
 --- !u!1 &6049223276326285475
@@ -15354,7 +15361,7 @@ NavMeshAgent:
   m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
-  avoidancePriority: 50
+  avoidancePriority: 0
   m_AngularSpeed: 120
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
@@ -15483,6 +15490,7 @@ MonoBehaviour:
   endurance: 125
   pushBackHeight: 6
   pushBackStrength: 3
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
 --- !u!1 &7347819945090907785
@@ -15568,6 +15576,7 @@ MonoBehaviour:
   endurance: 30
   pushBackHeight: 4
   pushBackStrength: 1
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
   linePfb: {fileID: 2911532761280341683, guid: 64dc07f26f1be994cb8a2fd0ca267ebe, type: 3}
@@ -15662,6 +15671,7 @@ MonoBehaviour:
   endurance: 45
   pushBackHeight: 6
   pushBackStrength: 3
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
 --- !u!1 &8306857782335731891
@@ -20792,6 +20802,7 @@ MonoBehaviour:
   endurance: 70
   pushBackHeight: 6
   pushBackStrength: 3
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
 --- !u!1001 &715061848
@@ -20942,6 +20953,7 @@ MonoBehaviour:
   endurance: 16
   pushBackHeight: 6
   pushBackStrength: 3
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
 --- !u!1001 &909279941
@@ -21092,6 +21104,7 @@ MonoBehaviour:
   endurance: 16
   pushBackHeight: 6
   pushBackStrength: 3
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
 --- !u!1001 &1082774666
@@ -21317,6 +21330,7 @@ MonoBehaviour:
   endurance: 60
   pushBackHeight: 6
   pushBackStrength: 3
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
 --- !u!1001 &1458337867
@@ -21778,6 +21792,7 @@ MonoBehaviour:
   endurance: 40
   pushBackHeight: 6
   pushBackStrength: 3
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
 --- !u!1001 &1710311627
@@ -21928,6 +21943,7 @@ MonoBehaviour:
   endurance: 50
   pushBackHeight: 6
   pushBackStrength: 3
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
 --- !u!1001 &1916061556
@@ -23331,6 +23347,7 @@ MonoBehaviour:
   endurance: 45
   pushBackHeight: 4
   pushBackStrength: 1
+  immortalCd: 5
   summons: []
   ignisFatuus: 0
   shootPoint: {fileID: 7421650654588731531}

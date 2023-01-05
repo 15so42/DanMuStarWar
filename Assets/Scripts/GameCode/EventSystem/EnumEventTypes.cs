@@ -26,5 +26,6 @@ public enum EnumEventType
     OnMonsterInit,
     //MonsterSpawner生成
     OnMonsterSpawnerInit,
+    OnUnitDamageOther,
 }
 

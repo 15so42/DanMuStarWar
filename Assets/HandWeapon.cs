@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GameCode.Tools;
 using Ludiq;
 using UnityEngine;
 using UnityEngine.AI;
@@ -62,6 +63,7 @@ public class HandWeapon : Weapon,IDamageAble
         randomStrs.Add("灵盾");
         randomStrs.Add("不灭");
         randomStrs.Add("过量治疗");
+        randomStrs.Add("审判");
     }
 
     public void SetMaxSpellCount(int value)
@@ -125,10 +127,20 @@ public class HandWeapon : Weapon,IDamageAble
             if(PVEManager.Instance)
                 PVEManager.Instance.difficulty += 0.15f;
         }
+
+        if (GetWeaponLevelByNbt("召唤") > 1)
+        {
+            foreach (var summon in summons)
+            {
+                summon.Die();
+            }
+        }
     }
 
     //记录噬魂的事件监听
     private bool addedSourCatch = false;
+    //记录审判的事件监听
+    private bool addedJudgeEvent = false;
     void OnMcUnitDie(McUnit mcUnit)
     {
         var sourCatchLevel = GetWeaponLevelByNbt("噬魂");
@@ -402,6 +414,18 @@ public class HandWeapon : Weapon,IDamageAble
             (owner as McUnit).CloseSunFx();
         }
 
+        var judge = GetWeaponLevelByNbt("审判");
+        {
+            if (judge > 0)
+            {
+                if (!addedJudgeEvent)
+                {
+                    EventCenter.AddListener<IAttackAble,IVictimAble>(EnumEventType.OnUnitDamageOther,Judge);
+                    addedJudgeEvent = true;
+                }
+            }
+        }
+
         var sourCatch = GetWeaponLevelByNbt("噬魂");
         if (sourCatch > 0)
         {
@@ -415,6 +439,23 @@ public class HandWeapon : Weapon,IDamageAble
         }
     }
 
+
+    void Judge(IAttackAble attackAble,IVictimAble victimAble)
+    {
+        
+        if(attackAble.GetAttackerOwner()==owner.GetAttackerOwner())
+            return;//同队伍不触发
+        var judgeLevel = GetWeaponLevelByNbt("审判");
+        
+        
+        
+        var rate = judgeLevel;
+        if (UnityEngine.Random.Range(0, 100) < rate)
+        {
+            ResFactory.Instance.CreateFx("JudgeFx", attackAble.GetAttackEntity().transform.position);
+            (attackAble as IVictimAble)?.OnAttacked(new AttackInfo(owner,AttackType.Real,judgeLevel));
+        }
+    }
 
     public override bool FireCheck()
     {
@@ -537,18 +578,18 @@ public class HandWeapon : Weapon,IDamageAble
             var chineseSummonList=new List<string>()
             {
                 "僵尸","骷髅","苦力怕",
-                "烈焰人","铁傀儡"
+                "烈焰人","铁傀儡","凋零"
             };
             
             var summonList = new List<string>()
             {
                 "BattleUnit_Zombie","BattleUnit_Skeleton","BattleUnit_Creeper",
-                "BattleUnit_Blaze","BattleUnit_IronGolem"
+                "BattleUnit_Blaze","BattleUnit_IronGolem","BattleUnit_Wither"
             };
 
             var costList = new List<int>()
             {
-                2, 3, 2, 4, 8
+                2, 3, 2, 4, 8,24
             };
 
             if (!chineseSummonList.Contains(name))
@@ -952,6 +993,8 @@ public class HandWeapon : Weapon,IDamageAble
         if (gameObject.activeSelf == false)
             return;
         DamageOtherFx(victimAble);
+        
+        EventCenter.Broadcast(EnumEventType.OnUnitDamageOther,owner as IAttackAble,victimAble);
         
         var heavyAttackLevel = GetWeaponLevelByNbt("重击");
         if (heavyAttackLevel > 0)
@@ -1379,6 +1422,7 @@ public class HandWeapon : Weapon,IDamageAble
         {
             
             EventCenter.RemoveListener<McUnit>(EnumEventType.OnMcUnitDied, OnMcUnitDie);
+            EventCenter.RemoveListener<IAttackAble,IVictimAble>(EnumEventType.OnUnitDamageOther, Judge);
         }
         catch (Exception e)
         {

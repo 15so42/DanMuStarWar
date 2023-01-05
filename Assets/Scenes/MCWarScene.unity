@@ -4124,7 +4124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   events:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 018834c1f8868a3439971f32c285305d, type: 2}
   level: 0
 --- !u!1 &1504619294
 GameObject:

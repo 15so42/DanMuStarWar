@@ -34,7 +34,7 @@ public class SelfExplosionWeapon : HandWeapon
         var value = 5 + highExplosion * 2;
         if (explosionSheep)
         {
-            value = 250;
+            value = 500;
         }
         var attackInfo = new AttackInfo(owner, AttackType.Physics, value);
         var position = transform.position;
