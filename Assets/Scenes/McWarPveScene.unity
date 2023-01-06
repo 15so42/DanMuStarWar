@@ -5001,6 +5001,7 @@ MonoBehaviour:
     m_Signals:
     - {fileID: 11400000, guid: 13c14b5599a93e74d88113d34307ecdd, type: 2}
     - {fileID: 11400000, guid: 9e34ec89fa5ccae4f9c3857997de257d, type: 2}
+    - {fileID: 11400000, guid: 23ea72d88f0f10749b8d73a811b20286, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -5021,6 +5022,20 @@ MonoBehaviour:
         - m_Target: {fileID: 1455102332}
           m_TargetAssemblyTypeName: PVEManager, Assembly-CSharp
           m_MethodName: AddRecoveryToBase
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1455102332}
+          m_TargetAssemblyTypeName: PVEManager, Assembly-CSharp
+          m_MethodName: GameOver
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -6776,7 +6791,7 @@ MonoBehaviour:
     baseSceneName: McWarPveScene
     realSceneName: McWarScene_Sea
   votedUid: 00000000
-  desireMap: "\u6D77\u6D0B"
+  desireMap: "\u6751\u5E84"
 --- !u!1 &2021024776
 GameObject:
   m_ObjectHideFlags: 0

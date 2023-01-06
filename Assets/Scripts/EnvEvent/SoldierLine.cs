@@ -21,7 +21,7 @@ public class SoldierLine : GameEnvEvent
         var summonList = new List<string>()
         {
             "BattleUnit_Zombie","BattleUnit_Skeleton","BattleUnit_Creeper",
-            "BattleUnit_Blaze","BattleUnit_IronGolem"
+            "BattleUnit_Blaze"
         };
         var count = UnityEngine.Random.Range(2, 5);
         var soldierName = summonList[UnityEngine.Random.Range(0, summonList.Count)];

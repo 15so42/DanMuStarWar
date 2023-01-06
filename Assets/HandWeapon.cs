@@ -446,10 +446,10 @@ public class HandWeapon : Weapon,IDamageAble
         if(attackAble.GetAttackerOwner()==owner.GetAttackerOwner())
             return;//同队伍不触发
         var judgeLevel = GetWeaponLevelByNbt("审判");
-        
-        
-        
-        var rate = judgeLevel;
+
+
+
+        var rate =judgeLevel;
         if (UnityEngine.Random.Range(0, 100) < rate)
         {
             ResFactory.Instance.CreateFx("JudgeFx", attackAble.GetAttackEntity().transform.position);
@@ -589,7 +589,7 @@ public class HandWeapon : Weapon,IDamageAble
 
             var costList = new List<int>()
             {
-                2, 3, 2, 4, 8,24
+                2, 3, 2, 4, 8,32
             };
 
             if (!chineseSummonList.Contains(name))
@@ -1220,6 +1220,7 @@ public class HandWeapon : Weapon,IDamageAble
 
     public virtual AttackInfo OnBeforeAttacked(AttackInfo attackInfo)
     {
+        attackInfo=new AttackInfo(attackInfo.attacker,attackInfo.attackType,attackInfo.value);
         if (gameObject.activeSelf == false)
             return attackInfo;
 

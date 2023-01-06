@@ -149,7 +149,18 @@ public class PVEManager : MonoBehaviour
         if(fightingManager.gameStatus!=GameStatus.Playing)
             return;
         var winners = PlanetManager.Instance.allPlanets[0].planetCommanders;
-        FightingManager.Instance.GameOverByMc(winners,null,true,true);
+        FightingManager.Instance.GameOverByMc(winners,null,false,true);
+    }
+    
+    /// <summary>
+    /// 用于战胜末影龙或者达到一个半小时后强行结束
+    /// </summary>
+    public void GameOver()
+    {
+        if(fightingManager.gameStatus!=GameStatus.Playing)
+            return;
+        var losers = PlanetManager.Instance.allPlanets[0].planetCommanders;
+        FightingManager.Instance.GameOverByMc(null,losers,false,true);
     }
 
 
