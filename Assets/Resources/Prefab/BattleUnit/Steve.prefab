@@ -15068,7 +15068,7 @@ MonoBehaviour:
   attackDistance: 25
   owner: {fileID: 0}
   weaponName: "\u6CBB\u7597\u6CD5\u6756"
-  attackSpeed: 0.3
+  attackSpeed: 0.18
   scatteringAngel: 5
   rayDistance: 20
   attackType: 3

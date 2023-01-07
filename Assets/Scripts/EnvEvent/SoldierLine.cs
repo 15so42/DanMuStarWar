@@ -37,6 +37,13 @@ public class SoldierLine : GameEnvEvent
                         if (mcUnit)
                         {
                             mcUnit.GoMCWorldPos(secondPlanet.transform.position, false);
+                            var diff=fightingManager.roundManager.elapsedTime/60;
+                            for (int j = 0; j < diff; j++)
+                            {
+                                mcUnit.GetActiveWeapon().RandomSpellBySpellCount();
+                            }
+
+                            mcUnit.canSetPlanetEnemy = true;
                         }
                         
                     }
@@ -54,6 +61,12 @@ public class SoldierLine : GameEnvEvent
                         if (mcUnit)
                         {
                             mcUnit.GoMCWorldPos(firstPlanet.transform.position, false);
+                            var diff=fightingManager.roundManager.elapsedTime/60;
+                            for (int j = 0; j < diff; j++)
+                            {
+                                mcUnit.GetActiveWeapon().RandomSpellBySpellCount();
+                            }
+                            mcUnit.canSetPlanetEnemy = true;
                         }
                         
                     }

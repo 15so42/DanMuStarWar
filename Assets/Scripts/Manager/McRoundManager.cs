@@ -354,6 +354,10 @@ public class McRoundManager : RoundManager
     }
     void ParseShop(SteveCommander steveCommander, string trim)
     {
+        if (steveCommander.player.userSaveData == null)
+        {
+            return;
+        }
         if (trim == "交易圣诞树")
         {
             if (steveCommander.player.userSaveData.coin > 180)

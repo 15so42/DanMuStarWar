@@ -313,6 +313,9 @@ public class HandWeapon : Weapon,IDamageAble
         return true;
     }
 
+    /// <summary>
+    /// 在附魔栏位限制内进行附魔
+    /// </summary>
     public void RandomSpellBySpellCount()
     {
         if (weaponNbt.enhancementLevels.Count < weaponNbt.maxSpellCount)
@@ -449,7 +452,7 @@ public class HandWeapon : Weapon,IDamageAble
 
 
 
-        var rate =judgeLevel;
+        var rate = Mathf.CeilToInt(judgeLevel*0.5f);
         if (UnityEngine.Random.Range(0, 100) < rate)
         {
             ResFactory.Instance.CreateFx("JudgeFx", attackAble.GetAttackEntity().transform.position);
@@ -530,6 +533,13 @@ public class HandWeapon : Weapon,IDamageAble
 
                 var maxSpellSlot = summonLevel/14 +1;
                 
+                //凋零攻击力减半
+                if (mcUnit as Wither)
+                {
+                    weapon.attackValue /= 2;
+                    mcUnit.AddMaxHp((int)(-0.5f*mcUnit.props.maxHp));
+                }
+                
                 weapon.SetMaxSpellCount(maxSpellSlot);
                 for (int i = 0; i < spellCount; i++)
                 {
@@ -589,7 +599,7 @@ public class HandWeapon : Weapon,IDamageAble
 
             var costList = new List<int>()
             {
-                2, 3, 2, 4, 8,32
+                2, 3, 2, 4, 8,24
             };
 
             if (!chineseSummonList.Contains(name))
@@ -1154,64 +1164,73 @@ public class HandWeapon : Weapon,IDamageAble
     {
         if (gameObject.activeSelf == false)
             return;
-        var triumphLevel = GetWeaponLevelByNbt("凯旋");
-        if (triumphLevel>0)
+
+        try
         {
-            // float total = victim.props.maxHp * (0.15f + triumphLevel * 0.1f);//能回的
-            // float need = owner.props.maxHp - owner.props.hp;//该回的
-            // float overflow = total - need;
-            // if (overflow>0)
-            // {
-            //     if (overflow > owner.props.maxHp * 0.5f)
-            //     {
-            //         overflow = owner.props.maxHp * 0.5f;
-            //     }
-            //     owner.props.maxHp += Mathf.CeilToInt(overflow);
-            //     (owner.planetCommander as SteveCommander).desireMaxHp = owner.props.maxHp;
-            // }
-            // owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,Mathf.CeilToInt(total)));  
-
-            bool isSteve = victim as Steve;
-
-            float multiplier = 0.5f;//玩家用0.5倍
-            if (isSteve == false)//非玩家效能减半
+            var triumphLevel = GetWeaponLevelByNbt("凯旋");
+            if (triumphLevel > 0)
             {
-                multiplier *=0.5f;
-                Debug.Log("凯旋非玩家，效能减半");
-            }
+                // float total = victim.props.maxHp * (0.15f + triumphLevel * 0.1f);//能回的
+                // float need = owner.props.maxHp - owner.props.hp;//该回的
+                // float overflow = total - need;
+                // if (overflow>0)
+                // {
+                //     if (overflow > owner.props.maxHp * 0.5f)
+                //     {
+                //         overflow = owner.props.maxHp * 0.5f;
+                //     }
+                //     owner.props.maxHp += Mathf.CeilToInt(overflow);
+                //     (owner.planetCommander as SteveCommander).desireMaxHp = owner.props.maxHp;
+                // }
+                // owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,Mathf.CeilToInt(total)));  
 
-            if (GetAttackDistance() > 10)
-            {
-                multiplier *=0.5f;
-                Debug.Log("远程，效能减半");
-            }
-            
-            int total = Mathf.CeilToInt((triumphLevel * multiplier));
-            
-           
-            if (total > 0)
-            {
-                owner.props.maxHp += total;
-                if (owner.planetCommander != null)
+                bool isSteve = victim as Steve;
+
+                float multiplier = 0.5f; //玩家用0.5倍
+                if (isSteve == false) //非玩家效能减半
                 {
-                    (owner.planetCommander as SteveCommander).desireMaxHp = owner.props.maxHp;
-                    
+                    multiplier *= 0.5f;
+                    Debug.Log("凯旋非玩家，效能减半");
                 }
-                FlyText.Instance.ShowDamageText( owner.transform.position-Vector3.up*2,"最大生命+"+total);
-            }
-            
-            owner.OnAttacked(new AttackInfo(owner,AttackType.Heal,total*2*2));    
-        }
 
-        
-        
-        var expFixLevel = GetWeaponLevelByNbt("经验修补");
-        if (expFixLevel > 0)
+                if (GetAttackDistance() > 10)
+                {
+                    multiplier *= 0.5f;
+                    Debug.Log("远程，效能减半");
+                }
+
+                int total = Mathf.CeilToInt((triumphLevel * multiplier));
+
+
+                if (total > 0)
+                {
+                    owner.props.maxHp += total;
+                    if (owner.planetCommander != null)
+                    {
+                        (owner.planetCommander as SteveCommander).desireMaxHp = owner.props.maxHp;
+
+                    }
+
+                    FlyText.Instance.ShowDamageText(owner.transform.position - Vector3.up * 2, "最大生命+" + total);
+                }
+
+                owner.OnAttacked(new AttackInfo(owner, AttackType.Heal, total * 2 * 2));
+            }
+
+
+
+            var expFixLevel = GetWeaponLevelByNbt("经验修补");
+            if (expFixLevel > 0)
+            {
+
+                maxEndurance += Mathf.CeilToInt(expFixLevel * 0.2f);
+                AddEndurance((int) expFixLevel * 2);
+                //FlyText.Instance.ShowDamageText(owner.transform.position,"经验修补");
+            }
+        }
+        catch (Exception e)
         {
-            
-            maxEndurance += Mathf.CeilToInt(expFixLevel * 0.2f);
-            AddEndurance((int)expFixLevel*2);
-            //FlyText.Instance.ShowDamageText(owner.transform.position,"经验修补");
+            Debug.LogError("HandWeapon OnSlainOther"+e.Message);
         }
     }
     
@@ -1421,13 +1440,14 @@ public class HandWeapon : Weapon,IDamageAble
             Destroy(summonPointUi.gameObject);
         try//可能之前没有噬魂附魔，因此可能移除不掉导致报错，忽略这次报错
         {
-            
-            EventCenter.RemoveListener<McUnit>(EnumEventType.OnMcUnitDied, OnMcUnitDie);
-            EventCenter.RemoveListener<IAttackAble,IVictimAble>(EnumEventType.OnUnitDamageOther, Judge);
+            if(addedSourCatch)
+                EventCenter.RemoveListener<McUnit>(EnumEventType.OnMcUnitDied, OnMcUnitDie);
+            if(addedJudgeEvent)
+                EventCenter.RemoveListener<IAttackAble,IVictimAble>(EnumEventType.OnUnitDamageOther, Judge);
         }
         catch (Exception e)
         {
-            
+            Debug.LogError("handWeapon移除事件异常"+e.Message);
         }
     }
 }
