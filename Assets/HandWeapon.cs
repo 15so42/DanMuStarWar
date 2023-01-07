@@ -63,7 +63,7 @@ public class HandWeapon : Weapon,IDamageAble
         randomStrs.Add("灵盾");
         randomStrs.Add("不灭");
         randomStrs.Add("过量治疗");
-        randomStrs.Add("审判");
+        //randomStrs.Add("审判");
     }
 
     public void SetMaxSpellCount(int value)

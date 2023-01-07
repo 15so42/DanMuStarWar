@@ -37,7 +37,7 @@ public class SoldierLine : GameEnvEvent
                         if (mcUnit)
                         {
                             mcUnit.GoMCWorldPos(secondPlanet.transform.position, false);
-                            var diff=fightingManager.roundManager.elapsedTime/60;
+                            var diff=fightingManager.roundManager.elapsedTime/180;
                             for (int j = 0; j < diff; j++)
                             {
                                 mcUnit.GetActiveWeapon().RandomSpellBySpellCount();
@@ -61,7 +61,7 @@ public class SoldierLine : GameEnvEvent
                         if (mcUnit)
                         {
                             mcUnit.GoMCWorldPos(firstPlanet.transform.position, false);
-                            var diff=fightingManager.roundManager.elapsedTime/60;
+                            var diff=fightingManager.roundManager.elapsedTime/180;
                             for (int j = 0; j < diff; j++)
                             {
                                 mcUnit.GetActiveWeapon().RandomSpellBySpellCount();

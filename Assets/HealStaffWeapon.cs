@@ -14,7 +14,7 @@ public class HealStaffWeapon : HandWeapon
     public override float GetAttackSpeed()
     {
         var attackSpeedLevel = GetWeaponLevelByNbt("妙手");
-        return attackSpeed + attackSpeedLevel * 0.036f;
+        return attackSpeed + attackSpeedLevel * 0.023f;
         
     }
    
