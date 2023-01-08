@@ -33,9 +33,12 @@ public class ThunderCloud : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         timer += Time.deltaTime;
         if (timer > attackCd)
         {
+            if(owner==null)
+                return;
             Attack();
             dir = UnityEngine.Random.insideUnitSphere;
             timer = 0;

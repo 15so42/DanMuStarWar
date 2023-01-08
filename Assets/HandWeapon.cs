@@ -41,6 +41,7 @@ public class HandWeapon : Weapon,IDamageAble
     private float lastSummonTime = 0;
     private float lastImmortalTime = 0;
     public float immortalCd = 5;
+    private float lastJudgeTime = 0;
     
     //记录召唤列表
     public List<McUnit> summons=new List<McUnit>();
@@ -63,7 +64,7 @@ public class HandWeapon : Weapon,IDamageAble
         randomStrs.Add("灵盾");
         randomStrs.Add("不灭");
         randomStrs.Add("过量治疗");
-        //randomStrs.Add("审判");
+        randomStrs.Add("审判");
     }
 
     public void SetMaxSpellCount(int value)
@@ -419,7 +420,7 @@ public class HandWeapon : Weapon,IDamageAble
 
         var judge = GetWeaponLevelByNbt("审判");
         {
-            if (judge > 0)
+            if (judge > 0 )
             {
                 if (!addedJudgeEvent)
                 {
@@ -445,7 +446,17 @@ public class HandWeapon : Weapon,IDamageAble
 
     void Judge(IAttackAble attackAble,IVictimAble victimAble)
     {
-        
+        if (Time.time <= lastJudgeTime)
+        {
+            return;
+        }
+
+        lastJudgeTime = Time.time;
+        if (owner == null)
+        {
+            Debug.LogError("审判Owner异常null");
+            return;
+        }
         if(attackAble.GetAttackerOwner()==owner.GetAttackerOwner())
             return;//同队伍不触发
         var judgeLevel = GetWeaponLevelByNbt("审判");
@@ -456,7 +467,7 @@ public class HandWeapon : Weapon,IDamageAble
         if (UnityEngine.Random.Range(0, 100) < rate)
         {
             ResFactory.Instance.CreateFx("JudgeFx", attackAble.GetAttackEntity().transform.position);
-            (attackAble as IVictimAble)?.OnAttacked(new AttackInfo(owner,AttackType.Real,judgeLevel));
+            (attackAble as IVictimAble)?.OnAttacked(new AttackInfo(owner,AttackType.Real,rate));
         }
     }
 
@@ -537,7 +548,7 @@ public class HandWeapon : Weapon,IDamageAble
                 if (mcUnit as Wither)
                 {
                     weapon.attackValue /= 2;
-                    mcUnit.AddMaxHp((int)(-0.5f*mcUnit.props.maxHp));
+                    //mcUnit.AddMaxHp((int)(-0.5f*mcUnit.props.maxHp));
                 }
                 
                 weapon.SetMaxSpellCount(maxSpellSlot);
@@ -1230,7 +1241,7 @@ public class HandWeapon : Weapon,IDamageAble
         }
         catch (Exception e)
         {
-            Debug.LogError("HandWeapon OnSlainOther"+e.Message);
+            Debug.LogError("HandWeapon OnSlainOther异常"+e.Message);
         }
     }
     
