@@ -8,7 +8,7 @@ public class FireSkill : SkillBase
     public int time=5;
 
     public GameEntity attacker;
-    public int damage = 1;
+    //public int damage = 1;
     
 
     public void SetAttacker(GameEntity gameEntity)
@@ -32,15 +32,26 @@ public class FireSkill : SkillBase
     protected override void Play()
     {
         base.Play();
-        gameEntity.OnAttacked(new AttackInfo(attacker,AttackType.Fire, damage));
+        var fireLevel = life - 3>0?life-3:1;
+        var damage = Mathf.CeilToInt(gameEntity.props.hp * (0.01f));
+        gameEntity.OnAttacked(new AttackInfo(attacker,AttackType.Real, damage));
         if (createCommander != null)
         {
             if((gameEntity as BattleUnit)?.planetCommander!=createCommander)//僵尸燃烧不能算到上海里去
                 createCommander.attackOtherDamage += damage;
            
         }
+
+        var steve = gameEntity as Steve;
+        if (steve!=null)
+        {
+            var weapon = steve.GetActiveWeapon();
+            if (weapon)
+            {
+                weapon.AddEndurance(-1*Mathf.CeilToInt(weapon.endurance*0.01f));
+            }
+        }
         
-        (gameEntity as Steve)?.GetActiveWeapon()?.AddEndurance(-1);
 
     }
 

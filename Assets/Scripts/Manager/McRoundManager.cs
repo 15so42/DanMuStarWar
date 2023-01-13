@@ -24,7 +24,7 @@ public class McRoundManager : RoundManager
 
     void ShowShopList()
     {
-        MessageBox._instance.AddMessage("系统","当前可交易物品有圣诞树(180绿宝石)，附魔槽位(100绿宝石)，更多物品请等待后续版本添加");
+        MessageBox._instance.AddMessage("系统","当前可交易物品有圣诞树(200绿宝石)，附魔槽位(120绿宝石),自爆羊(800,仅PVE模式),稀有武器(400)，更多物品请等待后续版本添加");
     }
 
     protected override void ParseTrim(int uid, string text, string trim)
@@ -197,9 +197,20 @@ public class McRoundManager : RoundManager
                 if (steve)
                 {
                     var weapon = steve.GetActiveWeapon();
+                    
+                    var str = "";
+                    var weaponNbt = weapon.weaponNbt;
+                    for (int i = 0; i < weaponNbt.enhancementLevels.Count; i++)
+                    {
+                        if (weaponNbt.enhancementLevels[i].level>0)
+                        {
+                            str += "|" + weaponNbt.enhancementLevels[i].enhancementName+weaponNbt.enhancementLevels[i].level;
+                        }
+                    }
                     MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"状态：\n血量:"+steve.props.hp+"/"+steve.props.maxHp+"\n"+
                                                          "护盾："+steve.props.shield+"/"+steve.props.maxShield+"\n"+
-                                                         "武器耐久："+weapon.endurance+"/"+weapon.maxEndurance+"\n");
+                                                         "武器耐久："+weapon.endurance+"/"+weapon.maxEndurance+"\n"+
+                                                         "附魔信息:"+weapon.weaponName+"|"+ str);
                 }
             }
 
@@ -360,28 +371,51 @@ public class McRoundManager : RoundManager
         }
         if (trim == "交易圣诞树")
         {
-            if (steveCommander.player.userSaveData.coin > 180)
+            if (steveCommander.player.userSaveData.coin > 200)
             {
                 ParseChristmasTree(steveCommander);
-                steveCommander.player.userSaveData.coin -= 180;
+                steveCommander.player.userSaveData.coin -= 200;
             }
             else
             {
-                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易圣诞树失败，需要180点数");
+                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易圣诞树失败，需要200点数");
             }
             
         }else if (trim == "交易附魔槽位" || trim=="交易附魔槽位")
         {
-            if (steveCommander.player.userSaveData.coin > 100)
+            if (steveCommander.player.userSaveData.coin > 120)
             {
                 steveCommander.desireSpellCount++;
                 steveCommander.SetMaxSpellCount();
-                steveCommander.player.userSaveData.coin -= 100;
+                steveCommander.player.userSaveData.coin -= 120;
                 MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易附魔槽位成功");
             }
             else
             {
-                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易附魔槽位失败，需要100点数");
+                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易附魔槽位失败，需要120点数");
+            }
+        }else if (trim == "交易稀有武器")
+        {
+            if (steveCommander.player.userSaveData.coin > 400)
+            {
+                steveCommander.giftWeaponCount++;
+                steveCommander.player.userSaveData.coin -= 120;
+                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易稀有武器成功，发送兑换TNT/钓竿/召唤法杖进行兑换");
+            }
+            else
+            {
+                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易稀有武器失败，需要400点数");
+            }
+        }else if (trim == "交易自爆羊" && PVEManager.Instance!=null)
+        {
+            if (steveCommander.player.userSaveData.coin > 800)
+            {
+                (FightingManager.Instance.roundManager as McPveRoundManager)?.SelfExplosionSheep(steveCommander);
+                steveCommander.player.userSaveData.coin -= 800;
+            }
+            else
+            {
+                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易自爆羊失败，需要800点数");
             }
         }
         else
@@ -573,7 +607,7 @@ public class McRoundManager : RoundManager
         
     }
     
-    void ParseRandomSpell(SteveCommander steveCommander,bool rare,bool byGift)
+    protected void ParseRandomSpell(SteveCommander steveCommander,bool rare,bool byGift)
     {
         
         var validSteve = steveCommander.FindFirstValidSteve();
@@ -660,7 +694,7 @@ public class McRoundManager : RoundManager
         
     }
     
-    void ParseAddMaxHp(SteveCommander steveCommander,bool byGift)
+    protected void ParseAddMaxHp(SteveCommander steveCommander,bool byGift)
     {
         if (byGift)
         {
@@ -671,7 +705,7 @@ public class McRoundManager : RoundManager
         if (!validSteve)
             return;
         if(byGift)
-            validSteve.AddMaxHp(3);
+            validSteve.AddMaxHp(5);
         else
         {
             if (steveCommander.point < 8)
@@ -684,23 +718,24 @@ public class McRoundManager : RoundManager
         }
     }
     
-    public void ParseFixWeapon(SteveCommander steveCommander)
+    public bool ParseFixWeapon(SteveCommander steveCommander)
     {
         
         var validSteve = steveCommander.FindFirstValidSteve();
         if (!validSteve)
-            return;
+            return false;
 
 
         if (steveCommander.point < 5)
         {
             steveCommander.commanderUi.LogTip("需要点数:5");
-            return;
+            return false;
         }
 
         validSteve.FixWeapon(25,true);
         steveCommander.AddPoint(-5);
-        
+        return true;
+
     }
     
     void ParseRareWeapon(SteveCommander steveCommander)
@@ -713,9 +748,9 @@ public class McRoundManager : RoundManager
         validSteve.RandomRareWeapon();
     }
     
-    void ParseAddPoint(SteveCommander steveCommander)
+    protected void ParseAddPoint(SteveCommander steveCommander)
     {
-        steveCommander.AddPoint(1.5f);
+        steveCommander.AddPoint(4f);
     }
 
 
@@ -740,46 +775,21 @@ public class McRoundManager : RoundManager
         // }
         ParseGiftInMcMode(steveCommander,giftName,battery);
 
-        if (giftName == "打call")
-        {
-            //ParseRespawn(uid,true);
-            //ParseAddMaxHp(steveCommander,true);
-            ParseRandomSpell(steveCommander,false,true);
-        }
+       
 
         if (giftName == "粉丝团灯牌")
         {
-            ParseChristmasTree(steveCommander);
+            //ParseChristmasTree(steveCommander);
         }
 
         if (giftName == "这个好诶")
         {
-            //ParseRespawn(uid,true);
-            //ParseAddMaxHp(steveCommander);
-            
-            
-            //特殊武器
-            //ParseRareWeapon(steveCommander);
+          
             steveCommander.giftWeaponCount++;
             MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"兑换礼物武器次数增加一次，输入兑换+武器名称兑换武器，如兑换钓竿，兑换TNT");
         }
         
-        // if (giftName == "白银宝盒")
-        // {
-        //     //特殊武器
-        //     ParseRareWeapon(steveCommander);
-        // }
-
-        if (giftName == "牛哇牛哇" || giftName == "牛哇")
-        {
-            ParseAddPoint(steveCommander);
-        }
-        
-        if (giftName == "flag")
-        {
-            ParseAddMaxHp(steveCommander,true);
-        }
-        //Debug.LogError(battery+","+battery/100);
+    
 
         if (giftName == "辣条")
         {

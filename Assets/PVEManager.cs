@@ -133,6 +133,14 @@ public class PVEManager : MonoBehaviour
         director= GameObject.FindWithTag("PlayableDirector").GetComponent<PlayableDirector>();
         director.Play();
 
+        var rand = UnityEngine.Random.Range(0, 3);
+        if (rand == 0)
+        {
+            director.playableGraph.GetRootPlayable(0).SetSpeed(2.5f);
+            TipsDialog.ShowDialog("敌人加快了攻势！",null);
+        }
+
+
         difficulty = 0;
         
         addDiffTimer = UnityTimer.Timer.Register(60, () =>

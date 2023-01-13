@@ -15,7 +15,7 @@ public class EnderDragon : McUnit
         liveWeapon.Init(this);
         liveWeapon.randomStrs.Remove("烈阳");
         liveWeapon.randomStrs.Remove("坚韧");
-        liveWeapon.immortalCd = 18;
+        liveWeapon.immortalCd = 13;
         
         canPushBack = false;
         
@@ -25,8 +25,22 @@ public class EnderDragon : McUnit
 
         //liveWeapon.TrySpecificSpell("龙鳞");
         liveWeapon.weaponNbt.enhancementLevels.Add(new EnhancementLevel("龙鳞",1));
-        var diff = PVEManager.Instance.difficulty;
-        AddMaxHp(150*(int)diff);
+        liveWeapon.weaponNbt.enhancementLevels.Add(new EnhancementLevel("保护",1));
+        //liveWeapon.weaponNbt.enhancementLevels.Add(new EnhancementLevel("不灭",1));
+
+        int diff = 0;
+        if (PVEManager.Instance)
+        {
+            diff = (int)PVEManager.Instance.difficulty;
+        }
+        else
+        {
+            diff = (int)(FightingManager.Instance.roundManager.elapsedTime / 60);
+        }
+
+       
+        AddMaxHp(150*diff);
+        liveWeapon.attackValue = diff;
         lastHp = props.hp;
     }
     
@@ -49,6 +63,7 @@ public class EnderDragon : McUnit
         
     }
 
+
    
 
 
@@ -59,7 +74,8 @@ public class EnderDragon : McUnit
         var enemys = AttackManager.Instance.GetEnemyInRadius(this, transform.position, 15,9);
         foreach (var victim in enemys)
         {
-            var value = Mathf.CeilToInt(victim.GetVictimEntity().props.maxHp * 0.4f);
+            var maxValue =  victim.GetVictimEntity().props.maxHp;
+            var value =liveWeapon.GetBaseAttackInfo().value+ Mathf.CeilToInt(maxValue * 0.4f);
             if (victim as Planet)
             {
                 Debug.Log("攻击基地，伤害减半");
@@ -79,7 +95,8 @@ public class EnderDragon : McUnit
         var enemys = AttackManager.Instance.GetEnemyInRadius(this, transform.position, 35,9);
         foreach (var victim in enemys)
         {
-            var value = Mathf.CeilToInt(victim.GetVictimEntity().props.hp * 0.6f);
+            var maxValue =  victim.GetVictimEntity().props.maxHp;
+            var value = liveWeapon.GetBaseAttackInfo().value+Mathf.CeilToInt(maxValue * 0.6f);
             if (victim as Planet)
             {
                 Debug.Log("攻击基地，伤害减半");

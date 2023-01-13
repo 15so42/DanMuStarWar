@@ -14,7 +14,7 @@ public class ThunderStaffWeapon : McTowerWeapon
     
     public override AttackInfo GetBaseAttackInfo()
     {
-        return new AttackInfo(owner,AttackType.Real,attackValue+(int)(GetWeaponLevelByNbt("高压")*1.2f));
+        return new AttackInfo(owner,AttackType.Real,attackValue+(int)(GetWeaponLevelByNbt("高压")*1.3f));
     }
     
     public override void FireAnim()

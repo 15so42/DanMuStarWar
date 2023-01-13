@@ -55,14 +55,18 @@ public class DragonBreath : MonoBehaviour
         {
             weapon.pushBackHeight = 4;
             weapon.pushBackStrength = 3;
+
+            //var maxValue = AttackManager.Instance.GetAvgValueFromHES(victimAble);
             if (victimAble as Planet)
             {
+                var victimProps = victimAble.GetVictimEntity().props;
                 victimAble.OnAttacked(new AttackInfo(owner, AttackType.Real,
-                    Mathf.CeilToInt(victimAble.GetVictimEntity().props.hp * 0.025f)));
+                    Mathf.CeilToInt( victimProps.maxHp* 0.025f)));
             }
             else
             {
-                weapon.DamageOther(victimAble,new AttackInfo(owner,AttackType.Real,Mathf.CeilToInt(victimAble.GetVictimEntity().props.hp*0.025f)));
+                var victimProps = victimAble.GetVictimEntity().props;
+                weapon.DamageOther(victimAble,new AttackInfo(owner,AttackType.Real,Mathf.CeilToInt(victimProps.maxHp* 0.025f)));
             }
             
             //Debug.Log(other.gameObject.name + "|||"+other.gameObject.layer);

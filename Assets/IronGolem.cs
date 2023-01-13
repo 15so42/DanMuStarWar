@@ -151,7 +151,7 @@ public class IronGolem : McUnit
         base.Die();
         if (ownerPlanet)
         {
-            ownerPlanet.RefreshIronGolem();
+            //ownerPlanet.RefreshIronGolem();
         }
         
     }

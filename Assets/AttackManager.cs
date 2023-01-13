@@ -173,4 +173,50 @@ public class AttackManager : MonoBehaviour
 
        
     }
+    
+    
+    public int GetMaxValueFromHES(IVictimAble victimAble)
+    {
+        var victimEntity = victimAble.GetVictimEntity();
+        if (victimEntity)
+        {
+            var prop = victimEntity.props;
+            var maxHp = prop.maxHp;
+            var maxShied = prop.maxShield;
+            var maxEndurance = (victimEntity as McUnit).GetActiveWeapon().maxEndurance;
+            return Mathf.Max(new int[] {maxEndurance, maxHp, maxShied});
+        }
+
+        return 200;
+
+    }
+    
+    public int GetAvgValueFromHES(IVictimAble victimAble)
+    {
+        var victimEntity = victimAble.GetVictimEntity();
+        if (victimEntity)
+        {
+            var count = 3;
+            var prop = victimEntity.props;
+            var maxHp = prop.maxHp;
+            var maxShied = prop.maxShield;
+            var maxEndurance = 0;
+            var mcUnit = victimAble as McUnit;
+            if (mcUnit!=null)
+            {
+                var weapon = mcUnit.GetActiveWeapon();
+                maxEndurance = weapon == null ? 100 : mcUnit.GetActiveWeapon().maxEndurance;
+            }
+            else
+            {
+                count--;
+            }
+
+            
+            return (maxEndurance+maxHp+maxShied)/count;
+        }
+
+        return 200;
+
+    }
 }

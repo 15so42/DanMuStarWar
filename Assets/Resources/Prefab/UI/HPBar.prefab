@@ -129,8 +129,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -7.36}
-  m_SizeDelta: {x: 0, y: 6.72}
+  m_AnchoredPosition: {x: 0, y: -8}
+  m_SizeDelta: {x: 0, y: 8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2911587746942305181
 CanvasRenderer:
@@ -1245,7 +1245,6 @@ MonoBehaviour:
   offset: {x: 0, y: 1, z: 0}
   hpTickUi: {fileID: 8907359875226780478}
   hpNumText: {fileID: 3231524183671499716}
-  tileLine: {fileID: 0}
   skillUiGroup: {fileID: 6795274448563395730}
   tipText: {fileID: 6154998537819265600}
   nameText: {fileID: 209123154490769779}

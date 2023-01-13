@@ -42,6 +42,8 @@ public class HandWeapon : Weapon,IDamageAble
     private float lastImmortalTime = 0;
     public float immortalCd = 5;
     private float lastJudgeTime = 0;
+    private int pressAttackLayer = 0;//强攻层数
+    private float lastDamageFixTime = 0;
     
     //记录召唤列表
     public List<McUnit> summons=new List<McUnit>();
@@ -65,6 +67,8 @@ public class HandWeapon : Weapon,IDamageAble
         randomStrs.Add("不灭");
         randomStrs.Add("过量治疗");
         randomStrs.Add("审判");
+        randomStrs.Add("强攻");
+        randomStrs.Add("振荡");
     }
 
     public void SetMaxSpellCount(int value)
@@ -151,7 +155,7 @@ public class HandWeapon : Weapon,IDamageAble
             return;
         }
 
-        if (owner == null)
+        if (owner == null || owner.die)
         {
             Debug.LogError("噬魂异常,owner为null");
             return;
@@ -171,14 +175,24 @@ public class HandWeapon : Weapon,IDamageAble
         endurance += value;
         if (endurance > maxEndurance)
             endurance = maxEndurance;
-        if (endurance <= maxEndurance * 0.1)
+        if (endurance <= maxEndurance * 0.2)
         {
             //(owner.planetCommander as SteveCommander).
             var steveCommander = owner.planetCommander as SteveCommander;
             var roundManager = FightingManager.Instance.roundManager as McRoundManager;
             if (steveCommander!=null && roundManager!=null && steveCommander.autoFixWeapon)
             {
-                roundManager.ParseFixWeapon(steveCommander);
+               var success= roundManager.ParseFixWeapon(steveCommander);
+               if (success)
+               {
+                   var damageFixLevel = GetWeaponLevelByNbt("振荡");
+                   if (damageFixLevel > 0 && Time.time>lastDamageFixTime+4)
+                   {
+                       var damage =Mathf.CeilToInt(maxEndurance * 0.01f * damageFixLevel);
+                       AttackManager.Instance.Explosion(new AttackInfo(owner,AttackType.Physics,damage),this,owner.transform.position,12, "DamageFixFx");
+                       lastDamageFixTime = Time.time;
+                   }
+               }
             }
             
         }
@@ -407,6 +421,16 @@ public class HandWeapon : Weapon,IDamageAble
         { 
             (owner as McUnit).CloseAngryFx();
         }
+
+        var phoenix = GetWeaponLevelByNbt("不死鸟");
+        if (phoenix > 0)
+        {
+            (owner as McUnit).OpenPhoenixFx();
+        }
+        else
+        {
+            (owner as McUnit).ClosePhoenixFx();
+        }
         
         var searingSun = GetWeaponLevelByNbt("烈阳");
         if (searingSun > 0)
@@ -446,13 +470,13 @@ public class HandWeapon : Weapon,IDamageAble
 
     void Judge(IAttackAble attackAble,IVictimAble victimAble)
     {
-        if (Time.time <= lastJudgeTime)
+        if (Time.time < lastJudgeTime+4)
         {
             return;
         }
 
         lastJudgeTime = Time.time;
-        if (owner == null)
+        if (owner == null || owner.die)
         {
             Debug.LogError("审判Owner异常null");
             return;
@@ -464,10 +488,11 @@ public class HandWeapon : Weapon,IDamageAble
 
 
         var rate = Mathf.CeilToInt(judgeLevel*0.5f);
-        if (UnityEngine.Random.Range(0, 100) < rate)
+        if (true||UnityEngine.Random.Range(0, 100) < rate)
         {
             ResFactory.Instance.CreateFx("JudgeFx", attackAble.GetAttackEntity().transform.position);
-            (attackAble as IVictimAble)?.OnAttacked(new AttackInfo(owner,AttackType.Real,rate));
+            //(attackAble as IVictimAble)?.OnAttacked(new AttackInfo(owner,AttackType.Real,rate));
+            DamageOther(attackAble as IVictimAble, new AttackInfo(owner,AttackType.Real,rate));
         }
     }
 
@@ -819,7 +844,7 @@ public class HandWeapon : Weapon,IDamageAble
             {
                
               
-                    owner.props.maxShield = (int)(spiritualShieldLevel*12);
+                    owner.props.maxShield = (int)(spiritualShieldLevel*10);
                     //float shieldValue = owner.props.maxHp * (0.09f+spiritualShieldLevel*0.01f);
 
                     var value = (int) (spiritualShieldLevel * 0.5f);
@@ -848,7 +873,22 @@ public class HandWeapon : Weapon,IDamageAble
             return;
 
         var victim = victimAble.GetVictimEntity();
-        
+
+        var pressAttackLevel = GetWeaponLevelByNbt("强攻");
+        if (pressAttackLevel > 0)
+        {
+            if (pressAttackLayer < pressAttackLevel)
+            {
+                pressAttackLayer++;
+            }
+            else
+            {
+                pressAttackLayer = pressAttackLayer / 2;
+            }
+
+            attackInfo.value += pressAttackLayer*2;
+
+        }
 
         var angry = GetWeaponLevelByNbt("愤怒");
         if (angry > 0)
@@ -1096,8 +1136,8 @@ public class HandWeapon : Weapon,IDamageAble
                 if (skill as FireSkill)//第一次附加火焰没问题，但是之后无法再附加火焰而是刷新火焰Buff
                 {
                     (skill as FireSkill).SetAttacker(owner); 
-                    (skill as FireSkill).life = 4 + fireLevel*2;
-                    (skill as FireSkill).damage = Mathf.CeilToInt((float)fireLevel*0.2f);
+                    (skill as FireSkill).life = 3 + fireLevel;
+                    //(skill as FireSkill).damage = Mathf.CeilToInt((float)fireLevel*0.2f);
                 }
                 
             }
@@ -1238,6 +1278,12 @@ public class HandWeapon : Weapon,IDamageAble
                 AddEndurance((int) expFixLevel * 2);
                 //FlyText.Instance.ShowDamageText(owner.transform.position,"经验修补");
             }
+
+            var pressAttackLevel = GetWeaponLevelByNbt("强攻");
+            if (pressAttackLevel > 0)
+            {
+                pressAttackLayer = 0;
+            }
         }
         catch (Exception e)
         {
@@ -1316,26 +1362,22 @@ public class HandWeapon : Weapon,IDamageAble
             if (owner.props.hp > 0)
             {
                 var hpRate = (float)owner.props.hp / owner.props.maxHp;
-                if (hpRate <= 0.4 && attackInfo.attackType!=AttackType.Heal)
+                if ( attackInfo.attackType!=AttackType.Heal)
                 {
-                    if (Time.time > lastPhoenixTime + 45)
+                    if (Time.time >= lastPhoenixTime+2 )
                     {
-                        lastPhoenixTime = Time.time;
-                        (owner as McUnit).OpenPhoenixFx();
-                    }
+                        var rand = UnityEngine.Random.Range(0, 100);
+                        if (rand < ((1-hpRate)*0.5f)*100f)
+                        {
+                            var value = Mathf.CeilToInt(phoenix*0.5f);
+                            owner.OnAttacked(new AttackInfo(owner, AttackType.Heal, value,Color.yellow));
 
-                    else if (Time.time < lastPhoenixTime + 10)
-                    {
-                        //持续10秒
-                        var value = Mathf.CeilToInt(phoenix*0.5f);
-                        owner.OnAttacked(new AttackInfo(owner, AttackType.Heal, value,Color.yellow));
-
-                        //Debug.Log("不死鸟回血"+value);
+                            //Debug.Log("不死鸟回血"+value);
+                            lastPhoenixTime = Time.time;
+                        }
+                       
                     }
-                    else
-                    {
-                        (owner as McUnit).ClosePhoenixFx();
-                    }
+                    
                 }
             }
         }
@@ -1365,39 +1407,41 @@ public class HandWeapon : Weapon,IDamageAble
         }
 
         var parryLevel = GetWeaponLevelByNbt("格挡");
-        var ignoreDamageType2 = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Poison,AttackType.Real,AttackType.Thunder};
+        var ignoreDamageType2 = new List<AttackType>() {AttackType.Heal};
         if (parryLevel > 0 && !ignoreDamageType2.Contains(attackInfo.attackType))
         {
-            // var targetValue = (0.15 + 0.1 * parryLevel)*100;
-            // if(UnityEngine.Random.Range(0, 100) <targetValue)
-            // {
-            //     attackInfo.value /= 2;
-            //     //Debug.Log("格挡");
-            // }
-
-            if (endurance < 1 || (float)endurance/maxEndurance<0.25f )
+            if ((float)endurance/maxEndurance<0.25f || endurance < 1  )
             {
                 return attackInfo;
             }
 
             var realDamage = attackInfo.value;
-            attackInfo.value -= parryLevel;
-            if (parryLevel >= 3)
-            {
-                float parryRate = (float)endurance / maxEndurance;
-                attackInfo.value = (int)(attackInfo.value* (1-parryRate));
-                
-            }
+            
+           
+            float parryRate = (float)endurance / maxEndurance;
+            attackInfo.value = (int)(attackInfo.value* (1-parryRate));
+            
 
             if (attackInfo.value < 0)
                 attackInfo.value = 0;
 
-            var realCost = realDamage - parryLevel;
+            var realCost = realDamage - attackInfo.value;//实际伤害-减免后的伤害=此次格挡的伤害值
+
+            var parryValue = realCost;
+            realCost = (int) (realCost * (1 - (float) parryLevel / (parryLevel + 30)));
+            
+            if (endurance - realCost <= 0)//消耗过大，只消耗endurance的耐久
+            {
+                realCost = endurance;
+            }
+            
             if (realCost < 0)
                 realCost = 0;
-            if (realCost == 0)
-                realCost = 1;
+            
+            
+            
             AddEndurance((int) (-1* realCost ));
+            //Debug.Log("减伤"+parryValue+"消耗耐久"+realCost);
             
         }
 
@@ -1439,6 +1483,7 @@ public class HandWeapon : Weapon,IDamageAble
     
     private void OnDisable()
     {
+        
         //清除所有事件绑定
         owner.onAttacked -= OnAttacked;
 
@@ -1453,8 +1498,12 @@ public class HandWeapon : Weapon,IDamageAble
         {
             if(addedSourCatch)
                 EventCenter.RemoveListener<McUnit>(EnumEventType.OnMcUnitDied, OnMcUnitDie);
-            if(addedJudgeEvent)
+            if (addedJudgeEvent)
+            {
                 EventCenter.RemoveListener<IAttackAble,IVictimAble>(EnumEventType.OnUnitDamageOther, Judge);
+                Debug.LogError("移除审判实践");
+            }
+                
         }
         catch (Exception e)
         {
