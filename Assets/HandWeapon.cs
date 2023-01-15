@@ -44,6 +44,7 @@ public class HandWeapon : Weapon,IDamageAble
     private float lastJudgeTime = 0;
     private int pressAttackLayer = 0;//强攻层数
     private float lastDamageFixTime = 0;
+    private float lastFireworksTime = 0;
     
     //记录召唤列表
     public List<McUnit> summons=new List<McUnit>();
@@ -69,6 +70,7 @@ public class HandWeapon : Weapon,IDamageAble
         randomStrs.Add("审判");
         randomStrs.Add("强攻");
         randomStrs.Add("振荡");
+        randomStrs.Add("烟花");
     }
 
     public void SetMaxSpellCount(int value)
@@ -188,7 +190,7 @@ public class HandWeapon : Weapon,IDamageAble
                    var damageFixLevel = GetWeaponLevelByNbt("振荡");
                    if (damageFixLevel > 0 && Time.time>lastDamageFixTime+4)
                    {
-                       var damage =Mathf.CeilToInt(maxEndurance * 0.01f * damageFixLevel);
+                       var damage =Mathf.CeilToInt(maxEndurance * 0.02f * damageFixLevel);
                        AttackManager.Instance.Explosion(new AttackInfo(owner,AttackType.Physics,damage),this,owner.transform.position,12, "DamageFixFx");
                        lastDamageFixTime = Time.time;
                    }
@@ -470,12 +472,16 @@ public class HandWeapon : Weapon,IDamageAble
 
     void Judge(IAttackAble attackAble,IVictimAble victimAble)
     {
-        if (Time.time < lastJudgeTime+4)
+        if (Time.time >= lastJudgeTime+7)
+        {
+            //这样写便于理解
+        }
+        else
         {
             return;
         }
 
-        lastJudgeTime = Time.time;
+        
         if (owner == null || owner.die)
         {
             Debug.LogError("审判Owner异常null");
@@ -484,7 +490,7 @@ public class HandWeapon : Weapon,IDamageAble
         if(attackAble.GetAttackerOwner()==owner.GetAttackerOwner())
             return;//同队伍不触发
         var judgeLevel = GetWeaponLevelByNbt("审判");
-
+        lastJudgeTime = Time.time;
 
 
         var rate = Mathf.CeilToInt(judgeLevel*0.5f);
@@ -886,7 +892,7 @@ public class HandWeapon : Weapon,IDamageAble
                 pressAttackLayer = pressAttackLayer / 2;
             }
 
-            attackInfo.value += pressAttackLayer*2;
+            attackInfo.value += Mathf.CeilToInt(pressAttackLayer*2.2f);
 
         }
 
@@ -1072,6 +1078,44 @@ public class HandWeapon : Weapon,IDamageAble
             }
            
         }
+        
+        var fireworksLevel = GetWeaponLevelByNbt("烟花");
+        if (fireworksLevel > 0 && Time.time >= lastFireworksTime + 6)
+        {
+            //var enemies = AttackManager.Instance.GetEnemyInRadius(owner, victimAble.GetVictimPosition(), 15, 90);
+            //AttackManager.Instance.AttackEnemies(enemies,new AttackInfo(owner,AttackType.Physics,rainAttack));
+            //List<IVictimAble> victimAbles=new List<IVictimAble>();
+
+            
+                var pos = victimAble.GetVictimPosition();
+                var units = AttackManager.Instance.GetVictimsInRadius(pos, 15);
+
+                lastFireworksTime  = Time.time;
+                foreach (var unit in units)
+                {
+                    if (unit != null && unit.GetVictimEntity()!=null && unit.GetVictimEntity().die == false)
+                    {
+                        
+                        if (owner.GetAttackerOwner() == unit.GetVictimOwner())
+                        {
+                            unit.OnAttacked(new AttackInfo(owner, AttackType.Heal, fireworksLevel));
+                        }//友军，治疗
+                        else
+                        {
+                            DamageOther(unit,new AttackInfo(owner,AttackType.Physics,fireworksLevel));
+                        }
+                        
+                    }
+                }
+
+                var fireworksList = new List<string>() {"FireworksFx0", "FireworksFx1", "FireworksFx2"};
+                ResFactory.Instance.CreateFx(fireworksList[UnityEngine.Random.Range(0,fireworksList.Count)],pos+Vector3.up*15);
+                
+            
+            
+            
+            
+        }
 
         var spaceChopperLevel = GetWeaponLevelByNbt("空间斩");
         if (spaceChopperLevel > 0)
@@ -1126,6 +1170,8 @@ public class HandWeapon : Weapon,IDamageAble
             lastRainAttackTime = Time.time;
 
         }
+
+        
         
         var fireLevel = GetWeaponLevelByNbt("火焰");
         if (fireLevel > 0)
@@ -1282,7 +1328,7 @@ public class HandWeapon : Weapon,IDamageAble
             var pressAttackLevel = GetWeaponLevelByNbt("强攻");
             if (pressAttackLevel > 0)
             {
-                pressAttackLayer = 0;
+                //pressAttackLayer = 0;
             }
         }
         catch (Exception e)
@@ -1364,12 +1410,12 @@ public class HandWeapon : Weapon,IDamageAble
                 var hpRate = (float)owner.props.hp / owner.props.maxHp;
                 if ( attackInfo.attackType!=AttackType.Heal)
                 {
-                    if (Time.time >= lastPhoenixTime+2 )
+                    if (Time.time >= lastPhoenixTime+1 )
                     {
                         var rand = UnityEngine.Random.Range(0, 100);
-                        if (rand < ((1-hpRate)*0.5f)*100f)
+                        if (rand < ((1-hpRate))*100f)
                         {
-                            var value = Mathf.CeilToInt(phoenix*0.5f);
+                            var value = Mathf.CeilToInt(phoenix);
                             owner.OnAttacked(new AttackInfo(owner, AttackType.Heal, value,Color.yellow));
 
                             //Debug.Log("不死鸟回血"+value);

@@ -49,6 +49,9 @@ public class SteveCommander : PlanetCommander
     //自动维修
     public bool autoFixWeapon = true;
     
+    //使用的圣诞树数量
+    public int christmasTreeCount = 0;
+    
     public SteveCommander(int uid, Player player) : base(uid, player)
     {
     }

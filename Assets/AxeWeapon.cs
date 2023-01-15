@@ -14,7 +14,7 @@ public class AxeWeapon : HandWeapon
     protected override void Update()
     {
         base.Update();
-        if (owner.IsTargetAlive() && Time.time >lastFlyAxeTime+8 )
+        if (owner.IsTargetAlive() && Time.time >=lastFlyAxeTime+15 )
         {
             GameObject axeGo = GameObject.Instantiate(axeBulletPfb);
             var bullet = axeGo.GetComponent<ArrowBullet>();

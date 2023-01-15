@@ -89,25 +89,22 @@ public class ArrowBullet : MonoBehaviour
         if(victim==null)
             return;
 
-       
-        // var hpAndShield = victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,3+strength*2));
-        // handWeapon.OnDamageOther(victim,hpAndShield);
-        // attacked.Add(victim);
         DamageVictim(victim);
-        
-        // var navMeshMoveManager = victim.GetGameObject().GetComponent<NavMeshMoveManager>();
-        // if(navMeshMoveManager)
-        //     navMeshMoveManager.PushBackByPos(victim.GetGameObject().transform.position,owner.GetAttackerOwner().transform.position,3,2,1+strength*0.2f);
-        //
-        //
-        // if (recycleAbleObject)
-        // {
-        //     recycleAbleObject.Recycle();
-        // }
-       
+
         DamageFx(victim);
             
         
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        var victim = ValidCheck(other);
+        if(victim==null)
+            return;
+
+        DamageVictim(victim);
+
+        DamageFx(victim);
     }
 
     public virtual int CalDamage()
@@ -118,8 +115,8 @@ public class ArrowBullet : MonoBehaviour
     {
         if(victim==null)
             return;
-        var hpAndShield = victim.OnAttacked(new AttackInfo(this.owner,AttackType.Physics,CalDamage()));
-        handWeapon.OnDamageOther(victim,hpAndShield);
+        handWeapon.DamageOther(victim,new AttackInfo(this.owner,AttackType.Physics,CalDamage()));
+        
         if(damageOnce)
             attacked.Add(victim);
     }

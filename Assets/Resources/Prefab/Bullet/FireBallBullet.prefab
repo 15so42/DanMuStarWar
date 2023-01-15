@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 302555110281647321}
   - component: {fileID: 7635755438114967846}
   - component: {fileID: 7720616423364668150}
-  m_Layer: 11
+  m_Layer: 17
   m_Name: FireBallBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339310741611365194}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1.6
@@ -97,6 +97,7 @@ MonoBehaviour:
   damageOnce: 1
   upForce: 3
   pushForce: 2
+  quickShoot: 0
 --- !u!1 &3090367026689524685
 GameObject:
   m_ObjectHideFlags: 0

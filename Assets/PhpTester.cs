@@ -34,6 +34,12 @@ public class UserSaveData
         this.customSkin64Code = customSkin64Code;
         this.jianzhang = jianzhang;
     }
+
+    public void AddCoin(int value)
+    {
+        coin += value;
+        
+    }
 }
 
 public class PhpTester : MonoBehaviour

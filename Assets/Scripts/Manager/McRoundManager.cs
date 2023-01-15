@@ -24,7 +24,7 @@ public class McRoundManager : RoundManager
 
     void ShowShopList()
     {
-        MessageBox._instance.AddMessage("系统","当前可交易物品有圣诞树(200绿宝石)，附魔槽位(120绿宝石),自爆羊(800,仅PVE模式),稀有武器(400)，更多物品请等待后续版本添加");
+        MessageBox._instance.AddMessage("系统","当前可交易物品有圣诞树(200绿宝石)，附魔槽位(120绿宝石),自爆羊(800,仅PVE模式),稀有武器(400)，红包(100),更多物品请等待后续版本添加");
     }
 
     protected override void ParseTrim(int uid, string text, string trim)
@@ -371,14 +371,15 @@ public class McRoundManager : RoundManager
         }
         if (trim == "交易圣诞树")
         {
-            if (steveCommander.player.userSaveData.coin > 200)
+            if (steveCommander.player.userSaveData.coin > 200 && steveCommander.christmasTreeCount==0)
             {
                 ParseChristmasTree(steveCommander);
                 steveCommander.player.userSaveData.coin -= 200;
+                steveCommander.christmasTreeCount++;
             }
             else
             {
-                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易圣诞树失败，需要200点数");
+                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易圣诞树失败，达到数量限制（1）或余额不足，需要200点数");
             }
             
         }else if (trim == "交易附魔槽位" || trim=="交易附魔槽位")
@@ -417,6 +418,80 @@ public class McRoundManager : RoundManager
             {
                 MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易自爆羊失败，需要800点数");
             }
+        }else if (trim=="交易红包")
+        {
+            if (steveCommander.player.userSaveData.coin < 100)
+            {
+                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易红包失败，需要100点数");
+            }else if (steveCommander.FindFirstValidSteve()==null)
+            {
+                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易红包失败，角色处于死亡状态");
+            }
+            else
+            {
+                var items = new List<string>()
+                    {"获得25绿宝石", "获得50绿宝石", "获得150绿宝石", "获得300绿宝石", "获得500绿宝石", "随机附魔1次", "随机附魔5次", "随机附魔15次"};
+                var randomList = new List<float>() {25, 15, 10, 5, 1, 20, 5, 1};
+                var sum = (int) randomList.Sum();
+
+                if (randomList.Count != items.Count)
+                {
+                    TipsDialog.ShowDialog("红包概率配置错误，请检查", null);
+                    Debug.LogError("红包概率配置错误，请检查");
+                }
+
+                for (int i = 0; i < randomList.Count; i++)
+                {
+                    randomList[i] = (randomList[i] / sum) * 100;
+                    
+                }
+
+                var str = "";
+                for (int i = 0; i < items.Count; i++)
+                {
+                    str += items[i] + "(" + randomList[i] + "%)";
+                }
+
+                Debug.Log("红包中奖概率如下：" + str);
+
+                int rand = UnityEngine.Random.Range(0, 100);
+                int currProb = 0;
+                for (int i = 0; i < randomList.Count; i++)
+                {
+                    currProb += (int) randomList[i];
+                    if (rand < currProb)
+                    {
+                        MessageBox._instance.AddMessage(steveCommander.player.userName + "抽奖结果为" + items[i]+"("+randomList[i]+"%)");
+                        var ret = items[i];
+                        string strTempContent = ret;
+                        strTempContent = Regex.Replace(strTempContent, @"[^0-9]+", "");
+                        var num = Int32.Parse(strTempContent);
+                        if (ret.StartsWith("获得") && ret.EndsWith("绿宝石"))
+                        {
+                            
+                                if (steveCommander.player.userSaveData != null)
+                                {
+                                    steveCommander.player.userSaveData.coin += num;
+                                }
+                            
+                        }
+
+                        if (ret.StartsWith("随机附魔"))
+                        {
+                            for (int j = 0; j < num; j++)
+                            {
+                                steveCommander.FindFirstValidSteve().RandomSpell(false, false);
+                            }
+                        }
+
+                        break;
+                    }
+                }
+
+                if (steveCommander.player.userSaveData != null) 
+                    steveCommander.player.userSaveData.coin -= 100;
+            }
+
         }
         else
         {
@@ -705,7 +780,7 @@ public class McRoundManager : RoundManager
         if (!validSteve)
             return;
         if(byGift)
-            validSteve.AddMaxHp(5);
+            validSteve.AddMaxHp(8);
         else
         {
             if (steveCommander.point < 8)
@@ -713,7 +788,7 @@ public class McRoundManager : RoundManager
                 steveCommander.commanderUi.LogTip("需要点数:8");
                 return;
             }
-            validSteve.AddMaxHp(5);
+            validSteve.AddMaxHp(8);
             steveCommander.AddPoint(-8);
         }
     }

@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 5355813753439992061}
   - component: {fileID: 2852730626245246210}
   - component: {fileID: 6565173127682923423}
-  m_Layer: 11
+  m_Layer: 17
   m_Name: WitherHeadBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6698955430015299438}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 2.4

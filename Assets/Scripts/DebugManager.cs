@@ -14,6 +14,11 @@ public class DebugManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKey(KeyCode.LeftShift)==false)
+        {
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.B))
         {
             DebugDialog.ShowDialog();

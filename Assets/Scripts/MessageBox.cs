@@ -68,8 +68,15 @@ public class MessageBox : MonoBehaviour
 
         //截取后面80个字符
         t = t.Substring(t.Length>remainCharaters?t.Length - remainCharaters : 0, t.Length> remainCharaters ? remainCharaters : t.Length);
-        scrollbar.value = 0;
+        
         text.text = t;
+        StartCoroutine(BottomScrollBar());
+    }
+
+    IEnumerator BottomScrollBar()
+    {
+        yield return null;
+        scrollbar.value = 0;
     }
 
     public void AddMessage(string writer, string msg)

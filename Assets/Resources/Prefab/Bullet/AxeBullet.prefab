@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 8297125105418035673}
   - component: {fileID: 3337856937188327883}
   - component: {fileID: 4264932368914354144}
-  m_Layer: 11
+  m_Layer: 17
   m_Name: AxeBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5428831536415131091}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.25, y: 0.9, z: 3}

@@ -28,6 +28,7 @@ public class Player
     }
     
     
+    
     public Player(int uid, string userName, string faceUrl,string top_photo)
     {
         this.uid = uid;
