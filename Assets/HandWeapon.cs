@@ -1360,7 +1360,7 @@ public class HandWeapon : Weapon,IDamageAble
         if (thronLevel > 0 && !ignoreDamageType.Contains(attackInfo.attackType))
         {
             var value = Mathf.CeilToInt(attackInfo.value * ((float)thronLevel / (thronLevel + 20)));
-            attackInfo.attacker.GetAttackEntity()
+            attackInfo.attacker?.GetAttackEntity()
                 .OnAttacked(new AttackInfo(owner, AttackType.Reflect, value));
         }
         
@@ -1369,7 +1369,7 @@ public class HandWeapon : Weapon,IDamageAble
         if (mirrorShield > 0 && !msIgnoreDamageType.Contains(attackInfo.attackType))
         {
             var value = Mathf.CeilToInt(0.16f*mirrorShield);
-            attackInfo.attacker.GetAttackEntity()
+            attackInfo.attacker?.GetAttackEntity()
                 .OnAttacked(new AttackInfo(owner, AttackType.Reflect, value));
         }
         

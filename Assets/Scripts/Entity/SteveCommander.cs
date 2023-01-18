@@ -112,6 +112,28 @@ public class SteveCommander : PlanetCommander
         
     }
 
+    private Coroutine autoBotC;
+    public void StartAutoBot()
+    {
+        EventCenter.AddListener(EnumEventType.OnBattleOver,OnBattleOver);
+        autoBotC = GameManager.Instance.StartCoroutine(AutoBot());
+    }
+
+    IEnumerator AutoBot()
+    {
+        while (true)
+        {
+            (FightingManager.Instance.roundManager as McRoundManager)?.ParseCommand(player.uid,"附魔");
+            yield return new WaitForSeconds(10);
+        }
+        
+    }
+
+    void OnBattleOver()
+    {
+        GameManager.Instance.StopCoroutine(autoBotC);
+    }
+
     public void ParseSurrenderInMc()
     {
         surrendered = true;

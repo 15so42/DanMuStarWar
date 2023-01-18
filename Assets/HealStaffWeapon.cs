@@ -47,7 +47,7 @@ public class HealStaffWeapon : HandWeapon
         {
             if (unit.die == false)
             {
-                var tmpPercent = (float) (unit.props.hp / unit.props.maxHp);
+                var tmpPercent = (float) ((unit.props.hp*1f) / unit.props.maxHp);
                 if (tmpPercent <= minPercent)
                 {
                     minPercent = tmpPercent;

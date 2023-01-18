@@ -5685,7 +5685,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eae5d6ed6e2f00643951a8444508a643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  planet: {fileID: 0}
 --- !u!114 &5468216365159158744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5708,6 +5707,8 @@ MonoBehaviour:
   hpUIOffse: {x: 0, y: 40, z: 0}
   hpUIScale: {x: 2.4, y: 2.4, z: 1}
   canBeTarget: 1
+  offsetY: 6
+  isSummoned: 0
   commanderPfb: {fileID: 7861269777895578270, guid: 3553470e66d7f54438a129abd700fbca,
     type: 3}
   planetTerritory: {fileID: 0}
@@ -5734,7 +5735,7 @@ MonoBehaviour:
   autoCreateUnit: 0
   unitRateStr: 132
   commanderPointTimer: 0
-  commanderPointCd: 13
+  commanderPointCd: 10
   urgentRepair: 0
 --- !u!114 &5468216365159158745
 MonoBehaviour:

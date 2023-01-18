@@ -36,7 +36,9 @@ public class PVEManager : MonoBehaviour
     public GameObject recoveryBasePfb;
 
     public Text diffText;
-    
+
+
+    private bool fasterVersion = false;
     
     private void Start()
     {
@@ -111,7 +113,15 @@ public class PVEManager : MonoBehaviour
                 var planetCommanders = PlanetManager.Instance.allPlanets[0].planetCommanders;
                 for (int i = 0; i < planetCommanders.Count; i++)
                 {
-                    planetCommanders[i].AddPoint(0.5f);
+                    if (fasterVersion)
+                    {
+                        planetCommanders[i].AddPoint(2f);
+                    }
+                    else
+                    {
+                        planetCommanders[i].AddPoint(1f);
+                    }
+                    
                 }
             }
 
@@ -133,11 +143,16 @@ public class PVEManager : MonoBehaviour
         director= GameObject.FindWithTag("PlayableDirector").GetComponent<PlayableDirector>();
         director.Play();
 
+        fasterVersion = false;
+        
+        fightingManager.uiManager.SetGameTimerTextColor(Color.white);
         var rand = UnityEngine.Random.Range(0, 3);
         if (rand == 0)
         {
             director.playableGraph.GetRootPlayable(0).SetSpeed(2.5f);
             TipsDialog.ShowDialog("敌人加快了攻势！",null);
+            fasterVersion = true;
+            fightingManager.uiManager.SetGameTimerTextColor(Color.red);
         }
 
 

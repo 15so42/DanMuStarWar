@@ -196,7 +196,7 @@ public class RoundManager : MonoBehaviour
     
     [PunRPC]
     //解析命令
-    protected virtual void ParseCommand(int uid, string text)
+    public virtual void ParseCommand(int uid, string text)
     {
         var user = GetPlayerByUid(uid);
         var validUser = user != null;

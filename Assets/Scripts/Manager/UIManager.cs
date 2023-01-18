@@ -102,6 +102,11 @@ public class UIManager : MonoBehaviour
       StartCoroutine(UpdateTimerText());
    }
 
+   public void SetGameTimerTextColor(Color value)
+   {
+      gameTimerText.color = value;
+   }
+   
    IEnumerator UpdateTimerText()
    {
       int time = 0;

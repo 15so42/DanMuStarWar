@@ -24,7 +24,7 @@ public class McRoundManager : RoundManager
 
     void ShowShopList()
     {
-        MessageBox._instance.AddMessage("系统","当前可交易物品有圣诞树(200绿宝石)，附魔槽位(120绿宝石),自爆羊(800,仅PVE模式),稀有武器(400)，红包(100),更多物品请等待后续版本添加");
+        MessageBox._instance.AddMessage("系统","当前可交易物品有圣诞树(200绿宝石)，附魔槽位(120绿宝石),自爆羊(800,仅PVE模式),稀有武器(400)，红包(100),托管者(50),更多物品请等待后续版本添加");
     }
 
     protected override void ParseTrim(int uid, string text, string trim)
@@ -371,7 +371,7 @@ public class McRoundManager : RoundManager
         }
         if (trim == "交易圣诞树")
         {
-            if (steveCommander.player.userSaveData.coin > 200 && steveCommander.christmasTreeCount==0)
+            if (steveCommander.player.userSaveData.coin >= 200 && steveCommander.christmasTreeCount<3)
             {
                 ParseChristmasTree(steveCommander);
                 steveCommander.player.userSaveData.coin -= 200;
@@ -379,12 +379,12 @@ public class McRoundManager : RoundManager
             }
             else
             {
-                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易圣诞树失败，达到数量限制（1）或余额不足，需要200点数");
+                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易圣诞树失败，达到数量限制（3）或余额不足，需要200点数");
             }
             
         }else if (trim == "交易附魔槽位" || trim=="交易附魔槽位")
         {
-            if (steveCommander.player.userSaveData.coin > 120)
+            if (steveCommander.player.userSaveData.coin >= 120)
             {
                 steveCommander.desireSpellCount++;
                 steveCommander.SetMaxSpellCount();
@@ -397,11 +397,11 @@ public class McRoundManager : RoundManager
             }
         }else if (trim == "交易稀有武器")
         {
-            if (steveCommander.player.userSaveData.coin > 400)
+            if (steveCommander.player.userSaveData.coin >= 400)
             {
                 steveCommander.giftWeaponCount++;
-                steveCommander.player.userSaveData.coin -= 120;
-                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易稀有武器成功，发送兑换TNT/钓竿/召唤法杖进行兑换");
+                steveCommander.player.userSaveData.coin -= 400;
+                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易稀有武器成功，发送兑换TNT/钓竿/召唤法杖/爆竹进行兑换");
             }
             else
             {
@@ -409,7 +409,7 @@ public class McRoundManager : RoundManager
             }
         }else if (trim == "交易自爆羊" && PVEManager.Instance!=null)
         {
-            if (steveCommander.player.userSaveData.coin > 800)
+            if (steveCommander.player.userSaveData.coin >= 800)
             {
                 (FightingManager.Instance.roundManager as McPveRoundManager)?.SelfExplosionSheep(steveCommander);
                 steveCommander.player.userSaveData.coin -= 800;
@@ -430,8 +430,8 @@ public class McRoundManager : RoundManager
             else
             {
                 var items = new List<string>()
-                    {"获得25绿宝石", "获得50绿宝石", "获得150绿宝石", "获得300绿宝石", "获得500绿宝石", "随机附魔1次", "随机附魔5次", "随机附魔15次"};
-                var randomList = new List<float>() {25, 15, 10, 5, 1, 20, 5, 1};
+                    { "获得50绿宝石", "获得100绿宝石","获得150绿宝石", "获得200绿宝石", "获得50礼物点数"};
+                var randomList = new List<float>() { 30, 25, 20, 15,5};
                 var sum = (int) randomList.Sum();
 
                 if (randomList.Count != items.Count)
@@ -484,6 +484,14 @@ public class McRoundManager : RoundManager
                             }
                         }
 
+                        if (ret.StartsWith("获得") && ret.EndsWith("礼物点数"))
+                        {
+                            if (steveCommander.player.userSaveData != null)
+                            {
+                                steveCommander.player.userSaveData.giftPoint += num;
+                            }
+                        }
+
                         break;
                     }
                 }
@@ -492,6 +500,20 @@ public class McRoundManager : RoundManager
                     steveCommander.player.userSaveData.coin -= 100;
             }
 
+        }
+        else if (trim=="交易托管者")
+        {
+            if (steveCommander.player.userSaveData.coin >= 50)
+            {
+                steveCommander.StartAutoBot();
+                steveCommander.player.userSaveData.coin -= 50;
+                MessageBox._instance.AddMessage("系统",steveCommander.player.userSaveData+"交易托管者成功");
+            }
+            else
+            {
+                MessageBox._instance.AddMessage("系统",steveCommander.player.userName+"交易托管者失败，需要50绿宝石");
+            }
+            
         }
         else
         {
