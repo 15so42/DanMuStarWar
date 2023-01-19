@@ -51,6 +51,13 @@ public class SteveCommander : PlanetCommander
     
     //使用的圣诞树数量
     public int christmasTreeCount = 0;
+
+    private int lastGoPos = 0;
+
+    public void SetLastGoPos(int index)
+    {
+        lastGoPos = index;
+    }
     
     public SteveCommander(int uid, Player player) : base(uid, player)
     {
@@ -123,7 +130,9 @@ public class SteveCommander : PlanetCommander
     {
         while (true)
         {
+            var index = lastGoPos;
             (FightingManager.Instance.roundManager as McRoundManager)?.ParseCommand(player.uid,"附魔");
+            (FightingManager.Instance.roundManager as McRoundManager)?.ParseCommand(player.uid,"q"+index);
             yield return new WaitForSeconds(10);
         }
         

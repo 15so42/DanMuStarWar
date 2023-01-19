@@ -27681,7 +27681,7 @@ MonoBehaviour:
   attackDistance: 25
   owner: {fileID: 0}
   weaponName: "\u7206\u7AF9"
-  attackSpeed: 1
+  attackSpeed: 0.3
   scatteringAngel: 5
   rayDistance: 20
   attackType: 0
@@ -27695,7 +27695,17 @@ MonoBehaviour:
     maxEndurance: 0
     enhancementLevels: []
   randomStrs:
+  - "\u706B\u7130"
+  - "\u5438\u8840"
+  - "\u51EF\u65CB"
   - "\u9AD8\u7206"
+  - "\u8010\u4E45"
+  - "\u7ECF\u9A8C\u4FEE\u8865"
+  - "\u56DE\u590D"
+  - "\u8D22\u8FD0"
+  - "\u6BD2"
+  - "\u4FDD\u62A4"
+  - "\u91CD\u51FB"
   mutexSpells:
   - "\u4FDD\u62A4"
   - "\u683C\u6321"

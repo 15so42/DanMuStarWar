@@ -1184,6 +1184,8 @@ public class Planet : GameEntity,ITaskAble
                 {
                     (battleUnits[i] as McUnit).SetGuardStats(false);
                     battleUnits[i].GoMCWorldPos(pos,escape);
+                    
+                    
                     //(battleUnits[i] as McUnit).isGuard = false;
                     
 
@@ -1191,6 +1193,7 @@ public class Planet : GameEntity,ITaskAble
                     //battleUnits[i].LogTip(commander.player.userName);
                 }
             }
+            (commander as SteveCommander)?.SetLastGoPos(index);
         }
     }
 
@@ -1243,7 +1246,13 @@ public class Planet : GameEntity,ITaskAble
 
     public override BattleUnitProps.HpAndShield OnAttacked(AttackInfo attackInfo)
     {
-        var hpAndShield = base.OnAttacked(attackInfo);
+        
+        var newAttackInfo=new AttackInfo(attackInfo.attacker,attackInfo.attackType,attackInfo.value);
+        if (newAttackInfo.value > 45)
+        {
+            newAttackInfo.value = 45;
+        }
+        var hpAndShield = base.OnAttacked(newAttackInfo);
 
         if (Math.Abs(supportDistance) < 0.5f)
             return hpAndShield;

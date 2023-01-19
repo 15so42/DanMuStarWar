@@ -430,8 +430,8 @@ public class McRoundManager : RoundManager
             else
             {
                 var items = new List<string>()
-                    { "获得50绿宝石", "获得100绿宝石","获得150绿宝石", "获得200绿宝石", "获得50礼物点数"};
-                var randomList = new List<float>() { 30, 25, 20, 15,5};
+                    { "获得25绿宝石", "获得100绿宝石","获得150绿宝石", "获得200绿宝石", "获得30礼物点数"};
+                var randomList = new List<float>() { 40, 20, 20, 10,10};
                 var sum = (int) randomList.Sum();
 
                 if (randomList.Count != items.Count)
@@ -501,11 +501,41 @@ public class McRoundManager : RoundManager
             }
 
         }
-        else if (trim=="交易托管者")
+        else if (trim.StartsWith("交易托管者"))
         {
+            bool IsNumeric(string str, out int result)
+            {
+                bool isNum;
+                isNum = int.TryParse(str, out result);
+                return isNum;
+            }
+            
+            var index = 0;
+            if (trim.Equals("交易托管者"))
+            {
+                index = MCPosManager.Instance.GetIndexByPos(steveCommander.ownerPlanet.GetVictimPosition());
+            }
+            else
+            {
+                var sub = trim.Substring(5);
+                int num = 0;
+                if (IsNumeric(sub,out num))
+                {
+                    index = num;
+                }
+                else
+                {
+                    ShowShopList();
+                    return;
+                }
+                
+            }
+            
             if (steveCommander.player.userSaveData.coin >= 50)
             {
+                steveCommander.SetLastGoPos(index);
                 steveCommander.StartAutoBot();
+                
                 steveCommander.player.userSaveData.coin -= 50;
                 MessageBox._instance.AddMessage("系统",steveCommander.player.userSaveData+"交易托管者成功");
             }

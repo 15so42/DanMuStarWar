@@ -119,10 +119,12 @@ public abstract class GameEntity : MonoBehaviour,IAttackAble,IVictimAble
 
    public virtual BattleUnitProps.HpAndShield OnAttacked(AttackInfo attackInfo)
    {
-      if (Time.time < lastDamageTime + 0.3)
-      {
-         attackInfo.value = Mathf.CeilToInt(attackInfo.value * 0.5f);
-      }
+      //短时间连续伤害减伤。
+      // if (Time.time < lastDamageTime + 0.3)
+      // {
+      //    attackInfo.value = Mathf.CeilToInt(attackInfo.value * 0.5f);
+      // }
+      
       
       attackInfo=OnBeforeAttacked(attackInfo);//减伤增伤判断
       

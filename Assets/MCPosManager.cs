@@ -38,4 +38,23 @@ public class MCPosManager : MonoBehaviour
         
         return positions[index];
     }
+
+    public int GetIndexByPos(Vector3 pos)
+    {
+        float minDistance = 99999;
+        var index = 0;
+        for (int i = 0; i < positions.Count; i++)
+        {
+            var mark = positions[i];
+            var tmpDis = Vector3.SqrMagnitude(mark - pos);
+            if (tmpDis < minDistance)
+            {
+                minDistance = tmpDis;
+                index = i;
+            }
+            
+        }
+
+        return index;
+    }
 }

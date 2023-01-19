@@ -792,9 +792,9 @@ public class HandWeapon : Weapon,IDamageAble
                     //summons[i].GoMCWorldPos(owner.transform.position,false);
                 }
 
-                var rand = UnityEngine.Random.Range(0, 5);
+                var rand = UnityEngine.Random.Range(0, 100);
                 
-                if (rand < 1)
+                if (rand < 30)
                 {
                     AddIgnisFatuus(1);
                 }
