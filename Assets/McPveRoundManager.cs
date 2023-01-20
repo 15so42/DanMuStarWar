@@ -87,7 +87,7 @@ public class McPveRoundManager : McRoundManager
                 }
 
                 var commanders = steveCommander.ownerPlanet.planetCommanders;
-                num *= (int)(commanders.Count * 0.2f);
+                num = (int)(num* (commanders.Count * 0.2f));
                 var queue = DivideRedPacket(num, commanders.Count);
                 foreach (var commander in commanders)
                 {

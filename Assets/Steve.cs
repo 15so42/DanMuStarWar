@@ -394,6 +394,7 @@ public class Steve : McUnit
         fightingManager.AddPlayerDataValue(planetCommander.player.uid,"dieCount",1);
         
         planetCommander.player.onSetUserData = null;
+        (planetCommander as SteveCommander).isBotGuard = false;
         base.Die();
         
     }

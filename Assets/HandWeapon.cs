@@ -794,7 +794,7 @@ public class HandWeapon : Weapon,IDamageAble
 
                 var rand = UnityEngine.Random.Range(0, 100);
                 
-                if (rand < 30)
+                if (rand < 25)
                 {
                     AddIgnisFatuus(1);
                 }

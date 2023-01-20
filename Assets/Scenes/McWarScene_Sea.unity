@@ -6876,6 +6876,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -623651360505231966, guid: 9b2d35a4ca6d16341a35238a941178a5,
         type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -623651360505231966, guid: 9b2d35a4ca6d16341a35238a941178a5,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
@@ -34783,7 +34788,7 @@ PrefabInstance:
     - target: {fileID: 4562847321792079547, guid: 5b5479c1c1e2d4a479dd9b81b57ed194,
         type: 3}
       propertyPath: snowBlockList.Array.size
-      value: 20
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 4562847321792079547, guid: 5b5479c1c1e2d4a479dd9b81b57ed194,
         type: 3}
@@ -34844,6 +34849,11 @@ PrefabInstance:
         type: 3}
       propertyPath: snowBlockList.Array.data[19]
       value: White_Glazed_Terracotta
+      objectReference: {fileID: 0}
+    - target: {fileID: 4562847321792079547, guid: 5b5479c1c1e2d4a479dd9b81b57ed194,
+        type: 3}
+      propertyPath: snowBlockList.Array.data[20]
+      value: Light_Grey_Glazed_Terracotta
       objectReference: {fileID: 0}
     - target: {fileID: 4562847321792079548, guid: 5b5479c1c1e2d4a479dd9b81b57ed194,
         type: 3}

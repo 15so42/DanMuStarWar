@@ -52,12 +52,22 @@ public class SteveCommander : PlanetCommander
     //使用的圣诞树数量
     public int christmasTreeCount = 0;
 
+    //托管者
     private int lastGoPos = 0;
-
+    private string lastGoType = "去";
+    public bool isBotGuard = false;
+    public bool isBotEnabled = false;
+    public bool isBotStarted = false;
     public void SetLastGoPos(int index)
     {
         lastGoPos = index;
     }
+
+    public void SetLastGoType(string value)
+    {
+        lastGoType = value;
+    }
+    
     
     public SteveCommander(int uid, Player player) : base(uid, player)
     {
@@ -122,17 +132,30 @@ public class SteveCommander : PlanetCommander
     private Coroutine autoBotC;
     public void StartAutoBot()
     {
+        if(autoBotC!=null)
+            return;
         EventCenter.AddListener(EnumEventType.OnBattleOver,OnBattleOver);
+        
         autoBotC = GameManager.Instance.StartCoroutine(AutoBot());
+        isBotStarted = true;
+        isBotEnabled = true;
     }
 
     IEnumerator AutoBot()
     {
         while (true)
         {
-            var index = lastGoPos;
-            (FightingManager.Instance.roundManager as McRoundManager)?.ParseCommand(player.uid,"附魔");
-            (FightingManager.Instance.roundManager as McRoundManager)?.ParseCommand(player.uid,"q"+index);
+            if (isBotEnabled)
+            {
+                var index = lastGoPos;
+                (FightingManager.Instance.roundManager as McRoundManager)?.ParseCommand(player.uid,"附魔");
+                if (!isBotGuard)
+                {
+                    (FightingManager.Instance.roundManager as McRoundManager)?.ParseCommand(player.uid,lastGoType+index);
+                }
+            }
+            
+            
             yield return new WaitForSeconds(10);
         }
         

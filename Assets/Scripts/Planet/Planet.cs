@@ -1193,14 +1193,16 @@ public class Planet : GameEntity,ITaskAble
                     //battleUnits[i].LogTip(commander.player.userName);
                 }
             }
+            (commander as SteveCommander).isBotGuard = false;
             (commander as SteveCommander)?.SetLastGoPos(index);
+            (commander as SteveCommander)?.SetLastGoType(escape?"溜":"去");
         }
     }
 
     public void Guard(int uid)
     {
         var commander = GetCommanderByUid(uid);
-
+        (commander as SteveCommander).isBotGuard = true;
         var steve = (commander as SteveCommander).FindFirstValidSteve();
         if (steve)
         {
