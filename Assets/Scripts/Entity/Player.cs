@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player
 {
-    public int uid;
+    public long uid;
     public string userName;
     
     public string faceUrl;
@@ -29,7 +29,7 @@ public class Player
     
     
     
-    public Player(int uid, string userName, string faceUrl,string top_photo)
+    public Player(long uid, string userName, string faceUrl,string top_photo)
     {
         this.uid = uid;
         this.userName = userName;

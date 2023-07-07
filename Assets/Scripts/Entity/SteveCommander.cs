@@ -69,11 +69,11 @@ public class SteveCommander : PlanetCommander
     }
     
     
-    public SteveCommander(int uid, Player player) : base(uid, player)
+    public SteveCommander(long uid, Player player) : base(uid, player)
     {
     }
 
-    public SteveCommander(int uid, Player player, Color color) : base(uid, player, color)
+    public SteveCommander(long uid, Player player, Color color) : base(uid, player, color)
     {
     }
 

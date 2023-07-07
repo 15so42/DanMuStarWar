@@ -1182,6 +1182,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lantern (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7651567298772961520, guid: c7dbda74ca586244b83cc7461e8a2f0f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7dbda74ca586244b83cc7461e8a2f0f, type: 3}
 --- !u!1 &97314072
@@ -1670,6 +1675,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Lantern (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7651567298772961520, guid: c7dbda74ca586244b83cc7461e8a2f0f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7dbda74ca586244b83cc7461e8a2f0f, type: 3}
@@ -2972,6 +2982,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lantern
       objectReference: {fileID: 0}
+    - target: {fileID: 7651567298772961520, guid: c7dbda74ca586244b83cc7461e8a2f0f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7dbda74ca586244b83cc7461e8a2f0f, type: 3}
 --- !u!1 &268394481
@@ -3228,6 +3243,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Lantern1 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072148283386173211, guid: 1255828da8cd52e459133f7655c369ab,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7388593334828120851, guid: 1255828da8cd52e459133f7655c369ab,
         type: 3}
@@ -3765,6 +3785,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Lantern (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7651567298772961520, guid: c7dbda74ca586244b83cc7461e8a2f0f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7dbda74ca586244b83cc7461e8a2f0f, type: 3}
@@ -6079,6 +6104,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Lantern (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7651567298772961520, guid: c7dbda74ca586244b83cc7461e8a2f0f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7dbda74ca586244b83cc7461e8a2f0f, type: 3}
@@ -13250,6 +13280,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lantern (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 7651567298772961520, guid: c7dbda74ca586244b83cc7461e8a2f0f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7dbda74ca586244b83cc7461e8a2f0f, type: 3}
 --- !u!1 &995003696
@@ -14716,6 +14751,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Lantern (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7651567298772961520, guid: c7dbda74ca586244b83cc7461e8a2f0f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7dbda74ca586244b83cc7461e8a2f0f, type: 3}
@@ -17953,6 +17993,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lantern1 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 4072148283386173211, guid: 1255828da8cd52e459133f7655c369ab,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7388593334828120851, guid: 1255828da8cd52e459133f7655c369ab,
         type: 3}
       propertyPath: m_RootOrder
@@ -19573,6 +19618,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Lantern (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7651567298772961520, guid: c7dbda74ca586244b83cc7461e8a2f0f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7dbda74ca586244b83cc7461e8a2f0f, type: 3}
@@ -21419,6 +21469,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lantern1 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4072148283386173211, guid: 1255828da8cd52e459133f7655c369ab,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7388593334828120851, guid: 1255828da8cd52e459133f7655c369ab,
         type: 3}
       propertyPath: m_RootOrder
@@ -23199,6 +23254,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lantern1 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 4072148283386173211, guid: 1255828da8cd52e459133f7655c369ab,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7388593334828120851, guid: 1255828da8cd52e459133f7655c369ab,
         type: 3}
       propertyPath: m_RootOrder
@@ -23510,6 +23570,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Lantern1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072148283386173211, guid: 1255828da8cd52e459133f7655c369ab,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7388593334828120851, guid: 1255828da8cd52e459133f7655c369ab,
         type: 3}
@@ -24776,6 +24841,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Lantern1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072148283386173211, guid: 1255828da8cd52e459133f7655c369ab,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7388593334828120851, guid: 1255828da8cd52e459133f7655c369ab,
         type: 3}

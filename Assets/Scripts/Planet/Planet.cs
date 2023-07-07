@@ -155,7 +155,7 @@ public class Planet : GameEntity,ITaskAble
        
     }
 
-    public void UrgentRepair(int uid)
+    public void UrgentRepair(long uid)
     {
         if (!urgentRepair)
         {
@@ -206,7 +206,7 @@ public class Planet : GameEntity,ITaskAble
         }
     }
 
-    public void Gather(int uid,Planet targetPlanet)
+    public void Gather(long uid,Planet targetPlanet)
     {
         var planetCommander = GetCommanderByUid(uid);
         var gatherUi=GameManager.Instance.uiManager.CreateGatherUi(targetPlanet,this,planetCommander);
@@ -218,7 +218,7 @@ public class Planet : GameEntity,ITaskAble
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="planet"></param>
-    public void Recall(int uid,Planet planet)
+    public void Recall(long uid,Planet planet)
     {
         var planetCommander = GetCommanderByUid(uid);
         for (int i = 0; i < battleUnits.Count; i++)
@@ -232,7 +232,7 @@ public class Planet : GameEntity,ITaskAble
         }
     }
 
-    public void RecallAll(int uid)
+    public void RecallAll(long uid)
     {
         var planetCommander = GetCommanderByUid(uid);
         for (int i = 0; i < battleUnits.Count; i++)
@@ -251,7 +251,7 @@ public class Planet : GameEntity,ITaskAble
     /// </summary>
     /// <param name="colonist"></param>
     /// <param name="point"></param>
-    public void Defend(Planet colonist,int uid,float point)
+    public void Defend(Planet colonist,long uid,float point)
     {
         if(colonist==this)
             return;
@@ -421,7 +421,7 @@ public class Planet : GameEntity,ITaskAble
     /// 宣战
     /// </summary>
     /// <param name="planet"></param>
-    public void ClaimWar(int commanderUid,Planet planet)
+    public void ClaimWar(long commanderUid,Planet planet)
     {
         if (planet == this)
         {
@@ -475,7 +475,7 @@ public class Planet : GameEntity,ITaskAble
     }
 
    
-    public void ClaimDefend(int uid,Planet planet)
+    public void ClaimDefend(long uid,Planet planet)
     {
         if(planet==null)
             return;
@@ -829,7 +829,7 @@ public class Planet : GameEntity,ITaskAble
     }
 
 
-    public PlanetCommander GetCommanderByUid(int uid)
+    public PlanetCommander GetCommanderByUid(long uid)
     {
         return planetCommanders.Find(x => x.uid == uid);
     }
@@ -908,7 +908,7 @@ public class Planet : GameEntity,ITaskAble
         }
     }
 
-    public void RollSkill(int commanderUid)
+    public void RollSkill(long commanderUid)
     {
         if (planetResContainer.GetResNumByType(ResourceType.DicePoint) <= 0)
         {
@@ -926,7 +926,7 @@ public class Planet : GameEntity,ITaskAble
         planetResContainer.ReduceRes(ResourceType.DicePoint,1);
     }
 
-    public void UseSkillBG(int commanderUid,int index)
+    public void UseSkillBG(long commanderUid,int index)
     {
         var skill = GetSkillByIndex(index);
         if (skill == null)
@@ -948,7 +948,7 @@ public class Planet : GameEntity,ITaskAble
             commander.AddPoint(-1*skill.usePoint);
     }
     
-    public void UseSkill(int commanderUid,int index)
+    public void UseSkill(long commanderUid,int index)
     {
         var skill = GetSkillByIndex(index);
         if (skill == null)
@@ -995,7 +995,7 @@ public class Planet : GameEntity,ITaskAble
         }
     }
     
-    public void ChangeSkill(int commanderUid,int index)
+    public void ChangeSkill(long commanderUid,int index)
     {
         
         var skill = GetSkillByIndex(index);
@@ -1017,7 +1017,7 @@ public class Planet : GameEntity,ITaskAble
         
     }
 
-    public void BuySkillBG(int commanderUid, int index)
+    public void BuySkillBG(long commanderUid, int index)
     {
         
         var commander = GetCommanderByUid(commanderUid);
@@ -1051,7 +1051,7 @@ public class Planet : GameEntity,ITaskAble
         
     }
     
-    public void RemoveSkill(int uid,int index)
+    public void RemoveSkill(long uid,int index)
     {
         var skill = GetSkillByIndex(index);
         if (skill == null)
@@ -1148,7 +1148,7 @@ public class Planet : GameEntity,ITaskAble
 
     }
 
-    public void ShowCommanderPosition(int uid)
+    public void ShowCommanderPosition(long uid)
     {
         var commander = GetCommanderByUid(uid);
         if (commander != null)
@@ -1164,7 +1164,7 @@ public class Planet : GameEntity,ITaskAble
         }
     }
     
-    public void GoWhere(int uid,int index,bool escape)
+    public void GoWhere(long uid,int index,bool escape)
     {
         var commander = GetCommanderByUid(uid);
         if (commander != null)
@@ -1199,7 +1199,7 @@ public class Planet : GameEntity,ITaskAble
         }
     }
 
-    public void Guard(int uid)
+    public void Guard(long uid)
     {
         var commander = GetCommanderByUid(uid);
         (commander as SteveCommander).isBotGuard = true;

@@ -20,11 +20,11 @@ public class BiliUserInfoQuerier : MonoBehaviour
         Instance = this;
     }
 
-    public void Query(int uid,Player player)
+    public void Query(long uid,Player player)
     {
         GameManager.Instance.StartCoroutine(QueryAccount(uid, player));
     }
-    IEnumerator QueryAccount(int uid,Player player)
+    IEnumerator QueryAccount(long uid,Player player)
     {
         //https://tenapi.cn/bilibili/?uid=350692333
         string baseUrl = "https://api.bilibili.com/x/space/app/index?mid=";

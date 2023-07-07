@@ -6,7 +6,7 @@ public class MarbleRoundManager : McRoundManager
 {
 
 
-    protected void ParseGoWhere(int uid, string trim, bool escape)
+    protected void ParseGoWhere(long uid, string trim, bool escape)
     {
         return;
     }

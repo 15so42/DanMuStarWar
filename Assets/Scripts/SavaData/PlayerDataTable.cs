@@ -7,7 +7,7 @@ public class PlayerDataTable
 {
    public List<PlayerData> playerDataList=new List<PlayerData>();
 
-   public PlayerData FindByUid(int uid)
+   public PlayerData FindByUid(long uid)
    {
       var playerData = playerDataList.Find(x => x.uid == uid);
       if (playerData == null)
@@ -21,7 +21,7 @@ public class PlayerDataTable
       return playerData;
    }
 
-   public void UpdateByUid(int uid,PlayerData newData)
+   public void UpdateByUid(long uid,PlayerData newData)
    {
       var playerData = playerDataList.Find(x => x.uid == uid);
       if (playerData!=null)

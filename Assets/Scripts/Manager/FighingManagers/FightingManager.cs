@@ -46,7 +46,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
     public int maxPlayerCount = 8;
     
     //局内退出玩家
-    [HideInInspector]public List<int> exitPlayers=new List<int>();
+    [HideInInspector]public List<long> exitPlayers=new List<long>();
     
     //对局状态
     public GameStatus gameStatus = GameStatus.Init;
@@ -95,8 +95,8 @@ public class FightingManager : MonoBehaviourPunCallbacks
         mapManager.Init(this);
         
        
-        EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
-        EventCenter.AddListener<int,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
+        EventCenter.AddListener<string,long,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
+        EventCenter.AddListener<long,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
         
         EventCenter.AddListener(EnumEventType.OnPlanetsSpawned,SetOwners);
         
@@ -117,7 +117,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
     
 
     
-    public void OnGiftReceived(int uid, string userName, int num,string giftName,int totalCoin)
+    public void OnGiftReceived(long uid, string userName, int num,string giftName,int totalCoin)
     {
         AddPlayerDataValue(uid,"giftPoint", totalCoin / 100);
         //TipsDialog.ShowDialog("感谢支持QWQ!"+userName+"获得"+ totalCoin/100+ "个礼物点",null);
@@ -143,7 +143,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
     /// <param name="uid"></param>
     /// <param name="key">"giftPoint,winCount,loseCount"</param>
     /// <param name="value"></param>
-    public void AddPlayerDataValue(int uid,string key,object value)
+    public void AddPlayerDataValue(long uid,string key,object value)
     {
         var findRet = players.Find(x => x.uid == uid);
         if(findRet==null)
@@ -222,12 +222,12 @@ public class FightingManager : MonoBehaviourPunCallbacks
 
     private void OnDestroy()
     {
-        EventCenter.RemoveListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
-        EventCenter.RemoveListener<int,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
+        EventCenter.RemoveListener<string,long,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
+        EventCenter.RemoveListener<long,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
         EventCenter.RemoveListener(EnumEventType.OnPlanetsSpawned,SetOwners);
     }
 
-    public void JoinGameByChoose(string teamName,int uid,string userName)
+    public void JoinGameByChoose(string teamName,long uid,string userName)
     {
         Player player=new Player(uid,userName,"","");
         BiliUserInfoQuerier.Instance.Query(uid,player);
@@ -354,7 +354,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
     
     
 
-    public Player GetPlayerByUid(int uid)
+    public Player GetPlayerByUid(long uid)
     {
         return players.Find(x => x.uid == uid);
     }
@@ -412,7 +412,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
 
    
 
-    private void OnDanMuReceived(string userName,int uid,string time,string text )
+    private void OnDanMuReceived(string userName,long uid,string time,string text )
     {
         if (text.Split(' ')[0] == "点歌" && text.Split(' ').Length>1)
         {

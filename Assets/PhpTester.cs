@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 [Serializable]
 public class UserSaveData
 {
-    public int uid;
+    public long uid;
     public string userName;
     public int giftPoint;
     public int winCount;
@@ -20,7 +20,7 @@ public class UserSaveData
     public string customSkin64Code;
     public int jianzhang;//0 false,1 true
 
-    public UserSaveData(int uid, string userName, int giftPoint, int winCount, int loseCount, int coin, int killCount, int dieCount, int skinId, string customSkin64Code,int jianzhang)
+    public UserSaveData(long uid, string userName, int giftPoint, int winCount, int loseCount, int coin, int killCount, int dieCount, int skinId, string customSkin64Code,int jianzhang)
     {
         this.uid = uid;
         this.userName = userName;
@@ -60,7 +60,7 @@ public class PhpTester : MonoBehaviour
 
 
 
-    public void GetUserByUid(int uid,string userName,Action<UserSaveData> onParseJson)
+    public void GetUserByUid(long uid,string userName,Action<UserSaveData> onParseJson)
     {
         void OnGetUserJson(string json)
         {
@@ -98,10 +98,10 @@ public class PhpTester : MonoBehaviour
         return "http://" + ipAddr + "/" + htDocsPath+ "/" + phpName;
     }
 
-    IEnumerator GetUserByUidC(int uid,string userName,Action<string> onGetJson)
+    IEnumerator GetUserByUidC(long uid,string userName,Action<string> onGetJson)
     {
         WWWForm wwwForm=new WWWForm();
-        wwwForm.AddField("uid",uid);
+        wwwForm.AddField("uid",uid.ToString());
         wwwForm.AddField("userName",userName);
 
         var path = GetPath("GetUserByUid.php");
@@ -150,10 +150,10 @@ public class PhpTester : MonoBehaviour
             , userSaveData.coin, userSaveData.killCount, userSaveData.dieCount, userSaveData.skinId));
     }
     
-    IEnumerator UpdateUserC(int uid,string userName,int giftPoint,int winCount,int loseCount,int coin,int killCount,int dieCount,int skinId)
+    IEnumerator UpdateUserC(long uid,string userName,int giftPoint,int winCount,int loseCount,int coin,int killCount,int dieCount,int skinId)
     {
         WWWForm wwwForm=new WWWForm();
-        wwwForm.AddField("uid",uid);
+        wwwForm.AddField("uid",uid.ToString());
         wwwForm.AddField("userName",userName);
         wwwForm.AddField("giftPoint",giftPoint);
         wwwForm.AddField("winCount",winCount);

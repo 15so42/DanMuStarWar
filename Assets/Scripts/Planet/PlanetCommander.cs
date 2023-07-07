@@ -7,7 +7,7 @@ using UnityTimer;
 public class PlanetCommander 
 {
 
-    public int uid;
+    public long uid;
     public Player player;
     public float point;
     public CommanderUI commanderUi;
@@ -25,7 +25,7 @@ public class PlanetCommander
     
     
     
-    public PlanetCommander (int uid, Player player)
+    public PlanetCommander (long uid, Player player)
     {
         this.uid = uid;
         this.player = player;
@@ -33,7 +33,7 @@ public class PlanetCommander
         
     }
     
-    public PlanetCommander (int uid, Player player,Color color)
+    public PlanetCommander (long uid, Player player,Color color)
     {
         this.uid = uid;
         this.player = player;

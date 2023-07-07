@@ -27,7 +27,7 @@ public class McRoundManager : RoundManager
         MessageBox._instance.AddMessage("系统","当前可交易物品有圣诞树(200绿宝石)，附魔槽位(120绿宝石),自爆羊(800,仅PVE模式),稀有武器(400)，红包(100),托管者(50),更多物品请等待后续版本添加");
     }
 
-    protected override void ParseTrim(int uid, string text, string trim)
+    protected override void ParseTrim(long uid, string text, string trim)
     {
         base.ParseTrim(uid, text, trim);
         var planet = GetPlantByPlayerUid(uid);
@@ -278,7 +278,7 @@ public class McRoundManager : RoundManager
         }
     }
 
-    protected void ParseGoWhere(int uid,string trim,bool escape)
+    protected void ParseGoWhere(long uid,string trim,bool escape)
     {
         
         
@@ -308,7 +308,7 @@ public class McRoundManager : RoundManager
         }
     }
 
-    protected void ParseGuard(int uid)
+    protected void ParseGuard(long uid)
     {
         var uidPlanet = GetPlantByPlayerUid(uid);
         if(uidPlanet==null)
@@ -318,7 +318,7 @@ public class McRoundManager : RoundManager
         uidPlanet.Guard(uid);
     }
     
-    void ParseCameraFocus(int uid)
+    void ParseCameraFocus(long uid)
     {
         var planet = GetPlantByPlayerUid(uid);
         if(planet==null)
@@ -639,7 +639,7 @@ public class McRoundManager : RoundManager
 
     }
 
-    void ParseRespawn(int uid,bool byGift)
+    void ParseRespawn(long uid,bool byGift)
     {
         var planet = GetPlantByPlayerUid(uid);
         if(planet==null)
@@ -882,7 +882,7 @@ public class McRoundManager : RoundManager
     }
     
     /******************解析礼物*********************/
-    protected override void ParseGift(int uid, string giftName,int battery)
+    protected override void ParseGift(long uid, string giftName,int battery)
     {
         var planet = GetPlantByPlayerUid(uid);
         if(planet==null)

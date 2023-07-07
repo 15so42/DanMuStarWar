@@ -56,7 +56,7 @@ public class DanMuReciver : MonoBehaviour
         {
             //从头读取每条弹幕，直到时间大于上次读取时间，
             string time= ret.data.room[i].timeline;
-            int uid = ret.data.room[i].uid;
+            long uid = ret.data.room[i].uid;
             long unix = GetUnixTime(time);
             
             if (unix>=lastReadUnix )//时间大于上一次读取弹幕的时间或者uid不同
@@ -130,7 +130,7 @@ public class DanMuReciver : MonoBehaviour
         return time.ToUniversalTime().Ticks / 10000000 - 62135596800;
     }
 
-    public void SendFakeDanMu(string nickName,int uid,string text)
+    public void SendFakeDanMu(string nickName,long uid,string text)
     {
         string time = DateTime.Now.ToString();
         EventCenter.Broadcast(EnumEventType.OnDanMuReceived,nickName,uid,time,text);
@@ -161,7 +161,7 @@ public class DanMuJson
 public class Admin
 {
     public string text;
-    public int uid;
+    public long uid;
     public string nickname;
     public string timeline;
 }
@@ -169,7 +169,7 @@ public class Admin
 public class Room
 {
     public string text;
-    public int uid;
+    public long uid;
     public string nickname;
     public string timeline;
     public bool readStatus = false;

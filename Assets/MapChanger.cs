@@ -21,7 +21,7 @@ public class MapChanger : MonoBehaviour
     public List<MapPair> mapPairs=new List<MapPair>();
     private Dictionary<string,int> mapVoteCount=new Dictionary<string, int>();
     
-    public List<int> votedUid=new List<int>();//每个uid只能投票一次
+    public List<long> votedUid=new List<long>();//每个uid只能投票一次
 
     public string desireMap = "";
 
@@ -39,7 +39,7 @@ public class MapChanger : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
+            EventCenter.AddListener<string,long,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
         }
         else
         {
@@ -56,7 +56,7 @@ public class MapChanger : MonoBehaviour
         ChangeMap(desireMap);
     }
 
-    private void OnDanMuReceived(string userName, int uid, string time, string text)
+    private void OnDanMuReceived(string userName, long uid, string time, string text)
     {
         
         
@@ -134,7 +134,7 @@ public class MapChanger : MonoBehaviour
     
     
 
-    public void MapVote(int uid,GameMode gameMode)
+    public void MapVote(long uid,GameMode gameMode)
     {
         if(votedUid.Contains(uid))
             return;

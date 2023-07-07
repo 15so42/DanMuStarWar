@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class StarWarRoundManager : RoundManager
 {
-    protected override void ParseTrim(int uid, string text,string trim)
+    protected override void ParseTrim(long uid, string text,string trim)
     {
         base.ParseTrim(uid, text,trim);
         if (text.StartsWith("宣战"))
@@ -90,7 +90,7 @@ public class StarWarRoundManager : RoundManager
     }
 
 
-    void ParseClaimWar(int uid,string trim)
+    void ParseClaimWar(long uid,string trim)
     {
         string pattern = @"^(宣战){1}(\d{1,2})$";
         if (Regex.IsMatch(trim, pattern))
@@ -116,7 +116,7 @@ public class StarWarRoundManager : RoundManager
         }
     }
     
-    void ParseRecall(int uid,string trim)
+    void ParseRecall(long uid,string trim)
     {
         string pattern = @"^(召回){1}(\d{1,2})$";
         string letterPattern = @"^(z|Z){1}(\d{1,2})$";
@@ -140,7 +140,7 @@ public class StarWarRoundManager : RoundManager
         }
     }
 
-    void ParseRecallAll(int uid)
+    void ParseRecallAll(long uid)
     {
         var uidPlanet = GetPlantByPlayerUid(uid);
         if(uidPlanet==null)
@@ -148,7 +148,7 @@ public class StarWarRoundManager : RoundManager
         uidPlanet.RecallAll(uid);
     }
     
-    void ParseGather(int uid,string trim)
+    void ParseGather(long uid,string trim)
     {
         string pattern = @"^(集结){1}(\d{1,2})$";
         
@@ -175,7 +175,7 @@ public class StarWarRoundManager : RoundManager
         }
     }
 
-    void ParseDefend(int uid, string trim)
+    void ParseDefend(long uid, string trim)
     {
         string pattern = @"^(驻守){1}(\d{1,2})$";
         if (Regex.IsMatch(trim, pattern))
@@ -200,13 +200,13 @@ public class StarWarRoundManager : RoundManager
         }
     }
 
-    void ParseComplexCommand(int uid, string trim)
+    void ParseComplexCommand(long uid, string trim)
     {
         string pattern= @"((m|M){1}\d{1}|(s|S){1}\d{1}|(y|Y){1}\d{1}|(h|H){1}\d{1})+";
         
     }
     
-    void ParseChangeSkill(int uid,string trim)
+    void ParseChangeSkill(long uid,string trim)
     {
         string pattern = @"^(换技能){1}(\d{1})$";
         string letterPattern = @"^(h|H){1}(\d{1})$";
@@ -228,7 +228,7 @@ public class StarWarRoundManager : RoundManager
         }
     }
     
-    void ParseUseSkill(int uid,string trim)//使用技能1或者u1或者U1
+    void ParseUseSkill(long uid,string trim)//使用技能1或者u1或者U1
     {
         string pattern = @"^(使用技能){1}(\d{1})$";
         string letterPattern = @"^(s|S){1}(\d{1})$";
@@ -245,7 +245,7 @@ public class StarWarRoundManager : RoundManager
         }
     }
     
-    void ParseBuySkill(int uid,string trim)//使用技能1或者u1或者U1
+    void ParseBuySkill(long uid,string trim)//使用技能1或者u1或者U1
     {
         string pattern = @"^(买技能){1}(\d{1})$";
         string letterPattern = @"^(m|M){1}(\d{1})$";
@@ -266,7 +266,7 @@ public class StarWarRoundManager : RoundManager
         }
     }
     
-    void ParseRemoveSkill(int uid,string trim)
+    void ParseRemoveSkill(long uid,string trim)
     {
         string pattern = @"^(移除技能){1}(\d{1})$";
         string letterPattern = @"^(y|Y){1}(\d{1})$";
@@ -283,7 +283,7 @@ public class StarWarRoundManager : RoundManager
         }
     }
     
-    void ParseRollSkill(int uid,string trim)
+    void ParseRollSkill(long uid,string trim)
     {
         string pattern = @"^(抽取技能)$";
         if (Regex.IsMatch(trim, pattern) || trim=="c" || trim=="C")
@@ -303,7 +303,7 @@ public class StarWarRoundManager : RoundManager
         }
     }
     
-    void ParseShowSkillDesc(int uid,string trim)
+    void ParseShowSkillDesc(long uid,string trim)
     {
         string pattern = @"^(技能说明)$";
         if (Regex.IsMatch(trim, pattern))
@@ -318,7 +318,7 @@ public class StarWarRoundManager : RoundManager
         }
     }
     
-    void ParseUrgentRepair(int uid,string trim)
+    void ParseUrgentRepair(long uid,string trim)
     {
         if (trim == "紧急维修")
         {
@@ -330,7 +330,7 @@ public class StarWarRoundManager : RoundManager
         }
     }
     
-    void ParseCloseAutoRoll(int uid,string trim)
+    void ParseCloseAutoRoll(long uid,string trim)
     {
         if (trim == "关闭自动抽卡")
         {
@@ -342,7 +342,7 @@ public class StarWarRoundManager : RoundManager
         }
     }
     
-    void ParseOpenAutoRoll(int uid,string trim)
+    void ParseOpenAutoRoll(long uid,string trim)
     {
         if (trim == "开启自动抽卡")
         {
@@ -354,7 +354,7 @@ public class StarWarRoundManager : RoundManager
         }
     }
     
-    void ParseSurrender(int uid)
+    void ParseSurrender(long uid)
     {
         
             Debug.Log("解析投降命令");
@@ -365,7 +365,7 @@ public class StarWarRoundManager : RoundManager
         
     }
 
-    void ParseShowWhere(int uid)
+    void ParseShowWhere(long uid)
     {
         var planet=GetPlantByPlayerUid(uid);
         if (planet)
@@ -375,7 +375,7 @@ public class StarWarRoundManager : RoundManager
     
     /******************解析礼物*********************/
     
-    protected override void ParseGift(int uid, string giftName,int battery)
+    protected override void ParseGift(long uid, string giftName,int battery)
     {
         if (giftName == "小花花")
         {

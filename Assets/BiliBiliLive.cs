@@ -14,7 +14,7 @@ using UnityEngine.Networking;
 [System.Serializable]
 public struct DanMuMsg
 {
-    public int userId;
+    public long userId;
     public string userName;
     public string content;
 }
@@ -22,7 +22,7 @@ public struct DanMuMsg
 [System.Serializable]
 public struct GiftMsg
 {
-    public int userId;
+    public long userId;
     public string userName;
     public int num;
     public string giftName;
@@ -111,8 +111,16 @@ public class BiliBiliLive : MonoBehaviour
         {
             case "DANMU_MSG":
                 //Debug.Log(e.Message);
-                int userId = jObject["info"][2][0].ToObject<int>();
+                long userId = jObject["info"][2][0].ToObject<long>();
                 string userName = jObject["info"][2][1].ToString();
+                // long userId = jObject["info"]["mid"].ToObject<long>();
+                // string userName = jObject["info"]["name"].ToString();
+                
+                if (userId == 0)
+                {
+                    TipsDialog.ShowDialog(userName+"的uid没有拿到！！",null);
+                    break;
+                }
                 string content = jObject["info"][1].ToString();
                 
                 Debug.Log($"[{userId}]{userName}:{content}");
@@ -145,7 +153,7 @@ public class BiliBiliLive : MonoBehaviour
     {
         Debug.Log(obj.ToString());
 
-        int userId = 0;
+        long userId = 0;
         string userName = "";
         string giftName = "";
         int num = 0;
@@ -155,7 +163,7 @@ public class BiliBiliLive : MonoBehaviour
         var batch = data["batch_combo_send"];
         if (true /*|| batch == null*/)//连击
         {
-            userId = data["uid"].ToObject<int>();
+            userId = data["uid"].ToObject<long>();
             userName = data["uname"].ToString();
             giftName = data["giftName"].ToString();
             num = data["num"].ToObject<int>();

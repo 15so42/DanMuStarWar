@@ -45,8 +45,8 @@ public class RoundManager : MonoBehaviour
         this.gameManager = gameManager;
         this.fightingManager = gameManager.fightingManager;
         this.players = players;
-        EventCenter.AddListener<string,int,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
-        EventCenter.AddListener<int,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
+        EventCenter.AddListener<string,long,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
+        EventCenter.AddListener<long,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
 
         timer = 0;
         elapsedTime = 0;
@@ -94,8 +94,8 @@ public class RoundManager : MonoBehaviour
         try
         {
             //如果切换游戏场景后游戏尚未开始，就不会绑定事件，因此强行结束或换场景会报错
-            EventCenter.RemoveListener<string, int, string, string>(EnumEventType.OnDanMuReceived, OnDanMuReceived);
-            EventCenter.RemoveListener<int, string, int, string, int>(EnumEventType.OnGiftReceived, OnGiftReceived);
+            EventCenter.RemoveListener<string, long, string, string>(EnumEventType.OnDanMuReceived, OnDanMuReceived);
+            EventCenter.RemoveListener<long, string, int, string, int>(EnumEventType.OnGiftReceived, OnGiftReceived);
             if(playEnvEvent!=null)
                 StopCoroutine(playEnvEvent);
         }
@@ -121,7 +121,7 @@ public class RoundManager : MonoBehaviour
         Stop();
     }
 
-    private void OnDanMuReceived(string userName,int uid,string time,string text)
+    private void OnDanMuReceived(string userName,long uid,string time,string text)
     {
         if (PhotonLauncher.playMode == PlayMode.Photon)
         {
@@ -135,12 +135,12 @@ public class RoundManager : MonoBehaviour
         
     }
 
-    Player GetPlayerByUid(int uid)
+    Player GetPlayerByUid(long uid)
     {
         return players.Find(x => x.uid == uid);
     }
 
-    protected Planet GetPlantByPlayerUid(int uid)
+    protected Planet GetPlantByPlayerUid(long uid)
     {
         //return PlanetManager.Instance.allPlanets.Find(x => x.planetCommanders !=null && x.owner.uid == uid);
         for (int i = 0; i < PlanetManager.Instance.allPlanets.Count; i++)
@@ -165,7 +165,7 @@ public class RoundManager : MonoBehaviour
     
    
 
-    void MapVote(int uid,GameMode gameMode)
+    void MapVote(long uid,GameMode gameMode)
     {
         
         // if(voted.Contains(uid))
@@ -186,7 +186,7 @@ public class RoundManager : MonoBehaviour
     }
 
 
-    protected virtual void ParseTrim(int uid, string text,string trim)
+    protected virtual void ParseTrim(long uid, string text,string trim)
     {
         
     }
@@ -196,7 +196,7 @@ public class RoundManager : MonoBehaviour
     
     [PunRPC]
     //解析命令
-    public virtual void ParseCommand(int uid, string text)
+    public virtual void ParseCommand(long uid, string text)
     {
         var user = GetPlayerByUid(uid);
         var validUser = user != null;
@@ -251,12 +251,12 @@ public class RoundManager : MonoBehaviour
 
     public struct GiftMSg
     {
-        public int uid;
+        public long uid;
         public string giftName;
         public int battery;
 
        
-        public GiftMSg(int uid, string giftName,int battery)
+        public GiftMSg(long uid, string giftName,int battery)
         {
             this.uid = uid;
             this.giftName = giftName;
@@ -269,7 +269,7 @@ public class RoundManager : MonoBehaviour
     //送礼区域变量*****************
     
     
-    public void OnGiftReceived(int uid, string userName, int num, string giftName, int totalCoin)
+    public void OnGiftReceived(long uid, string userName, int num, string giftName, int totalCoin)
     {
         if (elapsedTime < 30)
         {
@@ -285,7 +285,7 @@ public class RoundManager : MonoBehaviour
 
 
 
-    protected virtual void ParseGift(int uid, string giftName, int battery)
+    protected virtual void ParseGift(long uid, string giftName, int battery)
     {
         
     }

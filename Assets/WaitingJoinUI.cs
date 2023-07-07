@@ -57,7 +57,7 @@ public class WaitingJoinUI : MonoBehaviour
       playerIconUis.Add(iconUi);
    }
 
-   public PlayerIconUi GetPlayerIconUiByUid(int uid)
+   public PlayerIconUi GetPlayerIconUiByUid(long uid)
    {
       return playerIconUis.Find(x => x.player.uid == uid);
    }
