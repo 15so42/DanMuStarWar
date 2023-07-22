@@ -876,13 +876,13 @@ public class McRoundManager : RoundManager
     }
 
 
-    protected virtual void ParseGiftInMcMode(SteveCommander steveCommander,string giftName,int battery)
+    protected virtual void ParseGiftInMcMode(SteveCommander steveCommander,string giftName,long battery)
     {
         
     }
     
     /******************解析礼物*********************/
-    protected override void ParseGift(long uid, string giftName,int battery)
+    protected override void ParseGift(long uid, string giftName,long battery)
     {
         var planet = GetPlantByPlayerUid(uid);
         if(planet==null)

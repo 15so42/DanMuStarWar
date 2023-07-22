@@ -375,7 +375,7 @@ public class StarWarRoundManager : RoundManager
     
     /******************解析礼物*********************/
     
-    protected override void ParseGift(long uid, string giftName,int battery)
+    protected override void ParseGift(long uid, string giftName,long battery)
     {
         if (giftName == "小花花")
         {

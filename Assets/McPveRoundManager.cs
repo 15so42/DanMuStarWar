@@ -11,7 +11,7 @@ public class McPveRoundManager : McRoundManager
 {
     private GameObject fireWall;
     private UnityTimer.Timer fireWallTimer;
-    protected override void ParseGiftInMcMode(SteveCommander steveCommander, string giftName, int battery)
+    protected override void ParseGiftInMcMode(SteveCommander steveCommander, string giftName, long battery)
     {
         base.ParseGiftInMcMode(steveCommander, giftName, battery);
         

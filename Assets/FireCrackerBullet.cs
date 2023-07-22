@@ -17,7 +17,7 @@ public class FireCrackerBullet : ArrowBullet
     void ExplosionDamage() 
     {
             
-        var attackInfo = new AttackInfo(owner, AttackType.Physics, Mathf.CeilToInt(5+highExplosiveLevel*1f));
+        var attackInfo = new AttackInfo(owner, AttackType.Physics, Mathf.CeilToInt(3+highExplosiveLevel*1f));
         var position = transform.position;
         AttackManager.Instance.Explosion(attackInfo,handWeapon, position, 12,"MCExplosionFx");
         //Debug.Log(gameObject.name+"Explosion一次");

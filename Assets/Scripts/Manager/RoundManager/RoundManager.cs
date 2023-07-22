@@ -46,7 +46,7 @@ public class RoundManager : MonoBehaviour
         this.fightingManager = gameManager.fightingManager;
         this.players = players;
         EventCenter.AddListener<string,long,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
-        EventCenter.AddListener<long,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
+        EventCenter.AddListener<long,string,long,string,long>(EnumEventType.OnGiftReceived,OnGiftReceived);
 
         timer = 0;
         elapsedTime = 0;
@@ -95,7 +95,7 @@ public class RoundManager : MonoBehaviour
         {
             //如果切换游戏场景后游戏尚未开始，就不会绑定事件，因此强行结束或换场景会报错
             EventCenter.RemoveListener<string, long, string, string>(EnumEventType.OnDanMuReceived, OnDanMuReceived);
-            EventCenter.RemoveListener<long, string, int, string, int>(EnumEventType.OnGiftReceived, OnGiftReceived);
+            EventCenter.RemoveListener<long, string, long, string, long>(EnumEventType.OnGiftReceived, OnGiftReceived);
             if(playEnvEvent!=null)
                 StopCoroutine(playEnvEvent);
         }
@@ -253,10 +253,10 @@ public class RoundManager : MonoBehaviour
     {
         public long uid;
         public string giftName;
-        public int battery;
+        public long battery;
 
        
-        public GiftMSg(long uid, string giftName,int battery)
+        public GiftMSg(long uid, string giftName,long battery)
         {
             this.uid = uid;
             this.giftName = giftName;
@@ -269,7 +269,7 @@ public class RoundManager : MonoBehaviour
     //送礼区域变量*****************
     
     
-    public void OnGiftReceived(long uid, string userName, int num, string giftName, int totalCoin)
+    public void OnGiftReceived(long uid, string userName, long num, string giftName, long totalCoin)
     {
         if (elapsedTime < 30)
         {
@@ -285,7 +285,7 @@ public class RoundManager : MonoBehaviour
 
 
 
-    protected virtual void ParseGift(long uid, string giftName, int battery)
+    protected virtual void ParseGift(long uid, string giftName, long battery)
     {
         
     }

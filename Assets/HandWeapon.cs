@@ -1359,7 +1359,7 @@ public class HandWeapon : Weapon,IDamageAble
         var ignoreDamageType = new List<AttackType>() {AttackType.Reflect,AttackType.Heal,AttackType.Fire,AttackType.Poison};
         if (thronLevel > 0 && !ignoreDamageType.Contains(attackInfo.attackType))
         {
-            var value = Mathf.CeilToInt(attackInfo.value * ((float)thronLevel / (thronLevel + 20)));
+            var value = Mathf.CeilToInt(attackInfo.value * ((float)thronLevel / (thronLevel + 30)));
             attackInfo.attacker?.GetAttackEntity()
                 .OnAttacked(new AttackInfo(owner, AttackType.Reflect, value));
         }

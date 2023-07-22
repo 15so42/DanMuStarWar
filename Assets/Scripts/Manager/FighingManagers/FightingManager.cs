@@ -96,7 +96,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
         
        
         EventCenter.AddListener<string,long,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
-        EventCenter.AddListener<long,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
+        EventCenter.AddListener<long,string,long,string,long>(EnumEventType.OnGiftReceived,OnGiftReceived);
         
         EventCenter.AddListener(EnumEventType.OnPlanetsSpawned,SetOwners);
         
@@ -117,7 +117,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
     
 
     
-    public void OnGiftReceived(long uid, string userName, int num,string giftName,int totalCoin)
+    public void OnGiftReceived(long uid, string userName, long num,string giftName,long totalCoin)
     {
         AddPlayerDataValue(uid,"giftPoint", totalCoin / 100);
         //TipsDialog.ShowDialog("感谢支持QWQ!"+userName+"获得"+ totalCoin/100+ "个礼物点",null);
@@ -155,37 +155,37 @@ public class FightingManager : MonoBehaviourPunCallbacks
         
         if (key == "giftPoint")
         {
-            userSaveData.giftPoint+=(int)value;
+            userSaveData.giftPoint += Convert.ToInt32(value);
         }
 
         if (key == "coin")
         {
-            userSaveData.coin += (int)value;
+            userSaveData.coin += Convert.ToInt32(value);
         }
 
         if (key == "winCount")
         {
-            userSaveData.winCount += (int)value;
+            userSaveData.winCount += Convert.ToInt32(value);
         }
 
         if (key == "loseCount")
         {
-            userSaveData.loseCount += (int)value;
+            userSaveData.loseCount += Convert.ToInt32(value);
         }
 
         if (key == "killCount")
         {
-            userSaveData.killCount += (int)value;
+            userSaveData.killCount += Convert.ToInt32(value);
         }
 
         if (key == "dieCount")
         {
-            userSaveData.dieCount += (int)value;
+            userSaveData.dieCount += Convert.ToInt32(value);
         }
 
         if (key == "skinId")
         {
-            userSaveData.skinId = (int)value;
+            userSaveData.skinId = Convert.ToInt32(value);
         }
        
        
@@ -223,7 +223,7 @@ public class FightingManager : MonoBehaviourPunCallbacks
     private void OnDestroy()
     {
         EventCenter.RemoveListener<string,long,string,string>(EnumEventType.OnDanMuReceived,OnDanMuReceived);
-        EventCenter.RemoveListener<long,string,int,string,int>(EnumEventType.OnGiftReceived,OnGiftReceived);
+        EventCenter.RemoveListener<long,string,long,string,long>(EnumEventType.OnGiftReceived,OnGiftReceived);
         EventCenter.RemoveListener(EnumEventType.OnPlanetsSpawned,SetOwners);
     }
 
